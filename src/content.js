@@ -40,13 +40,15 @@ export const pages = {
     path: { ar: "/", en: "/en" },
     file: { ar: "index.html", en: "en/index.html" },
     nav: { ar: "الرئيسية", en: "Home" },
+    // Titles and descriptions lead with the words merchants actually search
+    // for ("إدارة طلبات", "متجر إلكتروني") — not the product category.
     title: {
-      ar: "velorci — منصة تشغيل أعمال متكاملة",
-      en: "velorci — business operating platform",
+      ar: "برنامج إدارة طلبات وتوصيل لتجّار انستقرام وواتساب — velorci",
+      en: "Order & delivery software for Instagram and WhatsApp sellers — velorci",
     },
     description: {
-      ar: "منصة تشغيل أعمال متكاملة تدير الطلبات والتوصيل والمتجر والمحاسبة وواتساب والإعلانات ونقطة البيع — من لوحة واحدة.",
-      en: "A complete business operating platform for orders, delivery, online store, accounting, WhatsApp, ads and POS — from one dashboard.",
+      ar: "بتاخذ طلباتك على انستقرام وواتساب؟ velorci بيجمعها في صندوق واحد، بيتابع كل طلب من التجهيز للتسليم، وبيحاسب عنك تلقائياً — مع متجر إلكتروني بدومينك.",
+      en: "Taking orders through Instagram and WhatsApp? velorci collects them in one inbox, tracks every order from prep to delivery, and does your accounting automatically — with an online store on your own domain.",
     },
   },
   about: {
@@ -109,23 +111,83 @@ export const ui = {
 };
 
 export const home = {
-  eyebrow: { ar: "business operating platform", en: "business operating platform" },
-  title: {
-    ar: "كل عملك في لوحة واحدة",
-    en: "Your entire business in one dashboard",
+  // Names the audience before anything else, so a visitor knows in one
+  // second whether this page is for them.
+  eyebrow: {
+    ar: "لتجّار انستقرام وواتساب",
+    en: "For Instagram & WhatsApp sellers",
   },
+  title: {
+    ar: "طلباتك من انستقرام وواتساب — في مكان واحد، ومنظّمة",
+    en: "Your Instagram and WhatsApp orders — in one place, finally organised",
+  },
+  // Three ideas, not seven: collect, track, account.
   sub: {
-    ar: "منصة تشغيل أعمال متكاملة تدير الطلبات والتوصيل والمتجر والمحاسبة وواتساب والإعلانات ونقطة البيع — بدون ربط أدوات متفرقة.",
-    en: "A complete business operating platform managing orders, delivery, store, accounting, WhatsApp, ads and POS — without stitching together separate tools.",
+    ar: "لو بتبيع على السوشال وبتوصّل بنفسك: velorci بيجمع طلباتك من كل قناة في صندوق واحد، بيتابع كل طلب من التجهيز حتى التسليم، وبيمسك حسابك تلقائياً.",
+    en: "If you sell on social and deliver yourself: velorci gathers your orders from every channel into one inbox, tracks each one from prep to delivery, and keeps your books automatically.",
   },
   cta1: { ar: "اطلب عرضاً", en: "Request a demo" },
-  cta2: { ar: "استكشف الخدمات", en: "Explore services" },
+  cta2: { ar: "شوف كيف بتشتغل", en: "See how it works" },
 
-  stats: [
-    { value: { ar: "٧", en: "7" }, label: { ar: "موديولات متكاملة", en: "integrated modules" } },
-    { value: { ar: "٦", en: "6" }, label: { ar: "أدوار فريق جاهزة", en: "ready team roles" } },
-    { value: { ar: "١", en: "1" }, label: { ar: "اشتراك واحد فقط", en: "single subscription" } },
-  ],
+  // "Is this you?" — the qualifier. Every line is a situation the target
+  // merchant is living right now, in their own words.
+  audience: {
+    title: { ar: "هاد أنت؟", en: "Sound familiar?" },
+    sub: {
+      ar: "لو واحدة من هدول بتوصفك، velorci مبني إلك.",
+      en: "If any of these describes you, velorci was built for you.",
+    },
+    items: [
+      {
+        ar: "بتوصلك طلبات على الخاص في انستقرام وواتساب، وبتكتبها بدفتر أو بملاحظات الجوال.",
+        en: "Orders arrive in your Instagram and WhatsApp DMs, and you write them in a notebook or your phone's notes.",
+      },
+      {
+        ar: "عندك سائق أو اتنين، وكل شوي بتتصل تسأل وين وصل الطلب.",
+        en: "You have a driver or two, and you keep calling to ask where an order got to.",
+      },
+      {
+        ar: "بتحسب أرباحك آخر الشهر على إكسل — أو ما بتحسبها أصلاً.",
+        en: "You work out your profit at month end in a spreadsheet — or never quite get to it.",
+      },
+      {
+        ar: "بدك متجر إلكتروني، بس كل العروض اللي جتك غالية أو بدها مبرمج.",
+        en: "You want an online store, but every quote you got was expensive or needed a developer.",
+      },
+    ],
+  },
+
+  // How it actually works — the step a confused visitor needs most.
+  howItWorks: {
+    title: { ar: "كيف بتشتغل", en: "How it works" },
+    sub: {
+      ar: "ثلاث خطوات، وبتكون شغّال. بدون برمجة وبدون تنصيب.",
+      en: "Three steps and you're running. No code, no installation.",
+    },
+    steps: [
+      {
+        title: { ar: "اربط قنواتك", en: "Connect your channels" },
+        body: {
+          ar: "واتساب الأعمال ومتجرك وطلبات انستقرام — كلها بتصبّ في صندوق طلبات واحد، بدل ما تلاحقها بين التطبيقات.",
+          en: "WhatsApp Business, your store and your Instagram orders all flow into one inbox, instead of you chasing them between apps.",
+        },
+      },
+      {
+        title: { ar: "تابع الطلب بمراحله", en: "Track each order's stages" },
+        body: {
+          ar: "تجهيز، تعبئة، توصيل، تسليم — بمراحل إنت بتحددها. وكل موظف وسائق عنده تطبيقه وبيشوف اللي يخصه بس.",
+          en: "Prep, packing, delivery, handover — in stages you define. Every staff member and driver gets their own app showing only their work.",
+        },
+      },
+      {
+        title: { ar: "الأرقام بتمشي لحالها", en: "The numbers keep themselves" },
+        body: {
+          ar: "كل طلب مكتمل بيسجّل إيراده تلقائياً. المصاريف والتقارير والفواتير جاهزة — بدون ما تفتح إكسل.",
+          en: "Every completed order books its own revenue. Expenses, reports and invoices are ready — without opening a spreadsheet.",
+        },
+      },
+    ],
+  },
 
   marquee: [
     { ar: "إدارة الطلبات", en: "Orders" },
@@ -139,10 +201,10 @@ export const home = {
   ],
 
   problem: {
-    title: { ar: "من الفوضى إلى منصة واحدة", en: "From chaos to one platform" },
+    title: { ar: "يومك قبل، ويومك بعد", en: "Your day before, and after" },
     sub: {
-      ar: "المشاكل اليومية للتاجر — وكيف تحلّها velorci",
-      en: "A merchant's daily problems — and how velorci solves them",
+      ar: "الوضع اللي بتعيشه اليوم، وشو بيصير محلّه.",
+      en: "What you live with today, and what takes its place.",
     },
     beforeLabel: { ar: "قبل", en: "Before" },
     afterLabel: { ar: "مع velorci", en: "With velorci" },
@@ -179,10 +241,13 @@ export const home = {
   },
 
   features: {
-    title: { ar: "منصة كاملة، ليس مجرد أداة", en: "A full platform, not just a tool" },
+    title: {
+      ar: "شو بتقدر تشغّل من نفس اللوحة",
+      en: "What you can run from the same dashboard",
+    },
     sub: {
-      ar: "أهم موديولات velorci — وكلها تعمل معاً من نفس اللوحة",
-      en: "velorci's core modules — all working together from the same dashboard",
+      ar: "مش أدوات منفصلة بتربطها ببعض — كلها جوّة بعض، وبتشتغل على نفس الطلب ونفس العميل.",
+      en: "Not separate tools you wire together — all of it lives in one place, working on the same order and the same customer.",
     },
     seeAll: { ar: "شاهد كل الخدمات", en: "See all services" },
     items: [
@@ -263,6 +328,15 @@ export const home = {
   },
 
   showcase: {
+    // Set `screenshot` to a real capture (e.g. "assets/app-home.png") and the
+    // page renders that image instead of the drawn mock-up below. Keep it null
+    // until a genuine screenshot exists — a drawn mock-up that pretends to be
+    // a screenshot costs more trust than it buys.
+    screenshot: null,
+    screenshotAlt: {
+      ar: "الشاشة الرئيسية لتطبيق velorci على الجوال",
+      en: "The velorci mobile app home screen",
+    },
     tag: { ar: "المنصة على أرض الواقع", en: "The platform in real life" },
     title: { ar: "لوحة تحكم كاملة… في جيبك", en: "A full dashboard… in your pocket" },
     body: {
@@ -331,11 +405,14 @@ export const home = {
 
   finalCta: {
     title: {
-      ar: "جاهز تشغّل عملك كله من مكان واحد؟",
-      en: "Ready to run your entire business from one place?",
+      ar: "خلّي طلباتك تنظّم حالها",
+      en: "Let your orders organise themselves",
     },
-    sub: { ar: "احجز عرضاً تجريبياً مجانياً اليوم", en: "Book a free demo today" },
-    cta: { ar: "تواصل معنا", en: "Get in touch" },
+    sub: {
+      ar: "احجز عرضاً مجانياً — بنفرجيك المنصة على عملك إنت، مش على حساب تجريبي.",
+      en: "Book a free demo — we'll walk through the platform on your business, not a dummy account.",
+    },
+    cta: { ar: "احجز عرضاً مجانياً", en: "Book a free demo" },
   },
 };
 

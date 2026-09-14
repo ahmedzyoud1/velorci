@@ -694,38 +694,6 @@ select {
   width: auto;
 }
 
-.hero__stats {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--sp-4) var(--sp-8);
-  margin-block-start: var(--sp-4);
-  padding-block-start: var(--sp-6);
-  border-block-start: 1px solid var(--line);
-  width: 100%;
-  max-width: 46rem;
-}
-
-.hero__stat {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-1);
-  align-items: center;
-}
-
-.hero__stat b {
-  font-family: var(--font-heading);
-  font-size: var(--step-3);
-  font-weight: 900;
-  color: var(--brand);
-  line-height: 1;
-}
-
-.hero__stat span {
-  font-size: var(--step--1);
-  color: var(--text-dim);
-}
-
 /* =========================================================================
    marquee
    ========================================================================= */
@@ -843,6 +811,96 @@ select {
   font-weight: 700;
   letter-spacing: 0.04em;
   flex: none;
+}
+
+/* =========================================================================
+   qualifiers — "is this you?"
+   ========================================================================= */
+
+.qualifiers {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.qualifier {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-5);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--line-soft);
+  background: var(--surface);
+  font-size: var(--step-1);
+  line-height: var(--leading-snug);
+  color: var(--text);
+}
+
+.qualifier__mark {
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--surface-brand);
+  border: 1px solid var(--line-strong);
+  color: var(--brand);
+  flex: none;
+  margin-block-start: 0.15em;
+}
+
+/* =========================================================================
+   steps — how it works
+   ========================================================================= */
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: var(--sp-5);
+  counter-reset: step;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-6) var(--sp-5);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.step__num {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--brand);
+  color: var(--brand-ink);
+  font-family: "Poppins", sans-serif;
+  font-size: var(--step-1);
+  font-weight: 800;
+  flex: none;
+}
+
+.step h3 {
+  font-size: var(--step-1);
+  font-weight: 700;
+}
+
+.step p {
+  color: var(--text-muted);
+  line-height: var(--leading-body);
+}
+
+/* A real screenshot, when one replaces the drawn mock-up. */
+.phone-shot {
+  justify-self: center;
+  width: min(100%, 19rem);
+  border-radius: 1.5rem;
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-lift);
 }
 
 /* =========================================================================

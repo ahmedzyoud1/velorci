@@ -104,15 +104,24 @@ function pageHero(titleValue, subValue, lang) {
 function homePage(lang) {
   const h = home;
 
-  const stats = h.stats
+  const audienceItems = h.audience.items
     .map(
-      (s) =>
-        `<div class="hero__stat"><b>${tx(s.value, lang)}</b><span>${tx(
-          s.label,
-          lang
-        )}</span></div>`
+      (a) => `<li class="qualifier" data-reveal>
+            <span class="qualifier__mark" aria-hidden="true">${icons.check}</span>
+            <span>${tx(a, lang)}</span>
+          </li>`
     )
-    .join("\n            ");
+    .join("\n          ");
+
+  const steps = h.howItWorks.steps
+    .map(
+      (s, i) => `<li class="step" data-reveal>
+            <span class="step__num" aria-hidden="true">${i + 1}</span>
+            <h3>${tx(s.title, lang)}</h3>
+            <p>${tx(s.body, lang)}</p>
+          </li>`
+    )
+    .join("\n          ");
 
   // Doubled so the CSS translateX(-50%) loop is seamless.
   const marqueeItems = [...h.marquee, ...h.marquee]
@@ -199,13 +208,7 @@ function homePage(lang) {
     h.cta1,
     lang
   )}</a>
-          <a class="btn btn--ghost" href="${url("services", lang)}">${tx(
-    h.cta2,
-    lang
-  )}</a>
-        </div>
-        <div class="hero__stats">
-            ${stats}
+          <a class="btn btn--ghost" href="#how">${tx(h.cta2, lang)}</a>
         </div>
       </div>
     </section>
@@ -215,6 +218,36 @@ function homePage(lang) {
           ${marqueeItems}
       </div>
     </div>
+
+    <section class="section" aria-labelledby="audience-title">
+      <div class="wrap wrap--narrow">
+        ${sectionHead({
+          title: h.audience.title,
+          sub: h.audience.sub,
+          lang,
+          center: true,
+          id: "audience-title",
+        })}
+        <ul class="qualifiers">
+          ${audienceItems}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section--wash" id="how" aria-labelledby="how-title">
+      <div class="wrap">
+        ${sectionHead({
+          title: h.howItWorks.title,
+          sub: h.howItWorks.sub,
+          lang,
+          center: true,
+          id: "how-title",
+        })}
+        <ol class="steps">
+          ${steps}
+        </ol>
+      </div>
+    </section>
 
     <section class="section" aria-labelledby="problem-title">
       <div class="wrap">
@@ -301,7 +334,16 @@ function homePage(lang) {
             ${checkList(h.showcase.points, lang)}
           </div>
 
-          <div class="phone" data-reveal>
+          ${
+            h.showcase.screenshot
+              ? `<img class="phone-shot" src="${asset(
+                  h.showcase.screenshot,
+                  lang
+                )}" alt="${tx(
+                  h.showcase.screenshotAlt,
+                  lang
+                )}" loading="lazy" decoding="async" data-reveal>`
+              : `<div class="phone" data-reveal>
             <div class="phone__screen">
               <div class="phone__bar"><span>12:48</span><span>83%</span></div>
               <p class="phone__title">${tx(ph.header, lang)}</p>
@@ -337,7 +379,8 @@ function homePage(lang) {
                 <span class="stat-tile__sub">${tx(ph.waRead, lang)}</span>
               </div>
             </div>
-          </div>
+          </div>`
+          }
         </div>
       </div>
     </section>
