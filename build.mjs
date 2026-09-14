@@ -4,11 +4,12 @@
  *
  *   node build.mjs
  *
- * Reads src/ and writes the generated site to the repository root so Vercel
- * (or any static host) can serve it with no build step configured.
+ * Reads src/ and writes the finished site into public/, which is the output
+ * directory Vercel serves (see vercel.json). Nothing else in the repository
+ * is published.
  */
 
-import { mkdir, writeFile, copyFile, readdir } from "node:fs/promises";
+import { mkdir, writeFile, copyFile, readdir, rm } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -17,10 +18,11 @@ import { document_ } from "./src/layout.js";
 import { renderers } from "./src/pages.js";
 
 const root = dirname(fileURLToPath(import.meta.url));
+const OUT = join(root, "public");
 const LANGS = ["ar", "en"];
 
 async function emit(relPath, contents) {
-  const full = join(root, relPath);
+  const full = join(OUT, relPath);
   await mkdir(dirname(full), { recursive: true });
   await writeFile(full, contents, "utf8");
   return relPath;
@@ -44,10 +46,21 @@ async function buildPages() {
 
 async function copyStatic() {
   const written = [];
+
   for (const name of ["styles.css", "site.js"]) {
-    await copyFile(join(root, "src", name), join(root, name));
+    await mkdir(OUT, { recursive: true });
+    await copyFile(join(root, "src", name), join(OUT, name));
     written.push(name);
   }
+
+  // assets/ is authored by hand and copied verbatim into the output.
+  const assets = await readdir(join(root, "assets")).catch(() => []);
+  await mkdir(join(OUT, "assets"), { recursive: true });
+  for (const name of assets) {
+    await copyFile(join(root, "assets", name), join(OUT, "assets", name));
+    written.push(`assets/${name}`);
+  }
+
   return written;
 }
 
@@ -94,51 +107,17 @@ Sitemap: ${site.domain}/sitemap.xml
   ];
 }
 
-/* --- host config -------------------------------------------------------- */
-
-async function buildVercelConfig() {
-  const config = {
-    $schema: "https://openapi.vercel.sh/vercel.json",
-    cleanUrls: true,
-    trailingSlash: false,
-    headers: [
-      {
-        source: "/assets/(.*)",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
-          },
-        ],
-      },
-      {
-        source: "/(.*)",
-        headers: [
-          { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-          {
-            key: "Strict-Transport-Security",
-            value: "max-age=31536000; includeSubDomains",
-          },
-        ],
-      },
-    ],
-  };
-
-  return [await emit("vercel.json", JSON.stringify(config, null, 2) + "\n")];
-}
-
 /* --- run ---------------------------------------------------------------- */
+
+// Start from an empty output directory so a renamed or deleted page can never
+// linger in a deploy.
+await rm(OUT, { recursive: true, force: true });
 
 const written = [
   ...(await buildPages()),
   ...(await copyStatic()),
   ...(await buildSitemap()),
-  ...(await buildVercelConfig()),
 ];
 
-const assets = await readdir(join(root, "assets")).catch(() => []);
-
-console.log(`built ${written.length} files:`);
+console.log(`built ${written.length} files into public/:`);
 for (const f of written) console.log(`  ${f}`);
-console.log(`(${assets.length} files in assets/ served as-is)`);
