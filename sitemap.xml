@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://www.velorci.com/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.velorci.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.velorci.com/en"/>
+  </url>
+  <url>
+    <loc>https://www.velorci.com/about</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.velorci.com/about"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.velorci.com/en/about"/>
+  </url>
+  <url>
+    <loc>https://www.velorci.com/services</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.velorci.com/services"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.velorci.com/en/services"/>
+  </url>
+  <url>
+    <loc>https://www.velorci.com/team</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.velorci.com/team"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.velorci.com/en/team"/>
+  </url>
+  <url>
+    <loc>https://www.velorci.com/contact</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.velorci.com/contact"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.velorci.com/en/contact"/>
+  </url>
+  <url>
+    <loc>https://www.velorci.com/en</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.velorci.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.velorci.com/en"/>
+  </url>
+  <url>
+    <loc>https://www.velorci.com/en/about</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.velorci.com/about"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.velorci.com/en/about"/>
+  </url>
+  <url>
+    <loc>https://www.velorci.com/en/services</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.velorci.com/services"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.velorci.com/en/services"/>
+  </url>
+  <url>
+    <loc>https://www.velorci.com/en/team</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.velorci.com/team"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.velorci.com/en/team"/>
+  </url>
+  <url>
+    <loc>https://www.velorci.com/en/contact</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.velorci.com/contact"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.velorci.com/en/contact"/>
+  </url>
+</urlset>
