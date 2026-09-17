@@ -57,6 +57,7 @@
   @media (max-width:900px){
     .r-grid4{grid-template-columns:1fr 1fr !important;}
     .r-grid3{grid-template-columns:1fr 1fr !important;}
+    .r-grid5{grid-template-columns:repeat(3,1fr) !important;}
   }
   .r-burger{display:none;}
   @media (max-width:640px){
@@ -69,7 +70,7 @@
     .r-hdr.menu-open .r-actions{display:flex !important; order:4 !important; width:100% !important; flex-direction:column !important; gap:8px !important;}
     .r-hdr.menu-open .r-actions > *{width:100% !important; text-align:center !important; justify-content:center !important; box-sizing:border-box !important;}
     .r-hero-h1{font-size:38px !important;}
-    .r-grid4, .r-grid3, .r-grid2{grid-template-columns:1fr !important;}
+    .r-grid4, .r-grid3, .r-grid2, .r-grid5{grid-template-columns:1fr !important;}
     .r-contact{padding:64px 20px 70px !important;}
     section{padding-left:20px !important; padding-right:20px !important;}
     .r-dash-side{display:none !important;}
@@ -186,18 +187,37 @@
       </div>
     </div>
 
-    <section style="padding:90px 40px;">
-      <div style="max-width:1100px; margin:0 auto;">
-        <h2 style="font-family:{{ t.headingFont }}; font-size:38px; font-weight:800; text-align:center; margin:0 0 10px; color:#E8FFFE;">{{ t.problem.title }}</h2>
-        <p style="text-align:center; color:rgba(232,255,254,.6); font-size:16px; margin:0 0 48px;">{{ t.problem.sub }}</p>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px 28px;">
-          <div style="font-family:Poppins,sans-serif; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(232,255,254,.45);">{{ t.problem.beforeLabel }}</div>
-          <div style="font-family:Poppins,sans-serif; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#65D4D2;">{{ t.problem.afterLabel }}</div>
-          <sc-for list="{{ t.problem.rows }}" as="row" hint-placeholder-count="7">
-            <div style="padding:16px 18px; background:rgba(232,255,254,.03); border:1px solid rgba(232,255,254,.08); border-radius:12px; font-size:15px; line-height:1.6; color:rgba(232,255,254,.65);">{{ row.p }}</div>
-            <div style="padding:16px 18px; background:rgba(101,212,210,.07); border:1px solid rgba(101,212,210,.3); border-radius:12px; font-size:15px; line-height:1.6; color:#E8FFFE; transition:all .25s;" style-hover="background:rgba(101,212,210,.14); transform:translateX(0) translateY(-2px); box-shadow:0 8px 26px rgba(101,212,210,.12);">{{ row.s }}</div>
+    <!-- CUSTOMER JOURNEY LOOP -->
+    <section style="position:relative; padding:90px 40px; overflow:hidden;">
+      <div style="position:absolute; top:-60px; left:50%; width:720px; height:720px; margin-left:-360px; background:radial-gradient(circle, rgba(101,212,210,.10), rgba(101,212,210,0) 62%); pointer-events:none;"></div>
+      <div style="position:relative; max-width:1180px; margin:0 auto;">
+
+        <div style="text-align:center; margin:0 0 16px;">
+          <span style="display:inline-block; padding:7px 17px; border-radius:20px; border:1px solid rgba(101,212,210,.35); background:rgba(101,212,210,.07); color:#65D4D2; font-size:12.5px; font-weight:700; letter-spacing:.05em; font-family:{{ t.headingFont }};">{{ t.journey.tag }}</span>
+        </div>
+
+        <h2 style="font-family:{{ t.headingFont }}; font-size:38px; font-weight:800; text-align:center; margin:0 0 12px; color:#E8FFFE;">{{ t.journey.title }}</h2>
+        <p style="text-align:center; color:rgba(232,255,254,.6); font-size:16px; line-height:1.8; margin:0 auto 52px; max-width:660px;">{{ t.journey.sub }}</p>
+
+        <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:14px; align-items:stretch;" class="r-grid5">
+          <sc-for list="{{ t.journey.steps }}" as="st" hint-placeholder-count="5">
+            <div style="position:relative; padding:30px 18px 24px; background:linear-gradient(180deg, rgba(101,212,210,.075), rgba(101,212,210,.015)); border:1px solid rgba(101,212,210,.2); border-radius:18px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:13px; transition:all .3s; cursor:default;" style-hover="transform:translateY(-8px); border-color:rgba(101,212,210,.55); background:linear-gradient(180deg, rgba(101,212,210,.12), rgba(101,212,210,.03)); box-shadow:0 18px 44px rgba(0,0,0,.42);">
+              <div style="position:absolute; top:13px; inset-inline-start:15px; font-family:Poppins,sans-serif; font-size:12px; font-weight:800; letter-spacing:.08em; color:rgba(101,212,210,.45);">{{ st.num }}</div>
+              <div style="width:54px; height:54px; border-radius:15px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 22px rgba(101,212,210,.22);">
+                <svg viewBox="0 0 24 24" style="width:26px; height:26px; display:block;" fill="none" stroke="#041316" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{ st.d }}"></path></svg>
+              </div>
+              <div style="font-family:{{ t.headingFont }}; font-weight:700; font-size:16.5px; line-height:1.45; color:#E8FFFE;">{{ st.title }}</div>
+              <div style="font-size:13.5px; line-height:1.75; color:rgba(232,255,254,.62);">{{ st.desc }}</div>
+              <div style="margin-top:auto; padding-top:8px;"><span style="display:inline-block; padding:5px 12px; border-radius:14px; background:rgba(101,212,210,.1); border:1px solid rgba(101,212,210,.28); color:#65D4D2; font-size:11.5px; font-weight:700;">{{ st.chip }}</span></div>
+            </div>
           </sc-for>
         </div>
+
+        <div style="margin-top:22px; padding:20px 26px; border:1px dashed rgba(101,212,210,.34); border-radius:16px; background:rgba(101,212,210,.035); display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap;">
+          <svg viewBox="0 0 24 24" style="width:22px; height:22px; flex:none; display:block;" fill="none" stroke="#65D4D2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36M21 3v6h-6"></path></svg>
+          <span style="font-size:15.5px; line-height:1.7; color:rgba(232,255,254,.8); text-align:center;">{{ t.journey.loop }}</span>
+        </div>
+
       </div>
     </section>
 
@@ -582,14 +602,32 @@
 <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#041316"></rect><text x="50" y="62" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="800" font-size="34" fill="#65D4D2">v</text></svg></template></x-dc>
 <script type="text/x-dc" data-dc-script>
 const DATA = {
-  problemRows: [
-    { p:{ar:"طلبات متفرقة بين واتساب والموقع وانستقرام",en:"Orders scattered across WhatsApp, website and Instagram"}, s:{ar:"صندوق طلبات موحّد يجمع كل الطلبات تلقائياً",en:"One unified inbox collects every order automatically"} },
-    { p:{ar:"لا تعرف أين وصل كل طلب",en:"No visibility into where each order stands"}, s:{ar:"مراحل طلب مخصصة من التجهيز حتى التسليم",en:"Custom order stages from prep to delivery"} },
-    { p:{ar:"فريق توصيل وتعبئة بدون تنظيم",en:"Delivery and packing team with no structure"}, s:{ar:"تطبيق منفصل لكل موظف بصلاحيات محددة",en:"A dedicated app per role with clear permissions"} },
-    { p:{ar:"محاسبة على ورق أو إكسل",en:"Accounting on paper or spreadsheets"}, s:{ar:"نظام محاسبة كامل بإيرادات ومصاريف وتقارير",en:"Full accounting with revenue, expenses and reports"} },
-    { p:{ar:"متجر إلكتروني مكلف ومعقّد",en:"Expensive, complex online store setups"}, s:{ar:"متجر جاهز بدومين خاص وسحب وإفلات",en:"Ready store with your own domain, drag-and-drop"} },
-    { p:{ar:"تسويق واتساب يدوي",en:"Manual WhatsApp marketing"}, s:{ar:"واتساب رسمي + بث جماعي + وكيل ذكاء يرد تلقائياً",en:"Official WhatsApp, broadcasts, AI agent replies automatically"} },
-    { p:{ar:"إعلانات ميتا بدون تتبع",en:"Meta ads with no tracking"}, s:{ar:"إعلانات + تتبع تحويلات + كتالوج منتجات",en:"Ads, conversion tracking and a product catalog"} },
+  journeySteps: [
+    { num:"01",
+      d:"M4 8h16M5 8l1-4h12l1 4M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8M9.5 20v-6h5v6",
+      title:{ar:"متجرك الإلكتروني",en:"Your online store"},
+      desc:{ar:"متجر بدومينك الخاص، يتصفّحه العميل ويطلب بنفسه في أي وقت — والطلب يدخل النظام مباشرة.",en:"A store on your own domain. Customers browse and order themselves, any time — the order lands in the system instantly."},
+      chip:{ar:"الطلب يدخل تلقائياً",en:"Order captured"} },
+    { num:"02",
+      d:"M21 11.5a8.4 8.4 0 0 1-12.5 7.3L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z",
+      title:{ar:"واتساب الأعمال الرسمي",en:"Official WhatsApp"},
+      desc:{ar:"تأكيد الطلب وكل تحديث للمراحل يوصل العميل على واتساب تلقائياً، من رقمك الرسمي الموثّق.",en:"Order confirmation and every stage update reach the customer on WhatsApp automatically, from your verified business number."},
+      chip:{ar:"تواصل بلا مجهود",en:"Zero-effort updates"} },
+    { num:"03",
+      d:"M12 3l1.9 4.9 4.9 1.9-4.9 1.9L12 16.6l-1.9-4.9L5.2 9.8l4.9-1.9zM18.6 15.4l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z",
+      title:{ar:"وكيل الذكاء الاصطناعي",en:"AI agent"},
+      desc:{ar:"يرد على أسئلة العملاء ٢٤ ساعة، يعرف منتجاتك وسياساتك، ويحوّل المحادثة لموظف بشري وقت الحاجة.",en:"Answers customer questions 24/7, knows your products and policies, and hands off to a human when needed."},
+      chip:{ar:"رد فوري ٢٤/٧",en:"Instant replies 24/7"} },
+    { num:"04",
+      d:"M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM8.8 11.6a2.2 2.2 0 1 0 0-4.4 2.2 2.2 0 0 0 0 4.4zM5.3 16.6c.4-1.8 1.8-2.9 3.5-2.9s3.1 1.1 3.5 2.9M15.5 9.5h3.8M15.5 13h3.8",
+      title:{ar:"ملف العميل CRM",en:"Customer CRM"},
+      desc:{ar:"كل طلب ومحادثة وملاحظة تتجمّع في ملف واحد، والمنصة تصنّف عملاءك تلقائياً حسب سلوكهم.",en:"Every order, chat and note collects into one profile, and the platform segments your customers automatically by behaviour."},
+      chip:{ar:"تعرف عميلك فعلاً",en:"Know your customer"} },
+    { num:"05",
+      d:"M3 11.5h18V19a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-7.5zM2.2 7.6h19.6v3.9H2.2zM12 7.6V20M12 7.6S10.6 3.6 8.1 3.6a2 2 0 1 0 0 4zM12 7.6s1.4-4 3.9-4a2 2 0 1 1 0 4z",
+      title:{ar:"برنامج الولاء",en:"Loyalty program"},
+      desc:{ar:"نقاط ومكافآت وعروض مخصّصة تُبنى على تاريخ شرائه — ترجّعه يشتري مرة ثانية وثالثة.",en:"Points, rewards and personalised offers built on their purchase history — bringing them back for a second and third order."},
+      chip:{ar:"شراء متكرر",en:"Repeat purchase"} },
   ],
   homeFeatures: [
     { badge:"OD", title:{ar:"الطلبات والتوصيل",en:"Orders & Delivery"}, desc:{ar:"صندوق موحّد، مراحل قابلة للتخصيص، تقويم توصيل وتعيين للموظفين بضغطة.",en:"Unified inbox, custom stages, delivery calendar and one-tap staff assignment."} },
@@ -732,12 +770,12 @@ class Component extends DCLogic {
           {name: L==="ar"?"نورة  محمد\n":"Noura F.", stage: L==="ar"?"تم التسليم":"Delivered", pill:"#E8FFFE"},
         ],
       },
-      problem: {
-        title: L==="ar" ? "من الفوضى إلى منصة واحدة" : "From chaos to one platform",
-        sub: L==="ar" ? "المشاكل اليومية للتاجر — وكيف تحلّها velorci" : "A merchant's daily problems — and how velorci solves them",
-        beforeLabel: L==="ar" ? "قبل" : "Before",
-        afterLabel: L==="ar" ? "مع velorci" : "With velorci",
-        rows: DATA.problemRows.map(r => ({p:this.pick(r.p), s:this.pick(r.s)})),
+      journey: {
+        tag: L==="ar" ? "كيف تشتغل velorci" : "How velorci works",
+        title: L==="ar" ? "دورة عميل مغلقة، تشتغل لحالها" : "A closed customer loop that runs itself",
+        sub: L==="ar" ? "متجرك الإلكتروني، واتساب، وكيل الذكاء الاصطناعي، ملف العميل، وبرنامج الولاء — خمس حلقات متصلة، كل وحدة تغذّي اللي بعدها بدون أي إدخال يدوي." : "Your online store, WhatsApp, the AI agent, the customer profile and the loyalty program — five connected links, each feeding the next with no manual work.",
+        loop: L==="ar" ? "ويرجع العميل من جديد إلى متجرك — الدورة تكتمل وحدها، وكل لفّة ترفع قيمة العميل عندك." : "And the customer returns to your store — the loop closes by itself, and every turn raises that customer's lifetime value.",
+        steps: DATA.journeySteps.map(s => ({num:s.num, d:s.d, title:this.pick(s.title), desc:this.pick(s.desc), chip:this.pick(s.chip)})),
       },
       homeFeatures: {
         title: L==="ar" ? "منصة كاملة، ليس مجرد أداة" : "A full platform, not just a tool",
