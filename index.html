@@ -838,21 +838,35 @@
             </sc-for>
           </div>
         </div>
-        <div style="flex:1; min-width:300px; max-width:420px; border-radius:20px; border:1px solid rgba(101,212,210,.3); background:#062024; padding:20px; display:flex; flex-direction:column; gap:12px; animation:floatY 7s ease-in-out infinite;">
-          <div style="display:flex; align-items:center; gap:10px; padding-bottom:12px; border-bottom:1px solid rgba(101,212,210,.15);">
-            <div style="width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; font-family:Poppins,sans-serif; font-weight:800; font-size:12px; color:#041316;">v</div>
-            <div style="display:flex; flex-direction:column;">
-              <span style="font-size:13.5px; font-weight:700; color:#E8FFFE;">{{ t.aiSection.chatName }}</span>
-              <span style="font-size:11px; color:#65D4D2;">{{ t.aiSection.chatStatus }}</span>
+        <div style="position:relative; flex:1; min-width:300px; max-width:420px;">
+          <div style="position:absolute; inset:14% 4% -8%; border-radius:44px; background:radial-gradient(58% 58% at 50% 62%, rgba(101,212,210,.4), rgba(101,212,210,0) 72%); filter:blur(48px); pointer-events:none;"></div>
+          <div style="position:relative; border-radius:24px; padding:1.2px; background:linear-gradient(170deg, rgba(232,255,254,.55), rgba(101,212,210,.2) 32%, rgba(101,212,210,.05) 62%, rgba(4,19,22,.3)); box-shadow:0 46px 110px rgba(0,0,0,.6), 0 18px 44px rgba(0,0,0,.42), 0 0 56px rgba(101,212,210,.1);">
+          <div style="border-radius:22.8px; overflow:hidden; background:#EDF7F6;">
+
+            <div style="display:flex; align-items:center; gap:11px; padding:14px 16px; background:linear-gradient(180deg,#E0F6F1,#CDEDE6); box-shadow:inset 0 1px 0 rgba(255,255,255,.7);">
+              <div style="position:relative; width:38px; height:38px; flex:none; border-radius:50%; background:linear-gradient(145deg,#15959F,#0B5F69); box-shadow:0 6px 16px rgba(15,124,134,.3); display:flex; align-items:center; justify-content:center; font-family:Poppins,sans-serif; font-weight:800; font-size:15px; color:#fff;">
+                v<span style="position:absolute; bottom:-1px; inset-inline-end:-1px; width:11px; height:11px; border-radius:50%; background:#17A05C; border:2px solid #E0F6F1; animation:livePulse 2.2s infinite;"></span>
+              </div>
+              <div style="display:flex; flex-direction:column; min-width:0;">
+                <span style="font-family:{{ t.headingFont }}; font-size:14px; font-weight:800; letter-spacing:-.01em; color:#08333A;">{{ t.aiSection.chatName }}</span>
+                <span style="font-size:11.5px; color:#17A05C; font-weight:700; margin-top:2px;">{{ t.aiSection.chatStatus }}</span>
+              </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:10px; padding:18px 16px 20px; background:linear-gradient(180deg,#F1F9F8,#E8F4F3);">
+              <div style="align-self:flex-start; max-width:86%; padding:11px 15px; border-radius:16px 16px 16px 5px; background:#FFFFFF; border:1px solid rgba(12,59,66,.07); box-shadow:0 2px 8px rgba(12,59,66,.06); font-size:13.5px; line-height:1.7; color:#0C3B42; animation:riseIn .55s .2s cubic-bezier(.22,1,.36,1) both;">{{ t.aiSection.msg1 }}</div>
+
+              <div style="align-self:flex-end; max-width:86%; padding:11px 15px; border-radius:16px 16px 5px 16px; background:linear-gradient(160deg,#D9F3EE,#C7EBE5); border:1px solid rgba(15,124,134,.22); box-shadow:0 4px 14px rgba(15,124,134,.14); font-size:13.5px; line-height:1.7; color:#08333A; animation:riseIn .55s .95s cubic-bezier(.22,1,.36,1) both;">{{ t.aiSection.msg2 }}<div style="margin-top:7px; display:flex; align-items:center; gap:5px; font-family:Poppins,sans-serif; font-size:10px; font-weight:800; color:#0F7C86; letter-spacing:.05em;">AI<svg viewBox="0 0 24 24" style="width:12px; height:12px;" fill="none" stroke="#17A05C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l4.5 4.5L13 10M10.5 13.5l3 3L21 9"></path></svg></div></div>
+
+              <div style="align-self:flex-start; max-width:86%; padding:11px 15px; border-radius:16px 16px 16px 5px; background:#FFFFFF; border:1px solid rgba(12,59,66,.07); box-shadow:0 2px 8px rgba(12,59,66,.06); font-size:13.5px; line-height:1.7; color:#0C3B42; animation:riseIn .55s 1.7s cubic-bezier(.22,1,.36,1) both;">{{ t.aiSection.msg3 }}</div>
+
+              <div style="align-self:flex-end; display:flex; align-items:center; gap:5px; padding:13px 17px; border-radius:16px 16px 5px 16px; background:linear-gradient(160deg,#D9F3EE,#C7EBE5); border:1px solid rgba(15,124,134,.22); box-shadow:0 4px 14px rgba(15,124,134,.14); animation:riseIn .5s 2.3s cubic-bezier(.22,1,.36,1) both;">
+                <span style="width:7px; height:7px; border-radius:50%; background:#0F7C86; animation:dot 1.2s 0s infinite;"></span>
+                <span style="width:7px; height:7px; border-radius:50%; background:#0F7C86; animation:dot 1.2s .18s infinite;"></span>
+                <span style="width:7px; height:7px; border-radius:50%; background:#0F7C86; animation:dot 1.2s .36s infinite;"></span>
+              </div>
             </div>
           </div>
-          <div style="align-self:flex-start; max-width:85%; padding:10px 14px; border-radius:14px 14px 14px 4px; background:rgba(232,255,254,.08); font-size:13.5px; line-height:1.6; color:#E8FFFE; animation:fadeUp .6s .2s ease both;">{{ t.aiSection.msg1 }}</div>
-          <div style="align-self:flex-end; max-width:85%; padding:10px 14px; border-radius:14px 14px 4px 14px; background:rgba(101,212,210,.16); border:1px solid rgba(101,212,210,.3); font-size:13.5px; line-height:1.6; color:#E8FFFE; animation:fadeUp .6s .9s ease both;">{{ t.aiSection.msg2 }}<div style="margin-top:6px; font-size:10px; font-weight:700; color:#65D4D2; letter-spacing:.05em;">AI ✓</div></div>
-          <div style="align-self:flex-start; max-width:85%; padding:10px 14px; border-radius:14px 14px 14px 4px; background:rgba(232,255,254,.08); font-size:13.5px; line-height:1.6; color:#E8FFFE; animation:fadeUp .6s 1.6s ease both;">{{ t.aiSection.msg3 }}</div>
-          <div style="align-self:flex-end; display:flex; gap:5px; padding:12px 16px; border-radius:14px 14px 4px 14px; background:rgba(101,212,210,.16); border:1px solid rgba(101,212,210,.3); animation:fadeUp .6s 2.3s ease both;">
-            <div style="width:7px; height:7px; border-radius:50%; background:#65D4D2; animation:blink 1.2s 0s infinite;"></div>
-            <div style="width:7px; height:7px; border-radius:50%; background:#65D4D2; animation:blink 1.2s .2s infinite;"></div>
-            <div style="width:7px; height:7px; border-radius:50%; background:#65D4D2; animation:blink 1.2s .4s infinite;"></div>
           </div>
         </div>
       </div>
@@ -872,24 +886,24 @@
         </div>
 
         <div style="position:relative; flex-shrink:0; animation:floatSlow 7s ease-in-out infinite;">
-          <div style="width:300px; border-radius:42px; border:1px solid rgba(101,212,210,.3); background:#03191c; padding:12px 12px 0; box-shadow:0 30px 80px rgba(0,0,0,.5), 0 0 60px rgba(101,212,210,.12);">
-            <div style="border-radius:32px; overflow:hidden; background:#041316; direction:{{ t.dir }};">
+          <div style="width:300px; border-radius:44px; padding:1.4px; background:linear-gradient(170deg, #8FAAB0, rgba(15,124,134,.16) 34%, rgba(4,19,22,.5)); box-shadow:0 46px 110px rgba(0,0,0,.62), 0 18px 44px rgba(0,0,0,.45), 0 0 56px rgba(15,124,134,.1);">
+            <div style="border-radius:36px; overflow:hidden; background:#EDF7F6; direction:{{ t.dir }};">
               <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 20px 6px; font-family:Poppins,sans-serif;">
-                <span style="font-size:14px; font-weight:700; color:#E8FFFE;">{{ t.showcase.phone.statusTime }}</span>
+                <span style="font-size:14px; font-weight:700; color:#08333A;">{{ t.showcase.phone.statusTime }}</span>
                 <div style="display:flex; align-items:center; gap:6px;">
-                  <span style="font-size:11px; color:#E8FFFE;">●●●</span>
-                  <span style="font-size:11px; color:#E8FFFE;">▮</span>
+                  <span style="font-size:11px; color:#08333A;">●●●</span>
+                  <span style="font-size:11px; color:#08333A;">▮</span>
                   
                 </div>
               </div>
-              <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 18px; border-bottom:1px solid rgba(101,212,210,.12);">
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 18px; border-bottom:1px solid rgba(15,124,134,.1);">
                 <div style="display:flex; align-items:center; gap:12px;">
-                  <div style="display:flex; flex-direction:column; gap:3px;"><span style="width:16px;height:2px;background:#65D4D2;"></span><span style="width:16px;height:2px;background:#65D4D2;"></span><span style="width:16px;height:2px;background:#65D4D2;"></span></div>
-                  <span style="font-family:{{ t.headingFont }}; font-size:18px; font-weight:800; color:#65D4D2;">{{ t.showcase.phone.header }}</span>
+                  <div style="display:flex; flex-direction:column; gap:3px;"><span style="width:16px;height:2px;background:#0F7C86;"></span><span style="width:16px;height:2px;background:#0F7C86;"></span><span style="width:16px;height:2px;background:#0F7C86;"></span></div>
+                  <span style="font-family:{{ t.headingFont }}; font-size:18px; font-weight:800; color:#0F7C86;">{{ t.showcase.phone.header }}</span>
                 </div>
-                <div style="display:flex; align-items:center; gap:12px; color:#65D4D2; font-size:13px;">
+                <div style="display:flex; align-items:center; gap:12px; color:#0F7C86; font-size:13px;">
                   <span>⟳</span>
-                  <span style="position:relative;">◔<span style="position:absolute; top:-6px; {{ t.chipSide2 }}:-6px; background:#F5A623; color:#041316; font-size:8px; font-weight:800; border-radius:50%; width:13px; height:13px; display:flex; align-items:center; justify-content:center;">2</span></span>
+                  <span style="position:relative;">◔<span style="position:absolute; top:-6px; {{ t.chipSide2 }}:-6px; background:#F5A623; color:#FFFFFF; font-size:8px; font-weight:800; border-radius:50%; width:13px; height:13px; display:flex; align-items:center; justify-content:center;">2</span></span>
                   <span>☀</span>
                 </div>
               </div>
@@ -897,54 +911,54 @@
                 
                 <div style="display:flex; gap:6px; overflow:hidden;">
                   <sc-for list="{{ t.showcase.phone.chips }}" as="ch" hint-placeholder-count="5">
-                    <span style="padding:6px 11px; border-radius:16px; background:rgba(101,212,210,.08); border:1px solid rgba(101,212,210,.18); font-size:11px; font-weight:600; color:rgba(232,255,254,.75); white-space:nowrap;">{{ ch }}</span>
+                    <span style="padding:6px 11px; border-radius:16px; background:rgba(101,212,210,.08); border:1px solid rgba(15,124,134,.16); font-size:11px; font-weight:600; color:#3E7079; white-space:nowrap;">{{ ch }}</span>
                   </sc-for>
                 </div>
-                <div style="padding:16px; border-radius:16px; background:rgba(101,212,210,.05); border:1px solid rgba(101,212,210,.15);">
+                <div style="padding:16px; border-radius:16px; background:rgba(15,124,134,.05); border:1px solid rgba(12,59,66,.07);">
                   <div style="display:flex; align-items:center; justify-content:flex-end; gap:8px; margin-bottom:6px;">
-                    <span style="font-size:12px; color:rgba(232,255,254,.6);">{{ t.showcase.phone.netLabel }}</span>
-                    <span style="width:22px;height:22px;border-radius:6px;background:rgba(101,212,210,.15);display:flex;align-items:center;justify-content:center;font-size:11px;"><span class="temj">💰</span></span>
+                    <span style="font-size:12px; color:#5C868D;">{{ t.showcase.phone.netLabel }}</span>
+                    <span style="width:22px;height:22px;border-radius:6px;background:rgba(12,59,66,.07);display:flex;align-items:center;justify-content:center;font-size:11px;"><span class="temj">💰</span></span>
                   </div>
                   <div style="display:flex; align-items:baseline; justify-content:flex-end; gap:6px;">
-                    <span style="font-size:13px; color:rgba(232,255,254,.6);">{{ t.showcase.phone.cur }}</span>
-                    <span style="font-family:Poppins,sans-serif; font-size:30px; font-weight:800; color:#E8FFFE; letter-spacing:-.01em;">{{ netRevenue }}</span>
+                    <span style="font-size:13px; color:#5C868D;">{{ t.showcase.phone.cur }}</span>
+                    <span style="font-family:Poppins,sans-serif; font-size:30px; font-weight:800; color:#08333A; letter-spacing:-.01em;">{{ netRevenue }}</span>
                   </div>
                   <div style="text-align:{{ t.chipSide2 }}; font-size:11px; color:#F5A623; margin-top:2px;">{{ t.showcase.phone.returned }}</div>
                   <svg viewBox="0 0 300 80" style="width:100%; height:64px; margin-top:8px; overflow:visible;">
-                    <defs><linearGradient id="rev" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#65D4D2" stop-opacity=".35"></stop><stop offset="1" stop-color="#65D4D2" stop-opacity="0"></stop></linearGradient></defs>
+                    <defs><linearGradient id="rev" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0F7C86" stop-opacity=".35"></stop><stop offset="1" stop-color="#0F7C86" stop-opacity="0"></stop></linearGradient></defs>
                     <path d="M0,60 L20,48 L40,20 L60,44 L80,30 L100,52 L120,46 L140,54 L160,40 L180,56 L200,34 L220,50 L240,26 L260,42 L280,30 L300,46 L300,80 L0,80 Z" fill="url(#rev)" style="animation:areaIn 1.2s .4s both;"></path>
-                    <path d="M0,60 L20,48 L40,20 L60,44 L80,30 L100,52 L120,46 L140,54 L160,40 L180,56 L200,34 L220,50 L240,26 L260,42 L280,30 L300,46" fill="none" stroke="#65D4D2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray:900; stroke-dashoffset:900; animation:drawLine 1.8s .2s cubic-bezier(.4,0,.2,1) forwards;"></path>
+                    <path d="M0,60 L20,48 L40,20 L60,44 L80,30 L100,52 L120,46 L140,54 L160,40 L180,56 L200,34 L220,50 L240,26 L260,42 L280,30 L300,46" fill="none" stroke="#0F7C86" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray:900; stroke-dashoffset:900; animation:drawLine 1.8s .2s cubic-bezier(.4,0,.2,1) forwards;"></path>
                   </svg>
                 </div>
                 <div style="display:flex; gap:10px;">
-                  <div style="flex:1; padding:12px; border-radius:14px; background:rgba(101,212,210,.05); border:1px solid rgba(101,212,210,.15);">
-                    <div style="text-align:{{ t.chipSide2 }}; font-size:11px; color:rgba(232,255,254,.6);">{{ t.showcase.phone.avgLabel }}</div>
-                    <div style="text-align:{{ t.chipSide2 }}; font-family:Poppins,sans-serif; font-size:19px; font-weight:800; color:#E8FFFE; margin-top:2px;">{{ avgOrder }}</div>
+                  <div style="flex:1; padding:12px; border-radius:14px; background:rgba(15,124,134,.05); border:1px solid rgba(12,59,66,.07);">
+                    <div style="text-align:{{ t.chipSide2 }}; font-size:11px; color:#5C868D;">{{ t.showcase.phone.avgLabel }}</div>
+                    <div style="text-align:{{ t.chipSide2 }}; font-family:Poppins,sans-serif; font-size:19px; font-weight:800; color:#08333A; margin-top:2px;">{{ avgOrder }}</div>
                   </div>
-                  <div style="flex:1; padding:12px; border-radius:14px; background:rgba(101,212,210,.05); border:1px solid rgba(101,212,210,.15);">
-                    <div style="text-align:{{ t.chipSide2 }}; font-size:11px; color:rgba(232,255,254,.6);">{{ t.showcase.phone.ordersLabel }}</div>
-                    <div style="text-align:{{ t.chipSide2 }}; font-family:Poppins,sans-serif; font-size:19px; font-weight:800; color:#E8FFFE; margin-top:2px;">{{ ordersCount }}</div>
+                  <div style="flex:1; padding:12px; border-radius:14px; background:rgba(15,124,134,.05); border:1px solid rgba(12,59,66,.07);">
+                    <div style="text-align:{{ t.chipSide2 }}; font-size:11px; color:#5C868D;">{{ t.showcase.phone.ordersLabel }}</div>
+                    <div style="text-align:{{ t.chipSide2 }}; font-family:Poppins,sans-serif; font-size:19px; font-weight:800; color:#08333A; margin-top:2px;">{{ ordersCount }}</div>
                     <div style="display:flex; align-items:flex-end; gap:2px; height:22px; margin-top:6px;">
                       <sc-for list="{{ phoneBars }}" as="pb" hint-placeholder-count="20">
-                        <div style="flex:1; height:{{ pb.h }}; background:#65D4D2; border-radius:1px; transform-origin:bottom; animation:barGrow .7s {{ pb.delay }} ease both;"></div>
+                        <div style="flex:1; height:{{ pb.h }}; background:#0F7C86; border-radius:1px; transform-origin:bottom; animation:barGrow .7s {{ pb.delay }} ease both;"></div>
                       </sc-for>
                     </div>
                   </div>
                 </div>
-                <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-radius:16px; background:rgba(101,212,210,.05); border:1px solid rgba(101,212,210,.15);">
-                  <span style="font-size:12px; color:rgba(232,255,254,.7);">{{ t.showcase.phone.waRead }} <span class="temj">✅</span></span>
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-radius:16px; background:rgba(15,124,134,.05); border:1px solid rgba(12,59,66,.07);">
+                  <span style="font-size:12px; color:#5C868D;">{{ t.showcase.phone.waRead }} <span class="temj">✅</span></span>
                   <div style="display:flex; align-items:center; gap:8px;">
-                    <span style="font-size:12px; color:rgba(232,255,254,.6);">WhatsApp</span>
-                    <span style="width:22px;height:22px;border-radius:6px;background:rgba(101,212,210,.15);display:flex;align-items:center;justify-content:center;font-size:11px;"><span class="temj">💬</span></span>
+                    <span style="font-size:12px; color:#5C868D;">WhatsApp</span>
+                    <span style="width:22px;height:22px;border-radius:6px;background:rgba(12,59,66,.07);display:flex;align-items:center;justify-content:center;font-size:11px;"><span class="temj">💬</span></span>
                   </div>
                 </div>
               </div>
-              <div style="display:flex; align-items:center; justify-content:space-around; padding:10px 8px 16px; border-top:1px solid rgba(101,212,210,.12); background:rgba(4,19,22,.6);">
-                <span style="font-size:10px; color:#65D4D2; text-align:center;"><span class="temj">⌂</span><br>{{ t.showcase.phone.tabs.0 }}</span>
-                <span style="font-size:10px; color:rgba(232,255,254,.5); text-align:center;"><span class="temj">💬</span><br>{{ t.showcase.phone.tabs.1 }}</span>
-                <span style="width:40px; height:40px; border-radius:50%; background:#0F6F7A; display:flex; align-items:center; justify-content:center; font-size:16px; margin-top:-14px; border:3px solid #041316;"><span class="temj">🛍</span></span>
-                <span style="font-size:10px; color:rgba(232,255,254,.5); text-align:center;"><span class="temj">📢</span><br>{{ t.showcase.phone.tabs.3 }}</span>
-                <span style="font-size:10px; color:rgba(232,255,254,.5); text-align:center;"><span class="temj">📈</span><br>{{ t.showcase.phone.tabs.4 }}</span>
+              <div style="display:flex; align-items:center; justify-content:space-around; padding:10px 8px 16px; border-top:1px solid rgba(15,124,134,.1); background:rgba(255,255,255,.7);">
+                <span style="font-size:10px; color:#0F7C86; text-align:center;"><span class="temj">⌂</span><br>{{ t.showcase.phone.tabs.0 }}</span>
+                <span style="font-size:10px; color:#8FAAB0; text-align:center;"><span class="temj">💬</span><br>{{ t.showcase.phone.tabs.1 }}</span>
+                <span style="width:40px; height:40px; border-radius:50%; background:#0F6F7A; display:flex; align-items:center; justify-content:center; font-size:16px; margin-top:-14px; border:3px solid #FFFFFF;"><span class="temj">🛍</span></span>
+                <span style="font-size:10px; color:#8FAAB0; text-align:center;"><span class="temj">📢</span><br>{{ t.showcase.phone.tabs.3 }}</span>
+                <span style="font-size:10px; color:#8FAAB0; text-align:center;"><span class="temj">📈</span><br>{{ t.showcase.phone.tabs.4 }}</span>
               </div>
             </div>
           </div>
@@ -967,7 +981,13 @@
           <sc-for list="{{ sellers }}" as="s" hint-placeholder-count="6">
             <div style="display:flex; align-items:center; gap:14px; padding:12px 10px; border-radius:12px; transition:background .2s;" style-hover="background:rgba(101,212,210,.06);">
               <div style="width:28px; height:28px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-family:Poppins,sans-serif; font-weight:800; font-size:13px; background:{{ s.rankBg }}; color:{{ s.rankFg }}; border:{{ s.rankBorder }};">{{ s.rank }}</div>
-              <div style="width:52px; height:52px; border-radius:11px; flex-shrink:0; overflow:hidden; border:1px solid rgba(101,212,210,.3);"><img src="{{ s.img }}" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+              <div style="width:54px; height:54px; border-radius:13px; flex-shrink:0; overflow:hidden; border:1px solid rgba(12,59,66,.09); background:radial-gradient(74% 74% at 50% 28%, #FFFFFF, #EDF2F1); box-shadow:0 4px 12px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.9); display:flex; align-items:center; justify-content:center;">
+                <svg viewBox="0 0 120 100" style="width:76%; height:auto; display:block;">
+                  <ellipse cx="60" cy="90" rx="26" ry="4" fill="#0C3B42" opacity=".12"></ellipse>
+                  <path d="{{ s.d }}" fill="#9AA6AA"></path>
+                  <path d="{{ s.d }}" fill="#FFFFFF" opacity=".24" style="clip-path:inset(0 0 55% 0);"></path>
+                </svg>
+              </div>
               <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:7px;">
                 <span style="font-size:14.5px; font-weight:600; color:#E8FFFE; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ s.name }}</span>
                 <div style="height:7px; border-radius:4px; background:rgba(232,255,254,.08); overflow:hidden;">
@@ -1273,12 +1293,12 @@ const DATA = {
     {ar:"وكيل ذكاء اصطناعي",en:"AI Agent"},{ar:"نقطة بيع POS",en:"POS"},{ar:"إعلانات ميتا",en:"Meta Ads"},{ar:"مدفوعات KNET",en:"KNET Payments"},
   ],
   topSellers: [
-    { rank:1, name:{ar:"أريكة جلدية فاخرة - أسود",en:"Premium Leather Sofa - Black"}, pcs:31, amount:"1,742.500", pct:100, img:"assets/prod-1.png" },
-    { rank:2, name:{ar:"كرسي مكتب قابل للتعديل - كحلي",en:"Adjustable Office Chair - Navy"}, pcs:27, amount:"1,510.200", pct:88, img:"assets/prod-2.png" },
-    { rank:3, name:{ar:"طاولة طعام خشبية - بني",en:"Wooden Dining Table - Brown"}, pcs:24, amount:"1,388.000", pct:80, img:"assets/prod-3.png" },
-    { rank:4, name:{ar:"مصباح أرضي معاصر - أبيض",en:"Modern Floor Lamp - White"}, pcs:18, amount:"612.300", pct:60, img:"assets/prod-4.png" },
-    { rank:5, name:{ar:"وسادة ديكور مزخرفة - رمادي",en:"Decorative Throw Pillow - Gray"}, pcs:15, amount:"245.750", pct:48, img:"assets/prod-5.png" },
-    { rank:6, name:{ar:"سجادة صوف طبيعي - بيج",en:"Natural Wool Rug - Beige"}, pcs:13, amount:"188.400", pct:42, img:"assets/prod-6.png" },
+    { rank:1, name:{ar:"أريكة جلدية فاخرة - أسود",en:"Premium Leather Sofa - Black"}, pcs:31, amount:"1,742.500", pct:100, d:"M20 84c-7 0-12-5.5-10.6-12.6C12.6 55 20 42.5 32 35.5c17-10 39-10 56 0 12 7 19.4 19.5 22.6 35.9C112 78.5 107 84 100 84z" },
+    { rank:2, name:{ar:"كرسي مكتب قابل للتعديل - كحلي",en:"Adjustable Office Chair - Navy"}, pcs:27, amount:"1,510.200", pct:88, d:"M41 16h38a7 7 0 0 1 7 7v24H34V23a7 7 0 0 1 7-7zM28 51h64a5.5 5.5 0 0 1 0 11H28a5.5 5.5 0 0 1 0-11zM56.5 62h7v14h-7zM40 80h40l-3.5 5h-33z" },
+    { rank:3, name:{ar:"طاولة طعام خشبية - بني",en:"Wooden Dining Table - Brown"}, pcs:24, amount:"1,388.000", pct:80, d:"M14 38h92v8.5H14zM26 46.5h7.5v38H26zM86.5 46.5H94v38h-7.5zM33.5 58h53v5.5h-53z" },
+    { rank:4, name:{ar:"مصباح أرضي معاصر - أبيض",en:"Modern Floor Lamp - White"}, pcs:18, amount:"612.300", pct:60, d:"M60 12L42.5 39h35zM56.5 39h7v38h-7zM43 81h34v5.5H43z" },
+    { rank:5, name:{ar:"وسادة ديكور مزخرفة - رمادي",en:"Decorative Throw Pillow - Gray"}, pcs:15, amount:"245.750", pct:48, d:"M32 26h56a11 11 0 0 1 11 11v22a11 11 0 0 1-11 11H32a11 11 0 0 1-11-11V37a11 11 0 0 1 11-11z" },
+    { rank:6, name:{ar:"سجادة صوف طبيعي - بيج",en:"Natural Wool Rug - Beige"}, pcs:13, amount:"188.400", pct:42, d:"M60 44c27.6 0 47 8.4 47 17.5S87.6 79 60 79 13 70.6 13 61.5 32.4 44 60 44zm0 8c-19.8 0-34 4.6-34 9.5S40.2 71 60 71s34-4.6 34-9.5S79.8 52 60 52z" },
   ],
 };
 
@@ -1863,7 +1883,7 @@ class Component extends DCLogic {
         pcs: Math.round(s.pcs*revealEase),
         amount: s.amount,
         barW: (s.pct*revealEase)+"%",
-        img: s.img,
+        d: s.d,
         slotId: "seller-"+s.rank,
       })),
       phoneBars: [40,60,45,75,55,90,50,70,45,65,80,55,40,70,50,85,45,60,75,50].map((h,i)=>({h:h+"%", delay:(0.5+i*0.04).toFixed(2)+"s"})),
