@@ -59,6 +59,8 @@
     .r-grid3{grid-template-columns:1fr 1fr !important;}
     .r-pillar{grid-template-columns:1fr !important; row-gap:52px !important;}
   }
+  .r-chips{scrollbar-width:none; -ms-overflow-style:none;}
+  .r-chips::-webkit-scrollbar{display:none;}
   .r-burger{display:none;}
   @media (max-width:640px){
     .r-hdr{padding:12px 18px !important; row-gap:12px !important; flex-wrap:wrap !important;}
@@ -72,7 +74,8 @@
     .r-hero-h1{font-size:38px !important;}
     .r-grid4, .r-grid3, .r-grid2{grid-template-columns:1fr !important;}
     .r-contact{padding:64px 20px 70px !important;}
-    .r-float{position:static !important; margin-top:14px !important; justify-content:center !important;}
+    .r-float{position:static !important; margin-top:14px !important; justify-content:center !important; white-space:normal !important; text-align:center !important;}
+    .r-float span{white-space:normal !important;}
     section{padding-left:20px !important; padding-right:20px !important;}
     .r-dash-side{display:none !important;}
     .r-dash-panels{flex-direction:column !important;}
@@ -208,7 +211,7 @@
         <div style="display:grid; grid-template-columns:1fr 330px; gap:26px; align-items:start;" class="r-pillar">
 
           <!-- ====== PREMIUM APP WINDOW ====== -->
-          <div style="position:relative;">
+          <div style="position:relative; min-width:0;">
 
             <div style="position:absolute; inset:12% 4% -7%; border-radius:48px; background:radial-gradient(58% 58% at 50% 62%, rgba(101,212,210,.42), rgba(101,212,210,0) 72%); filter:blur(54px); pointer-events:none;"></div>
 
@@ -320,9 +323,9 @@
                     </div>
                   </div>
 
-                  <div style="display:flex; gap:7px; padding:4px 14px 12px; flex-wrap:wrap;">
+                  <div style="display:flex; gap:7px; padding:4px 14px 12px; flex-wrap:nowrap; overflow-x:auto; min-width:0;" class="r-chips">
                     <sc-for list="{{ t.pillars.wa.filters }}" as="fl" hint-placeholder-count="4">
-                      <span style="padding:6px 13px; border-radius:16px; background:{{ fl.bg }}; border:1px solid {{ fl.border }}; color:{{ fl.fg }}; font-size:11.5px; font-weight:700;">{{ fl.label }}</span>
+                      <span style="flex:none; padding:6px 13px; border-radius:16px; background:{{ fl.bg }}; border:1px solid {{ fl.border }}; color:{{ fl.fg }}; font-size:11.5px; font-weight:700; white-space:nowrap;">{{ fl.label }}</span>
                     </sc-for>
                   </div>
 
@@ -506,7 +509,7 @@
           </div>
 
           <!-- ====== SIDE COPY ====== -->
-          <div style="display:flex; flex-direction:column; gap:14px; padding:28px 24px; border:1px solid rgba(101,212,210,.2); border-radius:20px; background:rgba(101,212,210,.04);">
+          <div style="min-width:0; display:flex; flex-direction:column; gap:14px; padding:28px 24px; border:1px solid rgba(101,212,210,.2); border-radius:20px; background:rgba(101,212,210,.04);">
             <div style="width:50px; height:50px; border-radius:14px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 22px rgba(101,212,210,.22);">
               <svg viewBox="0 0 24 24" style="width:24px; height:24px; display:block;" fill="none" stroke="#041316" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{ activePillar.d }}"></path></svg>
             </div>
