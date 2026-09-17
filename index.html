@@ -272,6 +272,17 @@
                   </div>
                 </div>
 
+                <div style="margin-top:14px; padding:14px 15px; border-radius:13px; background:linear-gradient(160deg,#FFFFFF,#EEF8F7); border:1px solid rgba(12,59,66,.06); box-shadow:0 1px 2px rgba(12,59,66,.04), inset 0 1px 0 rgba(255,255,255,.9);">
+                  <div style="font-size:11px; font-weight:700; letter-spacing:.05em; color:#8FAAB0; font-family:Poppins,sans-serif;">{{ t.pillars.store.toolsLabel }}</div>
+                  <div style="display:flex; flex-wrap:wrap; gap:7px; margin-top:10px;">
+                    <sc-for list="{{ t.pillars.store.tools }}" as="tl" hint-placeholder-count="11">
+                      <span style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:10px; background:#FFFFFF; border:1px solid rgba(12,59,66,.08); box-shadow:0 1px 2px rgba(12,59,66,.04); font-size:11.5px; font-weight:700; color:#3E7079; white-space:nowrap;">
+                        <svg viewBox="0 0 24 24" style="width:12px; height:12px; flex:none;" fill="none" stroke="#0F7C86" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ tl.d }}"></path></svg>{{ tl.label }}
+                      </span>
+                    </sc-for>
+                  </div>
+                </div>
+
                 <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:14px; padding:0 4px;">
                   <span style="font-family:{{ t.headingFont }}; font-weight:800; font-size:15.5px; letter-spacing:-.01em; color:#08333A;">{{ t.pillars.store.offers }}</span>
                   <span style="font-size:12px; color:#5C868D;">{{ t.pillars.store.seeAll }}</span>
@@ -296,6 +307,208 @@
                       </div>
                     </div>
                   </sc-for>
+                </div>
+              </sc-if>
+
+
+              <!-- ---------- ORDERS ---------- -->
+              <sc-if value="{{ isPillarOrders }}" hint-placeholder-val="{{ false }}">
+                <div style="border-radius:14px; overflow:hidden; background:linear-gradient(180deg,#FFFFFF,#FBFEFE); border:1px solid rgba(12,59,66,.07); box-shadow:0 1px 2px rgba(12,59,66,.04), 0 10px 30px rgba(12,59,66,.07);">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 16px; background:linear-gradient(180deg,#E0F6F1,#CDEDE6); box-shadow:inset 0 1px 0 rgba(255,255,255,.7);">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                      <svg viewBox="0 0 24 24" style="width:18px; height:18px;" fill="none" stroke="#08333A" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+                      <span style="font-family:{{ t.headingFont }}; font-weight:800; font-size:16px; letter-spacing:-.015em; color:#08333A;">{{ t.pillars.orders.title }}</span>
+                    </div>
+                    <span style="padding:3px 10px; border-radius:11px; background:#F5C542; color:#4A3708; font-family:Poppins,sans-serif; font-size:11px; font-weight:800;">40</span>
+                  </div>
+
+                  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px; padding:13px 14px;" class="r-grid4">
+                    <sc-for list="{{ t.pillars.orders.summary }}" as="sm" hint-placeholder-count="4">
+                      <div style="padding:11px 10px; border-radius:11px; background:linear-gradient(160deg,#FFFFFF,#EEF8F7); border:1px solid rgba(12,59,66,.06); box-shadow:0 1px 2px rgba(12,59,66,.04), inset 0 1px 0 rgba(255,255,255,.9); text-align:center;">
+                        <div style="font-size:10px; color:#8FAAB0; font-weight:700;">{{ sm.label }}</div>
+                        <div style="font-family:Poppins,sans-serif; font-size:14.5px; font-weight:800; color:#0F7C86; margin-top:4px; direction:ltr; unicode-bidi:isolate;">{{ sm.value }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+
+                  <div style="display:flex; gap:16px; padding:0 16px 10px; overflow-x:auto; flex-wrap:nowrap;" class="r-chips">
+                    <sc-for list="{{ t.pillars.orders.stages }}" as="sg" hint-placeholder-count="4">
+                      <div style="flex:none; padding-bottom:7px; border-bottom:2.5px solid {{ sg.line }}; display:flex; align-items:center; gap:6px; white-space:nowrap;">
+                        <span style="font-size:12.5px; font-weight:800; color:{{ sg.fg }};">{{ sg.label }}</span>
+                        <span style="padding:1px 8px; border-radius:8px; background:{{ sg.pillBg }}; color:{{ sg.pillFg }}; font-family:Poppins,sans-serif; font-size:10.5px; font-weight:800;">{{ sg.count }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+
+                  <div style="padding:6px 14px 16px;">
+                    <sc-for list="{{ t.pillars.orders.list }}" as="od" hint-placeholder-count="2">
+                      <div style="margin-bottom:11px;">
+                        <div style="text-align:center; font-family:Poppins,sans-serif; font-size:10.5px; color:#9FB8BC; padding:6px 0 9px;">{{ od.date }}</div>
+                        <div style="border:1px solid rgba(12,59,66,.07); border-inline-start:3px solid {{ od.accent }}; border-radius:13px; padding:13px 15px; background:#FFFFFF; box-shadow:0 6px 18px rgba(12,59,66,.06);">
+                          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+                            <div style="display:flex; align-items:center; gap:7px;">
+                              <span style="padding:3px 11px; border-radius:10px; background:{{ od.stateBg }}; color:{{ od.stateFg }}; font-size:11px; font-weight:800;">{{ od.state }}</span>
+                              <span style="padding:3px 10px; border-radius:10px; background:#EAF3F2; color:#5C868D; font-family:Poppins,sans-serif; font-size:10.5px; font-weight:700;">{{ od.age }}</span>
+                            </div>
+                            <span style="font-family:Poppins,sans-serif; font-size:12.5px; font-weight:800; color:#0C3B42; direction:ltr; unicode-bidi:isolate;">{{ od.inv }}</span>
+                          </div>
+                          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top:11px;">
+                            <span style="font-family:Poppins,sans-serif; font-size:19px; font-weight:800; color:#17A05C; direction:ltr; unicode-bidi:isolate;">{{ od.amount }}</span>
+                            <div style="display:flex; align-items:center; gap:7px;">
+                              <span style="padding:4px 11px; border-radius:10px; background:#FFF3E2; color:#A76A12; font-size:10.5px; font-weight:700;">{{ od.promo }}</span>
+                              <span style="padding:4px 12px; border-radius:10px; background:#EAF3F2; border:1px solid rgba(12,59,66,.08); color:#3E7079; font-family:Poppins,sans-serif; font-size:10.5px; font-weight:800;">{{ od.pay }}</span>
+                            </div>
+                          </div>
+                          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top:11px; padding-top:11px; border-top:1px solid #F0F7F6;">
+                            <div style="display:flex; align-items:center; gap:8px;">
+                              <span style="width:8px; height:8px; border-radius:50%; background:#17A05C;"></span>
+                              <span style="font-size:13px; font-weight:700; color:#0C3B42;">{{ od.customer }}</span>
+                              <span style="padding:2px 9px; border-radius:8px; background:#FDEEEA; color:#C2532E; font-family:Poppins,sans-serif; font-size:10px; font-weight:800;">{{ od.repeat }}</span>
+                            </div>
+                            <span style="display:inline-flex; align-items:center; gap:5px; padding:4px 11px; border-radius:10px; background:#F4FAF9; border:1px solid rgba(12,59,66,.07); font-size:11px; color:#3E7079; font-weight:700;">
+                              <svg viewBox="0 0 24 24" style="width:11px; height:11px;" fill="none" stroke="#C2532E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11zM12 12.4a2.4 2.4 0 1 0 0-4.8 2.4 2.4 0 0 0 0 4.8z"></path></svg>
+                              {{ od.area }}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- ---------- INVENTORY ---------- -->
+              <sc-if value="{{ isPillarStock }}" hint-placeholder-val="{{ false }}">
+                <div style="border-radius:14px; overflow:hidden; background:linear-gradient(180deg,#FFFFFF,#FBFEFE); border:1px solid rgba(12,59,66,.07); box-shadow:0 1px 2px rgba(12,59,66,.04), 0 10px 30px rgba(12,59,66,.07); padding:16px;">
+                  <div style="display:flex; align-items:center; gap:10px;">
+                    <svg viewBox="0 0 24 24" style="width:19px; height:19px; flex:none;" fill="none" stroke="#0F7C86" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8l8.4 4.5v9.4L12 21.2l-8.4-4.5V7.3zM3.6 7.3L12 11.8l8.4-4.5M12 11.8v9.4"></path></svg>
+                    <span style="font-family:{{ t.headingFont }}; font-weight:800; font-size:16px; letter-spacing:-.015em; color:#08333A;">{{ t.pillars.stock.title }}</span>
+                  </div>
+
+                  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:13px;">
+                    <sc-for list="{{ t.pillars.stock.counts }}" as="sc" hint-placeholder-count="3">
+                      <span style="padding:7px 15px; border-radius:11px; background:#E7F5F3; border:1px solid rgba(12,59,66,.06); color:#0F7C86; font-size:12px; font-weight:700;">{{ sc }}</span>
+                    </sc-for>
+                  </div>
+
+                  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;">
+                    <sc-for list="{{ t.pillars.stock.tabs }}" as="st" hint-placeholder-count="3">
+                      <span style="display:inline-flex; align-items:center; gap:7px; padding:9px 16px; border-radius:12px; background:{{ st.bg }}; border:1px solid {{ st.border }}; color:{{ st.fg }}; font-size:12.5px; font-weight:700;">
+                        {{ st.label }}
+                        <sc-if value="{{ st.hasBadge }}" hint-placeholder-val="{{ false }}">
+                          <span style="padding:1px 8px; border-radius:8px; background:#E4572E; color:#fff; font-family:Poppins,sans-serif; font-size:10px; font-weight:800;">{{ st.badge }}</span>
+                        </sc-if>
+                      </span>
+                    </sc-for>
+                  </div>
+
+                  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px;" class="r-grid2">
+                    <sc-for list="{{ t.pillars.stock.actions }}" as="ac" hint-placeholder-count="4">
+                      <span style="display:flex; align-items:center; justify-content:center; gap:8px; padding:11px 12px; border-radius:11px; background:linear-gradient(180deg,#FFFFFF,#F5FBFA); border:1px solid rgba(12,59,66,.08); box-shadow:0 1px 2px rgba(12,59,66,.04); color:#3E7079; font-size:12px; font-weight:700; text-align:center;">
+                        <svg viewBox="0 0 24 24" style="width:14px; height:14px; flex:none;" fill="none" stroke="#0F7C86" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="{{ ac.d }}"></path></svg>
+                        {{ ac.label }}
+                      </span>
+                    </sc-for>
+                  </div>
+
+                  <div style="display:flex; gap:7px; flex-wrap:nowrap; overflow-x:auto; margin-top:14px;" class="r-chips">
+                    <sc-for list="{{ t.pillars.stock.cats }}" as="ct" hint-placeholder-count="5">
+                      <span style="flex:none; padding:6px 14px; border-radius:16px; background:{{ ct.bg }}; border:1px solid {{ ct.border }}; color:{{ ct.fg }}; font-size:11.5px; font-weight:700; white-space:nowrap;">{{ ct.label }}</span>
+                    </sc-for>
+                  </div>
+
+                  <div style="margin-top:13px; border-radius:12px; overflow:hidden; border:1px solid rgba(12,59,66,.07);">
+                    <div style="display:grid; grid-template-columns:1fr 130px 76px; gap:10px; padding:10px 14px; background:#0C3B42;">
+                      <span style="font-family:Poppins,sans-serif; font-size:11px; font-weight:700; color:#CFE6E4;">{{ t.pillars.stock.colProduct }}</span>
+                      <span style="font-family:Poppins,sans-serif; font-size:11px; font-weight:700; color:#CFE6E4;">{{ t.pillars.stock.colType }}</span>
+                      <span style="font-family:Poppins,sans-serif; font-size:11px; font-weight:700; color:#CFE6E4;">{{ t.pillars.stock.colPrice }}</span>
+                    </div>
+                    <sc-for list="{{ t.pillars.stock.rows }}" as="rw" hint-placeholder-count="3">
+                      <div style="display:grid; grid-template-columns:1fr 130px 76px; gap:10px; align-items:center; padding:10px 14px; border-top:1px solid #F0F7F6; background:#fff;">
+                        <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+                          <div style="width:38px; height:38px; flex:none; border-radius:9px; background:radial-gradient(70% 70% at 50% 30%, #FFFFFF, #EDF2F1); border:1px solid rgba(12,59,66,.07); display:flex; align-items:center; justify-content:center;">
+                            <svg viewBox="0 0 120 100" style="width:78%; height:auto; display:block;"><path d="{{ rw.d }}" fill="#A6B1B4"></path></svg>
+                          </div>
+                          <div style="min-width:0;">
+                            <div style="font-size:12.5px; font-weight:700; color:#0C3B42; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ rw.name }}</div>
+                            <div style="font-family:Poppins,sans-serif; font-size:10.5px; color:#9FB8BC; margin-top:2px;">{{ rw.sku }}</div>
+                          </div>
+                        </div>
+                        <span style="padding:5px 10px; border-radius:9px; background:#EAF3F2; border:1px solid rgba(12,59,66,.07); color:#3E7079; font-size:10.5px; font-weight:700; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ rw.type }}</span>
+                        <span style="font-family:Poppins,sans-serif; font-size:12.5px; font-weight:800; color:#0F7C86; direction:ltr; unicode-bidi:isolate;">{{ rw.price }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- ---------- MARKETING CALENDAR ---------- -->
+              <sc-if value="{{ isPillarCalendar }}" hint-placeholder-val="{{ false }}">
+                <div style="border-radius:14px; overflow:hidden; background:linear-gradient(180deg,#FFFFFF,#FBFEFE); border:1px solid rgba(12,59,66,.07); box-shadow:0 1px 2px rgba(12,59,66,.04), 0 10px 30px rgba(12,59,66,.07);">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; padding:14px 16px; background:linear-gradient(180deg,#E0F6F1,#CDEDE6); box-shadow:inset 0 1px 0 rgba(255,255,255,.7);">
+                    <div>
+                      <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:16px; letter-spacing:-.015em; color:#08333A;">{{ t.pillars.calendar.title }}</div>
+                      <div style="font-size:11.5px; color:#5C868D; margin-top:3px;">{{ t.pillars.calendar.sub }}</div>
+                    </div>
+                    <span style="padding:9px 18px; border-radius:12px; background:linear-gradient(180deg,#14909B,#0C6A74); color:#fff; font-family:{{ t.headingFont }}; font-size:12.5px; font-weight:700; box-shadow:0 8px 20px rgba(15,124,134,.32), inset 0 1px 0 rgba(255,255,255,.22);">{{ t.pillars.calendar.addEvent }}</span>
+                  </div>
+
+                  <div style="margin:14px; padding:13px 15px; border-radius:12px; background:linear-gradient(160deg,#EAF7F5,#DFF2EF); border:1px solid rgba(15,124,134,.2); display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                    <div style="min-width:0;">
+                      <div style="font-weight:700; font-size:13px; color:#08333A;">{{ t.pillars.calendar.toggleTitle }}</div>
+                      <div style="font-size:11.5px; line-height:1.6; color:#5C868D; margin-top:3px;">{{ t.pillars.calendar.toggleBody }}</div>
+                    </div>
+                    <span style="width:42px; height:23px; flex:none; border-radius:14px; background:#17A05C; display:flex; align-items:center; justify-content:flex-end; padding:0 3px; box-shadow:inset 0 1px 3px rgba(0,0,0,.14);"><span style="width:17px; height:17px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.25);"></span></span>
+                  </div>
+
+                  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin:0 14px;" class="r-grid3">
+                    <sc-for list="{{ t.pillars.calendar.selects }}" as="sl" hint-placeholder-count="3">
+                      <div>
+                        <div style="font-size:11px; color:#8FAAB0; font-weight:700; margin-bottom:5px;">{{ sl.label }}</div>
+                        <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 13px; border-radius:11px; background:linear-gradient(180deg,#FFFFFF,#FAFDFD); border:1px solid rgba(12,59,66,.09); box-shadow:inset 0 1px 3px rgba(12,59,66,.05);">
+                          <span style="font-size:12.5px; font-weight:700; color:#0C3B42; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ sl.value }}</span>
+                          <svg viewBox="0 0 24 24" style="width:13px; height:13px; flex:none;" fill="none" stroke="#8FAAB0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5l6 6 6-6"></path></svg>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+
+                  <div style="display:flex; gap:7px; flex-wrap:nowrap; overflow-x:auto; margin:13px 14px 0;" class="r-chips">
+                    <sc-for list="{{ t.pillars.calendar.kinds }}" as="kd" hint-placeholder-count="4">
+                      <span style="flex:none; display:inline-flex; align-items:center; gap:7px; padding:7px 14px; border-radius:18px; background:{{ kd.bg }}; border:1px solid {{ kd.border }}; color:{{ kd.fg }}; font-size:11.5px; font-weight:700; white-space:nowrap;">
+                        <span style="width:8px; height:8px; border-radius:50%; background:{{ kd.dot }}; flex:none;"></span>{{ kd.label }}
+                      </span>
+                    </sc-for>
+                  </div>
+
+                  <div style="display:flex; align-items:center; justify-content:center; gap:14px; margin-top:15px;">
+                    <span style="width:28px; height:28px; border-radius:9px; background:#EAF3F2; border:1px solid rgba(12,59,66,.07); display:flex; align-items:center; justify-content:center;">
+                      <svg viewBox="0 0 24 24" style="width:12px; height:12px;" fill="none" stroke="#3E7079" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6l-6 6 6 6"></path></svg>
+                    </span>
+                    <span style="font-family:{{ t.headingFont }}; font-weight:800; font-size:15px; color:#08333A;">{{ t.pillars.calendar.monthLabel }}</span>
+                    <span style="padding:3px 10px; border-radius:9px; background:#E7F5F3; color:#0F7C86; font-size:10.5px; font-weight:800;">{{ t.pillars.calendar.eventCount }}</span>
+                    <span style="width:28px; height:28px; border-radius:9px; background:#EAF3F2; border:1px solid rgba(12,59,66,.07); display:flex; align-items:center; justify-content:center;">
+                      <svg viewBox="0 0 24 24" style="width:12px; height:12px;" fill="none" stroke="#3E7079" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 6l6 6-6 6"></path></svg>
+                    </span>
+                  </div>
+
+                  <div style="margin:13px 14px 16px; border-radius:12px; overflow:hidden; border:1px solid rgba(12,59,66,.07);">
+                    <div style="display:grid; grid-template-columns:repeat(7,1fr); background:#EAF3F2;">
+                      <sc-for list="{{ t.pillars.calendar.days }}" as="dn" hint-placeholder-count="7">
+                        <span style="padding:8px 2px; text-align:center; font-family:Poppins,sans-serif; font-size:10.5px; font-weight:700; color:#5C868D;">{{ dn }}</span>
+                      </sc-for>
+                    </div>
+                    <div style="display:grid; grid-template-columns:repeat(7,1fr); background:#fff;">
+                      <sc-for list="{{ t.pillars.calendar.cells }}" as="cl" hint-placeholder-count="21">
+                        <div style="min-height:54px; padding:5px 4px; border-top:1px solid #F0F7F6; border-inline-start:1px solid #F0F7F6;">
+                          <div style="font-family:Poppins,sans-serif; font-size:10px; color:{{ cl.numColor }}; text-align:start;">{{ cl.num }}</div>
+                          <sc-if value="{{ cl.hasEvent }}" hint-placeholder-val="{{ false }}">
+                            <div style="margin-top:4px; padding:3px 5px; border-radius:6px; background:#E7F5F3; border-inline-start:2.5px solid #0F7C86; font-size:9px; font-weight:700; color:#0F7C86; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ cl.event }}</div>
+                          </sc-if>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
                 </div>
               </sc-if>
 
@@ -917,6 +1130,16 @@ const DATA = {
       title:{ar:"متجر بدومينك الخاص",en:"A store on your own domain"},
       desc:{ar:"مصمّم بالسحب والإفلات، بدون برمجة ولا مطوّر. العميل يتصفّح ويطلب بنفسه، والطلب يدخل لوحتك مباشرة.",en:"Built drag-and-drop, no code and no developer. Customers browse and order themselves, and the order lands straight in your dashboard."},
       points:{ar:["كوبونات وسلات متروكة وتقييمات","دفع KNET وبطاقات وتقسيط","تقارير مبيعات لحظية"],en:["Coupons, abandoned carts and reviews","KNET, cards and instalments","Live sales reports"]} },
+    { key:"orders", badge:{ar:"12 طلب مفتوح الآن",en:"12 open orders right now"}, tab:{ar:"إدارة الطلبات",en:"Orders"}, frame:"Orders · live board",
+      d:"M8 4h8a2 2 0 0 1 2 2v14.5l-6-3-6 3V6a2 2 0 0 1 2-2zM9.5 9h5M9.5 12.5h5",
+      title:{ar:"كل طلباتك على لوح واحد",en:"Every order on one board"},
+      desc:{ar:"من اللحظة اللي يدخل فيها الطلب حتى التسليم — مراحل واضحة، مبلغ، طريقة دفع، منطقة، وسائق معيَّن.",en:"From the moment an order lands until delivery — clear stages, amount, payment method, area and assigned driver."},
+      points:{ar:["مراحل مخصصة حسب طبيعة عملك","تعيين سائق ومتابعة وقت التنفيذ","فلترة وبحث وتجميع حسب التاريخ"],en:["Custom stages that fit your workflow","Assign a driver and track turnaround","Filter, search and group by date"]} },
+    { key:"stock", badge:{ar:"161 منتج · 28 نقص مرصود",en:"161 products · 28 gaps flagged"}, tab:{ar:"إدارة المخزون",en:"Inventory"}, frame:"Products · inventory",
+      d:"M12 2.8l8.4 4.5v9.4L12 21.2l-8.4-4.5V7.3zM3.6 7.3L12 11.8l8.4-4.5M12 11.8v9.4",
+      title:{ar:"مخزون ومنتجات تحت السيطرة",en:"Products and stock under control"},
+      desc:{ar:"منتجات رئيسية بمتغيّرات، تصنيفات، خصائص، ورصد تلقائي للنواقص — مع استيراد وتصدير Excel بضغطة.",en:"Parent products with variants, categories, attributes and automatic gap detection — with one-click Excel import and export."},
+      points:{ar:["منتج رئيسي بمتغيّرات متعددة","رصد النواقص في بيانات المنتجات","استيراد من متجر قائم عبر رابط"],en:["Parent products with multiple variants","Detects gaps in product data","Import from an existing store by link"]} },
     { key:"wa", badge:{ar:"96% نسبة وصول الرسائل",en:"96% message delivery"}, tab:{ar:"واتساب",en:"WhatsApp"}, frame:"WhatsApp Business API",
       d:"M21 11.5a8.4 8.4 0 0 1-12.5 7.3L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z",
       title:{ar:"واتساب أعمال رسمي",en:"Official WhatsApp Business"},
@@ -937,6 +1160,11 @@ const DATA = {
       title:{ar:"نقاط ومكافآت ترجّع العميل",en:"Points and rewards that bring them back"},
       desc:{ar:"العميل يجمع نقاط مع كل طلب، ويشوف كم باقي للمكافأة الجاية — سبب واضح يخليه يطلب منك مرة ثانية بدل المنافس.",en:"Customers earn points on every order and see how close the next reward is — a clear reason to order from you again instead of a competitor."},
       points:{ar:["مستويات عضوية ومكافآت مرنة","عروض مبنية على تاريخ الشراء","تتبّع نسبة العملاء العائدين"],en:["Flexible tiers and rewards","Offers built on purchase history","Track your returning-customer rate"]} },
+    { key:"calendar", badge:{ar:"تخطيط المواسم قبل ما تبدأ",en:"Plan seasons before they start"}, tab:{ar:"التقويم التسويقي",en:"Marketing calendar"}, frame:"Marketing calendar",
+      d:"M4 7h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1zM8 3v4M16 3v4M3 11.5h18",
+      title:{ar:"تقويم تسويقي يعرف مواسم بلدك",en:"A marketing calendar that knows your market"},
+      desc:{ar:"الأعياد الرسمية ومواسم التسوق والأحداث العالمية لدولتك، جاهزة في تقويم واحد — عشان تجهّز حملتك قبل الموسم مش بعده.",en:"Public holidays, shopping seasons and global events for your country, ready in one calendar — so you prepare the campaign before the season, not after."},
+      points:{ar:["أعياد ومواسم مرتّبة حسب الدولة","تنبيه قبل الموسم بـ ٢٠ يوم","أحداث مخصصة تضيفها بنفسك"],en:["Holidays and seasons per country","Alerts 20 days before a season","Add your own custom events"]} },
   ],
   homeFeatures: [
     { badge:"OD", title:{ar:"الطلبات والتوصيل",en:"Orders & Delivery"}, desc:{ar:"صندوق موحّد، مراحل قابلة للتخصيص، تقويم توصيل وتعيين للموظفين بضغطة.",en:"Unified inbox, custom stages, delivery calendar and one-tap staff assignment."} },
@@ -1083,7 +1311,7 @@ class Component extends DCLogic {
       },
       pillars: {
         tag: L==="ar" ? "شوف المنصة وهي تشتغل" : "See the platform running",
-        title: L==="ar" ? "خمس أدوات، لوحة واحدة" : "Five tools, one dashboard",
+        title: L==="ar" ? "ثماني أدوات، لوحة واحدة" : "Eight tools, one dashboard",
         sub: L==="ar" ? "اضغط على أي أداة وشوف شاشتها الحقيقية داخل المنصة." : "Pick any tool and see its real screen inside the platform.",
         cta: L==="ar" ? "اطلب عرضاً تجريبياً" : "Request a demo",
 
@@ -1093,6 +1321,20 @@ class Component extends DCLogic {
           heroPrice: L==="ar" ? "59 د.ك" : "KD 59",
           buy: L==="ar" ? "اشترِ الآن" : "Buy now",
           offers: L==="ar" ? "العروض" : "Offers",
+          toolsLabel: L==="ar" ? "أدوات المتجر" : "STORE TOOLS",
+          tools: [
+            { label: L==="ar"?"السلات المتروكة":"Abandoned carts", d:"M5 6h16l-1.7 8.6a2 2 0 0 1-2 1.6H9a2 2 0 0 1-2-1.6L4.6 4H2M9 20.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM17 20.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" },
+            { label: L==="ar"?"تنبيه عودة المخزون":"Back-in-stock alerts", d:"M18 8.5a6 6 0 1 0-12 0c0 6-2.5 7.5-2.5 7.5h17S18 14.5 18 8.5zM13.7 19.5a2 2 0 0 1-3.4 0" },
+            { label:"SEO", d:"M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20.5 20.5L16 16" },
+            { label: L==="ar"?"أكواد الخصم":"Discount codes", d:"M20 12a2.5 2.5 0 0 1 2-2.4V6.5a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v3.1a2.5 2.5 0 0 1 0 4.8v3.1a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-3.1A2.5 2.5 0 0 1 20 12zM9 9.5h6M9 14.5h6" },
+            { label: L==="ar"?"إدارة المرتجعات":"Return management", d:"M3.5 12A8.5 8.5 0 1 1 6 18M3.5 17.5V12H9" },
+            { label: L==="ar"?"التقييمات":"Reviews", d:"M12 3.5l2.6 5.8 6.3.7-4.7 4.3 1.3 6.2-5.5-3.2-5.5 3.2 1.3-6.2L3.1 10l6.3-.7z" },
+            { label: L==="ar"?"لعبة الجوائز":"Prize game", d:"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM12 3v5.5M12 15.5V21" },
+            { label: L==="ar"?"بطاقات الهدايا":"Gift cards", d:"M3 11.5h18V19a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zM2.2 7.6h19.6v3.9H2.2zM12 7.6V20M12 7.6S10.6 3.6 8.1 3.6a2 2 0 1 0 0 4zM12 7.6s1.4-4 3.9-4a2 2 0 1 1 0 4z" },
+            { label: L==="ar"?"تصميم المتجر":"Store design", d:"M12 3a9 9 0 1 0 0 18c1 0 1.7-.8 1.7-1.7 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.1 0-1 .8-1.7 1.7-1.7H16a5 5 0 0 0 5-5c0-4-4-7.3-9-7.3zM7.5 12.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4zM11 8.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4zM15.5 9.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4z" },
+            { label: L==="ar"?"الفروع والاستلام":"Branches & pickup", d:"M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11zM12 12.4a2.4 2.4 0 1 0 0-4.8 2.4 2.4 0 0 0 0 4.8z" },
+            { label: L==="ar"?"إعدادات المتجر":"Store settings", d:"M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zM19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1v.3a2 2 0 1 1-4 0v-.2a1.6 1.6 0 0 0-2.8-1.1l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 3.5 14H3a2 2 0 1 1 0-4h.2A1.6 1.6 0 0 0 4.3 7.2l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 2.7-1.1V3a2 2 0 1 1 4 0v.2a1.6 1.6 0 0 0 2.8 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7h.3a2 2 0 1 1 0 4h-.2a1.6 1.6 0 0 0-1.2 1z" },
+          ],
           seeAll: L==="ar" ? "الكل ←" : "See all →",
           hero: [
             { d:"M41 16h38a7 7 0 0 1 7 7v24H34V23a7 7 0 0 1 7-7zM28 51h64a5.5 5.5 0 0 1 0 11H28a5.5 5.5 0 0 1 0-11zM56.5 62h7v14h-7zM40 80h40l-3.5 5h-33z", fill:"#AEB9BC", w:"122px", flex:"1", op:".6" },
@@ -1104,6 +1346,86 @@ class Component extends DCLogic {
             { d:"M14 38h92v8.5H14zM26 46.5h7.5v38H26zM86.5 46.5H94v38h-7.5zM33.5 58h53v5.5h-53z", fill:"#A9B0AC", name: L==="ar"?"طاولة طعام خشبية":"Wooden dining table", was:"141.000", now: L==="ar"?"120.000 د.ك":"KD 120.000", off:"15%" },
             { d:"M60 44c27.6 0 47 8.4 47 17.5S87.6 79 60 79 13 70.6 13 61.5 32.4 44 60 44zm0 8c-19.8 0-34 4.6-34 9.5S40.2 71 60 71s34-4.6 34-9.5S79.8 52 60 52z",   fill:"#B4BBB7", name: L==="ar"?"سجادة صوف طبيعي":"Natural wool rug", was:"34.000", now: L==="ar"?"28.900 د.ك":"KD 28.900", off:"15%" },
           ],
+        },
+
+        orders: {
+          title: L==="ar" ? "الطلبات" : "Orders",
+          summary: [
+            { label: L==="ar"?"وقت التنفيذ":"Turnaround", value: L==="ar"?"29س 55د":"29h 55m" },
+            { label: L==="ar"?"الإجمالي":"Total", value: L==="ar"?"883.90 د.ك":"KD 883.90" },
+            { label: L==="ar"?"القطع":"Items", value:"23" },
+            { label: L==="ar"?"الطلبات":"Orders", value:"12" },
+          ],
+          stages: [
+            { label: L==="ar"?"مفتوح":"Open", count:"12", active:true },
+            { label: L==="ar"?"قيد التنفيذ":"In progress", count:"3", active:false },
+            { label: L==="ar"?"تم التوصيل":"Delivered", count:"82", active:false },
+            { label: L==="ar"?"مكتمل":"Done", count:"323", active:false },
+          ],
+          list: [
+            { date:"2026-09-17", inv:"INV-26-4393", state: L==="ar"?"مفتوح":"Open", age: L==="ar"?"6 أيام":"6 d",
+              amount: L==="ar"?"49.300 د.ك":"KD 49.300", promo:"FREEDELIVERY (2)", pay: L==="ar"?"نقداً":"Cash",
+              customer: L==="ar"?"عميل تجريبي":"Demo customer", repeat:"4x", area: L==="ar"?"الظهر":"Al Dhaher",
+              accent:"#E4572E", stateBg:"#FDEAE4", stateFg:"#C2532E" },
+            { date:"2026-09-15", inv:"INV-26-4392", state: L==="ar"?"قيد التنفيذ":"In progress", age: L==="ar"?"4 أيام":"4 d",
+              amount: L==="ar"?"98.600 د.ك":"KD 98.600", promo:"FREEDELIVERY (2)", pay:"KNET",
+              customer: L==="ar"?"عميل تجريبي":"Demo customer", repeat:"2x", area: L==="ar"?"صباح الأحمد":"Sabah Al Ahmad",
+              accent:"#F0A825", stateBg:"#FFF3E2", stateFg:"#A76A12" },
+          ],
+        },
+
+        stock: {
+          title: L==="ar" ? "إعدادات المنتجات" : "Products Settings",
+          counts: L==="ar" ? ["161 منتج","28 منتج رئيسي","4 تصنيفات"] : ["161 products","28 parents","4 categories"],
+          tabs: [
+            { label: L==="ar"?"المنتجات":"Products", active:true, badge:"" },
+            { label: L==="ar"?"النواقص":"Gaps", active:false, badge:"28" },
+            { label: L==="ar"?"الخصائص":"Attributes", active:false, badge:"" },
+          ],
+          actions: [
+            { label: L==="ar"?"تصدير Excel كامل":"Export full Excel", d:"M12 3v12M8 11.5l4 4 4-4M4 20h16" },
+            { label: L==="ar"?"استيراد Excel / CSV":"Import Excel / CSV", d:"M12 15.5V3.5M8 8l4-4.5 4 4.5M4 20h16" },
+            { label: L==="ar"?"استيراد من متجر قائم":"Import from an existing store", d:"M10 13.5a4 4 0 0 0 5.7 0l3-3a4 4 0 1 0-5.7-5.7l-1 1M14 10.5a4 4 0 0 0-5.7 0l-3 3a4 4 0 1 0 5.7 5.7l1-1" },
+            { label: L==="ar"?"دليل ملف Excel":"Excel file guide", d:"M5 4h9l5 5v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zM14 4v5h5" },
+          ],
+          cats: [
+            { label: L==="ar"?"الكل":"All", active:true },
+            { label: L==="ar"?"إعادة تعبئة":"Refill", active:false },
+            { label: L==="ar"?"جلسات خارجية":"Outdoor seating", active:false },
+            { label: L==="ar"?"جلسات داخلية":"Indoor seating", active:false },
+            { label: L==="ar"?"منتجات موسمية":"Seasonal", active:false },
+          ],
+          colProduct: L==="ar" ? "المنتج" : "Product",
+          colType: L==="ar" ? "النوع" : "Type",
+          colPrice: L==="ar" ? "السعر" : "Price",
+          rows: [
+            { d:"M20 84c-7 0-12-5.5-10.6-12.6C12.6 55 20 42.5 32 35.5c17-10 39-10 56 0 12 7 19.4 19.5 22.6 35.9C112 78.5 107 84 100 84z",  name: L==="ar"?"بين باج ضد الماء":"Waterproof bean bag", sku:"158161", type: L==="ar"?"رئيسي · 10 متغيّرات":"Parent · 10 children", price:"38.000" },
+            { d:"M41 16h38a7 7 0 0 1 7 7v24H34V23a7 7 0 0 1 7-7zM28 51h64a5.5 5.5 0 0 1 0 11H28a5.5 5.5 0 0 1 0-11zM56.5 62h7v14h-7zM40 80h40l-3.5 5h-33z", name: L==="ar"?"كرسي فردي ضد الماء":"Waterproof single chair", sku:"158274", type: L==="ar"?"رئيسي · 10 متغيّرات":"Parent · 10 children", price:"30.000" },
+            { d:"M14 38h92v8.5H14zM26 46.5h7.5v38H26zM86.5 46.5H94v38h-7.5zM33.5 58h53v5.5h-53z", name: L==="ar"?"طاولة ضد الماء":"Waterproof table", sku:"158277", type: L==="ar"?"رئيسي · 10 متغيّرات":"Parent · 10 children", price:"12.000" },
+          ],
+        },
+
+        calendar: {
+          title: L==="ar" ? "التقويم التسويقي" : "Marketing Calendar",
+          sub: L==="ar" ? "خطّط حملاتك قبل كل موسم" : "Plan your campaigns ahead of every season",
+          addEvent: L==="ar" ? "+ حدث مخصص" : "+ Custom event",
+          toggleTitle: L==="ar" ? "إظهار المواسم القادمة على بطاقة الترحيب" : "Show upcoming seasons on the welcome card",
+          toggleBody: L==="ar" ? "الأحداث اللي باقي عليها أقل من 20 يوم تظهر أول ما تفتح لوحة التحكم" : "Events less than 20 days away appear when you open the dashboard",
+          selects: [
+            { label: L==="ar"?"الدولة":"Country", value: L==="ar"?"الكويت":"Kuwait" },
+            { label: L==="ar"?"السنة":"Year", value:"2026" },
+            { label: L==="ar"?"الشهر":"Month", value: L==="ar"?"سبتمبر":"September" },
+          ],
+          kinds: [
+            { label: L==="ar"?"أعياد رسمية":"Government holidays", dot:"#3E7079", active:true },
+            { label: L==="ar"?"مواسم تسوق":"Shopping seasons", dot:"#0F7C86", active:true },
+            { label: L==="ar"?"أحداث عالمية":"Global events", dot:"#17A05C", active:true },
+            { label: L==="ar"?"أحداث مخصصة":"Custom events", dot:"#E8A317", active:false },
+          ],
+          monthLabel: L==="ar" ? "سبتمبر 2026" : "September 2026",
+          eventCount: L==="ar" ? "4 أحداث" : "4 events",
+          days: L==="ar" ? ["أحد","إثنين","ثلاثاء","أربعاء","خميس","جمعة","سبت"] : ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
+          eventName: L==="ar" ? "العودة للمدارس" : "Back to school",
         },
 
         wa: {
@@ -1317,6 +1639,43 @@ class Component extends DCLogic {
     };
 
     const chipOn  = { bg:"#FDF0CE", border:"#EFCB6A", fg:"#8A6410" };
+    t.pillars.orders.stages = t.pillars.orders.stages.map(s => ({
+      label:s.label, count:s.count,
+      line: s.active ? "#E4572E" : "transparent",
+      fg: s.active ? "#08333A" : "#8FAAB0",
+      pillBg: s.active ? "#FDEAE4" : "#EFF5F4",
+      pillFg: s.active ? "#C2532E" : "#8FAAB0",
+    }));
+    t.pillars.stock.tabs = t.pillars.stock.tabs.map(x => ({
+      label:x.label, badge:x.badge, hasBadge: !!x.badge,
+      bg: x.active ? "#0C3B42" : "#F4FAF9",
+      border: x.active ? "#0C3B42" : "rgba(12,59,66,.08)",
+      fg: x.active ? "#FFFFFF" : "#5C868D",
+    }));
+    t.pillars.stock.cats = t.pillars.stock.cats.map(c => ({
+      label:c.label,
+      bg: c.active ? "#0F7C86" : "#F4FAF9",
+      border: c.active ? "#0F7C86" : "rgba(12,59,66,.08)",
+      fg: c.active ? "#FFFFFF" : "#5C868D",
+    }));
+    t.pillars.calendar.kinds = t.pillars.calendar.kinds.map(k => ({
+      label:k.label, dot:k.dot,
+      bg: k.active ? "#F1F9F8" : "#FFFFFF",
+      border: k.active ? "rgba(15,124,134,.3)" : "rgba(12,59,66,.09)",
+      fg: k.active ? "#0C3B42" : "#9FB8BC",
+    }));
+    // September 2026 starts on a Tuesday; three weeks is all the frame needs
+    const calEventDays = [1,2,6,7];
+    t.pillars.calendar.cells = Array.from({length:21}, (_,i) => {
+      const day = i - 1;
+      const inMonth = day >= 1;
+      return {
+        num: inMonth ? String(day) : "",
+        numColor: inMonth ? "#5C868D" : "transparent",
+        hasEvent: inMonth && calEventDays.indexOf(day) !== -1,
+        event: t.pillars.calendar.eventName,
+      };
+    });
     const chipOff = { bg:"#F4FAF9", border:"#DFEDEC", fg:"#5C868D" };
     t.pillars.wa.chats = t.pillars.wa.chats.map(c => ({...c, hasInv: !!c.inv}));
     t.pillars.wa.filters = t.pillars.wa.filters.map(f => ({ label:f.label, ...(f.active ? chipOn : chipOff) }));
@@ -1369,6 +1728,9 @@ class Component extends DCLogic {
         badge: this.pick(pillarDef.badge),
       },
       isPillarStore: P==="store",
+      isPillarOrders: P==="orders",
+      isPillarStock: P==="stock",
+      isPillarCalendar: P==="calendar",
       isPillarWa: P==="wa",
       isPillarAi: P==="ai",
       isPillarCrm: P==="crm",
