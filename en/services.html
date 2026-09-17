@@ -61,6 +61,10 @@
   @keyframes pop{0%{transform:scale(.6);opacity:0;}70%{transform:scale(1.08);}100%{transform:scale(1);opacity:1;}}
   @keyframes floatSlow{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
   @keyframes ring{0%{transform:scale(.8);opacity:.6;}100%{transform:scale(1.9);opacity:0;}}
+  @keyframes riseIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+  @keyframes dot{0%,60%,100%{transform:translateY(0);opacity:.35;}30%{transform:translateY(-4px);opacity:1;}}
+  @keyframes livePulse{0%,100%{box-shadow:0 0 0 0 rgba(23,160,92,.55);}70%{box-shadow:0 0 0 7px rgba(23,160,92,0);}}
+  @keyframes knobIn{from{transform:translateX(-19px);}to{transform:none;}}
   .temj{filter:grayscale(1) brightness(0) saturate(100%) invert(78%) sepia(35%) saturate(560%) hue-rotate(128deg) brightness(95%) contrast(90%);}
   @media (max-width:900px){
     .r-grid5{grid-template-columns:1fr 1fr 1fr !important;}
@@ -289,7 +293,7 @@
                   <div style="padding:20px 18px 8px; text-align:center;">
                     <div style="display:flex; align-items:flex-end; justify-content:center; gap:14px;">
                       <sc-for list="{{ t.pillars.store.hero }}" as="hp" hint-placeholder-count="3">
-                        <div style="flex:{{ hp.flex }}; display:flex; align-items:flex-end; justify-content:center; opacity:{{ hp.op }};">
+                        <div style="flex:{{ hp.flex }}; display:flex; align-items:flex-end; justify-content:center; opacity:{{ hp.op }}; animation:riseIn .6s {{ hp.delay }} cubic-bezier(.22,1,.36,1) both;">
                           <svg viewBox="0 0 120 100" style="width:100%; max-width:{{ hp.w }}; height:auto; display:block;">
                             <ellipse cx="60" cy="90" rx="36" ry="5.5" fill="#0C3B42" opacity=".13"></ellipse>
                             <path d="{{ hp.d }}" fill="{{ hp.fill }}"></path>
@@ -314,7 +318,7 @@
                   <div style="font-size:11px; font-weight:700; letter-spacing:.05em; color:#8FAAB0; font-family:Poppins,sans-serif;">{{ t.pillars.store.toolsLabel }}</div>
                   <div style="display:flex; flex-wrap:wrap; gap:7px; margin-top:10px;">
                     <sc-for list="{{ t.pillars.store.tools }}" as="tl" hint-placeholder-count="11">
-                      <span style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:10px; background:#FFFFFF; border:1px solid rgba(12,59,66,.08); box-shadow:0 1px 2px rgba(12,59,66,.04); font-size:11.5px; font-weight:700; color:#3E7079; white-space:nowrap;">
+                      <span style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:10px; background:#FFFFFF; border:1px solid rgba(12,59,66,.08); box-shadow:0 1px 2px rgba(12,59,66,.04); font-size:11.5px; font-weight:700; color:#3E7079; white-space:nowrap; animation:riseIn .4s {{ tl.delay }} cubic-bezier(.22,1,.36,1) both;">
                         <svg viewBox="0 0 24 24" style="width:12px; height:12px; flex:none;" fill="none" stroke="#0F7C86" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ tl.d }}"></path></svg>{{ tl.label }}
                       </span>
                     </sc-for>
@@ -327,7 +331,7 @@
                 </div>
                 <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:11px; margin-top:10px;" class="r-grid3">
                   <sc-for list="{{ t.pillars.store.products }}" as="pr" hint-placeholder-count="3">
-                    <div style="position:relative; border-radius:13px; overflow:hidden; background:linear-gradient(180deg,#FFFFFF,#FBFEFE); border:1px solid rgba(12,59,66,.07); box-shadow:0 1px 2px rgba(12,59,66,.04), 0 10px 30px rgba(12,59,66,.07);">
+                    <div style="position:relative; border-radius:13px; overflow:hidden; background:linear-gradient(180deg,#FFFFFF,#FBFEFE); border:1px solid rgba(12,59,66,.07); box-shadow:0 1px 2px rgba(12,59,66,.04), 0 10px 30px rgba(12,59,66,.07); animation:riseIn .55s {{ pr.delay }} cubic-bezier(.22,1,.36,1) both;">
                       <span style="position:absolute; top:0; inset-inline-start:0; z-index:2; padding:4px 11px; border-end-end-radius:11px; background:linear-gradient(140deg,#F0673E,#D4451F); color:#fff; font-family:Poppins,sans-serif; font-size:10.5px; font-weight:800; box-shadow:0 4px 12px rgba(212,69,31,.35);">{{ pr.off }}</span>
                       <div style="height:108px; display:flex; align-items:center; justify-content:center; background:radial-gradient(74% 74% at 50% 28%, #FFFFFF, #EFF2F1);">
                         <svg viewBox="0 0 120 100" style="width:74%; max-width:120px; height:auto; display:block;">
@@ -362,7 +366,7 @@
 
                   <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px; padding:13px 14px;" class="r-grid4">
                     <sc-for list="{{ t.pillars.orders.summary }}" as="sm" hint-placeholder-count="4">
-                      <div style="padding:11px 10px; border-radius:11px; background:linear-gradient(160deg,#FFFFFF,#EEF8F7); border:1px solid rgba(12,59,66,.06); box-shadow:0 1px 2px rgba(12,59,66,.04), inset 0 1px 0 rgba(255,255,255,.9); text-align:center;">
+                      <div style="padding:11px 10px; border-radius:11px; background:linear-gradient(160deg,#FFFFFF,#EEF8F7); border:1px solid rgba(12,59,66,.06); box-shadow:0 1px 2px rgba(12,59,66,.04), inset 0 1px 0 rgba(255,255,255,.9); text-align:center; animation:riseIn .45s {{ sm.delay }} cubic-bezier(.22,1,.36,1) both;">
                         <div style="font-size:10px; color:#8FAAB0; font-weight:700;">{{ sm.label }}</div>
                         <div style="font-family:Poppins,sans-serif; font-size:14.5px; font-weight:800; color:#0F7C86; margin-top:4px; direction:ltr; unicode-bidi:isolate;">{{ sm.value }}</div>
                       </div>
@@ -380,7 +384,7 @@
 
                   <div style="padding:6px 14px 16px;">
                     <sc-for list="{{ t.pillars.orders.list }}" as="od" hint-placeholder-count="2">
-                      <div style="margin-bottom:11px;">
+                      <div style="margin-bottom:11px; animation:riseIn .55s {{ od.delay }} cubic-bezier(.22,1,.36,1) both;">
                         <div style="text-align:center; font-family:Poppins,sans-serif; font-size:10.5px; color:#9FB8BC; padding:6px 0 9px;">{{ od.date }}</div>
                         <div style="border:1px solid rgba(12,59,66,.07); border-inline-start:3px solid {{ od.accent }}; border-radius:13px; padding:13px 15px; background:#FFFFFF; box-shadow:0 6px 18px rgba(12,59,66,.06);">
                           <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
@@ -399,7 +403,7 @@
                           </div>
                           <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top:11px; padding-top:11px; border-top:1px solid #F0F7F6;">
                             <div style="display:flex; align-items:center; gap:8px;">
-                              <span style="width:8px; height:8px; border-radius:50%; background:#17A05C;"></span>
+                              <span style="width:8px; height:8px; border-radius:50%; background:#17A05C; animation:livePulse 2.2s infinite;"></span>
                               <span style="font-size:13px; font-weight:700; color:#0C3B42;">{{ od.customer }}</span>
                               <span style="padding:2px 9px; border-radius:8px; background:#FDEEEA; color:#C2532E; font-family:Poppins,sans-serif; font-size:10px; font-weight:800;">{{ od.repeat }}</span>
                             </div>
@@ -434,7 +438,7 @@
                       <span style="display:inline-flex; align-items:center; gap:7px; padding:9px 16px; border-radius:12px; background:{{ st.bg }}; border:1px solid {{ st.border }}; color:{{ st.fg }}; font-size:12.5px; font-weight:700;">
                         {{ st.label }}
                         <sc-if value="{{ st.hasBadge }}" hint-placeholder-val="{{ false }}">
-                          <span style="padding:1px 8px; border-radius:8px; background:#E4572E; color:#fff; font-family:Poppins,sans-serif; font-size:10px; font-weight:800;">{{ st.badge }}</span>
+                          <span style="padding:1px 8px; border-radius:8px; background:#E4572E; color:#fff; font-family:Poppins,sans-serif; font-size:10px; font-weight:800; animation:pop .5s .5s both;">{{ st.badge }}</span>
                         </sc-if>
                       </span>
                     </sc-for>
@@ -462,7 +466,7 @@
                       <span style="font-family:Poppins,sans-serif; font-size:11px; font-weight:700; color:#CFE6E4;">{{ t.pillars.stock.colPrice }}</span>
                     </div>
                     <sc-for list="{{ t.pillars.stock.rows }}" as="rw" hint-placeholder-count="3">
-                      <div style="display:grid; grid-template-columns:1fr 130px 76px; gap:10px; align-items:center; padding:10px 14px; border-top:1px solid #F0F7F6; background:#fff;">
+                      <div style="display:grid; grid-template-columns:1fr 130px 76px; gap:10px; align-items:center; padding:10px 14px; border-top:1px solid #F0F7F6; background:#fff; animation:riseIn .5s {{ rw.delay }} cubic-bezier(.22,1,.36,1) both;">
                         <div style="display:flex; align-items:center; gap:10px; min-width:0;">
                           <div style="width:38px; height:38px; flex:none; border-radius:9px; background:radial-gradient(70% 70% at 50% 30%, #FFFFFF, #EDF2F1); border:1px solid rgba(12,59,66,.07); display:flex; align-items:center; justify-content:center;">
                             <svg viewBox="0 0 120 100" style="width:78%; height:auto; display:block;"><path d="{{ rw.d }}" fill="#A6B1B4"></path></svg>
@@ -496,7 +500,7 @@
                       <div style="font-weight:700; font-size:13px; color:#08333A;">{{ t.pillars.calendar.toggleTitle }}</div>
                       <div style="font-size:11.5px; line-height:1.6; color:#5C868D; margin-top:3px;">{{ t.pillars.calendar.toggleBody }}</div>
                     </div>
-                    <span style="width:42px; height:23px; flex:none; border-radius:14px; background:#17A05C; display:flex; align-items:center; justify-content:flex-end; padding:0 3px; box-shadow:inset 0 1px 3px rgba(0,0,0,.14);"><span style="width:17px; height:17px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.25);"></span></span>
+                    <span style="width:42px; height:23px; flex:none; border-radius:14px; background:#17A05C; display:flex; align-items:center; justify-content:flex-end; padding:0 3px; box-shadow:inset 0 1px 3px rgba(0,0,0,.14);"><span style="width:17px; height:17px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.25); animation:knobIn .5s .3s cubic-bezier(.22,1,.36,1) both;"></span></span>
                   </div>
 
                   <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin:0 14px;" class="r-grid3">
@@ -541,7 +545,7 @@
                         <div style="min-height:54px; padding:5px 4px; border-top:1px solid #F0F7F6; border-inline-start:1px solid #F0F7F6;">
                           <div style="font-family:Poppins,sans-serif; font-size:10px; color:{{ cl.numColor }}; text-align:start;">{{ cl.num }}</div>
                           <sc-if value="{{ cl.hasEvent }}" hint-placeholder-val="{{ false }}">
-                            <div style="margin-top:4px; padding:3px 5px; border-radius:6px; background:#E7F5F3; border-inline-start:2.5px solid #0F7C86; font-size:9px; font-weight:700; color:#0F7C86; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ cl.event }}</div>
+                            <div style="margin-top:4px; padding:3px 5px; border-radius:6px; background:#E7F5F3; border-inline-start:2.5px solid #0F7C86; font-size:9px; font-weight:700; color:#0F7C86; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; animation:pop .45s {{ cl.delay }} both;">{{ cl.event }}</div>
                           </sc-if>
                         </div>
                       </sc-for>
@@ -582,7 +586,7 @@
 
                   <div style="border-top:1px solid #EDF5F4;">
                     <sc-for list="{{ t.pillars.wa.chats }}" as="ch" hint-placeholder-count="5">
-                      <div style="display:flex; align-items:center; gap:12px; padding:11px 15px; border-bottom:1px solid #F2F8F7;">
+                      <div style="display:flex; align-items:center; gap:12px; padding:11px 15px; border-bottom:1px solid #F2F8F7; animation:riseIn .5s {{ ch.delay }} cubic-bezier(.22,1,.36,1) both;">
                         <div style="position:relative; flex:none;">
                           <div style="width:38px; height:38px; border-radius:50%; background:{{ ch.avatarBg }}; box-shadow:0 4px 10px rgba(12,59,66,.22), inset 0 1px 0 rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center; font-family:Poppins,sans-serif; font-weight:700; font-size:15px; color:#fff;">{{ ch.initial }}</div>
                           <sc-if value="{{ ch.unread }}" hint-placeholder-val="{{ false }}">
@@ -606,6 +610,16 @@
                     </sc-for>
                   </div>
 
+                  <div style="display:flex; align-items:center; gap:9px; padding:11px 15px; border-top:1px solid #F2F8F7; animation:riseIn .5s 1.05s cubic-bezier(.22,1,.36,1) both;">
+                    <div style="width:36px; height:36px; flex:none; border-radius:50%; background:linear-gradient(135deg,#65D4D2,#0F6F7A); box-shadow:0 4px 10px rgba(12,59,66,.22); display:flex; align-items:center; justify-content:center; font-family:Poppins,sans-serif; font-weight:800; font-size:12px; color:#041316;">AI</div>
+                    <div style="display:flex; align-items:center; gap:5px; padding:11px 15px; border-radius:15px; background:#EAF3F2; border:1px solid rgba(12,59,66,.06);">
+                      <span style="width:6px; height:6px; border-radius:50%; background:#3E7079; animation:dot 1.2s 0s infinite;"></span>
+                      <span style="width:6px; height:6px; border-radius:50%; background:#3E7079; animation:dot 1.2s .18s infinite;"></span>
+                      <span style="width:6px; height:6px; border-radius:50%; background:#3E7079; animation:dot 1.2s .36s infinite;"></span>
+                    </div>
+                    <span style="font-size:11px; color:#9FB8BC;">{{ t.pillars.wa.typing }}</span>
+                  </div>
+
                   <div style="display:flex; align-items:center; justify-content:space-around; padding:9px 10px; background:#F4FAF9; border-top:1px solid #E4F0EE;">
                     <sc-for list="{{ t.pillars.wa.nav }}" as="nv" hint-placeholder-count="4">
                       <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
@@ -627,7 +641,7 @@
                     <div style="flex:1;">
                       <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:15.5px; letter-spacing:-.01em; color:#08333A;">{{ t.pillars.ai.agentName }}</div>
                       <div style="display:flex; align-items:center; gap:6px; margin-top:3px;">
-                        <span style="width:7px; height:7px; border-radius:50%; background:#17A05C;"></span>
+                        <span style="width:7px; height:7px; border-radius:50%; background:#17A05C; animation:livePulse 2.2s infinite;"></span>
                         <span style="font-size:11.5px; color:#17A05C; font-weight:700;">{{ t.pillars.ai.running }}</span>
                       </div>
                     </div>
@@ -641,7 +655,7 @@
 
                   <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; padding:14px;">
                     <sc-for list="{{ t.pillars.ai.stats }}" as="as" hint-placeholder-count="3">
-                      <div style="padding:14px 10px; border-radius:12px; background:linear-gradient(160deg,#FFFFFF,#EEF8F7); border:1px solid rgba(12,59,66,.06); box-shadow:0 1px 2px rgba(12,59,66,.04), inset 0 1px 0 rgba(255,255,255,.9); text-align:center;">
+                      <div style="padding:14px 10px; border-radius:12px; background:linear-gradient(160deg,#FFFFFF,#EEF8F7); border:1px solid rgba(12,59,66,.06); box-shadow:0 1px 2px rgba(12,59,66,.04), inset 0 1px 0 rgba(255,255,255,.9); text-align:center; animation:riseIn .5s {{ as.delay }} cubic-bezier(.22,1,.36,1) both;">
                         <div style="font-family:Poppins,sans-serif; font-size:22px; font-weight:800; color:#0F7C86;">{{ as.value }}</div>
                         <div style="font-size:11px; color:#5C868D; margin-top:4px;">{{ as.label }}</div>
                       </div>
@@ -682,7 +696,7 @@
                   <div style="margin-top:18px; font-family:Poppins,sans-serif; font-size:11px; font-weight:700; letter-spacing:.06em; color:#8FAAB0;">{{ t.pillars.crm.timelineLabel }}</div>
                   <div style="margin-top:11px;">
                     <sc-for list="{{ t.pillars.crm.timeline }}" as="tl" hint-placeholder-count="3">
-                      <div style="display:flex; align-items:flex-start; gap:12px; padding-bottom:14px;">
+                      <div style="display:flex; align-items:flex-start; gap:12px; padding-bottom:14px; animation:riseIn .5s {{ tl.delay }} cubic-bezier(.22,1,.36,1) both;">
                         <div style="display:flex; flex-direction:column; align-items:center; flex:none; padding-top:4px;">
                           <span style="width:8px; height:8px; border-radius:50%; background:#0F7C86;"></span>
                           <span style="width:1px; flex:1; min-height:16px; background:#D5E9E7;"></span>
@@ -707,7 +721,7 @@
                     </div>
                     <div style="display:flex; align-items:center; gap:9px;">
                       <span style="font-size:11.5px; font-weight:800; color:#17A05C;">{{ t.pillars.loyalty.onLabel }}</span>
-                      <span style="width:42px; height:23px; border-radius:14px; background:#17A05C; display:flex; align-items:center; justify-content:flex-end; padding:0 3px;"><span style="width:17px; height:17px; border-radius:50%; background:#fff;"></span></span>
+                      <span style="width:42px; height:23px; border-radius:14px; background:#17A05C; display:flex; align-items:center; justify-content:flex-end; padding:0 3px; box-shadow:inset 0 1px 3px rgba(0,0,0,.14);"><span style="width:17px; height:17px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.25); animation:knobIn .5s .3s cubic-bezier(.22,1,.36,1) both;"></span></span>
                     </div>
                   </div>
 
@@ -718,7 +732,7 @@
 
                   <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:0 14px;" class="r-grid3">
                     <sc-for list="{{ t.pillars.loyalty.cards }}" as="lc" hint-placeholder-count="3">
-                      <div style="padding:14px; border-radius:12px; background:linear-gradient(160deg,#FFFFFF,#EEF8F7); border:1px solid rgba(12,59,66,.06); box-shadow:0 1px 2px rgba(12,59,66,.04), inset 0 1px 0 rgba(255,255,255,.9);">
+                      <div style="padding:14px; border-radius:12px; background:linear-gradient(160deg,#FFFFFF,#EEF8F7); border:1px solid rgba(12,59,66,.06); box-shadow:0 1px 2px rgba(12,59,66,.04), inset 0 1px 0 rgba(255,255,255,.9); animation:riseIn .5s {{ lc.delay }} cubic-bezier(.22,1,.36,1) both;">
                         <div style="font-size:11px; color:#8FAAB0; font-weight:700;">{{ lc.label }}</div>
                         <div style="font-family:Poppins,sans-serif; font-size:20px; font-weight:800; color:#0F7C86; margin-top:6px;">{{ lc.value }}</div>
                         <div style="font-size:10.5px; color:#8FAAB0; margin-top:4px;">{{ lc.sub }}</div>
@@ -2024,6 +2038,7 @@ class Component extends DCLogic {
 
         wa: {
           search: L==="ar" ? "ابحث في المحادثات" : "Search chats",
+          typing: L==="ar" ? "الوكيل يكتب ردّاً…" : "The agent is typing…",
           filters: [
             { label: L==="ar"?"تحتاج ردك 2":"Needs you 2", active:true },
             { label: L==="ar"?"غير مقروء":"Unread", active:false },
@@ -2395,6 +2410,19 @@ class Component extends DCLogic {
       } : { title:"", updated:"", sections:[] },
     };
 
+    // staggered entrance delays — each screen plays itself in when its tab opens
+    const stagger = (arr, step, start) => arr.map((x, i) => ({...x, delay: (start + i*step).toFixed(2) + "s"}));
+    t.pillars.store.hero      = stagger(t.pillars.store.hero, .09, .10);
+    t.pillars.store.products  = stagger(t.pillars.store.products, .10, .34);
+    t.pillars.store.tools     = stagger(t.pillars.store.tools, .035, .20);
+    t.pillars.orders.summary  = stagger(t.pillars.orders.summary, .07, .06);
+    t.pillars.orders.list     = stagger(t.pillars.orders.list, .16, .30);
+    t.pillars.stock.rows      = stagger(t.pillars.stock.rows, .10, .30);
+    t.pillars.wa.chats        = stagger(t.pillars.wa.chats, .10, .18);
+    t.pillars.ai.stats        = stagger(t.pillars.ai.stats, .09, .12);
+    t.pillars.crm.timeline    = stagger(t.pillars.crm.timeline, .12, .26);
+    t.pillars.loyalty.cards   = stagger(t.pillars.loyalty.cards, .09, .24);
+
     const chipOn  = { bg:"#FDF0CE", border:"#EFCB6A", fg:"#8A6410" };
     t.pillars.orders.stages = t.pillars.orders.stages.map(s => ({
       label:s.label, count:s.count,
@@ -2431,6 +2459,7 @@ class Component extends DCLogic {
         numColor: inMonth ? "#5C868D" : "transparent",
         hasEvent: inMonth && calEventDays.indexOf(day) !== -1,
         event: t.pillars.calendar.eventName,
+        delay: (.45 + i*.05).toFixed(2) + "s",
       };
     });
     const chipOff = { bg:"#F4FAF9", border:"#DFEDEC", fg:"#5C868D" };
