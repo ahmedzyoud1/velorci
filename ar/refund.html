@@ -66,7 +66,10 @@
     .r-grid5{grid-template-columns:1fr 1fr 1fr !important;}
     .r-grid4{grid-template-columns:1fr 1fr !important;}
     .r-grid3{grid-template-columns:1fr 1fr !important;}
+    .r-pillar{grid-template-columns:1fr !important; row-gap:52px !important;}
   }
+  .r-chips{scrollbar-width:none; -ms-overflow-style:none;}
+  .r-chips::-webkit-scrollbar{display:none;}
   .r-burger{display:none;}
   /* Legal pages live in the burger menu only — never in the desktop bar. */
   .r-nav-extra{display:none;}
@@ -84,6 +87,8 @@
     .r-hero-h1{font-size:38px !important;}
     .r-grid5, .r-grid4, .r-grid3, .r-grid2{grid-template-columns:1fr !important;}
     .r-contact{padding:64px 20px 70px !important;}
+    .r-float{position:static !important; margin-top:14px !important; justify-content:center !important; white-space:normal !important; text-align:center !important;}
+    .r-float span{white-space:normal !important;}
     section{padding-left:20px !important; padding-right:20px !important;}
     .r-dash-side{display:none !important;}
     .r-dash-panels{flex-direction:column !important;}
@@ -204,17 +209,554 @@
       </div>
     </div>
 
-    <section style="padding:90px 40px;">
-      <div style="max-width:1100px; margin:0 auto;">
-        <h2 style="font-family:{{ t.headingFont }}; font-size:38px; font-weight:800; text-align:center; margin:0 0 10px; color:#E8FFFE;">{{ t.problem.title }}</h2>
-        <p style="text-align:center; color:rgba(232,255,254,.6); font-size:16px; margin:0 0 48px;">{{ t.problem.sub }}</p>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px 28px;">
-          <div style="font-family:Poppins,sans-serif; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(232,255,254,.45);">{{ t.problem.beforeLabel }}</div>
-          <div style="font-family:Poppins,sans-serif; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#65D4D2;">{{ t.problem.afterLabel }}</div>
-          <sc-for list="{{ t.problem.rows }}" as="row" hint-placeholder-count="7">
-            <div style="padding:16px 18px; background:rgba(232,255,254,.03); border:1px solid rgba(232,255,254,.08); border-radius:12px; font-size:15px; line-height:1.6; color:rgba(232,255,254,.65);">{{ row.p }}</div>
-            <div style="padding:16px 18px; background:rgba(101,212,210,.07); border:1px solid rgba(101,212,210,.3); border-radius:12px; font-size:15px; line-height:1.6; color:#E8FFFE; transition:all .25s;" style-hover="background:rgba(101,212,210,.14); transform:translateX(0) translateY(-2px); box-shadow:0 8px 26px rgba(101,212,210,.12);">{{ row.s }}</div>
+    <!-- PLATFORM PILLARS — TABBED SHOWCASE -->
+    <section style="position:relative; padding:90px 40px; overflow:hidden;">
+      <div style="position:absolute; top:-80px; left:50%; width:760px; height:760px; margin-left:-380px; background:radial-gradient(circle, rgba(101,212,210,.09), rgba(101,212,210,0) 62%); pointer-events:none;"></div>
+      <div style="position:relative; max-width:1160px; margin:0 auto;">
+
+        <div style="text-align:center; margin:0 0 16px;">
+          <span style="display:inline-block; padding:7px 17px; border-radius:20px; border:1px solid rgba(101,212,210,.35); background:rgba(101,212,210,.07); color:#65D4D2; font-size:12.5px; font-weight:700; letter-spacing:.05em; font-family:{{ t.headingFont }};">{{ t.pillars.tag }}</span>
+        </div>
+        <h2 style="font-family:{{ t.headingFont }}; font-size:38px; font-weight:800; text-align:center; margin:0 0 12px; color:#E8FFFE;">{{ t.pillars.title }}</h2>
+        <p style="text-align:center; color:rgba(232,255,254,.6); font-size:16px; line-height:1.8; margin:0 auto 34px; max-width:600px;">{{ t.pillars.sub }}</p>
+
+        <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin-bottom:24px;">
+          <sc-for list="{{ pillarTabs }}" as="tb" hint-placeholder-count="5">
+            <div onClick="{{ tb.onClick }}" style="padding:11px 20px; border-radius:14px; font-family:{{ t.headingFont }}; font-size:14.5px; font-weight:700; cursor:pointer; color:{{ tb.fg }}; background:{{ tb.bg }}; border:{{ tb.border }}; box-shadow:{{ tb.shadow }}; transition:all .22s;" style-hover="border-color:rgba(101,212,210,.55);">{{ tb.label }}</div>
           </sc-for>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 330px; gap:26px; align-items:start;" class="r-pillar">
+
+          <!-- ====== PREMIUM APP WINDOW ====== -->
+          <div style="position:relative; min-width:0;">
+
+            <div style="position:absolute; inset:12% 4% -7%; border-radius:48px; background:radial-gradient(58% 58% at 50% 62%, rgba(101,212,210,.42), rgba(101,212,210,0) 72%); filter:blur(54px); pointer-events:none;"></div>
+
+            <div style="position:relative; border-radius:24px; padding:1.2px; background:linear-gradient(170deg, rgba(232,255,254,.55), rgba(101,212,210,.2) 32%, rgba(101,212,210,.05) 62%, rgba(4,19,22,.3)); box-shadow:0 56px 130px rgba(0,0,0,.62), 0 20px 48px rgba(0,0,0,.45), 0 0 62px rgba(101,212,210,.1);">
+            <div style="border-radius:22.8px; overflow:hidden; background:#EDF7F6; direction:{{ t.dir }};">
+
+            <div style="position:relative; display:flex; align-items:center; gap:7px; padding:12px 18px; background:linear-gradient(180deg,#E6F2F0,#D7EBE8); border-bottom:1px solid rgba(12,59,66,.08);">
+              <span style="width:9px; height:9px; border-radius:50%; background:#EE9E94; box-shadow:inset 0 -1px 1px rgba(0,0,0,.14);"></span>
+              <span style="width:9px; height:9px; border-radius:50%; background:#F0C878; box-shadow:inset 0 -1px 1px rgba(0,0,0,.14);"></span>
+              <span style="width:9px; height:9px; border-radius:50%; background:#8FCE9F; box-shadow:inset 0 -1px 1px rgba(0,0,0,.14);"></span>
+              <span style="margin-inline-start:14px; display:inline-flex; align-items:center; gap:7px; padding:5px 15px; border-radius:11px; background:linear-gradient(180deg,#FFFFFF,#F7FCFB); border:1px solid rgba(12,59,66,.09); box-shadow:0 1px 2px rgba(12,59,66,.05); font-family:Poppins,sans-serif; font-size:11.5px; color:#5C868D; direction:ltr;">
+                <svg viewBox="0 0 24 24" style="width:11px; height:11px; flex:none;" fill="none" stroke="#7FB3AE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10.5V8a6 6 0 0 1 12 0v2.5M5 10.5h14v9H5z"></path></svg>
+                {{ activePillar.frame }}
+              </span>
+              <div style="position:absolute; top:0; left:0; right:0; height:52%; background:linear-gradient(180deg, rgba(255,255,255,.6), rgba(255,255,255,0)); pointer-events:none;"></div>
+            </div>
+
+            <div style="position:relative; padding:20px; min-height:430px; background:linear-gradient(180deg,#F1F9F8,#E8F4F3);">
+            <div style="position:absolute; top:0; left:0; right:0; height:120px; background:linear-gradient(180deg, rgba(255,255,255,.7), rgba(255,255,255,0)); pointer-events:none;"></div>
+            <div style="position:relative;">
+
+              <!-- ---------- STORE ---------- -->
+              <sc-if value="{{ isPillarStore }}" hint-placeholder-val="{{ true }}">
+                <div style="border-radius:14px; overflow:hidden; background:linear-gradient(180deg,#FFFFFF,#FBFEFE); border:1px solid rgba(12,59,66,.07); box-shadow:0 1px 2px rgba(12,59,66,.04), 0 10px 30px rgba(12,59,66,.07);">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 18px; background:linear-gradient(180deg,#7E9B86,#65826E); box-shadow:inset 0 1px 0 rgba(255,255,255,.22), 0 2px 10px rgba(12,59,66,.12);">
+                    <div style="display:flex; align-items:center; gap:13px;">
+                      <svg viewBox="0 0 24 24" style="width:19px; height:19px;" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+                      <svg viewBox="0 0 24 24" style="width:18px; height:18px;" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12.4a3.4 3.4 0 1 0 0-6.8 3.4 3.4 0 0 0 0 6.8zM5 19.6c.9-3.2 3.6-5 7-5s6.1 1.8 7 5"></path></svg>
+                    </div>
+                    <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:16px; letter-spacing:.08em; color:#FFFFFF;">{{ t.pillars.store.brand }}</div>
+                    <div style="position:relative;">
+                      <svg viewBox="0 0 24 24" style="width:20px; height:20px;" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h15l-1.6 8.4a2 2 0 0 1-2 1.6H9.3a2 2 0 0 1-2-1.6L5.4 4H3M9 20.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM17.5 20.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"></path></svg>
+                      <span style="position:absolute; top:-6px; inset-inline-end:-7px; min-width:16px; height:16px; border-radius:9px; background:#E4572E; color:#fff; font-family:Poppins,sans-serif; font-size:10px; font-weight:800; display:flex; align-items:center; justify-content:center;">2</span>
+                    </div>
+                  </div>
+
+                  <div style="padding:20px 18px 8px; text-align:center;">
+                    <div style="display:flex; align-items:flex-end; justify-content:center; gap:14px;">
+                      <sc-for list="{{ t.pillars.store.hero }}" as="hp" hint-placeholder-count="3">
+                        <div style="flex:{{ hp.flex }}; display:flex; align-items:flex-end; justify-content:center; opacity:{{ hp.op }};">
+                          <svg viewBox="0 0 120 100" style="width:100%; max-width:{{ hp.w }}; height:auto; display:block;">
+                            <ellipse cx="60" cy="90" rx="36" ry="5.5" fill="#0C3B42" opacity=".13"></ellipse>
+                            <path d="{{ hp.d }}" fill="{{ hp.fill }}"></path>
+                            <path d="{{ hp.d }}" fill="#FFFFFF" opacity=".22" style="clip-path:inset(0 0 55% 0);"></path>
+                          </svg>
+                        </div>
+                      </sc-for>
+                    </div>
+                    <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:19px; color:#4A6B55; margin-top:16px;">{{ t.pillars.store.heroName }}</div>
+                    <div style="font-family:Poppins,sans-serif; font-weight:700; font-size:15px; color:#6E8B77; margin-top:6px;">{{ t.pillars.store.heroPrice }}</div>
+                    <span style="display:inline-block; margin-top:13px; padding:10px 34px; border-radius:24px; border:1.5px solid #6E8B77; color:#4A6B55; font-family:{{ t.headingFont }}; font-weight:700; font-size:13.5px;">{{ t.pillars.store.buy }}</span>
+                    <div style="display:flex; align-items:center; justify-content:center; gap:6px; margin-top:14px;">
+                      <span style="width:6px; height:6px; border-radius:4px; background:#CBDCD0;"></span>
+                      <span style="width:22px; height:6px; border-radius:4px; background:#6E8B77;"></span>
+                      <span style="width:6px; height:6px; border-radius:4px; background:#CBDCD0;"></span>
+                      <span style="width:6px; height:6px; border-radius:4px; background:#CBDCD0;"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="margin-top:14px; padding:14px 15px; border-radius:13px; background:linear-gradient(160deg,#FFFFFF,#EEF8F7); border:1px solid rgba(12,59,66,.06); box-shadow:0 1px 2px rgba(12,59,66,.04), inset 0 1px 0 rgba(255,255,255,.9);">
+                  <div style="font-size:11px; font-weight:700; letter-spacing:.05em; color:#8FAAB0; font-family:Poppins,sans-serif;">{{ t.pillars.store.toolsLabel }}</div>
+                  <div style="display:flex; flex-wrap:wrap; gap:7px; margin-top:10px;">
+                    <sc-for list="{{ t.pillars.store.tools }}" as="tl" hint-placeholder-count="11">
+                      <span style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:10px; background:#FFFFFF; border:1px solid rgba(12,59,66,.08); box-shadow:0 1px 2px rgba(12,59,66,.04); font-size:11.5px; font-weight:700; color:#3E7079; white-space:nowrap;">
+                        <svg viewBox="0 0 24 24" style="width:12px; height:12px; flex:none;" fill="none" stroke="#0F7C86" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ tl.d }}"></path></svg>{{ tl.label }}
+                      </span>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:14px; padding:0 4px;">
+                  <span style="font-family:{{ t.headingFont }}; font-weight:800; font-size:15.5px; letter-spacing:-.01em; color:#08333A;">{{ t.pillars.store.offers }}</span>
+                  <span style="font-size:12px; color:#5C868D;">{{ t.pillars.store.seeAll }}</span>
+                </div>
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:11px; margin-top:10px;" class="r-grid3">
+                  <sc-for list="{{ t.pillars.store.products }}" as="pr" hint-placeholder-count="3">
+                    <div style="position:relative; border-radius:13px; overflow:hidden; background:linear-gradient(180deg,#FFFFFF,#FBFEFE); border:1px solid rgba(12,59,66,.07); box-shadow:0 1px 2px rgba(12,59,66,.04), 0 10px 30px rgba(12,59,66,.07);">
+                      <span style="position:absolute; top:0; inset-inline-start:0; z-index:2; padding:4px 11px; border-end-end-radius:11px; background:linear-gradient(140deg,#F0673E,#D4451F); color:#fff; font-family:Poppins,sans-serif; font-size:10.5px; font-weight:800; box-shadow:0 4px 12px rgba(212,69,31,.35);">{{ pr.off }}</span>
+                      <div style="height:108px; display:flex; align-items:center; justify-content:center; background:radial-gradient(74% 74% at 50% 28%, #FFFFFF, #EFF2F1);">
+                        <svg viewBox="0 0 120 100" style="width:74%; max-width:120px; height:auto; display:block;">
+                          <ellipse cx="60" cy="90" rx="30" ry="4.6" fill="#0C3B42" opacity=".12"></ellipse>
+                          <path d="{{ pr.d }}" fill="{{ pr.fill }}"></path>
+                          <path d="{{ pr.d }}" fill="#FFFFFF" opacity=".22" style="clip-path:inset(0 0 55% 0);"></path>
+                        </svg>
+                      </div>
+                      <div style="padding:10px 12px 12px;">
+                        <div style="font-size:12.5px; font-weight:700; color:#0C3B42; line-height:1.45; min-height:36px;">{{ pr.name }}</div>
+                        <div style="display:flex; align-items:baseline; gap:7px; margin-top:6px; flex-wrap:wrap;">
+                          <span style="font-family:Poppins,sans-serif; font-size:11.5px; color:#9FB8BC; text-decoration:line-through;">{{ pr.was }}</span>
+                          <span style="font-family:Poppins,sans-serif; font-size:13.5px; font-weight:800; color:#0F7C86;">{{ pr.now }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+
+              <!-- ---------- ORDERS ---------- -->
+              <sc-if value="{{ isPillarOrders }}" hint-placeholder-val="{{ false }}">
+                <div style="border-radius:14px; overflow:hidden; background:linear-gradient(180deg,#FFFFFF,#FBFEFE); border:1px solid rgba(12,59,66,.07); box-shadow:0 1px 2px rgba(12,59,66,.04), 0 10px 30px rgba(12,59,66,.07);">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 16px; background:linear-gradient(180deg,#E0F6F1,#CDEDE6); box-shadow:inset 0 1px 0 rgba(255,255,255,.7);">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                      <svg viewBox="0 0 24 24" style="width:18px; height:18px;" fill="none" stroke="#08333A" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+                      <span style="font-family:{{ t.headingFont }}; font-weight:800; font-size:16px; letter-spacing:-.015em; color:#08333A;">{{ t.pillars.orders.title }}</span>
+                    </div>
+                    <span style="padding:3px 10px; border-radius:11px; background:#F5C542; color:#4A3708; font-family:Poppins,sans-serif; font-size:11px; font-weight:800;">40</span>
+                  </div>
+
+                  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px; padding:13px 14px;" class="r-grid4">
+                    <sc-for list="{{ t.pillars.orders.summary }}" as="sm" hint-placeholder-count="4">
+                      <div style="padding:11px 10px; border-radius:11px; background:linear-gradient(160deg,#FFFFFF,#EEF8F7); border:1px solid rgba(12,59,66,.06); box-shadow:0 1px 2px rgba(12,59,66,.04), inset 0 1px 0 rgba(255,255,255,.9); text-align:center;">
+                        <div style="font-size:10px; color:#8FAAB0; font-weight:700;">{{ sm.label }}</div>
+                        <div style="font-family:Poppins,sans-serif; font-size:14.5px; font-weight:800; color:#0F7C86; margin-top:4px; direction:ltr; unicode-bidi:isolate;">{{ sm.value }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+
+                  <div style="display:flex; gap:16px; padding:0 16px 10px; overflow-x:auto; flex-wrap:nowrap;" class="r-chips">
+                    <sc-for list="{{ t.pillars.orders.stages }}" as="sg" hint-placeholder-count="4">
+                      <div style="flex:none; padding-bottom:7px; border-bottom:2.5px solid {{ sg.line }}; display:flex; align-items:center; gap:6px; white-space:nowrap;">
+                        <span style="font-size:12.5px; font-weight:800; color:{{ sg.fg }};">{{ sg.label }}</span>
+                        <span style="padding:1px 8px; border-radius:8px; background:{{ sg.pillBg }}; color:{{ sg.pillFg }}; font-family:Poppins,sans-serif; font-size:10.5px; font-weight:800;">{{ sg.count }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+
+                  <div style="padding:6px 14px 16px;">
+                    <sc-for list="{{ t.pillars.orders.list }}" as="od" hint-placeholder-count="2">
+                      <div style="margin-bottom:11px;">
+                        <div style="text-align:center; font-family:Poppins,sans-serif; font-size:10.5px; color:#9FB8BC; padding:6px 0 9px;">{{ od.date }}</div>
+                        <div style="border:1px solid rgba(12,59,66,.07); border-inline-start:3px solid {{ od.accent }}; border-radius:13px; padding:13px 15px; background:#FFFFFF; box-shadow:0 6px 18px rgba(12,59,66,.06);">
+                          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+                            <div style="display:flex; align-items:center; gap:7px;">
+                              <span style="padding:3px 11px; border-radius:10px; background:{{ od.stateBg }}; color:{{ od.stateFg }}; font-size:11px; font-weight:800;">{{ od.state }}</span>
+                              <span style="padding:3px 10px; border-radius:10px; background:#EAF3F2; color:#5C868D; font-family:Poppins,sans-serif; font-size:10.5px; font-weight:700;">{{ od.age }}</span>
+                            </div>
+                            <span style="font-family:Poppins,sans-serif; font-size:12.5px; font-weight:800; color:#0C3B42; direction:ltr; unicode-bidi:isolate;">{{ od.inv }}</span>
+                          </div>
+                          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top:11px;">
+                            <span style="font-family:Poppins,sans-serif; font-size:19px; font-weight:800; color:#17A05C; direction:ltr; unicode-bidi:isolate;">{{ od.amount }}</span>
+                            <div style="display:flex; align-items:center; gap:7px;">
+                              <span style="padding:4px 11px; border-radius:10px; background:#FFF3E2; color:#A76A12; font-size:10.5px; font-weight:700;">{{ od.promo }}</span>
+                              <span style="padding:4px 12px; border-radius:10px; background:#EAF3F2; border:1px solid rgba(12,59,66,.08); color:#3E7079; font-family:Poppins,sans-serif; font-size:10.5px; font-weight:800;">{{ od.pay }}</span>
+                            </div>
+                          </div>
+                          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top:11px; padding-top:11px; border-top:1px solid #F0F7F6;">
+                            <div style="display:flex; align-items:center; gap:8px;">
+                              <span style="width:8px; height:8px; border-radius:50%; background:#17A05C;"></span>
+                              <span style="font-size:13px; font-weight:700; color:#0C3B42;">{{ od.customer }}</span>
+                              <span style="padding:2px 9px; border-radius:8px; background:#FDEEEA; color:#C2532E; font-family:Poppins,sans-serif; font-size:10px; font-weight:800;">{{ od.repeat }}</span>
+                            </div>
+                            <span style="display:inline-flex; align-items:center; gap:5px; padding:4px 11px; border-radius:10px; background:#F4FAF9; border:1px solid rgba(12,59,66,.07); font-size:11px; color:#3E7079; font-weight:700;">
+                              <svg viewBox="0 0 24 24" style="width:11px; height:11px;" fill="none" stroke="#C2532E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11zM12 12.4a2.4 2.4 0 1 0 0-4.8 2.4 2.4 0 0 0 0 4.8z"></path></svg>
+                              {{ od.area }}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- ---------- INVENTORY ---------- -->
+              <sc-if value="{{ isPillarStock }}" hint-placeholder-val="{{ false }}">
+                <div style="border-radius:14px; overflow:hidden; background:linear-gradient(180deg,#FFFFFF,#FBFEFE); border:1px solid rgba(12,59,66,.07); box-shadow:0 1px 2px rgba(12,59,66,.04), 0 10px 30px rgba(12,59,66,.07); padding:16px;">
+                  <div style="display:flex; align-items:center; gap:10px;">
+                    <svg viewBox="0 0 24 24" style="width:19px; height:19px; flex:none;" fill="none" stroke="#0F7C86" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8l8.4 4.5v9.4L12 21.2l-8.4-4.5V7.3zM3.6 7.3L12 11.8l8.4-4.5M12 11.8v9.4"></path></svg>
+                    <span style="font-family:{{ t.headingFont }}; font-weight:800; font-size:16px; letter-spacing:-.015em; color:#08333A;">{{ t.pillars.stock.title }}</span>
+                  </div>
+
+                  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:13px;">
+                    <sc-for list="{{ t.pillars.stock.counts }}" as="sc" hint-placeholder-count="3">
+                      <span style="padding:7px 15px; border-radius:11px; background:#E7F5F3; border:1px solid rgba(12,59,66,.06); color:#0F7C86; font-size:12px; font-weight:700;">{{ sc }}</span>
+                    </sc-for>
+                  </div>
+
+                  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;">
+                    <sc-for list="{{ t.pillars.stock.tabs }}" as="st" hint-placeholder-count="3">
+                      <span style="display:inline-flex; align-items:center; gap:7px; padding:9px 16px; border-radius:12px; background:{{ st.bg }}; border:1px solid {{ st.border }}; color:{{ st.fg }}; font-size:12.5px; font-weight:700;">
+                        {{ st.label }}
+                        <sc-if value="{{ st.hasBadge }}" hint-placeholder-val="{{ false }}">
+                          <span style="padding:1px 8px; border-radius:8px; background:#E4572E; color:#fff; font-family:Poppins,sans-serif; font-size:10px; font-weight:800;">{{ st.badge }}</span>
+                        </sc-if>
+                      </span>
+                    </sc-for>
+                  </div>
+
+                  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px;" class="r-grid2">
+                    <sc-for list="{{ t.pillars.stock.actions }}" as="ac" hint-placeholder-count="4">
+                      <span style="display:flex; align-items:center; justify-content:center; gap:8px; padding:11px 12px; border-radius:11px; background:linear-gradient(180deg,#FFFFFF,#F5FBFA); border:1px solid rgba(12,59,66,.08); box-shadow:0 1px 2px rgba(12,59,66,.04); color:#3E7079; font-size:12px; font-weight:700; text-align:center;">
+                        <svg viewBox="0 0 24 24" style="width:14px; height:14px; flex:none;" fill="none" stroke="#0F7C86" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="{{ ac.d }}"></path></svg>
+                        {{ ac.label }}
+                      </span>
+                    </sc-for>
+                  </div>
+
+                  <div style="display:flex; gap:7px; flex-wrap:nowrap; overflow-x:auto; margin-top:14px;" class="r-chips">
+                    <sc-for list="{{ t.pillars.stock.cats }}" as="ct" hint-placeholder-count="5">
+                      <span style="flex:none; padding:6px 14px; border-radius:16px; background:{{ ct.bg }}; border:1px solid {{ ct.border }}; color:{{ ct.fg }}; font-size:11.5px; font-weight:700; white-space:nowrap;">{{ ct.label }}</span>
+                    </sc-for>
+                  </div>
+
+                  <div style="margin-top:13px; border-radius:12px; overflow:hidden; border:1px solid rgba(12,59,66,.07);">
+                    <div style="display:grid; grid-template-columns:1fr 130px 76px; gap:10px; padding:10px 14px; background:#0C3B42;">
+                      <span style="font-family:Poppins,sans-serif; font-size:11px; font-weight:700; color:#CFE6E4;">{{ t.pillars.stock.colProduct }}</span>
+                      <span style="font-family:Poppins,sans-serif; font-size:11px; font-weight:700; color:#CFE6E4;">{{ t.pillars.stock.colType }}</span>
+                      <span style="font-family:Poppins,sans-serif; font-size:11px; font-weight:700; color:#CFE6E4;">{{ t.pillars.stock.colPrice }}</span>
+                    </div>
+                    <sc-for list="{{ t.pillars.stock.rows }}" as="rw" hint-placeholder-count="3">
+                      <div style="display:grid; grid-template-columns:1fr 130px 76px; gap:10px; align-items:center; padding:10px 14px; border-top:1px solid #F0F7F6; background:#fff;">
+                        <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+                          <div style="width:38px; height:38px; flex:none; border-radius:9px; background:radial-gradient(70% 70% at 50% 30%, #FFFFFF, #EDF2F1); border:1px solid rgba(12,59,66,.07); display:flex; align-items:center; justify-content:center;">
+                            <svg viewBox="0 0 120 100" style="width:78%; height:auto; display:block;"><path d="{{ rw.d }}" fill="#A6B1B4"></path></svg>
+                          </div>
+                          <div style="min-width:0;">
+                            <div style="font-size:12.5px; font-weight:700; color:#0C3B42; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ rw.name }}</div>
+                            <div style="font-family:Poppins,sans-serif; font-size:10.5px; color:#9FB8BC; margin-top:2px;">{{ rw.sku }}</div>
+                          </div>
+                        </div>
+                        <span style="padding:5px 10px; border-radius:9px; background:#EAF3F2; border:1px solid rgba(12,59,66,.07); color:#3E7079; font-size:10.5px; font-weight:700; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ rw.type }}</span>
+                        <span style="font-family:Poppins,sans-serif; font-size:12.5px; font-weight:800; color:#0F7C86; direction:ltr; unicode-bidi:isolate;">{{ rw.price }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- ---------- MARKETING CALENDAR ---------- -->
+              <sc-if value="{{ isPillarCalendar }}" hint-placeholder-val="{{ false }}">
+                <div style="border-radius:14px; overflow:hidden; background:linear-gradient(180deg,#FFFFFF,#FBFEFE); border:1px solid rgba(12,59,66,.07); box-shadow:0 1px 2px rgba(12,59,66,.04), 0 10px 30px rgba(12,59,66,.07);">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; padding:14px 16px; background:linear-gradient(180deg,#E0F6F1,#CDEDE6); box-shadow:inset 0 1px 0 rgba(255,255,255,.7);">
+                    <div>
+                      <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:16px; letter-spacing:-.015em; color:#08333A;">{{ t.pillars.calendar.title }}</div>
+                      <div style="font-size:11.5px; color:#5C868D; margin-top:3px;">{{ t.pillars.calendar.sub }}</div>
+                    </div>
+                    <span style="padding:9px 18px; border-radius:12px; background:linear-gradient(180deg,#14909B,#0C6A74); color:#fff; font-family:{{ t.headingFont }}; font-size:12.5px; font-weight:700; box-shadow:0 8px 20px rgba(15,124,134,.32), inset 0 1px 0 rgba(255,255,255,.22);">{{ t.pillars.calendar.addEvent }}</span>
+                  </div>
+
+                  <div style="margin:14px; padding:13px 15px; border-radius:12px; background:linear-gradient(160deg,#EAF7F5,#DFF2EF); border:1px solid rgba(15,124,134,.2); display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                    <div style="min-width:0;">
+                      <div style="font-weight:700; font-size:13px; color:#08333A;">{{ t.pillars.calendar.toggleTitle }}</div>
+                      <div style="font-size:11.5px; line-height:1.6; color:#5C868D; margin-top:3px;">{{ t.pillars.calendar.toggleBody }}</div>
+                    </div>
+                    <span style="width:42px; height:23px; flex:none; border-radius:14px; background:#17A05C; display:flex; align-items:center; justify-content:flex-end; padding:0 3px; box-shadow:inset 0 1px 3px rgba(0,0,0,.14);"><span style="width:17px; height:17px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.25);"></span></span>
+                  </div>
+
+                  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin:0 14px;" class="r-grid3">
+                    <sc-for list="{{ t.pillars.calendar.selects }}" as="sl" hint-placeholder-count="3">
+                      <div>
+                        <div style="font-size:11px; color:#8FAAB0; font-weight:700; margin-bottom:5px;">{{ sl.label }}</div>
+                        <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 13px; border-radius:11px; background:linear-gradient(180deg,#FFFFFF,#FAFDFD); border:1px solid rgba(12,59,66,.09); box-shadow:inset 0 1px 3px rgba(12,59,66,.05);">
+                          <span style="font-size:12.5px; font-weight:700; color:#0C3B42; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ sl.value }}</span>
+                          <svg viewBox="0 0 24 24" style="width:13px; height:13px; flex:none;" fill="none" stroke="#8FAAB0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5l6 6 6-6"></path></svg>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+
+                  <div style="display:flex; gap:7px; flex-wrap:nowrap; overflow-x:auto; margin:13px 14px 0;" class="r-chips">
+                    <sc-for list="{{ t.pillars.calendar.kinds }}" as="kd" hint-placeholder-count="4">
+                      <span style="flex:none; display:inline-flex; align-items:center; gap:7px; padding:7px 14px; border-radius:18px; background:{{ kd.bg }}; border:1px solid {{ kd.border }}; color:{{ kd.fg }}; font-size:11.5px; font-weight:700; white-space:nowrap;">
+                        <span style="width:8px; height:8px; border-radius:50%; background:{{ kd.dot }}; flex:none;"></span>{{ kd.label }}
+                      </span>
+                    </sc-for>
+                  </div>
+
+                  <div style="display:flex; align-items:center; justify-content:center; gap:14px; margin-top:15px;">
+                    <span style="width:28px; height:28px; border-radius:9px; background:#EAF3F2; border:1px solid rgba(12,59,66,.07); display:flex; align-items:center; justify-content:center;">
+                      <svg viewBox="0 0 24 24" style="width:12px; height:12px;" fill="none" stroke="#3E7079" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6l-6 6 6 6"></path></svg>
+                    </span>
+                    <span style="font-family:{{ t.headingFont }}; font-weight:800; font-size:15px; color:#08333A;">{{ t.pillars.calendar.monthLabel }}</span>
+                    <span style="padding:3px 10px; border-radius:9px; background:#E7F5F3; color:#0F7C86; font-size:10.5px; font-weight:800;">{{ t.pillars.calendar.eventCount }}</span>
+                    <span style="width:28px; height:28px; border-radius:9px; background:#EAF3F2; border:1px solid rgba(12,59,66,.07); display:flex; align-items:center; justify-content:center;">
+                      <svg viewBox="0 0 24 24" style="width:12px; height:12px;" fill="none" stroke="#3E7079" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 6l6 6-6 6"></path></svg>
+                    </span>
+                  </div>
+
+                  <div style="margin:13px 14px 16px; border-radius:12px; overflow:hidden; border:1px solid rgba(12,59,66,.07);">
+                    <div style="display:grid; grid-template-columns:repeat(7,1fr); background:#EAF3F2;">
+                      <sc-for list="{{ t.pillars.calendar.days }}" as="dn" hint-placeholder-count="7">
+                        <span style="padding:8px 2px; text-align:center; font-family:Poppins,sans-serif; font-size:10.5px; font-weight:700; color:#5C868D;">{{ dn }}</span>
+                      </sc-for>
+                    </div>
+                    <div style="display:grid; grid-template-columns:repeat(7,1fr); background:#fff;">
+                      <sc-for list="{{ t.pillars.calendar.cells }}" as="cl" hint-placeholder-count="21">
+                        <div style="min-height:54px; padding:5px 4px; border-top:1px solid #F0F7F6; border-inline-start:1px solid #F0F7F6;">
+                          <div style="font-family:Poppins,sans-serif; font-size:10px; color:{{ cl.numColor }}; text-align:start;">{{ cl.num }}</div>
+                          <sc-if value="{{ cl.hasEvent }}" hint-placeholder-val="{{ false }}">
+                            <div style="margin-top:4px; padding:3px 5px; border-radius:6px; background:#E7F5F3; border-inline-start:2.5px solid #0F7C86; font-size:9px; font-weight:700; color:#0F7C86; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ cl.event }}</div>
+                          </sc-if>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- ---------- WHATSAPP ---------- -->
+              <sc-if value="{{ isPillarWa }}" hint-placeholder-val="{{ false }}">
+                <div style="border-radius:14px; overflow:hidden; background:linear-gradient(180deg,#FFFFFF,#FBFEFE); border:1px solid rgba(12,59,66,.07); box-shadow:0 1px 2px rgba(12,59,66,.04), 0 10px 30px rgba(12,59,66,.07);">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 16px; background:linear-gradient(180deg,#E0F6F1,#CDEDE6); box-shadow:inset 0 1px 0 rgba(255,255,255,.7);">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                      <svg viewBox="0 0 24 24" style="width:18px; height:18px;" fill="none" stroke="#0C3B42" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+                      <span style="font-family:Poppins,sans-serif; font-weight:800; font-size:16px; color:#0C3B42;">WhatsApp</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:13px;">
+                      <svg viewBox="0 0 24 24" style="width:17px; height:17px;" fill="none" stroke="#3E7079" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5A8 8 0 1 0 18.4 16M20 6.5V12h-5.5"></path></svg>
+                      <span style="padding:3px 10px; border-radius:11px; background:#F5C542; color:#4A3708; font-family:Poppins,sans-serif; font-size:11px; font-weight:800;">40</span>
+                    </div>
+                  </div>
+
+                  <div style="display:flex; align-items:center; gap:10px; padding:12px 14px 8px;">
+                    <div style="flex:1; display:flex; align-items:center; gap:9px; padding:9px 14px; border-radius:22px; background:#F1F7F7; border:1px solid #DFEDEC;">
+                      <svg viewBox="0 0 24 24" style="width:15px; height:15px; flex:none;" fill="none" stroke="#9FB8BC" stroke-width="2" stroke-linecap="round"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4"></path></svg>
+                      <span style="font-size:12.5px; color:#9FB8BC;">{{ t.pillars.wa.search }}</span>
+                    </div>
+                    <div style="width:34px; height:34px; flex:none; border-radius:50%; background:#0F7C86; display:flex; align-items:center; justify-content:center;">
+                      <svg viewBox="0 0 24 24" style="width:16px; height:16px;" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+                    </div>
+                  </div>
+
+                  <div style="display:flex; gap:7px; padding:4px 14px 12px; flex-wrap:nowrap; overflow-x:auto; min-width:0;" class="r-chips">
+                    <sc-for list="{{ t.pillars.wa.filters }}" as="fl" hint-placeholder-count="4">
+                      <span style="flex:none; padding:6px 13px; border-radius:16px; background:{{ fl.bg }}; border:1px solid {{ fl.border }}; color:{{ fl.fg }}; font-size:11.5px; font-weight:700; white-space:nowrap;">{{ fl.label }}</span>
+                    </sc-for>
+                  </div>
+
+                  <div style="border-top:1px solid #EDF5F4;">
+                    <sc-for list="{{ t.pillars.wa.chats }}" as="ch" hint-placeholder-count="5">
+                      <div style="display:flex; align-items:center; gap:12px; padding:11px 15px; border-bottom:1px solid #F2F8F7;">
+                        <div style="position:relative; flex:none;">
+                          <div style="width:38px; height:38px; border-radius:50%; background:{{ ch.avatarBg }}; box-shadow:0 4px 10px rgba(12,59,66,.22), inset 0 1px 0 rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center; font-family:Poppins,sans-serif; font-weight:700; font-size:15px; color:#fff;">{{ ch.initial }}</div>
+                          <sc-if value="{{ ch.unread }}" hint-placeholder-val="{{ false }}">
+                            <span style="position:absolute; top:-3px; inset-inline-start:-3px; width:17px; height:17px; border-radius:50%; background:#17A05C; border:2px solid #fff; color:#fff; font-family:Poppins,sans-serif; font-size:9.5px; font-weight:800; display:flex; align-items:center; justify-content:center;">1</span>
+                          </sc-if>
+                        </div>
+                        <div style="flex:1; min-width:0;">
+                          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                            <span style="font-weight:700; font-size:13.5px; color:#0C3B42;">{{ ch.name }}</span>
+                            <span style="font-family:Poppins,sans-serif; font-size:10.5px; color:#9FB8BC; flex:none;">{{ ch.time }}</span>
+                          </div>
+                          <div style="font-size:12px; color:#5C868D; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ ch.msg }}</div>
+                          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:4px;">
+                            <span style="font-family:Poppins,sans-serif; font-size:11px; color:#8FAAB0; direction:ltr; unicode-bidi:isolate;">{{ ch.phone }}</span>
+                            <sc-if value="{{ ch.hasInv }}" hint-placeholder-val="{{ true }}">
+                              <span style="padding:2px 9px; border-radius:7px; background:#DCF5E7; color:#177E52; font-family:Poppins,sans-serif; font-size:10px; font-weight:700; flex:none; direction:ltr; unicode-bidi:isolate;">{{ ch.inv }}</span>
+                            </sc-if>
+                          </div>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+
+                  <div style="display:flex; align-items:center; justify-content:space-around; padding:9px 10px; background:#F4FAF9; border-top:1px solid #E4F0EE;">
+                    <sc-for list="{{ t.pillars.wa.nav }}" as="nv" hint-placeholder-count="4">
+                      <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
+                        <svg viewBox="0 0 24 24" style="width:17px; height:17px;" fill="none" stroke="{{ nv.color }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ nv.d }}"></path></svg>
+                        <span style="font-family:Poppins,sans-serif; font-size:10px; font-weight:700; color:{{ nv.color }};">{{ nv.label }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- ---------- AI AGENT ---------- -->
+              <sc-if value="{{ isPillarAi }}" hint-placeholder-val="{{ false }}">
+                <div style="border-radius:14px; overflow:hidden; background:linear-gradient(180deg,#FFFFFF,#FBFEFE); border:1px solid rgba(12,59,66,.07); box-shadow:0 1px 2px rgba(12,59,66,.04), 0 10px 30px rgba(12,59,66,.07);">
+                  <div style="display:flex; align-items:center; gap:12px; padding:14px 16px; border-bottom:1px solid #EDF5F4;">
+                    <div style="width:38px; height:38px; flex:none; border-radius:11px; background:#D6F2EC; display:flex; align-items:center; justify-content:center;">
+                      <svg viewBox="0 0 24 24" style="width:20px; height:20px;" fill="none" stroke="#0F7C86" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.5 7.3L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z"></path></svg>
+                    </div>
+                    <div style="flex:1;">
+                      <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:15.5px; letter-spacing:-.01em; color:#08333A;">{{ t.pillars.ai.agentName }}</div>
+                      <div style="display:flex; align-items:center; gap:6px; margin-top:3px;">
+                        <span style="width:7px; height:7px; border-radius:50%; background:#17A05C;"></span>
+                        <span style="font-size:11.5px; color:#17A05C; font-weight:700;">{{ t.pillars.ai.running }}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="display:flex; gap:6px; padding:12px 14px; border-bottom:1px solid #EDF5F4; flex-wrap:wrap;">
+                    <sc-for list="{{ t.pillars.ai.tabs }}" as="at" hint-placeholder-count="5">
+                      <span style="padding:6px 13px; border-radius:11px; background:{{ at.bg }}; border:1px solid {{ at.border }}; color:{{ at.fg }}; font-size:12px; font-weight:700;">{{ at.label }}</span>
+                    </sc-for>
+                  </div>
+
+                  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; padding:14px;">
+                    <sc-for list="{{ t.pillars.ai.stats }}" as="as" hint-placeholder-count="3">
+                      <div style="padding:14px 10px; border-radius:12px; background:linear-gradient(160deg,#FFFFFF,#EEF8F7); border:1px solid rgba(12,59,66,.06); box-shadow:0 1px 2px rgba(12,59,66,.04), inset 0 1px 0 rgba(255,255,255,.9); text-align:center;">
+                        <div style="font-family:Poppins,sans-serif; font-size:22px; font-weight:800; color:#0F7C86;">{{ as.value }}</div>
+                        <div style="font-size:11px; color:#5C868D; margin-top:4px;">{{ as.label }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+
+                  <div style="margin:0 14px 14px; padding:18px; border-radius:13px; background:linear-gradient(160deg,#FFFFFF,#EEF8F7); border:1px solid rgba(12,59,66,.06); box-shadow:0 1px 2px rgba(12,59,66,.04), inset 0 1px 0 rgba(255,255,255,.9); text-align:center;">
+                    <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:15.5px; letter-spacing:-.01em; color:#08333A;">{{ t.pillars.ai.cardTitle }}</div>
+                    <div style="font-size:12.5px; line-height:1.8; color:#5C868D; margin-top:8px; max-width:440px; margin-inline-start:auto; margin-inline-end:auto;">{{ t.pillars.ai.cardBody }}</div>
+                    <div style="font-size:12px; color:#0F7C86; font-weight:700; margin-top:11px;">{{ t.pillars.ai.progress }}</div>
+                    <span style="display:inline-block; margin-top:13px; padding:11px 28px; border-radius:11px; background:linear-gradient(180deg,#14909B,#0C6A74); color:#fff; font-family:{{ t.headingFont }}; font-weight:700; font-size:13px; box-shadow:0 8px 20px rgba(15,124,134,.32), inset 0 1px 0 rgba(255,255,255,.22);">{{ t.pillars.ai.cardCta }}</span>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- ---------- CRM ---------- -->
+              <sc-if value="{{ isPillarCrm }}" hint-placeholder-val="{{ false }}">
+                <div style="border-radius:14px; overflow:hidden; background:linear-gradient(180deg,#FFFFFF,#FBFEFE); border:1px solid rgba(12,59,66,.07); box-shadow:0 1px 2px rgba(12,59,66,.04), 0 10px 30px rgba(12,59,66,.07); padding:18px;">
+                  <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding-bottom:15px; border-bottom:1px solid #EDF5F4;">
+                    <div style="width:50px; height:50px; flex:none; border-radius:15px; background:linear-gradient(145deg,#15959F,#0B5F69); box-shadow:0 10px 22px rgba(15,124,134,.3), inset 0 1px 0 rgba(255,255,255,.25); display:flex; align-items:center; justify-content:center; font-family:{{ t.headingFont }}; font-weight:800; font-size:19px; color:#fff;">{{ t.pillars.crm.initial }}</div>
+                    <div style="flex:1; min-width:150px;">
+                      <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:17.5px; letter-spacing:-.015em; color:#08333A;">{{ t.pillars.crm.name }}</div>
+                      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:7px;">
+                        <sc-for list="{{ t.pillars.crm.tags }}" as="tg" hint-placeholder-count="3">
+                          <span style="padding:3px 10px; border-radius:8px; background:#DFF3F1; color:#0F7C86; font-size:10.5px; font-weight:700;">{{ tg }}</span>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:15px;">
+                    <sc-for list="{{ t.pillars.crm.stats }}" as="cs" hint-placeholder-count="3">
+                      <div style="padding:14px 12px; border-radius:12px; background:linear-gradient(160deg,#FFFFFF,#EEF8F7); border:1px solid rgba(12,59,66,.06); box-shadow:0 1px 2px rgba(12,59,66,.04), inset 0 1px 0 rgba(255,255,255,.9);">
+                        <div style="font-family:Poppins,sans-serif; font-size:18px; font-weight:800; color:#0F7C86;">{{ cs.value }}</div>
+                        <div style="font-size:11px; color:#5C868D; margin-top:4px;">{{ cs.label }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div style="margin-top:18px; font-family:Poppins,sans-serif; font-size:11px; font-weight:700; letter-spacing:.06em; color:#8FAAB0;">{{ t.pillars.crm.timelineLabel }}</div>
+                  <div style="margin-top:11px;">
+                    <sc-for list="{{ t.pillars.crm.timeline }}" as="tl" hint-placeholder-count="3">
+                      <div style="display:flex; align-items:flex-start; gap:12px; padding-bottom:14px;">
+                        <div style="display:flex; flex-direction:column; align-items:center; flex:none; padding-top:4px;">
+                          <span style="width:8px; height:8px; border-radius:50%; background:#0F7C86;"></span>
+                          <span style="width:1px; flex:1; min-height:16px; background:#D5E9E7;"></span>
+                        </div>
+                        <div style="flex:1;">
+                          <div style="font-size:13px; color:#0C3B42;">{{ tl.text }}</div>
+                          <div style="font-size:11px; color:#8FAAB0; margin-top:3px;">{{ tl.time }}</div>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- ---------- LOYALTY ---------- -->
+              <sc-if value="{{ isPillarLoyalty }}" hint-placeholder-val="{{ false }}">
+                <div style="border-radius:14px; overflow:hidden; background:linear-gradient(180deg,#FFFFFF,#FBFEFE); border:1px solid rgba(12,59,66,.07); box-shadow:0 1px 2px rgba(12,59,66,.04), 0 10px 30px rgba(12,59,66,.07);">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 16px; border-bottom:1px solid #EDF5F4; flex-wrap:wrap;">
+                    <div>
+                      <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:16px; letter-spacing:-.015em; color:#08333A;">{{ t.pillars.loyalty.title }}</div>
+                      <div style="font-size:11.5px; color:#8FAAB0; margin-top:3px;">{{ t.pillars.loyalty.sub }}</div>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:9px;">
+                      <span style="font-size:11.5px; font-weight:800; color:#17A05C;">{{ t.pillars.loyalty.onLabel }}</span>
+                      <span style="width:42px; height:23px; border-radius:14px; background:#17A05C; display:flex; align-items:center; justify-content:flex-end; padding:0 3px;"><span style="width:17px; height:17px; border-radius:50%; background:#fff;"></span></span>
+                    </div>
+                  </div>
+
+                  <div style="margin:14px; padding:16px 18px; border-radius:15px; background:linear-gradient(125deg,#0B5F69,#0F7C86 45%,#45B8AE); color:#fff; box-shadow:0 14px 34px rgba(15,124,134,.32), inset 0 1px 0 rgba(255,255,255,.28);">
+                    <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:15px;">{{ t.pillars.loyalty.bannerTitle }}</div>
+                    <div style="font-size:12.5px; line-height:1.7; opacity:.88; margin-top:6px;">{{ t.pillars.loyalty.bannerBody }}</div>
+                  </div>
+
+                  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:0 14px;" class="r-grid3">
+                    <sc-for list="{{ t.pillars.loyalty.cards }}" as="lc" hint-placeholder-count="3">
+                      <div style="padding:14px; border-radius:12px; background:linear-gradient(160deg,#FFFFFF,#EEF8F7); border:1px solid rgba(12,59,66,.06); box-shadow:0 1px 2px rgba(12,59,66,.04), inset 0 1px 0 rgba(255,255,255,.9);">
+                        <div style="font-size:11px; color:#8FAAB0; font-weight:700;">{{ lc.label }}</div>
+                        <div style="font-family:Poppins,sans-serif; font-size:20px; font-weight:800; color:#0F7C86; margin-top:6px;">{{ lc.value }}</div>
+                        <div style="font-size:10.5px; color:#8FAAB0; margin-top:4px;">{{ lc.sub }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+
+                  <div style="margin:14px; padding:16px; border-radius:13px; background:linear-gradient(160deg,#FFFFFF,#EEF8F7); border:1px solid rgba(12,59,66,.06); box-shadow:0 1px 2px rgba(12,59,66,.04), inset 0 1px 0 rgba(255,255,255,.9);">
+                    <div style="display:flex; align-items:center; gap:9px;">
+                      <svg viewBox="0 0 24 24" style="width:17px; height:17px;" fill="none" stroke="#C99A2E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.5 5.6 6 .7-4.5 4.1 1.3 6-5.3-3-5.3 3 1.3-6L3.5 9.3l6-.7z"></path></svg>
+                      <span style="font-family:{{ t.headingFont }}; font-weight:800; font-size:14px; color:#0C3B42;">{{ t.pillars.loyalty.earnTitle }}</span>
+                    </div>
+                    <div style="font-size:12px; color:#5C868D; margin-top:7px;">{{ t.pillars.loyalty.earnBody }}</div>
+                    <div style="display:flex; align-items:center; gap:10px; margin-top:12px; flex-wrap:wrap;">
+                      <span style="flex:1; min-width:110px; padding:10px 14px; border-radius:10px; background:linear-gradient(180deg,#FFFFFF,#FAFDFD); border:1px solid rgba(12,59,66,.09); box-shadow:inset 0 1px 3px rgba(12,59,66,.05); font-family:Poppins,sans-serif; font-size:13px; font-weight:700; color:#0C3B42;">1 KWD</span>
+                      <span style="font-size:12px; color:#5C868D;">{{ t.pillars.loyalty.earns }}</span>
+                      <span style="flex:1; min-width:110px; padding:10px 14px; border-radius:10px; background:linear-gradient(180deg,#FFFFFF,#FAFDFD); border:1px solid rgba(12,59,66,.09); box-shadow:inset 0 1px 3px rgba(12,59,66,.05); font-family:Poppins,sans-serif; font-size:13px; font-weight:700; color:#0C3B42;">10 pts</span>
+                    </div>
+                    <div style="display:flex; gap:7px; margin-top:12px; flex-wrap:wrap;">
+                      <sc-for list="{{ t.pillars.loyalty.rates }}" as="rt" hint-placeholder-count="5">
+                        <span style="padding:6px 14px; border-radius:18px; background:{{ rt.bg }}; border:1px solid {{ rt.border }}; color:{{ rt.fg }}; font-family:Poppins,sans-serif; font-size:12px; font-weight:700;">{{ rt.label }}</span>
+                      </sc-for>
+                    </div>
+                  </div>
+                </div>
+              </sc-if>
+
+            </div>
+            </div>
+
+            </div>
+            </div>
+
+            <div style="position:absolute; bottom:-24px; inset-inline-start:30px; z-index:4; display:flex; align-items:center; gap:11px; padding:13px 20px; border-radius:16px; background:linear-gradient(150deg, rgba(9,42,47,.96), rgba(4,19,22,.96)); border:1px solid rgba(101,212,210,.4); box-shadow:0 22px 50px rgba(0,0,0,.6), 0 0 34px rgba(101,212,210,.2); backdrop-filter:blur(8px);" class="r-float">
+              <span style="width:9px; height:9px; border-radius:50%; background:#65D4D2; box-shadow:0 0 12px rgba(101,212,210,.95); flex:none;"></span>
+              <span style="font-family:{{ t.headingFont }}; font-size:13.5px; font-weight:700; color:#E8FFFE; white-space:nowrap;">{{ activePillar.badge }}</span>
+            </div>
+
+          </div>
+
+          <!-- ====== SIDE COPY ====== -->
+          <div style="min-width:0; display:flex; flex-direction:column; gap:14px; padding:28px 24px; border:1px solid rgba(101,212,210,.2); border-radius:20px; background:rgba(101,212,210,.04);">
+            <div style="width:50px; height:50px; border-radius:14px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 22px rgba(101,212,210,.22);">
+              <svg viewBox="0 0 24 24" style="width:24px; height:24px; display:block;" fill="none" stroke="#041316" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{ activePillar.d }}"></path></svg>
+            </div>
+            <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:21px; line-height:1.4; color:#E8FFFE;">{{ activePillar.title }}</div>
+            <div style="font-size:14.5px; line-height:1.85; color:rgba(232,255,254,.65);">{{ activePillar.desc }}</div>
+            <div style="display:flex; flex-direction:column; gap:9px; margin-top:4px;">
+              <sc-for list="{{ activePillar.points }}" as="pt" hint-placeholder-count="3">
+                <div style="display:flex; align-items:flex-start; gap:10px;">
+                  <svg viewBox="0 0 24 24" style="width:16px; height:16px; flex:none; margin-top:3px;" fill="none" stroke="#65D4D2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.2 5.2L20 7"></path></svg>
+                  <span style="font-size:13.5px; line-height:1.65; color:rgba(232,255,254,.72);">{{ pt }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div onClick="{{ goTo.contact }}" style="margin-top:auto; padding-top:14px;"><span style="display:inline-block; padding:12px 24px; border-radius:13px; background:#65D4D2; color:#041316; font-family:{{ t.headingFont }}; font-weight:800; font-size:14px; cursor:pointer; box-shadow:0 0 22px rgba(101,212,210,.3);">{{ t.pillars.cta }}</span></div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -1137,14 +1679,47 @@ const LEGAL = {
 };
 
 const DATA = {
-  problemRows: [
-    { p:{ar:"طلبات متفرقة بين واتساب والموقع وانستقرام",en:"Orders scattered across WhatsApp, website and Instagram"}, s:{ar:"صندوق طلبات موحّد يجمع كل الطلبات تلقائياً",en:"One unified inbox collects every order automatically"} },
-    { p:{ar:"لا تعرف أين وصل كل طلب",en:"No visibility into where each order stands"}, s:{ar:"مراحل طلب مخصصة من التجهيز حتى التسليم",en:"Custom order stages from prep to delivery"} },
-    { p:{ar:"فريق توصيل وتعبئة بدون تنظيم",en:"Delivery and packing team with no structure"}, s:{ar:"تطبيق منفصل لكل موظف بصلاحيات محددة",en:"A dedicated app per role with clear permissions"} },
-    { p:{ar:"محاسبة على ورق أو إكسل",en:"Accounting on paper or spreadsheets"}, s:{ar:"نظام محاسبة كامل بإيرادات ومصاريف وتقارير",en:"Full accounting with revenue, expenses and reports"} },
-    { p:{ar:"متجر إلكتروني مكلف ومعقّد",en:"Expensive, complex online store setups"}, s:{ar:"متجر جاهز بدومين خاص وسحب وإفلات",en:"Ready store with your own domain, drag-and-drop"} },
-    { p:{ar:"تسويق واتساب يدوي",en:"Manual WhatsApp marketing"}, s:{ar:"واتساب رسمي + بث جماعي + وكيل ذكاء يرد تلقائياً",en:"Official WhatsApp, broadcasts, AI agent replies automatically"} },
-    { p:{ar:"إعلانات ميتا بدون تتبع",en:"Meta ads with no tracking"}, s:{ar:"إعلانات + تتبع تحويلات + كتالوج منتجات",en:"Ads, conversion tracking and a product catalog"} },
+  pillarDefs: [
+    { key:"store", badge:{ar:"+18% مبيعات هذا الشهر",en:"+18% sales this month"}, tab:{ar:"المتجر الإلكتروني",en:"Online store"}, frame:"yourstore.com",
+      d:"M4 8h16M5 8l1-4h12l1 4M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8M9.5 20v-6h5v6",
+      title:{ar:"متجر بدومينك الخاص",en:"A store on your own domain"},
+      desc:{ar:"مصمّم بالسحب والإفلات، بدون برمجة ولا مطوّر. العميل يتصفّح ويطلب بنفسه، والطلب يدخل لوحتك مباشرة.",en:"Built drag-and-drop, no code and no developer. Customers browse and order themselves, and the order lands straight in your dashboard."},
+      points:{ar:["كوبونات وسلات متروكة وتقييمات","دفع KNET وبطاقات وتقسيط","تقارير مبيعات لحظية"],en:["Coupons, abandoned carts and reviews","KNET, cards and instalments","Live sales reports"]} },
+    { key:"orders", badge:{ar:"12 طلب مفتوح الآن",en:"12 open orders right now"}, tab:{ar:"إدارة الطلبات",en:"Orders"}, frame:"Orders · live board",
+      d:"M8 4h8a2 2 0 0 1 2 2v14.5l-6-3-6 3V6a2 2 0 0 1 2-2zM9.5 9h5M9.5 12.5h5",
+      title:{ar:"كل طلباتك على لوح واحد",en:"Every order on one board"},
+      desc:{ar:"من اللحظة اللي يدخل فيها الطلب حتى التسليم — مراحل واضحة، مبلغ، طريقة دفع، منطقة، وسائق معيَّن.",en:"From the moment an order lands until delivery — clear stages, amount, payment method, area and assigned driver."},
+      points:{ar:["مراحل مخصصة حسب طبيعة عملك","تعيين سائق ومتابعة وقت التنفيذ","فلترة وبحث وتجميع حسب التاريخ"],en:["Custom stages that fit your workflow","Assign a driver and track turnaround","Filter, search and group by date"]} },
+    { key:"stock", badge:{ar:"161 منتج · 28 نقص مرصود",en:"161 products · 28 gaps flagged"}, tab:{ar:"إدارة المخزون",en:"Inventory"}, frame:"Products · inventory",
+      d:"M12 2.8l8.4 4.5v9.4L12 21.2l-8.4-4.5V7.3zM3.6 7.3L12 11.8l8.4-4.5M12 11.8v9.4",
+      title:{ar:"مخزون ومنتجات تحت السيطرة",en:"Products and stock under control"},
+      desc:{ar:"منتجات رئيسية بمتغيّرات، تصنيفات، خصائص، ورصد تلقائي للنواقص — مع استيراد وتصدير Excel بضغطة.",en:"Parent products with variants, categories, attributes and automatic gap detection — with one-click Excel import and export."},
+      points:{ar:["منتج رئيسي بمتغيّرات متعددة","رصد النواقص في بيانات المنتجات","استيراد من متجر قائم عبر رابط"],en:["Parent products with multiple variants","Detects gaps in product data","Import from an existing store by link"]} },
+    { key:"wa", badge:{ar:"96% نسبة وصول الرسائل",en:"96% message delivery"}, tab:{ar:"واتساب",en:"WhatsApp"}, frame:"WhatsApp Business API",
+      d:"M21 11.5a8.4 8.4 0 0 1-12.5 7.3L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z",
+      title:{ar:"واتساب أعمال رسمي",en:"Official WhatsApp Business"},
+      desc:{ar:"رقمك الموثّق داخل المنصة — محادثات العملاء، تحديثات الطلبات، والبث الجماعي كلها من نفس الشاشة.",en:"Your verified number inside the platform — customer chats, order updates and broadcasts all from one screen."},
+      points:{ar:["قوالب معتمدة وإشعارات آلية","بث جماعي لشرائح عملاء محددة","صندوق موحّد لكل المحادثات"],en:["Approved templates and automated notifications","Broadcasts to specific customer segments","One unified inbox for every chat"]} },
+    { key:"ai", badge:{ar:"73% تُحلّ بدون موظف",en:"73% resolved without a human"}, tab:{ar:"وكيل AI",en:"AI agent"}, frame:"AI Agent · settings",
+      d:"M12 3l1.9 4.9 4.9 1.9-4.9 1.9L12 16.6l-1.9-4.9L5.2 9.8l4.9-1.9zM18.6 15.4l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z",
+      title:{ar:"وكيل ذكاء اصطناعي يرد بدلك",en:"An AI agent that replies for you"},
+      desc:{ar:"يتعلّم من منتجاتك وسياساتك، يرد على العملاء ٢٤ ساعة بشخصية تختارها، ويحوّل لموظف بشري وقت ما يحتاج.",en:"Learns your products and policies, answers customers 24/7 with a personality you choose, and hands off to a human when needed."},
+      points:{ar:["يتعلّم من سياساتك ومنتجاتك","شخصية ومستوى ذكاء قابلين للاختيار","تحويل فوري لموظف عند الحاجة"],en:["Learns from your policies and products","Selectable personality and intelligence tier","Instant handoff to a human"]} },
+    { key:"crm", badge:{ar:"تصنيف تلقائي لكل عميل",en:"Every customer auto-segmented"}, tab:{ar:"ملف العميل",en:"Customer CRM"}, frame:"CRM · customer profile",
+      d:"M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM8.8 11.6a2.2 2.2 0 1 0 0-4.4 2.2 2.2 0 0 0 0 4.4zM5.3 16.6c.4-1.8 1.8-2.9 3.5-2.9s3.1 1.1 3.5 2.9M15.5 9.5h3.8M15.5 13h3.8",
+      title:{ar:"ملف كامل لكل عميل",en:"A full profile for every customer"},
+      desc:{ar:"كل طلب ومحادثة وملاحظة تتجمّع تلقائياً في مكان واحد، والمنصة تصنّف عملاءك حسب سلوكهم الفعلي.",en:"Every order, chat and note collects automatically in one place, and the platform segments customers by their actual behaviour."},
+      points:{ar:["تصنيف تلقائي: متكرر، خامل، VIP","سجل طلبات ومحادثات كامل","أساس البث والعروض المخصصة"],en:["Auto segments: repeat, dormant, VIP","Full order and conversation history","The base for targeted offers"]} },
+    { key:"loyalty", badge:{ar:"38% من المبيعات عملاء عائدون",en:"38% of sales from returning customers"}, tab:{ar:"برنامج الولاء",en:"Loyalty"}, frame:"Loyalty · member card",
+      d:"M3 11.5h18V19a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-7.5zM2.2 7.6h19.6v3.9H2.2zM12 7.6V20M12 7.6S10.6 3.6 8.1 3.6a2 2 0 1 0 0 4zM12 7.6s1.4-4 3.9-4a2 2 0 1 1 0 4z",
+      title:{ar:"نقاط ومكافآت ترجّع العميل",en:"Points and rewards that bring them back"},
+      desc:{ar:"العميل يجمع نقاط مع كل طلب، ويشوف كم باقي للمكافأة الجاية — سبب واضح يخليه يطلب منك مرة ثانية بدل المنافس.",en:"Customers earn points on every order and see how close the next reward is — a clear reason to order from you again instead of a competitor."},
+      points:{ar:["مستويات عضوية ومكافآت مرنة","عروض مبنية على تاريخ الشراء","تتبّع نسبة العملاء العائدين"],en:["Flexible tiers and rewards","Offers built on purchase history","Track your returning-customer rate"]} },
+    { key:"calendar", badge:{ar:"تخطيط المواسم قبل ما تبدأ",en:"Plan seasons before they start"}, tab:{ar:"التقويم التسويقي",en:"Marketing calendar"}, frame:"Marketing calendar",
+      d:"M4 7h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1zM8 3v4M16 3v4M3 11.5h18",
+      title:{ar:"تقويم تسويقي يعرف مواسم بلدك",en:"A marketing calendar that knows your market"},
+      desc:{ar:"الأعياد الرسمية ومواسم التسوق والأحداث العالمية لدولتك، جاهزة في تقويم واحد — عشان تجهّز حملتك قبل الموسم مش بعده.",en:"Public holidays, shopping seasons and global events for your country, ready in one calendar — so you prepare the campaign before the season, not after."},
+      points:{ar:["أعياد ومواسم مرتّبة حسب الدولة","تنبيه قبل الموسم بـ ٢٠ يوم","أحداث مخصصة تضيفها بنفسك"],en:["Holidays and seasons per country","Alerts 20 days before a season","Add your own custom events"]} },
   ],
   homeFeatures: [
     { badge:"OD", title:{ar:"الطلبات والتوصيل",en:"Orders & Delivery"}, desc:{ar:"صندوق موحّد، مراحل قابلة للتخصيص، تقويم توصيل وتعيين للموظفين بضغطة.",en:"Unified inbox, custom stages, delivery calendar and one-tap staff assignment."} },
@@ -1208,7 +1783,7 @@ const DATA = {
 };
 
 class Component extends DCLogic {
-  state = { page:currentPage(), lang:currentLang(), form:{name:"",phone:"",company:"",message:"",plan:requestedPlan(),biz:"",email:"",agreed:false,trial:requestedTrial()}, submitted:false, subSubmitted:false, agreeWarn:false, statProgress:0, menuOpen:false, revealProg:0 };
+  state = { page:currentPage(), lang:currentLang(), pillar:"store", form:{name:"",phone:"",company:"",message:"",plan:requestedPlan(),biz:"",email:"",agreed:false,trial:requestedTrial()}, submitted:false, subSubmitted:false, agreeWarn:false, statProgress:0, menuOpen:false, revealProg:0 };
 
   componentDidMount(){
     let step = 0;
@@ -1274,6 +1849,8 @@ class Component extends DCLogic {
     ];
     const barsH = [45,70,55,90,65,100,80];
 
+    const P = this.state.pillar;
+    const pillarDef = DATA.pillarDefs.find(p => p.key === P) || DATA.pillarDefs[0];
     const t = {
       dir, headingFont,
       bodyFont: L==="ar" ? "'Cairo', sans-serif" : "'Poppins', sans-serif",
@@ -1304,12 +1881,205 @@ class Component extends DCLogic {
           {name: L==="ar"?"نورة  محمد\n":"Noura F.", stage: L==="ar"?"تم التسليم":"Delivered", pill:"#E8FFFE"},
         ],
       },
-      problem: {
-        title: L==="ar" ? "من الفوضى إلى منصة واحدة" : "From chaos to one platform",
-        sub: L==="ar" ? "المشاكل اليومية للتاجر — وكيف تحلّها velorci" : "A merchant's daily problems — and how velorci solves them",
-        beforeLabel: L==="ar" ? "قبل" : "Before",
-        afterLabel: L==="ar" ? "مع velorci" : "With velorci",
-        rows: DATA.problemRows.map(r => ({p:this.pick(r.p), s:this.pick(r.s)})),
+      pillars: {
+        tag: L==="ar" ? "شوف المنصة وهي تشتغل" : "See the platform running",
+        title: L==="ar" ? "ثماني أدوات، لوحة واحدة" : "Eight tools, one dashboard",
+        sub: L==="ar" ? "اضغط على أي أداة وشوف شاشتها الحقيقية داخل المنصة." : "Pick any tool and see its real screen inside the platform.",
+        cta: L==="ar" ? "اطلب عرضاً تجريبياً" : "Request a demo",
+
+        store: {
+          brand: L==="ar" ? "متجرك" : "YOUR BRAND",
+          heroName: L==="ar" ? "كرسي استرخاء كبير" : "Large lounge chair",
+          heroPrice: L==="ar" ? "59 د.ك" : "KD 59",
+          buy: L==="ar" ? "اشترِ الآن" : "Buy now",
+          offers: L==="ar" ? "العروض" : "Offers",
+          toolsLabel: L==="ar" ? "أدوات المتجر" : "STORE TOOLS",
+          tools: [
+            { label: L==="ar"?"السلات المتروكة":"Abandoned carts", d:"M5 6h16l-1.7 8.6a2 2 0 0 1-2 1.6H9a2 2 0 0 1-2-1.6L4.6 4H2M9 20.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM17 20.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" },
+            { label: L==="ar"?"تنبيه عودة المخزون":"Back-in-stock alerts", d:"M18 8.5a6 6 0 1 0-12 0c0 6-2.5 7.5-2.5 7.5h17S18 14.5 18 8.5zM13.7 19.5a2 2 0 0 1-3.4 0" },
+            { label:"SEO", d:"M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20.5 20.5L16 16" },
+            { label: L==="ar"?"أكواد الخصم":"Discount codes", d:"M20 12a2.5 2.5 0 0 1 2-2.4V6.5a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v3.1a2.5 2.5 0 0 1 0 4.8v3.1a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-3.1A2.5 2.5 0 0 1 20 12zM9 9.5h6M9 14.5h6" },
+            { label: L==="ar"?"إدارة المرتجعات":"Return management", d:"M3.5 12A8.5 8.5 0 1 1 6 18M3.5 17.5V12H9" },
+            { label: L==="ar"?"التقييمات":"Reviews", d:"M12 3.5l2.6 5.8 6.3.7-4.7 4.3 1.3 6.2-5.5-3.2-5.5 3.2 1.3-6.2L3.1 10l6.3-.7z" },
+            { label: L==="ar"?"لعبة الجوائز":"Prize game", d:"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM12 3v5.5M12 15.5V21" },
+            { label: L==="ar"?"بطاقات الهدايا":"Gift cards", d:"M3 11.5h18V19a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zM2.2 7.6h19.6v3.9H2.2zM12 7.6V20M12 7.6S10.6 3.6 8.1 3.6a2 2 0 1 0 0 4zM12 7.6s1.4-4 3.9-4a2 2 0 1 1 0 4z" },
+            { label: L==="ar"?"تصميم المتجر":"Store design", d:"M12 3a9 9 0 1 0 0 18c1 0 1.7-.8 1.7-1.7 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.1 0-1 .8-1.7 1.7-1.7H16a5 5 0 0 0 5-5c0-4-4-7.3-9-7.3zM7.5 12.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4zM11 8.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4zM15.5 9.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4z" },
+            { label: L==="ar"?"الفروع والاستلام":"Branches & pickup", d:"M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11zM12 12.4a2.4 2.4 0 1 0 0-4.8 2.4 2.4 0 0 0 0 4.8z" },
+            { label: L==="ar"?"إعدادات المتجر":"Store settings", d:"M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zM19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1v.3a2 2 0 1 1-4 0v-.2a1.6 1.6 0 0 0-2.8-1.1l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 3.5 14H3a2 2 0 1 1 0-4h.2A1.6 1.6 0 0 0 4.3 7.2l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 2.7-1.1V3a2 2 0 1 1 4 0v.2a1.6 1.6 0 0 0 2.8 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7h.3a2 2 0 1 1 0 4h-.2a1.6 1.6 0 0 0-1.2 1z" },
+          ],
+          seeAll: L==="ar" ? "الكل ←" : "See all →",
+          hero: [
+            { d:"M41 16h38a7 7 0 0 1 7 7v24H34V23a7 7 0 0 1 7-7zM28 51h64a5.5 5.5 0 0 1 0 11H28a5.5 5.5 0 0 1 0-11zM56.5 62h7v14h-7zM40 80h40l-3.5 5h-33z", fill:"#AEB9BC", w:"122px", flex:"1", op:".6" },
+            { d:"M20 84c-7 0-12-5.5-10.6-12.6C12.6 55 20 42.5 32 35.5c17-10 39-10 56 0 12 7 19.4 19.5 22.6 35.9C112 78.5 107 84 100 84z",  fill:"#8E9BA0", w:"200px", flex:"1.6", op:"1" },
+            { d:"M14 38h92v8.5H14zM26 46.5h7.5v38H26zM86.5 46.5H94v38h-7.5zM33.5 58h53v5.5h-53z", fill:"#AEB9BC", w:"122px", flex:"1", op:".6" },
+          ],
+          products: [
+            { d:"M41 16h38a7 7 0 0 1 7 7v24H34V23a7 7 0 0 1 7-7zM28 51h64a5.5 5.5 0 0 1 0 11H28a5.5 5.5 0 0 1 0-11zM56.5 62h7v14h-7zM40 80h40l-3.5 5h-33z", fill:"#97A4A8", name: L==="ar"?"كرسي مكتب قابل للتعديل":"Adjustable office chair", was:"66.500", now: L==="ar"?"56.500 د.ك":"KD 56.500", off:"15%" },
+            { d:"M14 38h92v8.5H14zM26 46.5h7.5v38H26zM86.5 46.5H94v38h-7.5zM33.5 58h53v5.5h-53z", fill:"#A9B0AC", name: L==="ar"?"طاولة طعام خشبية":"Wooden dining table", was:"141.000", now: L==="ar"?"120.000 د.ك":"KD 120.000", off:"15%" },
+            { d:"M60 44c27.6 0 47 8.4 47 17.5S87.6 79 60 79 13 70.6 13 61.5 32.4 44 60 44zm0 8c-19.8 0-34 4.6-34 9.5S40.2 71 60 71s34-4.6 34-9.5S79.8 52 60 52z",   fill:"#B4BBB7", name: L==="ar"?"سجادة صوف طبيعي":"Natural wool rug", was:"34.000", now: L==="ar"?"28.900 د.ك":"KD 28.900", off:"15%" },
+          ],
+        },
+
+        orders: {
+          title: L==="ar" ? "الطلبات" : "Orders",
+          summary: [
+            { label: L==="ar"?"وقت التنفيذ":"Turnaround", value: L==="ar"?"29س 55د":"29h 55m" },
+            { label: L==="ar"?"الإجمالي":"Total", value: L==="ar"?"883.90 د.ك":"KD 883.90" },
+            { label: L==="ar"?"القطع":"Items", value:"23" },
+            { label: L==="ar"?"الطلبات":"Orders", value:"12" },
+          ],
+          stages: [
+            { label: L==="ar"?"مفتوح":"Open", count:"12", active:true },
+            { label: L==="ar"?"قيد التنفيذ":"In progress", count:"3", active:false },
+            { label: L==="ar"?"تم التوصيل":"Delivered", count:"82", active:false },
+            { label: L==="ar"?"مكتمل":"Done", count:"323", active:false },
+          ],
+          list: [
+            { date:"2026-09-17", inv:"INV-26-4393", state: L==="ar"?"مفتوح":"Open", age: L==="ar"?"6 أيام":"6 d",
+              amount: L==="ar"?"49.300 د.ك":"KD 49.300", promo:"FREEDELIVERY (2)", pay: L==="ar"?"نقداً":"Cash",
+              customer: L==="ar"?"عميل تجريبي":"Demo customer", repeat:"4x", area: L==="ar"?"الظهر":"Al Dhaher",
+              accent:"#E4572E", stateBg:"#FDEAE4", stateFg:"#C2532E" },
+            { date:"2026-09-15", inv:"INV-26-4392", state: L==="ar"?"قيد التنفيذ":"In progress", age: L==="ar"?"4 أيام":"4 d",
+              amount: L==="ar"?"98.600 د.ك":"KD 98.600", promo:"FREEDELIVERY (2)", pay:"KNET",
+              customer: L==="ar"?"عميل تجريبي":"Demo customer", repeat:"2x", area: L==="ar"?"صباح الأحمد":"Sabah Al Ahmad",
+              accent:"#F0A825", stateBg:"#FFF3E2", stateFg:"#A76A12" },
+          ],
+        },
+
+        stock: {
+          title: L==="ar" ? "إعدادات المنتجات" : "Products Settings",
+          counts: L==="ar" ? ["161 منتج","28 منتج رئيسي","4 تصنيفات"] : ["161 products","28 parents","4 categories"],
+          tabs: [
+            { label: L==="ar"?"المنتجات":"Products", active:true, badge:"" },
+            { label: L==="ar"?"النواقص":"Gaps", active:false, badge:"28" },
+            { label: L==="ar"?"الخصائص":"Attributes", active:false, badge:"" },
+          ],
+          actions: [
+            { label: L==="ar"?"تصدير Excel كامل":"Export full Excel", d:"M12 3v12M8 11.5l4 4 4-4M4 20h16" },
+            { label: L==="ar"?"استيراد Excel / CSV":"Import Excel / CSV", d:"M12 15.5V3.5M8 8l4-4.5 4 4.5M4 20h16" },
+            { label: L==="ar"?"استيراد من متجر قائم":"Import from an existing store", d:"M10 13.5a4 4 0 0 0 5.7 0l3-3a4 4 0 1 0-5.7-5.7l-1 1M14 10.5a4 4 0 0 0-5.7 0l-3 3a4 4 0 1 0 5.7 5.7l1-1" },
+            { label: L==="ar"?"دليل ملف Excel":"Excel file guide", d:"M5 4h9l5 5v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zM14 4v5h5" },
+          ],
+          cats: [
+            { label: L==="ar"?"الكل":"All", active:true },
+            { label: L==="ar"?"إعادة تعبئة":"Refill", active:false },
+            { label: L==="ar"?"جلسات خارجية":"Outdoor seating", active:false },
+            { label: L==="ar"?"جلسات داخلية":"Indoor seating", active:false },
+            { label: L==="ar"?"منتجات موسمية":"Seasonal", active:false },
+          ],
+          colProduct: L==="ar" ? "المنتج" : "Product",
+          colType: L==="ar" ? "النوع" : "Type",
+          colPrice: L==="ar" ? "السعر" : "Price",
+          rows: [
+            { d:"M20 84c-7 0-12-5.5-10.6-12.6C12.6 55 20 42.5 32 35.5c17-10 39-10 56 0 12 7 19.4 19.5 22.6 35.9C112 78.5 107 84 100 84z",  name: L==="ar"?"بين باج ضد الماء":"Waterproof bean bag", sku:"158161", type: L==="ar"?"رئيسي · 10 متغيّرات":"Parent · 10 children", price:"38.000" },
+            { d:"M41 16h38a7 7 0 0 1 7 7v24H34V23a7 7 0 0 1 7-7zM28 51h64a5.5 5.5 0 0 1 0 11H28a5.5 5.5 0 0 1 0-11zM56.5 62h7v14h-7zM40 80h40l-3.5 5h-33z", name: L==="ar"?"كرسي فردي ضد الماء":"Waterproof single chair", sku:"158274", type: L==="ar"?"رئيسي · 10 متغيّرات":"Parent · 10 children", price:"30.000" },
+            { d:"M14 38h92v8.5H14zM26 46.5h7.5v38H26zM86.5 46.5H94v38h-7.5zM33.5 58h53v5.5h-53z", name: L==="ar"?"طاولة ضد الماء":"Waterproof table", sku:"158277", type: L==="ar"?"رئيسي · 10 متغيّرات":"Parent · 10 children", price:"12.000" },
+          ],
+        },
+
+        calendar: {
+          title: L==="ar" ? "التقويم التسويقي" : "Marketing Calendar",
+          sub: L==="ar" ? "خطّط حملاتك قبل كل موسم" : "Plan your campaigns ahead of every season",
+          addEvent: L==="ar" ? "+ حدث مخصص" : "+ Custom event",
+          toggleTitle: L==="ar" ? "إظهار المواسم القادمة على بطاقة الترحيب" : "Show upcoming seasons on the welcome card",
+          toggleBody: L==="ar" ? "الأحداث اللي باقي عليها أقل من 20 يوم تظهر أول ما تفتح لوحة التحكم" : "Events less than 20 days away appear when you open the dashboard",
+          selects: [
+            { label: L==="ar"?"الدولة":"Country", value: L==="ar"?"الكويت":"Kuwait" },
+            { label: L==="ar"?"السنة":"Year", value:"2026" },
+            { label: L==="ar"?"الشهر":"Month", value: L==="ar"?"سبتمبر":"September" },
+          ],
+          kinds: [
+            { label: L==="ar"?"أعياد رسمية":"Government holidays", dot:"#3E7079", active:true },
+            { label: L==="ar"?"مواسم تسوق":"Shopping seasons", dot:"#0F7C86", active:true },
+            { label: L==="ar"?"أحداث عالمية":"Global events", dot:"#17A05C", active:true },
+            { label: L==="ar"?"أحداث مخصصة":"Custom events", dot:"#E8A317", active:false },
+          ],
+          monthLabel: L==="ar" ? "سبتمبر 2026" : "September 2026",
+          eventCount: L==="ar" ? "4 أحداث" : "4 events",
+          days: L==="ar" ? ["أحد","إثنين","ثلاثاء","أربعاء","خميس","جمعة","سبت"] : ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
+          eventName: L==="ar" ? "العودة للمدارس" : "Back to school",
+        },
+
+        wa: {
+          search: L==="ar" ? "ابحث في المحادثات" : "Search chats",
+          filters: [
+            { label: L==="ar"?"تحتاج ردك 2":"Needs you 2", active:true },
+            { label: L==="ar"?"غير مقروء":"Unread", active:false },
+            { label: L==="ar"?"كل الحالات":"All statuses", active:false },
+            { label: L==="ar"?"كل الوسوم":"All tags", active:false },
+          ],
+          chats: [
+            { initial:"ع", name: L==="ar"?"عميل تجريبي ١":"Demo customer 1", msg: L==="ar"?"تم تجهيز طلبك وراح يتواصل معك المندوب قبل التوصيل ✓":"Your order is ready, the driver will contact you before delivery ✓", phone:"+965 5XXX XXXX", inv:"#INV-26-4371", time:"1:03", unread:false, avatarBg:"#8B5CF6" },
+            { initial:"ن", name: L==="ar"?"عميل تجريبي ٢":"Demo customer 2", msg: L==="ar"?"أكيد تفضل، شلون أقدر أساعدك ✓":"Of course, how can I help you ✓", phone:"+965 6XXX XXXX", inv:"", time:"6:11", unread:false, avatarBg:"#E8833A" },
+            { initial:"س", name: L==="ar"?"عميل تجريبي ٣":"Demo customer 3", msg: L==="ar"?"يعطيكم العافية":"Thank you so much", phone:"+965 6XXX XXXX", inv:"#INV-26-4372", time: L==="ar"?"أمس":"Yesterday", unread:true, avatarBg:"#DC2626" },
+            { initial:"ف", name: L==="ar"?"عميل تجريبي ٤":"Demo customer 4", msg: L==="ar"?"خلال ٥ أيام وقبل التوصيل سيتم التواصل معكم ✓":"Within 5 days, we will contact you before delivery ✓", phone:"+965 9XXX XXXX", inv:"#INV-26-4392", time:"9/10", unread:false, avatarBg:"#7C3AED" },
+            { initial:"م", name: L==="ar"?"عميل تجريبي ٥":"Demo customer 5", msg: L==="ar"?"تم تجهيز طلبك وراح يتواصل معك المندوب ✓":"Your order is ready, the driver will contact you ✓", phone:"+965 9XXX XXXX", inv:"#INV-26-4341", time:"9/12", unread:false, avatarBg:"#2563EB" },
+          ],
+          nav: [
+            { label: L==="ar"?"الرئيسية":"Home", d:"M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z", active:false },
+            { label:"WhatsApp", d:"M21 11.5a8.4 8.4 0 0 1-12.5 7.3L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z", active:true },
+            { label: L==="ar"?"المنتجات":"Products", d:"M12 2.8l8 4.3v9.8l-8 4.3-8-4.3V7.1zM4 7.1l8 4.3 8-4.3M12 11.4V21", active:false },
+            { label: L==="ar"?"التقارير":"Reports", d:"M4 20h16M7 16V9M12 16V5M17 16v-5", active:false },
+          ],
+        },
+
+        ai: {
+          agentName: L==="ar" ? "موظف المبيعات وخدمة العملاء" : "Sales & Customer Service Employee",
+          running: L==="ar" ? "يعمل الآن" : "Running",
+          tabs: [
+            { label: L==="ar"?"الحالة":"Status", active:false },
+            { label: L==="ar"?"المعرفة":"Brain", active:true },
+            { label: L==="ar"?"الشخصية":"Persona", active:false },
+            { label: L==="ar"?"الإعدادات":"Settings", active:false },
+            { label: L==="ar"?"المختبر":"Lab", active:false },
+          ],
+          stats: [
+            { value:"34", label: L==="ar"?"معلومة معتمدة":"approved facts" },
+            { value:"0", label: L==="ar"?"بانتظار الاعتماد":"awaiting approval" },
+            { value:"44%", label: L==="ar"?"اكتمال الملف":"profile complete" },
+          ],
+          cardTitle: L==="ar" ? "مقابلة التعرّف على عملك" : "Business discovery interview",
+          cardBody: L==="ar" ? "محادثة قصيرة تسألك عن عملك سؤالاً واحداً في كل مرة. تقرأ كتالوجك وما استُخلص من محادثاتك، فتسأل فقط عمّا ينقصها — ولا تكرر ما تعرفه." : "A short conversation that asks about your business, one question at a time. It reads your catalogue and what was mined from your chats, so it asks only about what is missing.",
+          progress: L==="ar" ? "ملفك الآن: 44% (7 من 16 حقلاً)" : "Your profile is now: 44% (7 of 16 fields)",
+          cardCta: L==="ar" ? "ابدأ المقابلة" : "Start the interview",
+        },
+
+        crm: {
+          initial: L==="ar" ? "ع" : "D",
+          name: L==="ar" ? "عميل تجريبي" : "Demo customer",
+          tags: L==="ar" ? ["عميل متكرر","VIP","واتساب"] : ["Repeat buyer","VIP","WhatsApp"],
+          stats: [
+            { value:"14", label: L==="ar"?"طلب":"orders" },
+            { value: L==="ar"?"842 د.ك":"KD 842", label: L==="ar"?"إجمالي الشراء":"lifetime value" },
+            { value: L==="ar"?"3 أيام":"3 days", label: L==="ar"?"منذ آخر طلب":"since last order" },
+          ],
+          timelineLabel: L==="ar" ? "آخر النشاطات" : "RECENT ACTIVITY",
+          timeline: [
+            { text: L==="ar"?"طلب #482 — تم التسليم بنجاح":"Order #482 — delivered", time: L==="ar"?"قبل 3 أيام":"3 days ago" },
+            { text: L==="ar"?"محادثة واتساب — استفسار عن الإرجاع":"WhatsApp chat — asked about returns", time: L==="ar"?"قبل 5 أيام":"5 days ago" },
+            { text: L==="ar"?"وصل للعضوية الذهبية":"Reached Gold tier", time: L==="ar"?"قبل أسبوعين":"2 weeks ago" },
+          ],
+        },
+
+        loyalty: {
+          title: L==="ar" ? "برنامج الولاء" : "Loyalty Program",
+          sub: L==="ar" ? "قواعد النقاط الخاصة بمتجرك" : "Your store's own points rules",
+          onLabel: L==="ar" ? "مفعّل" : "On",
+          bannerTitle: L==="ar" ? "البرنامج يعمل" : "Program is running",
+          bannerBody: L==="ar" ? "عملاؤك يجمعون نقاطاً مع كل عملية شراء حسب القواعد اللي حددتها — بدون أي خطوة إضافية منك." : "Your customers earn points on every purchase by the rules you set — with no extra step from you.",
+          cards: [
+            { label: L==="ar"?"نسبة الاسترداد":"Cashback rate", value:"1.0%", sub: L==="ar"?"من كل عملية بيع":"of every sale" },
+            { label: L==="ar"?"100 نقطة =":"100 points =", value: L==="ar"?"0.100 د.ك":"KD 0.100", sub: L==="ar"?"قيمتها للعميل":"for the customer" },
+            { label: L==="ar"?"لكل 1.000 د.ك":"Per KD 1.000", value: L==="ar"?"10 نقاط":"10 pts", sub: L==="ar"?"يكسبها العميل":"earned" },
+          ],
+          earnTitle: L==="ar" ? "كسب النقاط" : "Earning points",
+          earnBody: L==="ar" ? "كم نقطة يحصل عليها العميل مقابل كل مبلغ ينفقه." : "How many points a customer gets for every amount they spend.",
+          earns: L==="ar" ? "يكسب العميل" : "customer earns",
+          rates: [
+            { label:"1%", active:true }, { label:"2%", active:false }, { label:"3%", active:false },
+            { label:"5%", active:false }, { label:"10%", active:false },
+          ],
+        },
       },
       homeFeatures: {
         title: L==="ar" ? "منصة كاملة، ليس مجرد أداة" : "A full platform, not just a tool",
@@ -1603,6 +2373,61 @@ class Component extends DCLogic {
       } : { title:"", updated:"", sections:[] },
     };
 
+    const chipOn  = { bg:"#FDF0CE", border:"#EFCB6A", fg:"#8A6410" };
+    t.pillars.orders.stages = t.pillars.orders.stages.map(s => ({
+      label:s.label, count:s.count,
+      line: s.active ? "#E4572E" : "transparent",
+      fg: s.active ? "#08333A" : "#8FAAB0",
+      pillBg: s.active ? "#FDEAE4" : "#EFF5F4",
+      pillFg: s.active ? "#C2532E" : "#8FAAB0",
+    }));
+    t.pillars.stock.tabs = t.pillars.stock.tabs.map(x => ({
+      label:x.label, badge:x.badge, hasBadge: !!x.badge,
+      bg: x.active ? "#0C3B42" : "#F4FAF9",
+      border: x.active ? "#0C3B42" : "rgba(12,59,66,.08)",
+      fg: x.active ? "#FFFFFF" : "#5C868D",
+    }));
+    t.pillars.stock.cats = t.pillars.stock.cats.map(c => ({
+      label:c.label,
+      bg: c.active ? "#0F7C86" : "#F4FAF9",
+      border: c.active ? "#0F7C86" : "rgba(12,59,66,.08)",
+      fg: c.active ? "#FFFFFF" : "#5C868D",
+    }));
+    t.pillars.calendar.kinds = t.pillars.calendar.kinds.map(k => ({
+      label:k.label, dot:k.dot,
+      bg: k.active ? "#F1F9F8" : "#FFFFFF",
+      border: k.active ? "rgba(15,124,134,.3)" : "rgba(12,59,66,.09)",
+      fg: k.active ? "#0C3B42" : "#9FB8BC",
+    }));
+    // September 2026 starts on a Tuesday; three weeks is all the frame needs
+    const calEventDays = [1,2,6,7];
+    t.pillars.calendar.cells = Array.from({length:21}, (_,i) => {
+      const day = i - 1;
+      const inMonth = day >= 1;
+      return {
+        num: inMonth ? String(day) : "",
+        numColor: inMonth ? "#5C868D" : "transparent",
+        hasEvent: inMonth && calEventDays.indexOf(day) !== -1,
+        event: t.pillars.calendar.eventName,
+      };
+    });
+    const chipOff = { bg:"#F4FAF9", border:"#DFEDEC", fg:"#5C868D" };
+    t.pillars.wa.chats = t.pillars.wa.chats.map(c => ({...c, hasInv: !!c.inv}));
+    t.pillars.wa.filters = t.pillars.wa.filters.map(f => ({ label:f.label, ...(f.active ? chipOn : chipOff) }));
+    t.pillars.wa.nav = t.pillars.wa.nav.map(n => ({ label:n.label, d:n.d, color: n.active ? "#0F7C86" : "#9FB8BC" }));
+    t.pillars.ai.tabs = t.pillars.ai.tabs.map(x => ({
+      label: x.label,
+      bg: x.active ? "#0C3B42" : "#F4FAF9",
+      border: x.active ? "#0C3B42" : "#E4F0EE",
+      fg: x.active ? "#FFFFFF" : "#5C868D",
+    }));
+    t.pillars.loyalty.rates = t.pillars.loyalty.rates.map(r => ({
+      label: r.label,
+      bg: r.active ? "#DFF3F1" : "#FFFFFF",
+      border: r.active ? "#7FC4C0" : "#DCEAE8",
+      fg: r.active ? "#0F7C86" : "#8FAAB0",
+    }));
+
     const mq = DATA.marquee.map(m => this.pick(m));
 
     return {
@@ -1611,6 +2436,30 @@ class Component extends DCLogic {
       toggleMenu: () => this.setState({menuOpen: !this.state.menuOpen}),
       navItems: PAGES.filter(it => it.nav).map(it => this.navLink(it, L)),
       navExtraItems: PAGES.filter(it => !it.nav).map(it => this.navLink(it, L)),
+      pillarTabs: DATA.pillarDefs.map(p => ({
+        label: this.pick(p.tab),
+        onClick: () => this.setState({pillar: p.key}),
+        fg: P===p.key ? "#041316" : "rgba(232,255,254,.72)",
+        bg: P===p.key ? "#65D4D2" : "rgba(232,255,254,.035)",
+        border: P===p.key ? "1px solid #65D4D2" : "1px solid rgba(101,212,210,.2)",
+        shadow: P===p.key ? "0 0 22px rgba(101,212,210,.32)" : "none",
+      })),
+      activePillar: {
+        frame: pillarDef.frame,
+        d: pillarDef.d,
+        title: this.pick(pillarDef.title),
+        desc: this.pick(pillarDef.desc),
+        points: this.pick(pillarDef.points),
+        badge: this.pick(pillarDef.badge),
+      },
+      isPillarStore: P==="store",
+      isPillarOrders: P==="orders",
+      isPillarStock: P==="stock",
+      isPillarCalendar: P==="calendar",
+      isPillarWa: P==="wa",
+      isPillarAi: P==="ai",
+      isPillarCrm: P==="crm",
+      isPillarLoyalty: P==="loyalty",
       isHome: this.state.page==="home",
       isAbout: this.state.page==="about",
       isServices: this.state.page==="services",
