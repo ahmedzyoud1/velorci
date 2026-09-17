@@ -190,7 +190,7 @@
     <!-- PLATFORM PILLARS — TABBED SHOWCASE -->
     <section style="position:relative; padding:90px 40px; overflow:hidden;">
       <div style="position:absolute; top:-80px; left:50%; width:760px; height:760px; margin-left:-380px; background:radial-gradient(circle, rgba(101,212,210,.09), rgba(101,212,210,0) 62%); pointer-events:none;"></div>
-      <div style="position:relative; max-width:1120px; margin:0 auto;">
+      <div style="position:relative; max-width:1160px; margin:0 auto;">
 
         <div style="text-align:center; margin:0 0 16px;">
           <span style="display:inline-block; padding:7px 17px; border-radius:20px; border:1px solid rgba(101,212,210,.35); background:rgba(101,212,210,.07); color:#65D4D2; font-size:12.5px; font-weight:700; letter-spacing:.05em; font-family:{{ t.headingFont }};">{{ t.pillars.tag }}</span>
@@ -198,143 +198,224 @@
         <h2 style="font-family:{{ t.headingFont }}; font-size:38px; font-weight:800; text-align:center; margin:0 0 12px; color:#E8FFFE;">{{ t.pillars.title }}</h2>
         <p style="text-align:center; color:rgba(232,255,254,.6); font-size:16px; line-height:1.8; margin:0 auto 34px; max-width:600px;">{{ t.pillars.sub }}</p>
 
-        <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin-bottom:22px;">
+        <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin-bottom:24px;">
           <sc-for list="{{ pillarTabs }}" as="tb" hint-placeholder-count="5">
             <div onClick="{{ tb.onClick }}" style="padding:11px 20px; border-radius:14px; font-family:{{ t.headingFont }}; font-size:14.5px; font-weight:700; cursor:pointer; color:{{ tb.fg }}; background:{{ tb.bg }}; border:{{ tb.border }}; box-shadow:{{ tb.shadow }}; transition:all .22s;" style-hover="border-color:rgba(101,212,210,.55);">{{ tb.label }}</div>
           </sc-for>
         </div>
 
-        <div style="display:grid; grid-template-columns:1fr 340px; gap:26px; align-items:start;" class="r-pillar">
+        <div style="display:grid; grid-template-columns:1fr 330px; gap:26px; align-items:start;" class="r-pillar">
 
-          <div style="border:1px solid rgba(101,212,210,.22); border-radius:20px; background:linear-gradient(180deg, rgba(8,58,63,.5), rgba(4,19,22,.72)); overflow:hidden; box-shadow:0 26px 70px rgba(0,0,0,.45);">
-            <div style="display:flex; align-items:center; gap:9px; padding:12px 16px; border-bottom:1px solid rgba(101,212,210,.16); background:rgba(4,19,22,.5);">
-              <span style="width:10px; height:10px; border-radius:50%; background:rgba(232,255,254,.18);"></span>
-              <span style="width:10px; height:10px; border-radius:50%; background:rgba(232,255,254,.18);"></span>
-              <span style="width:10px; height:10px; border-radius:50%; background:rgba(101,212,210,.5);"></span>
-              <span style="margin-inline-start:10px; padding:5px 14px; border-radius:10px; background:rgba(232,255,254,.05); border:1px solid rgba(101,212,210,.16); font-family:Poppins,sans-serif; font-size:12px; color:rgba(232,255,254,.62); direction:ltr;">{{ activePillar.frame }}</span>
+          <!-- ====== LIGHT APP WINDOW ====== -->
+          <div style="border-radius:20px; overflow:hidden; background:#EAF6F5; box-shadow:0 30px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(101,212,210,.22); direction:{{ t.dir }};">
+
+            <div style="display:flex; align-items:center; gap:8px; padding:11px 16px; background:#DCEEEC; border-bottom:1px solid #C9E3E0;">
+              <span style="width:10px; height:10px; border-radius:50%; background:#F0A9A0;"></span>
+              <span style="width:10px; height:10px; border-radius:50%; background:#F2CE8C;"></span>
+              <span style="width:10px; height:10px; border-radius:50%; background:#9BD3A8;"></span>
+              <span style="margin-inline-start:12px; padding:4px 14px; border-radius:9px; background:#FFFFFF; border:1px solid #CDE5E2; font-family:Poppins,sans-serif; font-size:11.5px; color:#5C868D; direction:ltr;">{{ activePillar.frame }}</span>
             </div>
 
-            <div style="padding:22px; min-height:392px;">
+            <div style="padding:18px; min-height:430px;">
 
+              <!-- ---------- STORE ---------- -->
               <sc-if value="{{ isPillarStore }}" hint-placeholder-val="{{ true }}">
-                <div>
-                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding-bottom:16px; border-bottom:1px solid rgba(232,255,254,.07);">
-                    <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:17px; color:#E8FFFE;">{{ t.pillars.store.shop }}</div>
-                    <div style="display:flex; align-items:center; gap:7px; padding:7px 13px; border-radius:11px; background:rgba(101,212,210,.1); border:1px solid rgba(101,212,210,.28);">
-                      <svg viewBox="0 0 24 24" style="width:15px; height:15px;" fill="none" stroke="#65D4D2" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h15l-1.6 8.4a2 2 0 0 1-2 1.6H9.3a2 2 0 0 1-2-1.6L5.4 4H3M9 20.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM17.5 20.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"></path></svg>
-                      <span style="font-size:13px; font-weight:700; color:#65D4D2;">3</span>
+                <div style="border-radius:14px; overflow:hidden; background:#FFFFFF; border:1px solid #DCEAE8;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 18px; background:#6E8B77;">
+                    <div style="display:flex; align-items:center; gap:13px;">
+                      <svg viewBox="0 0 24 24" style="width:19px; height:19px;" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+                      <svg viewBox="0 0 24 24" style="width:18px; height:18px;" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12.4a3.4 3.4 0 1 0 0-6.8 3.4 3.4 0 0 0 0 6.8zM5 19.6c.9-3.2 3.6-5 7-5s6.1 1.8 7 5"></path></svg>
+                    </div>
+                    <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:16px; letter-spacing:.08em; color:#FFFFFF;">{{ t.pillars.store.brand }}</div>
+                    <div style="position:relative;">
+                      <svg viewBox="0 0 24 24" style="width:20px; height:20px;" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h15l-1.6 8.4a2 2 0 0 1-2 1.6H9.3a2 2 0 0 1-2-1.6L5.4 4H3M9 20.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM17.5 20.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"></path></svg>
+                      <span style="position:absolute; top:-6px; inset-inline-end:-7px; min-width:16px; height:16px; border-radius:9px; background:#E4572E; color:#fff; font-family:Poppins,sans-serif; font-size:10px; font-weight:800; display:flex; align-items:center; justify-content:center;">2</span>
                     </div>
                   </div>
-                  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:13px; margin-top:18px;" class="r-grid3">
-                    <sc-for list="{{ t.pillars.store.products }}" as="pr" hint-placeholder-count="3">
-                      <div style="border:1px solid rgba(232,255,254,.08); border-radius:14px; overflow:hidden; background:rgba(232,255,254,.025); transition:all .25s;" style-hover="border-color:rgba(101,212,210,.4); transform:translateY(-3px);">
-                        <div style="height:112px; display:flex; align-items:center; justify-content:center; background:rgba(4,19,22,.5); border-bottom:1px solid rgba(232,255,254,.06);"><img src="{{ pr.img }}" style="max-width:74%; max-height:78px; width:auto; height:auto; object-fit:contain; display:block;"></div>
-                        <div style="padding:11px 12px 13px;">
-                          <div style="font-size:13px; font-weight:600; line-height:1.5; color:#E8FFFE; min-height:39px;">{{ pr.name }}</div>
-                          <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:9px;">
-                            <span style="font-family:Poppins,sans-serif; font-size:13.5px; font-weight:800; color:#65D4D2;">{{ pr.price }}</span>
-                            <span style="padding:5px 11px; border-radius:9px; background:#65D4D2; color:#041316; font-size:11px; font-weight:800;">{{ t.pillars.store.add }}</span>
-                          </div>
+
+                  <div style="padding:20px 18px 8px; text-align:center;">
+                    <div style="display:flex; align-items:flex-end; justify-content:center; gap:14px;">
+                      <sc-for list="{{ t.pillars.store.hero }}" as="hp" hint-placeholder-count="3">
+                        <div style="flex:{{ hp.flex }}; display:flex; align-items:flex-end; justify-content:center;">
+                          <img src="{{ hp.img }}" style="width:100%; max-width:{{ hp.w }}; height:auto; object-fit:contain; display:block; opacity:{{ hp.op }};">
+                        </div>
+                      </sc-for>
+                    </div>
+                    <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:19px; color:#4A6B55; margin-top:16px;">{{ t.pillars.store.heroName }}</div>
+                    <div style="font-family:Poppins,sans-serif; font-weight:700; font-size:15px; color:#6E8B77; margin-top:6px;">{{ t.pillars.store.heroPrice }}</div>
+                    <span style="display:inline-block; margin-top:13px; padding:10px 34px; border-radius:24px; border:1.5px solid #6E8B77; color:#4A6B55; font-family:{{ t.headingFont }}; font-weight:700; font-size:13.5px;">{{ t.pillars.store.buy }}</span>
+                    <div style="display:flex; align-items:center; justify-content:center; gap:6px; margin-top:14px;">
+                      <span style="width:6px; height:6px; border-radius:4px; background:#CBDCD0;"></span>
+                      <span style="width:22px; height:6px; border-radius:4px; background:#6E8B77;"></span>
+                      <span style="width:6px; height:6px; border-radius:4px; background:#CBDCD0;"></span>
+                      <span style="width:6px; height:6px; border-radius:4px; background:#CBDCD0;"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:14px; padding:0 4px;">
+                  <span style="font-family:{{ t.headingFont }}; font-weight:800; font-size:15px; color:#0C3B42;">{{ t.pillars.store.offers }}</span>
+                  <span style="font-size:12px; color:#5C868D;">{{ t.pillars.store.seeAll }}</span>
+                </div>
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:11px; margin-top:10px;" class="r-grid3">
+                  <sc-for list="{{ t.pillars.store.products }}" as="pr" hint-placeholder-count="3">
+                    <div style="position:relative; border-radius:13px; overflow:hidden; background:#FFFFFF; border:1px solid #DCEAE8;">
+                      <span style="position:absolute; top:0; inset-inline-start:0; z-index:2; padding:4px 11px; border-end-end-radius:11px; background:#E4572E; color:#fff; font-family:Poppins,sans-serif; font-size:10.5px; font-weight:800;">{{ pr.off }}</span>
+                      <div style="height:96px; display:flex; align-items:center; justify-content:center; background:#F4F9F8;">
+                        <img src="{{ pr.img }}" style="max-width:70%; max-height:72px; object-fit:contain; display:block;">
+                      </div>
+                      <div style="padding:10px 12px 12px;">
+                        <div style="font-size:12.5px; font-weight:700; color:#0C3B42; line-height:1.45; min-height:36px;">{{ pr.name }}</div>
+                        <div style="display:flex; align-items:baseline; gap:7px; margin-top:6px; flex-wrap:wrap;">
+                          <span style="font-family:Poppins,sans-serif; font-size:11.5px; color:#9FB8BC; text-decoration:line-through;">{{ pr.was }}</span>
+                          <span style="font-family:Poppins,sans-serif; font-size:13.5px; font-weight:800; color:#0F7C86;">{{ pr.now }}</span>
                         </div>
                       </div>
-                    </sc-for>
-                  </div>
-                  <div style="margin-top:18px; padding:13px 16px; border-radius:12px; background:rgba(101,212,210,.06); border:1px solid rgba(101,212,210,.2); font-size:13.5px; color:rgba(232,255,254,.75);">{{ t.pillars.store.note }}</div>
+                    </div>
+                  </sc-for>
                 </div>
               </sc-if>
 
+              <!-- ---------- WHATSAPP ---------- -->
               <sc-if value="{{ isPillarWa }}" hint-placeholder-val="{{ false }}">
-                <div>
-                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; padding-bottom:14px; border-bottom:1px solid rgba(232,255,254,.07);">
-                    <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:16px; color:#E8FFFE;">{{ t.pillars.wa.inbox }}</div>
-                    <span style="padding:5px 12px; border-radius:10px; background:rgba(58,208,122,.14); border:1px solid rgba(58,208,122,.34); color:#7ee2a8; font-size:11.5px; font-weight:700;">{{ t.pillars.wa.badge }}</span>
-                  </div>
-                  <div style="display:flex; flex-direction:column; gap:7px; margin-top:13px;">
-                    <sc-for list="{{ t.pillars.wa.chats }}" as="ch" hint-placeholder-count="4">
-                      <div style="display:flex; align-items:center; gap:12px; padding:11px 13px; border-radius:12px; background:rgba(232,255,254,.025); border:1px solid rgba(232,255,254,.06); transition:all .2s;" style-hover="background:rgba(101,212,210,.07); border-color:rgba(101,212,210,.3);">
-                        <div style="width:38px; height:38px; flex:none; border-radius:50%; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; font-family:{{ t.headingFont }}; font-weight:800; font-size:14px; color:#041316;">{{ ch.initial }}</div>
-                        <div style="flex:1; min-width:0;">
-                          <div style="display:flex; align-items:center; gap:8px;">
-                            <span style="font-weight:700; font-size:14px; color:#E8FFFE;">{{ ch.name }}</span>
-                            <span style="padding:2px 8px; border-radius:7px; background:{{ ch.tagBg }}; border:1px solid {{ ch.tagBorder }}; color:{{ ch.tagFg }}; font-size:10.5px; font-weight:700;">{{ ch.tag }}</span>
-                          </div>
-                          <div style="font-size:12.5px; color:rgba(232,255,254,.5); margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ ch.msg }}</div>
-                        </div>
-                        <div style="font-family:Poppins,sans-serif; font-size:11px; color:rgba(232,255,254,.35); flex:none;">{{ ch.time }}</div>
-                      </div>
-                    </sc-for>
-                  </div>
-                  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:16px;">
-                    <sc-for list="{{ t.pillars.wa.stats }}" as="ws" hint-placeholder-count="3">
-                      <div style="padding:13px; border-radius:12px; background:rgba(101,212,210,.055); border:1px solid rgba(101,212,210,.18); text-align:center;">
-                        <div style="font-family:Poppins,sans-serif; font-size:19px; font-weight:800; color:#65D4D2;">{{ ws.value }}</div>
-                        <div style="font-size:11.5px; color:rgba(232,255,254,.55); margin-top:3px;">{{ ws.label }}</div>
-                      </div>
-                    </sc-for>
-                  </div>
-                </div>
-              </sc-if>
-
-              <sc-if value="{{ isPillarAi }}" hint-placeholder-val="{{ false }}">
-                <div>
-                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; padding:14px 16px; border-radius:13px; background:rgba(58,208,122,.08); border:1px solid rgba(58,208,122,.28);">
-                    <div style="display:flex; align-items:center; gap:11px;">
-                      <span style="position:relative; width:10px; height:10px; border-radius:50%; background:#3ad07a; box-shadow:0 0 12px rgba(58,208,122,.8);"></span>
-                      <span style="font-family:{{ t.headingFont }}; font-weight:700; font-size:15px; color:#E8FFFE;">{{ t.pillars.ai.status }}</span>
+                <div style="border-radius:14px; overflow:hidden; background:#FFFFFF; border:1px solid #DCEAE8;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 16px; background:#D6F2EC;">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                      <svg viewBox="0 0 24 24" style="width:18px; height:18px;" fill="none" stroke="#0C3B42" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+                      <span style="font-family:Poppins,sans-serif; font-weight:800; font-size:16px; color:#0C3B42;">WhatsApp</span>
                     </div>
-                    <span style="padding:6px 16px; border-radius:20px; background:#3ad07a; color:#04170c; font-size:12px; font-weight:800;">{{ t.pillars.ai.on }}</span>
+                    <div style="display:flex; align-items:center; gap:13px;">
+                      <svg viewBox="0 0 24 24" style="width:17px; height:17px;" fill="none" stroke="#3E7079" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5A8 8 0 1 0 18.4 16M20 6.5V12h-5.5"></path></svg>
+                      <span style="padding:3px 10px; border-radius:11px; background:#F5C542; color:#4A3708; font-family:Poppins,sans-serif; font-size:11px; font-weight:800;">40</span>
+                    </div>
                   </div>
-                  <div style="margin-top:18px; font-size:12.5px; font-weight:700; letter-spacing:.06em; color:rgba(232,255,254,.42); font-family:Poppins,sans-serif;">{{ t.pillars.ai.personaLabel }}</div>
-                  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
-                    <sc-for list="{{ t.pillars.ai.personas }}" as="ps" hint-placeholder-count="3">
-                      <span style="padding:8px 16px; border-radius:11px; background:{{ ps.bg }}; border:{{ ps.border }}; color:{{ ps.fg }}; font-size:13px; font-weight:700;">{{ ps.label }}</span>
+
+                  <div style="display:flex; align-items:center; gap:10px; padding:12px 14px 8px;">
+                    <div style="flex:1; display:flex; align-items:center; gap:9px; padding:9px 14px; border-radius:22px; background:#F1F7F7; border:1px solid #DFEDEC;">
+                      <svg viewBox="0 0 24 24" style="width:15px; height:15px; flex:none;" fill="none" stroke="#9FB8BC" stroke-width="2" stroke-linecap="round"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4"></path></svg>
+                      <span style="font-size:12.5px; color:#9FB8BC;">{{ t.pillars.wa.search }}</span>
+                    </div>
+                    <div style="width:34px; height:34px; flex:none; border-radius:50%; background:#0F7C86; display:flex; align-items:center; justify-content:center;">
+                      <svg viewBox="0 0 24 24" style="width:16px; height:16px;" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+                    </div>
+                  </div>
+
+                  <div style="display:flex; gap:7px; padding:4px 14px 12px; flex-wrap:wrap;">
+                    <sc-for list="{{ t.pillars.wa.filters }}" as="fl" hint-placeholder-count="4">
+                      <span style="padding:6px 13px; border-radius:16px; background:{{ fl.bg }}; border:1px solid {{ fl.border }}; color:{{ fl.fg }}; font-size:11.5px; font-weight:700;">{{ fl.label }}</span>
                     </sc-for>
                   </div>
-                  <div style="margin-top:20px; font-size:12.5px; font-weight:700; letter-spacing:.06em; color:rgba(232,255,254,.42); font-family:Poppins,sans-serif;">{{ t.pillars.ai.knowledgeLabel }}</div>
-                  <div style="display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:11px;" class="r-grid2">
-                    <sc-for list="{{ t.pillars.ai.knowledge }}" as="kn" hint-placeholder-count="4">
-                      <div style="display:flex; align-items:center; gap:10px; padding:12px 14px; border-radius:11px; background:rgba(232,255,254,.025); border:1px solid rgba(232,255,254,.07);">
-                        <svg viewBox="0 0 24 24" style="width:16px; height:16px; flex:none;" fill="none" stroke="#3ad07a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.2 5.2L20 7"></path></svg>
-                        <span style="font-size:13px; color:rgba(232,255,254,.8);">{{ kn }}</span>
+
+                  <div style="border-top:1px solid #EDF5F4;">
+                    <sc-for list="{{ t.pillars.wa.chats }}" as="ch" hint-placeholder-count="5">
+                      <div style="display:flex; align-items:center; gap:12px; padding:11px 15px; border-bottom:1px solid #F2F8F7;">
+                        <div style="position:relative; flex:none;">
+                          <div style="width:38px; height:38px; border-radius:50%; background:{{ ch.avatarBg }}; display:flex; align-items:center; justify-content:center; font-family:Poppins,sans-serif; font-weight:700; font-size:15px; color:#fff;">{{ ch.initial }}</div>
+                          <sc-if value="{{ ch.unread }}" hint-placeholder-val="{{ false }}">
+                            <span style="position:absolute; top:-3px; inset-inline-start:-3px; width:17px; height:17px; border-radius:50%; background:#17A05C; border:2px solid #fff; color:#fff; font-family:Poppins,sans-serif; font-size:9.5px; font-weight:800; display:flex; align-items:center; justify-content:center;">1</span>
+                          </sc-if>
+                        </div>
+                        <div style="flex:1; min-width:0;">
+                          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                            <span style="font-weight:700; font-size:13.5px; color:#0C3B42;">{{ ch.name }}</span>
+                            <span style="font-family:Poppins,sans-serif; font-size:10.5px; color:#9FB8BC; flex:none;">{{ ch.time }}</span>
+                          </div>
+                          <div style="font-size:12px; color:#5C868D; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ ch.msg }}</div>
+                          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:4px;">
+                            <span style="font-family:Poppins,sans-serif; font-size:11px; color:#8FAAB0; direction:ltr; unicode-bidi:isolate;">{{ ch.phone }}</span>
+                            <sc-if value="{{ ch.hasInv }}" hint-placeholder-val="{{ true }}">
+                              <span style="padding:2px 9px; border-radius:7px; background:#DCF5E7; color:#177E52; font-family:Poppins,sans-serif; font-size:10px; font-weight:700; flex:none; direction:ltr; unicode-bidi:isolate;">{{ ch.inv }}</span>
+                            </sc-if>
+                          </div>
+                        </div>
                       </div>
                     </sc-for>
                   </div>
-                  <div style="margin-top:18px; padding:14px 16px; border-radius:12px; background:rgba(101,212,210,.07); border:1px solid rgba(101,212,210,.24); font-size:13.5px; line-height:1.7; color:rgba(232,255,254,.8);">{{ t.pillars.ai.note }}</div>
+
+                  <div style="display:flex; align-items:center; justify-content:space-around; padding:9px 10px; background:#F4FAF9; border-top:1px solid #E4F0EE;">
+                    <sc-for list="{{ t.pillars.wa.nav }}" as="nv" hint-placeholder-count="4">
+                      <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
+                        <svg viewBox="0 0 24 24" style="width:17px; height:17px;" fill="none" stroke="{{ nv.color }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ nv.d }}"></path></svg>
+                        <span style="font-family:Poppins,sans-serif; font-size:10px; font-weight:700; color:{{ nv.color }};">{{ nv.label }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
                 </div>
               </sc-if>
 
+              <!-- ---------- AI AGENT ---------- -->
+              <sc-if value="{{ isPillarAi }}" hint-placeholder-val="{{ false }}">
+                <div style="border-radius:14px; overflow:hidden; background:#FFFFFF; border:1px solid #DCEAE8;">
+                  <div style="display:flex; align-items:center; gap:12px; padding:14px 16px; border-bottom:1px solid #EDF5F4;">
+                    <div style="width:38px; height:38px; flex:none; border-radius:11px; background:#D6F2EC; display:flex; align-items:center; justify-content:center;">
+                      <svg viewBox="0 0 24 24" style="width:20px; height:20px;" fill="none" stroke="#0F7C86" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.5 7.3L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z"></path></svg>
+                    </div>
+                    <div style="flex:1;">
+                      <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:15px; color:#0C3B42;">{{ t.pillars.ai.agentName }}</div>
+                      <div style="display:flex; align-items:center; gap:6px; margin-top:3px;">
+                        <span style="width:7px; height:7px; border-radius:50%; background:#17A05C;"></span>
+                        <span style="font-size:11.5px; color:#17A05C; font-weight:700;">{{ t.pillars.ai.running }}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="display:flex; gap:6px; padding:12px 14px; border-bottom:1px solid #EDF5F4; flex-wrap:wrap;">
+                    <sc-for list="{{ t.pillars.ai.tabs }}" as="at" hint-placeholder-count="5">
+                      <span style="padding:6px 13px; border-radius:11px; background:{{ at.bg }}; border:1px solid {{ at.border }}; color:{{ at.fg }}; font-size:12px; font-weight:700;">{{ at.label }}</span>
+                    </sc-for>
+                  </div>
+
+                  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; padding:14px;">
+                    <sc-for list="{{ t.pillars.ai.stats }}" as="as" hint-placeholder-count="3">
+                      <div style="padding:14px 10px; border-radius:12px; background:#F4FAF9; border:1px solid #E4F0EE; text-align:center;">
+                        <div style="font-family:Poppins,sans-serif; font-size:22px; font-weight:800; color:#0F7C86;">{{ as.value }}</div>
+                        <div style="font-size:11px; color:#5C868D; margin-top:4px;">{{ as.label }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+
+                  <div style="margin:0 14px 14px; padding:18px; border-radius:13px; background:#F4FAF9; border:1px solid #E4F0EE; text-align:center;">
+                    <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:15px; color:#0C3B42;">{{ t.pillars.ai.cardTitle }}</div>
+                    <div style="font-size:12.5px; line-height:1.8; color:#5C868D; margin-top:8px; max-width:440px; margin-inline-start:auto; margin-inline-end:auto;">{{ t.pillars.ai.cardBody }}</div>
+                    <div style="font-size:12px; color:#0F7C86; font-weight:700; margin-top:11px;">{{ t.pillars.ai.progress }}</div>
+                    <span style="display:inline-block; margin-top:13px; padding:11px 28px; border-radius:11px; background:#0F7C86; color:#fff; font-family:{{ t.headingFont }}; font-weight:700; font-size:13px;">{{ t.pillars.ai.cardCta }}</span>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- ---------- CRM ---------- -->
               <sc-if value="{{ isPillarCrm }}" hint-placeholder-val="{{ false }}">
-                <div>
-                  <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding-bottom:16px; border-bottom:1px solid rgba(232,255,254,.07);">
-                    <div style="width:52px; height:52px; flex:none; border-radius:15px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; font-family:{{ t.headingFont }}; font-weight:800; font-size:20px; color:#041316;">{{ t.pillars.crm.initial }}</div>
+                <div style="border-radius:14px; overflow:hidden; background:#FFFFFF; border:1px solid #DCEAE8; padding:18px;">
+                  <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding-bottom:15px; border-bottom:1px solid #EDF5F4;">
+                    <div style="width:50px; height:50px; flex:none; border-radius:14px; background:#0F7C86; display:flex; align-items:center; justify-content:center; font-family:{{ t.headingFont }}; font-weight:800; font-size:19px; color:#fff;">{{ t.pillars.crm.initial }}</div>
                     <div style="flex:1; min-width:150px;">
-                      <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:18px; color:#E8FFFE;">{{ t.pillars.crm.name }}</div>
-                      <div style="display:flex; gap:7px; flex-wrap:wrap; margin-top:7px;">
+                      <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:17px; color:#0C3B42;">{{ t.pillars.crm.name }}</div>
+                      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:7px;">
                         <sc-for list="{{ t.pillars.crm.tags }}" as="tg" hint-placeholder-count="3">
-                          <span style="padding:4px 11px; border-radius:9px; background:rgba(101,212,210,.1); border:1px solid rgba(101,212,210,.3); color:#65D4D2; font-size:11px; font-weight:700;">{{ tg }}</span>
+                          <span style="padding:3px 10px; border-radius:8px; background:#DFF3F1; color:#0F7C86; font-size:10.5px; font-weight:700;">{{ tg }}</span>
                         </sc-for>
                       </div>
                     </div>
                   </div>
-                  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:11px; margin-top:17px;">
+                  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:15px;">
                     <sc-for list="{{ t.pillars.crm.stats }}" as="cs" hint-placeholder-count="3">
-                      <div style="padding:15px 13px; border-radius:13px; background:rgba(101,212,210,.05); border:1px solid rgba(101,212,210,.17);">
-                        <div style="font-family:Poppins,sans-serif; font-size:19px; font-weight:800; color:#65D4D2;">{{ cs.value }}</div>
-                        <div style="font-size:11.5px; color:rgba(232,255,254,.55); margin-top:4px;">{{ cs.label }}</div>
+                      <div style="padding:14px 12px; border-radius:12px; background:#F4FAF9; border:1px solid #E4F0EE;">
+                        <div style="font-family:Poppins,sans-serif; font-size:18px; font-weight:800; color:#0F7C86;">{{ cs.value }}</div>
+                        <div style="font-size:11px; color:#5C868D; margin-top:4px;">{{ cs.label }}</div>
                       </div>
                     </sc-for>
                   </div>
-                  <div style="margin-top:20px; font-size:12.5px; font-weight:700; letter-spacing:.06em; color:rgba(232,255,254,.42); font-family:Poppins,sans-serif;">{{ t.pillars.crm.timelineLabel }}</div>
-                  <div style="display:flex; flex-direction:column; gap:0; margin-top:12px;">
+                  <div style="margin-top:18px; font-family:Poppins,sans-serif; font-size:11px; font-weight:700; letter-spacing:.06em; color:#8FAAB0;">{{ t.pillars.crm.timelineLabel }}</div>
+                  <div style="margin-top:11px;">
                     <sc-for list="{{ t.pillars.crm.timeline }}" as="tl" hint-placeholder-count="3">
-                      <div style="display:flex; align-items:flex-start; gap:13px; padding-bottom:15px;">
+                      <div style="display:flex; align-items:flex-start; gap:12px; padding-bottom:14px;">
                         <div style="display:flex; flex-direction:column; align-items:center; flex:none; padding-top:4px;">
-                          <span style="width:9px; height:9px; border-radius:50%; background:#65D4D2; box-shadow:0 0 0 4px rgba(101,212,210,.14);"></span>
-                          <span style="width:1px; flex:1; min-height:18px; background:rgba(101,212,210,.22);"></span>
+                          <span style="width:8px; height:8px; border-radius:50%; background:#0F7C86;"></span>
+                          <span style="width:1px; flex:1; min-height:16px; background:#D5E9E7;"></span>
                         </div>
                         <div style="flex:1;">
-                          <div style="font-size:13.5px; color:#E8FFFE;">{{ tl.text }}</div>
-                          <div style="font-size:11.5px; color:rgba(232,255,254,.4); margin-top:3px;">{{ tl.time }}</div>
+                          <div style="font-size:13px; color:#0C3B42;">{{ tl.text }}</div>
+                          <div style="font-size:11px; color:#8FAAB0; margin-top:3px;">{{ tl.time }}</div>
                         </div>
                       </div>
                     </sc-for>
@@ -342,30 +423,51 @@
                 </div>
               </sc-if>
 
+              <!-- ---------- LOYALTY ---------- -->
               <sc-if value="{{ isPillarLoyalty }}" hint-placeholder-val="{{ false }}">
-                <div>
-                  <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+                <div style="border-radius:14px; overflow:hidden; background:#FFFFFF; border:1px solid #DCEAE8;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 16px; border-bottom:1px solid #EDF5F4; flex-wrap:wrap;">
                     <div>
-                      <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:17px; color:#E8FFFE;">{{ t.pillars.loyalty.member }}</div>
-                      <div style="font-size:12.5px; color:rgba(232,255,254,.5); margin-top:4px;">{{ t.pillars.loyalty.since }}</div>
+                      <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:15.5px; color:#0C3B42;">{{ t.pillars.loyalty.title }}</div>
+                      <div style="font-size:11.5px; color:#8FAAB0; margin-top:3px;">{{ t.pillars.loyalty.sub }}</div>
                     </div>
-                    <span style="padding:7px 17px; border-radius:20px; background:linear-gradient(135deg,#f0c85a,#c9972f); color:#2a1f05; font-size:12.5px; font-weight:800; font-family:{{ t.headingFont }};">{{ t.pillars.loyalty.tier }}</span>
-                  </div>
-                  <div style="margin-top:20px; padding:22px; border-radius:16px; background:rgba(101,212,210,.06); border:1px solid rgba(101,212,210,.22); text-align:center;">
-                    <div style="font-family:Poppins,sans-serif; font-size:44px; font-weight:900; line-height:1; color:#65D4D2;">1,240</div>
-                    <div style="font-size:13px; color:rgba(232,255,254,.6); margin-top:7px;">{{ t.pillars.loyalty.pointsLabel }}</div>
-                    <div style="height:9px; border-radius:6px; background:rgba(232,255,254,.07); margin-top:17px; overflow:hidden;">
-                      <div style="height:100%; width:76%; border-radius:6px; background:linear-gradient(90deg,#0F6F7A,#65D4D2);"></div>
+                    <div style="display:flex; align-items:center; gap:9px;">
+                      <span style="font-size:11.5px; font-weight:800; color:#17A05C;">{{ t.pillars.loyalty.onLabel }}</span>
+                      <span style="width:42px; height:23px; border-radius:14px; background:#17A05C; display:flex; align-items:center; justify-content:flex-end; padding:0 3px;"><span style="width:17px; height:17px; border-radius:50%; background:#fff;"></span></span>
                     </div>
-                    <div style="font-size:12px; color:rgba(232,255,254,.5); margin-top:9px;">{{ t.pillars.loyalty.toNext }}</div>
                   </div>
-                  <div style="display:flex; flex-direction:column; gap:8px; margin-top:16px;">
-                    <sc-for list="{{ t.pillars.loyalty.rewards }}" as="rw" hint-placeholder-count="3">
-                      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 15px; border-radius:12px; background:{{ rw.bg }}; border:1px solid {{ rw.border }};">
-                        <span style="font-size:13.5px; font-weight:600; color:{{ rw.fg }};">{{ rw.name }}</span>
-                        <span style="padding:4px 12px; border-radius:9px; background:{{ rw.pillBg }}; color:{{ rw.pillFg }}; font-size:11.5px; font-weight:700; white-space:nowrap;">{{ rw.state }}</span>
+
+                  <div style="margin:14px; padding:16px 18px; border-radius:13px; background:linear-gradient(120deg,#0F7C86,#3FAFA6); color:#fff;">
+                    <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:15px;">{{ t.pillars.loyalty.bannerTitle }}</div>
+                    <div style="font-size:12.5px; line-height:1.7; opacity:.88; margin-top:6px;">{{ t.pillars.loyalty.bannerBody }}</div>
+                  </div>
+
+                  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:0 14px;" class="r-grid3">
+                    <sc-for list="{{ t.pillars.loyalty.cards }}" as="lc" hint-placeholder-count="3">
+                      <div style="padding:14px; border-radius:12px; background:#F4FAF9; border:1px solid #E4F0EE;">
+                        <div style="font-size:11px; color:#8FAAB0; font-weight:700;">{{ lc.label }}</div>
+                        <div style="font-family:Poppins,sans-serif; font-size:20px; font-weight:800; color:#0F7C86; margin-top:6px;">{{ lc.value }}</div>
+                        <div style="font-size:10.5px; color:#8FAAB0; margin-top:4px;">{{ lc.sub }}</div>
                       </div>
                     </sc-for>
+                  </div>
+
+                  <div style="margin:14px; padding:16px; border-radius:13px; background:#F4FAF9; border:1px solid #E4F0EE;">
+                    <div style="display:flex; align-items:center; gap:9px;">
+                      <svg viewBox="0 0 24 24" style="width:17px; height:17px;" fill="none" stroke="#C99A2E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.5 5.6 6 .7-4.5 4.1 1.3 6-5.3-3-5.3 3 1.3-6L3.5 9.3l6-.7z"></path></svg>
+                      <span style="font-family:{{ t.headingFont }}; font-weight:800; font-size:14px; color:#0C3B42;">{{ t.pillars.loyalty.earnTitle }}</span>
+                    </div>
+                    <div style="font-size:12px; color:#5C868D; margin-top:7px;">{{ t.pillars.loyalty.earnBody }}</div>
+                    <div style="display:flex; align-items:center; gap:10px; margin-top:12px; flex-wrap:wrap;">
+                      <span style="flex:1; min-width:110px; padding:10px 14px; border-radius:10px; background:#fff; border:1px solid #DCEAE8; font-family:Poppins,sans-serif; font-size:13px; font-weight:700; color:#0C3B42;">1 KWD</span>
+                      <span style="font-size:12px; color:#5C868D;">{{ t.pillars.loyalty.earns }}</span>
+                      <span style="flex:1; min-width:110px; padding:10px 14px; border-radius:10px; background:#fff; border:1px solid #DCEAE8; font-family:Poppins,sans-serif; font-size:13px; font-weight:700; color:#0C3B42;">10 pts</span>
+                    </div>
+                    <div style="display:flex; gap:7px; margin-top:12px; flex-wrap:wrap;">
+                      <sc-for list="{{ t.pillars.loyalty.rates }}" as="rt" hint-placeholder-count="5">
+                        <span style="padding:6px 14px; border-radius:18px; background:{{ rt.bg }}; border:1px solid {{ rt.border }}; color:{{ rt.fg }}; font-family:Poppins,sans-serif; font-size:12px; font-weight:700;">{{ rt.label }}</span>
+                      </sc-for>
+                    </div>
                   </div>
                 </div>
               </sc-if>
@@ -373,6 +475,7 @@
             </div>
           </div>
 
+          <!-- ====== SIDE COPY ====== -->
           <div style="display:flex; flex-direction:column; gap:14px; padding:28px 24px; border:1px solid rgba(101,212,210,.2); border-radius:20px; background:rgba(101,212,210,.04);">
             <div style="width:50px; height:50px; border-radius:14px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 22px rgba(101,212,210,.22);">
               <svg viewBox="0 0 24 24" style="width:24px; height:24px; display:block;" fill="none" stroke="#041316" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{ activePillar.d }}"></path></svg>
@@ -948,51 +1051,75 @@ class Component extends DCLogic {
       pillars: {
         tag: L==="ar" ? "شوف المنصة وهي تشتغل" : "See the platform running",
         title: L==="ar" ? "خمس أدوات، لوحة واحدة" : "Five tools, one dashboard",
-        sub: L==="ar" ? "اضغط على أي أداة وشوف شكلها الحقيقي داخل المنصة." : "Pick any tool and see how it actually looks inside the platform.",
+        sub: L==="ar" ? "اضغط على أي أداة وشوف شاشتها الحقيقية داخل المنصة." : "Pick any tool and see its real screen inside the platform.",
         cta: L==="ar" ? "اطلب عرضاً تجريبياً" : "Request a demo",
+
         store: {
-          shop: L==="ar" ? "متجر الأثاث" : "Furniture Store",
-          add: L==="ar" ? "أضف" : "Add",
-          note: L==="ar" ? "دومينك الخاص، تصميم بالسحب والإفلات، ودفع KNET — بدون سطر برمجة واحد." : "Your own domain, drag-and-drop design and KNET checkout — without a single line of code.",
+          brand: L==="ar" ? "متجرك" : "YOUR BRAND",
+          heroName: L==="ar" ? "كرسي استرخاء كبير" : "Large lounge chair",
+          heroPrice: L==="ar" ? "59 د.ك" : "KD 59",
+          buy: L==="ar" ? "اشترِ الآن" : "Buy now",
+          offers: L==="ar" ? "العروض" : "Offers",
+          seeAll: L==="ar" ? "الكل ←" : "See all →",
+          hero: [
+            { img:"assets/prod-4.png", w:"120px", flex:"1", op:".75" },
+            { img:"assets/prod-1.png", w:"190px", flex:"1.5", op:"1" },
+            { img:"assets/prod-5.png", w:"120px", flex:"1", op:".75" },
+          ],
           products: [
-            { img:"assets/prod-1.png", name: L==="ar"?"أريكة جلدية فاخرة":"Premium leather sofa", price: L==="ar"?"185.000 د.ك":"KD 185.000" },
-            { img:"assets/prod-2.png", name: L==="ar"?"كرسي مكتب قابل للتعديل":"Adjustable office chair", price: L==="ar"?"56.500 د.ك":"KD 56.500" },
-            { img:"assets/prod-3.png", name: L==="ar"?"طاولة طعام خشبية":"Wooden dining table", price: L==="ar"?"120.000 د.ك":"KD 120.000" },
+            { img:"assets/prod-2.png", name: L==="ar"?"كرسي مكتب قابل للتعديل":"Adjustable office chair", was:"66.500", now: L==="ar"?"56.500 د.ك":"KD 56.500", off:"15%" },
+            { img:"assets/prod-3.png", name: L==="ar"?"طاولة طعام خشبية":"Wooden dining table", was:"141.000", now: L==="ar"?"120.000 د.ك":"KD 120.000", off:"15%" },
+            { img:"assets/prod-6.png", name: L==="ar"?"سجادة صوف طبيعي":"Natural wool rug", was:"34.000", now: L==="ar"?"28.900 د.ك":"KD 28.900", off:"15%" },
           ],
         },
+
         wa: {
-          inbox: L==="ar" ? "صندوق المحادثات" : "Conversation inbox",
-          badge: L==="ar" ? "الوكيل الذكي مفعّل" : "AI agent active",
+          search: L==="ar" ? "ابحث في المحادثات" : "Search chats",
+          filters: [
+            { label: L==="ar"?"تحتاج ردك 2":"Needs you 2", active:true },
+            { label: L==="ar"?"غير مقروء":"Unread", active:false },
+            { label: L==="ar"?"كل الحالات":"All statuses", active:false },
+            { label: L==="ar"?"كل الوسوم":"All tags", active:false },
+          ],
           chats: [
-            { initial:"م", name: L==="ar"?"أم محمد":"Um Mohammad", msg: L==="ar"?"طلبك رقم ٤٨٢ في مرحلة التوصيل، يوصلك اليوم ٥–٧ م":"Order #482 is out for delivery, arriving 5–7 pm", time:"12:48", auto:true },
-            { initial:"س", name: L==="ar"?"سالم العتيبي":"Salem A.", msg: L==="ar"?"تمام، شكراً لك 🙏":"Great, thank you 🙏", time:"12:31", auto:false },
-            { initial:"ن", name: L==="ar"?"نورة فهد":"Noura F.", msg: L==="ar"?"سياسة الإرجاع خلال ١٤ يوم من الاستلام":"Returns are accepted within 14 days of delivery", time:"11:57", auto:true },
-            { initial:"ع", name: L==="ar"?"عبدالله ناصر":"Abdullah N.", msg: L==="ar"?"أبغى أضيف قطعة على الطلب":"I want to add an item to my order", time:"11:20", auto:false },
+            { initial:"ع", name: L==="ar"?"عميل تجريبي ١":"Demo customer 1", msg: L==="ar"?"تم تجهيز طلبك وراح يتواصل معك المندوب قبل التوصيل ✓":"Your order is ready, the driver will contact you before delivery ✓", phone:"+965 5XXX XXXX", inv:"#INV-26-4371", time:"1:03", unread:false, avatarBg:"#8B5CF6" },
+            { initial:"ن", name: L==="ar"?"عميل تجريبي ٢":"Demo customer 2", msg: L==="ar"?"أكيد تفضل، شلون أقدر أساعدك ✓":"Of course, how can I help you ✓", phone:"+965 6XXX XXXX", inv:"", time:"6:11", unread:false, avatarBg:"#E8833A" },
+            { initial:"س", name: L==="ar"?"عميل تجريبي ٣":"Demo customer 3", msg: L==="ar"?"يعطيكم العافية":"Thank you so much", phone:"+965 6XXX XXXX", inv:"#INV-26-4372", time: L==="ar"?"أمس":"Yesterday", unread:true, avatarBg:"#DC2626" },
+            { initial:"ف", name: L==="ar"?"عميل تجريبي ٤":"Demo customer 4", msg: L==="ar"?"خلال ٥ أيام وقبل التوصيل سيتم التواصل معكم ✓":"Within 5 days, we will contact you before delivery ✓", phone:"+965 9XXX XXXX", inv:"#INV-26-4392", time:"9/10", unread:false, avatarBg:"#7C3AED" },
+            { initial:"م", name: L==="ar"?"عميل تجريبي ٥":"Demo customer 5", msg: L==="ar"?"تم تجهيز طلبك وراح يتواصل معك المندوب ✓":"Your order is ready, the driver will contact you ✓", phone:"+965 9XXX XXXX", inv:"#INV-26-4341", time:"9/12", unread:false, avatarBg:"#2563EB" },
+          ],
+          nav: [
+            { label: L==="ar"?"الرئيسية":"Home", d:"M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z", active:false },
+            { label:"WhatsApp", d:"M21 11.5a8.4 8.4 0 0 1-12.5 7.3L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z", active:true },
+            { label: L==="ar"?"المنتجات":"Products", d:"M12 2.8l8 4.3v9.8l-8 4.3-8-4.3V7.1zM4 7.1l8 4.3 8-4.3M12 11.4V21", active:false },
+            { label: L==="ar"?"التقارير":"Reports", d:"M4 20h16M7 16V9M12 16V5M17 16v-5", active:false },
+          ],
+        },
+
+        ai: {
+          agentName: L==="ar" ? "موظف المبيعات وخدمة العملاء" : "Sales & Customer Service Employee",
+          running: L==="ar" ? "يعمل الآن" : "Running",
+          tabs: [
+            { label: L==="ar"?"الحالة":"Status", active:false },
+            { label: L==="ar"?"المعرفة":"Brain", active:true },
+            { label: L==="ar"?"الشخصية":"Persona", active:false },
+            { label: L==="ar"?"الإعدادات":"Settings", active:false },
+            { label: L==="ar"?"المختبر":"Lab", active:false },
           ],
           stats: [
-            { value:"1,240", label: L==="ar"?"رسالة بث":"broadcast sent" },
-            { value:"96%", label: L==="ar"?"نسبة الوصول":"delivery rate" },
-            { value:"73%", label: L==="ar"?"ردّ عليها الوكيل":"handled by AI" },
+            { value:"34", label: L==="ar"?"معلومة معتمدة":"approved facts" },
+            { value:"0", label: L==="ar"?"بانتظار الاعتماد":"awaiting approval" },
+            { value:"44%", label: L==="ar"?"اكتمال الملف":"profile complete" },
           ],
+          cardTitle: L==="ar" ? "مقابلة التعرّف على عملك" : "Business discovery interview",
+          cardBody: L==="ar" ? "محادثة قصيرة تسألك عن عملك سؤالاً واحداً في كل مرة. تقرأ كتالوجك وما استُخلص من محادثاتك، فتسأل فقط عمّا ينقصها — ولا تكرر ما تعرفه." : "A short conversation that asks about your business, one question at a time. It reads your catalogue and what was mined from your chats, so it asks only about what is missing.",
+          progress: L==="ar" ? "ملفك الآن: 44% (7 من 16 حقلاً)" : "Your profile is now: 44% (7 of 16 fields)",
+          cardCta: L==="ar" ? "ابدأ المقابلة" : "Start the interview",
         },
-        ai: {
-          status: L==="ar" ? "الوكيل يرد على عملائك الآن" : "The agent is answering your customers",
-          on: L==="ar" ? "مفعّل" : "Active",
-          personaLabel: L==="ar" ? "شخصية الوكيل" : "AGENT PERSONALITY",
-          personas: [
-            { key:"friendly", label: L==="ar"?"ودود":"Friendly", active:true },
-            { key:"formal", label: L==="ar"?"رسمي":"Formal", active:false },
-            { key:"short", label: L==="ar"?"مختصر":"Concise", active:false },
-          ],
-          knowledgeLabel: L==="ar" ? "مصادر المعرفة" : "KNOWLEDGE SOURCES",
-          knowledge: L==="ar"
-            ? ["قائمة المنتجات والأسعار","سياسة الإرجاع والاستبدال","مناطق وأوقات التوصيل","الأسئلة الشائعة"]
-            : ["Product list and prices","Returns and exchange policy","Delivery areas and times","Frequently asked questions"],
-          note: L==="ar" ? "٧٣٪ من المحادثات تُحلّ بالكامل بدون تدخل أي موظف — والباقي يتحوّل لفريقك تلقائياً." : "73% of conversations are resolved entirely without a human — the rest are handed to your team automatically.",
-        },
+
         crm: {
-          initial: L==="ar" ? "أ" : "U",
-          name: L==="ar" ? "أم محمد" : "Um Mohammad",
+          initial: L==="ar" ? "ع" : "D",
+          name: L==="ar" ? "عميل تجريبي" : "Demo customer",
           tags: L==="ar" ? ["عميل متكرر","VIP","واتساب"] : ["Repeat buyer","VIP","WhatsApp"],
           stats: [
             { value:"14", label: L==="ar"?"طلب":"orders" },
@@ -1003,19 +1130,27 @@ class Component extends DCLogic {
           timeline: [
             { text: L==="ar"?"طلب #482 — تم التسليم بنجاح":"Order #482 — delivered", time: L==="ar"?"قبل 3 أيام":"3 days ago" },
             { text: L==="ar"?"محادثة واتساب — استفسار عن الإرجاع":"WhatsApp chat — asked about returns", time: L==="ar"?"قبل 5 أيام":"5 days ago" },
-            { text: L==="ar"?"وصلت للعضوية الذهبية":"Reached Gold tier", time: L==="ar"?"قبل أسبوعين":"2 weeks ago" },
+            { text: L==="ar"?"وصل للعضوية الذهبية":"Reached Gold tier", time: L==="ar"?"قبل أسبوعين":"2 weeks ago" },
           ],
         },
+
         loyalty: {
-          member: L==="ar" ? "أم محمد" : "Um Mohammad",
-          since: L==="ar" ? "عضوة منذ مارس 2025" : "Member since March 2025",
-          tier: L==="ar" ? "عضوية ذهبية" : "Gold tier",
-          pointsLabel: L==="ar" ? "نقطة متاحة" : "points available",
-          toNext: L==="ar" ? "260 نقطة للمكافأة الجاية" : "260 points to the next reward",
-          rewards: [
-            { name: L==="ar"?"خصم 10% على الطلب الجاي":"10% off your next order", req:500, state: L==="ar"?"متاحة":"Available", ready:true },
-            { name: L==="ar"?"توصيل مجاني لمدة شهر":"Free delivery for a month", req:750, state: L==="ar"?"متاحة":"Available", ready:true },
-            { name: L==="ar"?"خصم 25% + هدية":"25% off + a gift", req:1500, state: L==="ar"?"260 نقطة باقية":"260 points to go", ready:false },
+          title: L==="ar" ? "برنامج الولاء" : "Loyalty Program",
+          sub: L==="ar" ? "قواعد النقاط الخاصة بمتجرك" : "Your store's own points rules",
+          onLabel: L==="ar" ? "مفعّل" : "On",
+          bannerTitle: L==="ar" ? "البرنامج يعمل" : "Program is running",
+          bannerBody: L==="ar" ? "عملاؤك يجمعون نقاطاً مع كل عملية شراء حسب القواعد اللي حددتها — بدون أي خطوة إضافية منك." : "Your customers earn points on every purchase by the rules you set — with no extra step from you.",
+          cards: [
+            { label: L==="ar"?"نسبة الاسترداد":"Cashback rate", value:"1.0%", sub: L==="ar"?"من كل عملية بيع":"of every sale" },
+            { label: L==="ar"?"100 نقطة =":"100 points =", value: L==="ar"?"0.100 د.ك":"KD 0.100", sub: L==="ar"?"قيمتها للعميل":"for the customer" },
+            { label: L==="ar"?"لكل 1.000 د.ك":"Per KD 1.000", value: L==="ar"?"10 نقاط":"10 pts", sub: L==="ar"?"يكسبها العميل":"earned" },
+          ],
+          earnTitle: L==="ar" ? "كسب النقاط" : "Earning points",
+          earnBody: L==="ar" ? "كم نقطة يحصل عليها العميل مقابل كل مبلغ ينفقه." : "How many points a customer gets for every amount they spend.",
+          earns: L==="ar" ? "يكسب العميل" : "customer earns",
+          rates: [
+            { label:"1%", active:true }, { label:"2%", active:false }, { label:"3%", active:false },
+            { label:"5%", active:false }, { label:"10%", active:false },
           ],
         },
       },
@@ -1148,26 +1283,22 @@ class Component extends DCLogic {
       footer: { rights: L==="ar" ? "© 2026 velorci. جميع الحقوق محفوظة." : "© 2026 velorci. All rights reserved." },
     };
 
-    t.pillars.wa.chats = t.pillars.wa.chats.map(c => ({
-      ...c,
-      tag: c.auto ? (L==="ar" ? "رد آلي" : "AI reply") : (L==="ar" ? "موظف" : "Human"),
-      tagBg: c.auto ? "rgba(101,212,210,.14)" : "rgba(232,255,254,.07)",
-      tagBorder: c.auto ? "rgba(101,212,210,.4)" : "rgba(232,255,254,.14)",
-      tagFg: c.auto ? "#65D4D2" : "rgba(232,255,254,.6)",
+    const chipOn  = { bg:"#FDF0CE", border:"#EFCB6A", fg:"#8A6410" };
+    const chipOff = { bg:"#F4FAF9", border:"#DFEDEC", fg:"#5C868D" };
+    t.pillars.wa.chats = t.pillars.wa.chats.map(c => ({...c, hasInv: !!c.inv}));
+    t.pillars.wa.filters = t.pillars.wa.filters.map(f => ({ label:f.label, ...(f.active ? chipOn : chipOff) }));
+    t.pillars.wa.nav = t.pillars.wa.nav.map(n => ({ label:n.label, d:n.d, color: n.active ? "#0F7C86" : "#9FB8BC" }));
+    t.pillars.ai.tabs = t.pillars.ai.tabs.map(x => ({
+      label: x.label,
+      bg: x.active ? "#0C3B42" : "#F4FAF9",
+      border: x.active ? "#0C3B42" : "#E4F0EE",
+      fg: x.active ? "#FFFFFF" : "#5C868D",
     }));
-    t.pillars.ai.personas = t.pillars.ai.personas.map(p => ({
-      label: p.label,
-      bg: p.active ? "rgba(101,212,210,.16)" : "rgba(232,255,254,.03)",
-      border: p.active ? "1px solid rgba(101,212,210,.6)" : "1px solid rgba(232,255,254,.09)",
-      fg: p.active ? "#65D4D2" : "rgba(232,255,254,.55)",
-    }));
-    t.pillars.loyalty.rewards = t.pillars.loyalty.rewards.map(r => ({
-      name: r.name, state: r.state,
-      bg: r.ready ? "rgba(101,212,210,.07)" : "rgba(232,255,254,.025)",
-      border: r.ready ? "rgba(101,212,210,.3)" : "rgba(232,255,254,.07)",
-      fg: r.ready ? "#E8FFFE" : "rgba(232,255,254,.5)",
-      pillBg: r.ready ? "rgba(58,208,122,.16)" : "rgba(232,255,254,.06)",
-      pillFg: r.ready ? "#7ee2a8" : "rgba(232,255,254,.45)",
+    t.pillars.loyalty.rates = t.pillars.loyalty.rates.map(r => ({
+      label: r.label,
+      bg: r.active ? "#DFF3F1" : "#FFFFFF",
+      border: r.active ? "#7FC4C0" : "#DCEAE8",
+      fg: r.active ? "#0F7C86" : "#8FAAB0",
     }));
 
     const mq = DATA.marquee.map(m => this.pick(m));
