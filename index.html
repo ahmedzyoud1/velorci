@@ -134,56 +134,77 @@
         </div>
 
         <div style="position:relative; margin-top:44px; width:100%; max-width:960px; animation:fadeUp .8s .5s ease both;">
-          <div style="position:absolute; top:-18px; {{ t.chipSide1 }}:-10px; z-index:3; padding:10px 16px; border-radius:12px; background:#083A3F; border:1px solid rgba(101,212,210,.45); font-size:13px; font-weight:700; color:#65D4D2; animation:floatY 5s ease-in-out infinite; box-shadow:0 10px 30px rgba(0,0,0,.4);">{{ t.hero.chip1 }}</div>
-          <div style="position:absolute; top:60px; {{ t.chipSide2 }}:-26px; z-index:3; padding:10px 16px; border-radius:12px; background:#083A3F; border:1px solid rgba(101,212,210,.45); font-size:13px; font-weight:700; color:#65D4D2; animation:floatY2 6s ease-in-out infinite; box-shadow:0 10px 30px rgba(0,0,0,.4);">{{ t.hero.chip2 }}</div>
-          <div style="position:absolute; bottom:40px; {{ t.chipSide1 }}:30px; z-index:3; padding:10px 16px; border-radius:12px; background:#083A3F; border:1px solid rgba(101,212,210,.45); font-size:13px; font-weight:700; color:#65D4D2; animation:floatY2 7s 1s ease-in-out infinite; box-shadow:0 10px 30px rgba(0,0,0,.4);">{{ t.hero.chip3 }}</div>
+          <div style="position:absolute; top:-22px; {{ t.chipSide1 }}:-22px; z-index:5; padding:10px 16px; border-radius:12px; background:linear-gradient(150deg, rgba(9,42,47,.97), rgba(4,19,22,.97)); border:1px solid rgba(101,212,210,.45); box-shadow:0 18px 40px rgba(0,0,0,.55), 0 0 28px rgba(101,212,210,.18); font-size:13px; font-weight:700; color:#65D4D2; animation:floatY 5s ease-in-out infinite; box-shadow:0 10px 30px rgba(0,0,0,.4);">{{ t.hero.chip1 }}</div>
+          <div style="position:absolute; top:96px; {{ t.chipSide2 }}:-34px; z-index:5; padding:10px 16px; border-radius:12px; background:linear-gradient(150deg, rgba(9,42,47,.97), rgba(4,19,22,.97)); border:1px solid rgba(101,212,210,.45); box-shadow:0 18px 40px rgba(0,0,0,.55), 0 0 28px rgba(101,212,210,.18); font-size:13px; font-weight:700; color:#65D4D2; animation:floatY2 6s ease-in-out infinite; box-shadow:0 10px 30px rgba(0,0,0,.4);">{{ t.hero.chip2 }}</div>
+          <div style="position:absolute; bottom:-20px; {{ t.chipSide1 }}:38px; z-index:5; padding:10px 16px; border-radius:12px; background:linear-gradient(150deg, rgba(9,42,47,.97), rgba(4,19,22,.97)); border:1px solid rgba(101,212,210,.45); box-shadow:0 18px 40px rgba(0,0,0,.55), 0 0 28px rgba(101,212,210,.18); font-size:13px; font-weight:700; color:#65D4D2; animation:floatY2 7s 1s ease-in-out infinite; box-shadow:0 10px 30px rgba(0,0,0,.4);">{{ t.hero.chip3 }}</div>
 
-          <div style="border-radius:20px; border:1px solid rgba(101,212,210,.3); background:#062024; overflow:hidden; animation:glowPulse 5s ease-in-out infinite; text-align:{{ t.textAlign }};" class="r-dash">
-            <div style="display:flex; align-items:center; gap:8px; padding:12px 18px; border-bottom:1px solid rgba(101,212,210,.15); background:rgba(4,19,22,.6);">
-              <div style="width:10px;height:10px;border-radius:50%;background:#0F6F7A;"></div>
-              <div style="width:10px;height:10px;border-radius:50%;background:#0F6F7A99;"></div>
-              <div style="width:10px;height:10px;border-radius:50%;background:#0F6F7A55;"></div>
-              <span style="font-family:monospace; font-size:12px; color:rgba(232,255,254,.45); margin:0 10px;">my.velorci.com</span>
-            </div>
-            <div style="display:flex;" class="r-dash-body">
-              <div style="width:190px; flex-shrink:0; border-inline-end:1px solid rgba(101,212,210,.12); padding:18px 14px; display:flex; flex-direction:column; gap:6px; background:rgba(4,19,22,.5);" class="r-dash-side">
-                <div style="display:flex; align-items:center; gap:8px; padding:0 8px 12px;">
-                  <img src="assets/logo-turq.png" style="height:16px;width:auto;">
-                  <span style="font-family:Poppins,sans-serif;font-weight:700;font-size:13px;color:#E8FFFE;">velorci</span>
-                </div>
-                <sc-for list="{{ t.dash.menu }}" as="mi" hint-placeholder-count="6">
-                  <div style="padding:9px 12px; border-radius:8px; font-size:12.5px; font-weight:600; color:{{ mi.color }}; background:{{ mi.bg }};">{{ mi.label }}</div>
-                </sc-for>
+          <div style="position:relative;" class="r-dash">
+            <div style="position:absolute; inset:14% 4% -8%; border-radius:48px; background:radial-gradient(58% 58% at 50% 62%, rgba(101,212,210,.4), rgba(101,212,210,0) 72%); filter:blur(54px); pointer-events:none;"></div>
+
+            <div style="position:relative; border-radius:24px; padding:1.2px; background:linear-gradient(170deg, rgba(232,255,254,.55), rgba(101,212,210,.2) 32%, rgba(101,212,210,.05) 62%, rgba(4,19,22,.3)); box-shadow:0 56px 130px rgba(0,0,0,.62), 0 20px 48px rgba(0,0,0,.45), 0 0 62px rgba(101,212,210,.1);">
+            <div style="border-radius:22.8px; overflow:hidden; background:#EDF7F6; text-align:{{ t.textAlign }};">
+
+              <div style="position:relative; display:flex; align-items:center; gap:7px; padding:12px 18px; background:linear-gradient(180deg,#E6F2F0,#D7EBE8); border-bottom:1px solid rgba(12,59,66,.08);">
+                <span style="width:9px; height:9px; border-radius:50%; background:#EE9E94; box-shadow:inset 0 -1px 1px rgba(0,0,0,.14);"></span>
+                <span style="width:9px; height:9px; border-radius:50%; background:#F0C878; box-shadow:inset 0 -1px 1px rgba(0,0,0,.14);"></span>
+                <span style="width:9px; height:9px; border-radius:50%; background:#8FCE9F; box-shadow:inset 0 -1px 1px rgba(0,0,0,.14);"></span>
+                <span style="margin-inline-start:14px; display:inline-flex; align-items:center; gap:7px; padding:5px 15px; border-radius:11px; background:linear-gradient(180deg,#FFFFFF,#F7FCFB); border:1px solid rgba(12,59,66,.09); box-shadow:0 1px 2px rgba(12,59,66,.05); font-family:Poppins,sans-serif; font-size:11.5px; color:#5C868D; direction:ltr;">
+                  <svg viewBox="0 0 24 24" style="width:11px; height:11px; flex:none;" fill="none" stroke="#7FB3AE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10.5V8a6 6 0 0 1 12 0v2.5M5 10.5h14v9H5z"></path></svg>
+                  my.velorci.com
+                </span>
+                <div style="position:absolute; top:0; left:0; right:0; height:52%; background:linear-gradient(180deg, rgba(255,255,255,.6), rgba(255,255,255,0)); pointer-events:none;"></div>
               </div>
-              <div style="flex:1; padding:20px; display:flex; flex-direction:column; gap:16px;">
-                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px;">
-                  <sc-for list="{{ dashStats }}" as="st" hint-placeholder-count="3">
-                    <div style="padding:14px; border-radius:12px; background:rgba(101,212,210,.06); border:1px solid rgba(101,212,210,.18); display:flex; flex-direction:column; gap:4px;">
-                      <span style="font-size:11.5px; color:rgba(232,255,254,.55);">{{ st.label }}</span>
-                      <span style="font-family:Poppins,sans-serif; font-size:24px; font-weight:800; color:#65D4D2;">{{ st.value }}</span>
+
+              <div style="display:flex; background:linear-gradient(180deg,#F1F9F8,#E8F4F3);" class="r-dash-body">
+
+                <div style="width:168px; flex:none; padding:18px 14px; background:linear-gradient(180deg,#FFFFFF,#F6FCFB); border-inline-end:1px solid rgba(12,59,66,.07);" class="r-dash-side">
+                  <div style="display:flex; align-items:center; gap:9px; padding-bottom:15px; margin-bottom:12px; border-bottom:1px solid rgba(12,59,66,.07);">
+                    <div style="width:26px; height:26px; border-radius:8px; background:linear-gradient(145deg,#15959F,#0B5F69); box-shadow:0 5px 12px rgba(15,124,134,.3); display:flex; align-items:center; justify-content:center; font-family:Poppins,sans-serif; font-weight:800; font-size:13px; color:#fff;">v</div>
+                    <span style="font-family:Poppins,sans-serif; font-weight:700; font-size:14px; color:#08333A;">velorci</span>
+                  </div>
+                  <sc-for list="{{ dashMenu }}" as="mi" hint-placeholder-count="6">
+                    <div style="display:flex; align-items:center; gap:9px; padding:8px 10px; margin-bottom:3px; border-radius:9px; background:{{ mi.bg }}; font-size:12.5px; font-weight:{{ mi.weight }}; color:{{ mi.fg }};">
+                      <span style="width:6px; height:6px; border-radius:50%; background:{{ mi.dot }}; flex:none;"></span>{{ mi.label }}
                     </div>
                   </sc-for>
                 </div>
-                <div style="display:flex; gap:12px;" class="r-dash-panels">
-                  <div style="flex:1.3; padding:16px; border-radius:12px; background:rgba(101,212,210,.05); border:1px solid rgba(101,212,210,.15);">
-                    <div style="font-size:12px; color:rgba(232,255,254,.55); margin-bottom:12px;">{{ t.dash.chartTitle }}</div>
-                    <div style="display:flex; align-items:flex-end; gap:8px; height:90px;">
-                      <sc-for list="{{ t.dash.bars }}" as="b" hint-placeholder-count="7">
-                        <div style="flex:1; height:{{ b.h }}; border-radius:5px 5px 0 0; background:linear-gradient(180deg, #65D4D2, #0F6F7A); transform-origin:bottom; animation:barGrow .9s {{ b.delay }} cubic-bezier(.2,.8,.2,1) both;"></div>
-                      </sc-for>
-                    </div>
-                  </div>
-                  <div style="flex:1; padding:16px; border-radius:12px; background:rgba(101,212,210,.05); border:1px solid rgba(101,212,210,.15); display:flex; flex-direction:column; gap:9px;">
-                    <div style="font-size:12px; color:rgba(232,255,254,.55);">{{ t.dash.ordersTitle }}</div>
-                    <sc-for list="{{ t.dash.orders }}" as="o" hint-placeholder-count="3">
-                      <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:8px 10px; border-radius:8px; background:rgba(4,19,22,.5);">
-                        <span style="font-size:12px; color:#E8FFFE;">{{ o.name }}</span>
-                        <span style="font-size:10.5px; font-weight:700; padding:3px 9px; border-radius:10px; color:#041316; background:{{ o.pill }};">{{ o.stage }}</span>
+
+                <div style="flex:1; min-width:0; padding:18px;">
+                  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:11px;">
+                    <sc-for list="{{ dashStats }}" as="st" hint-placeholder-count="3">
+                      <div style="padding:14px 13px; border-radius:13px; background:linear-gradient(160deg,#FFFFFF,#EEF8F7); border:1px solid rgba(12,59,66,.06); box-shadow:0 1px 2px rgba(12,59,66,.04), inset 0 1px 0 rgba(255,255,255,.9); animation:riseIn .5s {{ st.delay }} cubic-bezier(.22,1,.36,1) both;">
+                        <span style="display:block; font-size:11px; color:#8FAAB0; font-weight:700;">{{ st.label }}</span>
+                        <span style="display:block; font-family:Poppins,sans-serif; font-size:20px; font-weight:800; color:#0F7C86; margin-top:5px; direction:ltr; unicode-bidi:isolate;">{{ st.value }}</span>
                       </div>
                     </sc-for>
                   </div>
+
+                  <div style="display:flex; gap:13px; margin-top:14px;" class="r-dash-panels">
+                    <div style="flex:1.25; min-width:0; padding:16px; border-radius:14px; background:linear-gradient(180deg,#FFFFFF,#FBFEFE); border:1px solid rgba(12,59,66,.07); box-shadow:0 1px 2px rgba(12,59,66,.04), 0 10px 30px rgba(12,59,66,.07);">
+                      <div style="font-size:12px; font-weight:700; color:#5C868D; margin-bottom:14px;">{{ t.dash.chartTitle }}</div>
+                      <div style="display:flex; align-items:flex-end; gap:7px; height:92px;">
+                        <sc-for list="{{ dashBars }}" as="b" hint-placeholder-count="7">
+                          <div style="flex:1; height:{{ b.h }}; border-radius:6px 6px 3px 3px; background:linear-gradient(180deg,#65D4D2,#0F7C86); box-shadow:0 4px 12px rgba(15,124,134,.22); transform-origin:bottom; animation:barGrow .8s {{ b.delay }} cubic-bezier(.22,1,.36,1) both;"></div>
+                        </sc-for>
+                      </div>
+                    </div>
+
+                    <div style="flex:1; min-width:0; padding:16px; border-radius:14px; background:linear-gradient(180deg,#FFFFFF,#FBFEFE); border:1px solid rgba(12,59,66,.07); box-shadow:0 1px 2px rgba(12,59,66,.04), 0 10px 30px rgba(12,59,66,.07);">
+                      <div style="font-size:12px; font-weight:700; color:#5C868D; margin-bottom:12px;">{{ t.dash.ordersTitle }}</div>
+                      <sc-for list="{{ dashOrders }}" as="o" hint-placeholder-count="3">
+                        <div style="display:flex; align-items:center; justify-content:space-between; gap:9px; padding:9px 0; border-top:1px solid #F0F7F6; animation:riseIn .5s {{ o.delay }} cubic-bezier(.22,1,.36,1) both;">
+                          <div style="display:flex; align-items:center; gap:8px; min-width:0;">
+                            <span style="width:24px; height:24px; flex:none; border-radius:50%; background:{{ o.avatarBg }}; box-shadow:0 3px 8px rgba(12,59,66,.18); display:flex; align-items:center; justify-content:center; font-family:{{ t.headingFont }}; font-weight:800; font-size:11px; color:#fff;">{{ o.initial }}</span>
+                            <span style="font-size:12.5px; font-weight:600; color:#0C3B42; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ o.name }}</span>
+                          </div>
+                          <span style="flex:none; padding:3px 10px; border-radius:9px; background:{{ o.pillBg }}; color:{{ o.pillFg }}; font-size:10.5px; font-weight:700; white-space:nowrap;">{{ o.stage }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
                 </div>
               </div>
+            </div>
             </div>
           </div>
         </div>
@@ -1811,7 +1832,24 @@ class Component extends DCLogic {
       isServices: this.state.page==="services",
       isTeam: this.state.page==="team",
       isContact: this.state.page==="contact",
-      dashStats: dashStatDefs.map(s => ({label:s.label, value: s.fmt(Math.round(s.target*ease))})),
+      dashStats: dashStatDefs.map((s,i) => ({label:s.label, value: s.fmt(Math.round(s.target*ease)), delay: (.18+i*.09).toFixed(2)+"s"})),
+      dashMenu: t.dash.menu.map((m,i) => ({
+        label: m.label !== undefined ? m.label : m,
+        bg: i===0 ? "#E7F5F3" : "transparent",
+        fg: i===0 ? "#0F7C86" : "#5C868D",
+        weight: i===0 ? "700" : "600",
+        dot: i===0 ? "#0F7C86" : "#C5DAD8",
+        delay: (.10+i*.05).toFixed(2)+"s",
+      })),
+      dashBars: t.dash.bars.map((b,i) => ({h: b.h, delay: (.30+i*.07).toFixed(2)+"s"})),
+      dashOrders: t.dash.orders.map((o,i) => ({
+        name: o.name, stage: o.stage,
+        initial: (o.name||"").trim().charAt(0),
+        avatarBg: ["#8B5CF6","#E8833A","#2563EB"][i%3],
+        pillBg: ["#FDEAE4","#FFF3E2","#DCF5E7"][i%3],
+        pillFg: ["#C2532E","#A76A12","#177E52"][i%3],
+        delay: (.45+i*.12).toFixed(2)+"s",
+      })),
       netRevenue: (34892.115*revealEase).toLocaleString("en",{minimumFractionDigits:3, maximumFractionDigits:3}),
       avgOrder: (63.440*revealEase).toLocaleString("en",{minimumFractionDigits:3, maximumFractionDigits:3}),
       ordersCount: Math.round(550*revealEase).toLocaleString("en"),
