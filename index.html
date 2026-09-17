@@ -503,6 +503,94 @@
                 </div>
               </sc-if>
 
+              <!-- ---------- ACCOUNTING ---------- -->
+              <sc-if value="{{ isPillarBooks }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                  <div style="display:flex; align-items:center; gap:12px; padding-bottom:14px; border-bottom:1px solid rgba(101,212,210,.18);">
+                    <div style="width:38px; height:38px; flex:none; border-radius:12px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(101,212,210,.25);">
+                      <svg viewBox="0 0 24 24" style="width:19px; height:19px;" fill="none" stroke="#041316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h14a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM8 7h8M8 11h8M8 15h4"></path></svg>
+                    </div>
+                    <div style="display:flex; flex-direction:column; min-width:0;">
+                      <span style="font-family:{{ t.headingFont }}; font-size:15px; font-weight:800; color:#E8FFFE;">{{ t.pillars.books.title }}</span>
+                      <span style="font-size:11.5px; color:#65D4D2;">{{ t.pillars.books.sub }}</span>
+                    </div>
+                  </div>
+
+                  <div style="padding:22px; border-radius:18px; background:rgba(101,212,210,.07); border:1px solid rgba(101,212,210,.22); animation:fadeUp .6s .15s ease both;">
+                    <div style="font-size:13px; color:rgba(232,255,254,.6);">{{ t.pillars.books.netLabel }}</div>
+                    <div style="font-family:Poppins,sans-serif; font-size:36px; font-weight:800; color:#65D4D2; margin-top:8px; direction:ltr; unicode-bidi:isolate; animation:pop .7s .3s both;">{{ t.pillars.books.net }}</div>
+                    <div style="font-size:12.5px; color:rgba(232,255,254,.45); margin-top:7px;">{{ t.pillars.books.netSub }}</div>
+                  </div>
+
+                  <sc-for list="{{ t.pillars.books.rows }}" as="bk" hint-placeholder-count="3">
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:15px 19px; border-radius:16px; background:rgba(232,255,254,.05); border:1px solid rgba(232,255,254,.09); animation:fadeUp .6s {{ bk.delay }} ease both;">
+                      <span style="font-size:14px; color:rgba(232,255,254,.8);">{{ bk.label }}</span>
+                      <span style="flex:none; font-family:Poppins,sans-serif; font-size:16px; font-weight:800; color:{{ bk.color }}; direction:ltr; unicode-bidi:isolate;">{{ bk.value }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <!-- ---------- POS ---------- -->
+              <sc-if value="{{ isPillarPos }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                  <div style="display:flex; align-items:center; gap:12px; padding-bottom:14px; border-bottom:1px solid rgba(101,212,210,.18);">
+                    <div style="width:38px; height:38px; flex:none; border-radius:12px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(101,212,210,.25);">
+                      <svg viewBox="0 0 24 24" style="width:19px; height:19px;" fill="none" stroke="#041316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12a1 1 0 0 1 1 1v18l-3-2-3 2-3-2-3 2V3a1 1 0 0 1 1-1zM9 7h6M9 11h6"></path></svg>
+                    </div>
+                    <div style="display:flex; flex-direction:column; min-width:0;">
+                      <span style="font-family:{{ t.headingFont }}; font-size:15px; font-weight:800; color:#E8FFFE;">{{ t.pillars.pos.title }}</span>
+                      <span style="font-size:11.5px; color:#65D4D2;">{{ t.pillars.pos.sub }}</span>
+                    </div>
+                  </div>
+
+                  <div style="padding:22px; border-radius:18px; background:rgba(101,212,210,.07); border:1px solid rgba(101,212,210,.22); animation:fadeUp .6s .15s ease both;">
+                    <sc-for list="{{ t.pillars.pos.lines }}" as="ln" hint-placeholder-count="3">
+                      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:7px 0; font-size:13.5px; color:rgba(232,255,254,.72);">
+                        <span>{{ ln.name }}</span>
+                        <span style="flex:none; font-family:Poppins,sans-serif; direction:ltr; unicode-bidi:isolate;">{{ ln.price }}</span>
+                      </div>
+                    </sc-for>
+                    <div style="height:1px; background:rgba(101,212,210,.22); margin:12px 0;"></div>
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                      <span style="font-family:{{ t.headingFont }}; font-size:15px; font-weight:800; color:#E8FFFE;">{{ t.pillars.pos.totalLabel }}</span>
+                      <span style="font-family:Poppins,sans-serif; font-size:28px; font-weight:800; color:#65D4D2; direction:ltr; unicode-bidi:isolate; animation:pop .6s .45s both;">{{ t.pillars.pos.total }}</span>
+                    </div>
+                  </div>
+
+                  <div style="display:flex; align-items:center; gap:13px; padding:15px 19px; border-radius:16px; background:rgba(232,255,254,.05); border:1px solid rgba(232,255,254,.09); animation:fadeUp .6s .5s ease both;">
+                    <svg viewBox="0 0 24 24" style="width:20px; height:20px; flex:none;" fill="none" stroke="#65D4D2" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V4h12v5M6 18H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-1M6 14h12v7H6z"></path></svg>
+                    <span style="flex:1; font-size:14px; line-height:1.7; color:rgba(232,255,254,.8);">{{ t.pillars.pos.note }}</span>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- ---------- ADS ---------- -->
+              <sc-if value="{{ isPillarAds }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                  <div style="display:flex; align-items:center; gap:12px; padding-bottom:14px; border-bottom:1px solid rgba(101,212,210,.18);">
+                    <div style="width:38px; height:38px; flex:none; border-radius:12px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(101,212,210,.25);">
+                      <svg viewBox="0 0 24 24" style="width:19px; height:19px;" fill="none" stroke="#041316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4a1 1 0 0 0 1 1h3l6 4V5L7 9H4a1 1 0 0 0-1 1zM17.5 8.5a5 5 0 0 1 0 7"></path></svg>
+                    </div>
+                    <div style="display:flex; flex-direction:column; min-width:0;">
+                      <span style="font-family:{{ t.headingFont }}; font-size:15px; font-weight:800; color:#E8FFFE;">{{ t.pillars.ads.title }}</span>
+                      <span style="font-size:11.5px; color:#65D4D2;">{{ t.pillars.ads.sub }}</span>
+                    </div>
+                  </div>
+
+                  <div style="display:flex; align-items:center; gap:18px; padding:22px; border-radius:18px; background:rgba(101,212,210,.07); border:1px solid rgba(101,212,210,.22); animation:fadeUp .6s .15s ease both;">
+                    <span style="font-family:Poppins,sans-serif; font-size:40px; font-weight:800; color:#65D4D2; line-height:1; animation:pop .7s .3s both;">{{ t.pillars.ads.big }}</span>
+                    <span style="flex:1; font-size:14px; line-height:1.7; color:rgba(232,255,254,.82);">{{ t.pillars.ads.bigLine }}</span>
+                  </div>
+
+                  <sc-for list="{{ t.pillars.ads.rows }}" as="ad" hint-placeholder-count="3">
+                    <div style="display:flex; align-items:center; gap:13px; padding:15px 19px; border-radius:16px; background:rgba(232,255,254,.05); border:1px solid rgba(232,255,254,.09); animation:fadeUp .6s {{ ad.delay }} ease both;">
+                      <svg viewBox="0 0 24 24" style="width:17px; height:17px; flex:none;" fill="none" stroke="#65D4D2" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.2 5.2L20 7"></path></svg>
+                      <span style="flex:1; font-size:14px; line-height:1.7; color:rgba(232,255,254,.8);">{{ ad.text }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
               <!-- ---------- MARKETING CALENDAR ---------- -->
               <sc-if value="{{ isPillarCalendar }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex; flex-direction:column; gap:16px;">
@@ -573,6 +661,10 @@
 
         </div>
         </div>
+
+        <div style="text-align:center; margin-top:40px;">
+          <div onClick="{{ goTo.services }}" style="display:inline-block; padding:13px 30px; border-radius:12px; border:1px solid rgba(101,212,210,.4); color:#65D4D2; font-weight:700; font-size:15px; cursor:pointer; font-family:{{ t.headingFont }}; transition:all .2s;" style-hover="background:rgba(101,212,210,.1);">{{ t.pillars.seeAll }}</div>
+        </div>
       </div>
     </section>
 
@@ -615,24 +707,6 @@
           </div>
         </div>
 
-      </div>
-    </section>
-    <section style="padding:0 40px 90px;">
-      <div style="max-width:1200px; margin:0 auto;">
-        <h2 style="font-family:{{ t.headingFont }}; font-size:38px; font-weight:800; text-align:center; margin:0 0 18px; color:#E8FFFE;">{{ t.homeFeatures.title }}</h2>
-        <p style="text-align:center; color:rgba(232,255,254,.6); font-size:16px; margin:0 auto 48px; max-width:560px;">{{ t.homeFeatures.sub }}</p>
-        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px;" class="r-grid3">
-          <sc-for list="{{ t.homeFeatures.items }}" as="f" hint-placeholder-count="6">
-            <div style="padding:28px 24px; background:rgba(101,212,210,.04); border:1px solid rgba(101,212,210,.16); border-radius:16px; display:flex; flex-direction:column; gap:14px; transition:all .3s; cursor:default;" style-hover="transform:translateY(-6px); border-color:rgba(101,212,210,.5); background:rgba(101,212,210,.08); box-shadow:0 16px 40px rgba(0,0,0,.35);">
-              <div style="width:44px; height:44px; border-radius:11px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; font-family:Poppins,sans-serif; font-weight:800; font-size:13px; color:#041316;">{{ f.badge }}</div>
-              <div style="font-family:{{ t.headingFont }}; font-weight:700; font-size:18px; color:#E8FFFE;">{{ f.title }}</div>
-              <div style="font-size:14px; line-height:1.7; color:rgba(232,255,254,.6);">{{ f.desc }}</div>
-            </div>
-          </sc-for>
-        </div>
-        <div style="text-align:center; margin-top:36px;">
-          <div onClick="{{ goTo.services }}" style="display:inline-block; padding:13px 30px; border-radius:12px; border:1px solid rgba(101,212,210,.4); color:#65D4D2; font-weight:700; font-size:15px; cursor:pointer; font-family:{{ t.headingFont }}; transition:all .2s;" style-hover="background:rgba(101,212,210,.1);">{{ t.homeFeatures.seeAll }}</div>
-        </div>
       </div>
     </section>
 
@@ -1034,6 +1108,21 @@ const DATA = {
       title:{ar:"نقاط ومكافآت ترجّع العميل",en:"Points and rewards that bring them back"},
       desc:{ar:"العميل يجمع نقاط مع كل طلب، ويشوف كم باقي للمكافأة الجاية — سبب واضح يخليه يطلب منك مرة ثانية بدل المنافس.",en:"Customers earn points on every order and see how close the next reward is — a clear reason to order from you again instead of a competitor."},
       points:{ar:["مستويات عضوية ومكافآت مرنة","عروض مبنية على تاريخ الشراء","تتبّع نسبة العملاء العائدين"],en:["Flexible tiers and rewards","Offers built on purchase history","Track your returning-customer rate"]} },
+    { key:"books", badge:{ar:"إيراداتك تُقيَّد تلقائياً",en:"Revenue posted automatically"}, blurb:{ar:"إيرادات ومصاريف وقيود وتقارير جاهزة للتصدير",en:"Revenue, expenses, journal entries and exportable reports"}, tab:{ar:"المحاسبة",en:"Accounting"}, frame:"Accounting",
+      d:"M5 3h14a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM8 7h8M8 11h8M8 15h4",
+      title:{ar:"محاسبة تكتب نفسها",en:"Accounting that writes itself"},
+      desc:{ar:"كل طلب يُسجَّل إيراداً لحظة اكتماله، وكل مصروف يُقيَّد في مكانه. لا إكسل، ولا إدخال يدوي في آخر الشهر.",en:"Every completed order is posted as revenue the moment it closes, and every expense lands in its place. No spreadsheets, no month-end data entry."},
+      points:{ar:["إيرادات آلية من الطلبات","مصاريف وقيود محاسبية","تقارير قابلة للتصدير"],en:["Automatic revenue from orders","Expenses and journal entries","Exportable reports"]} },
+    { key:"pos", badge:{ar:"مبيعات المحل في نفس النظام",en:"In-store sales in the same system"}, blurb:{ar:"شاشة كاشير بفاتورة حرارية، ومبيعاتها تدخل نفس اللوحة",en:"A cashier screen with thermal receipts, feeding the same dashboard"}, tab:{ar:"نقطة البيع",en:"Point of sale"}, frame:"Point of sale",
+      d:"M6 2h12a1 1 0 0 1 1 1v18l-3-2-3 2-3-2-3 2V3a1 1 0 0 1 1-1zM9 7h6M9 11h6",
+      title:{ar:"محلّك ومتجرك في حساب واحد",en:"Your shop and your store in one ledger"},
+      desc:{ar:"شاشة كاشير كاملة بفاتورة طباعة حرارية. ما يُباع في المحل ينزل من نفس المخزون ويظهر في نفس التقارير.",en:"A full cashier screen with thermal receipt printing. What sells in the shop comes off the same stock and lands in the same reports."},
+      points:{ar:["فاتورة حرارية للزبون","خصم من نفس المخزون","تقرير مبيعات موحّد"],en:["Thermal receipt for the customer","Deducted from the same stock","One unified sales report"]} },
+    { key:"ads", badge:{ar:"تعرف أي إعلان جاب طلباً",en:"You know which ad brought the order"}, blurb:{ar:"إعلانات ميتا وتتبّع التحويلات وكاتب نصوص بالذكاء الاصطناعي",en:"Meta ads, conversion tracking and an AI copywriter"}, tab:{ar:"الإعلانات",en:"Advertising"}, frame:"Meta ads",
+      d:"M3 10v4a1 1 0 0 0 1 1h3l6 4V5L7 9H4a1 1 0 0 0-1 1zM17.5 8.5a5 5 0 0 1 0 7",
+      title:{ar:"إعلانات تعرف نتيجتها",en:"Ads you can actually measure"},
+      desc:{ar:"أنشئ إعلان ميتا من داخل المنصة، وتتبّع التحويل حتى الطلب نفسه — لا تخمين في نهاية الشهر عن مصدر مبيعاتك.",en:"Create a Meta ad from inside the platform and follow the conversion all the way to the order — no month-end guessing about where sales came from."},
+      points:{ar:["كتالوج منتجات متصل بحسابك","تتبّع التحويلات حتى الطلب","كاتب نصوص إعلانية بالذكاء الاصطناعي"],en:["Product catalogue linked to your account","Conversions tracked down to the order","An AI ad copywriter"]} },
     { key:"calendar", blurb:{ar:"مواسم بلدك وأعيادها جاهزة لتخطيط حملاتك",en:"Your country's seasons, ready to plan campaigns"}, badge:{ar:"تخطيط المواسم قبل ما تبدأ",en:"Plan seasons before they start"}, tab:{ar:"التقويم التسويقي",en:"Marketing calendar"}, frame:"Marketing calendar",
       d:"M4 7h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1zM8 3v4M16 3v4M3 11.5h18",
       title:{ar:"تقويم تسويقي يعرف مواسم بلدك",en:"A marketing calendar that knows your market"},
@@ -1186,8 +1275,9 @@ class Component extends DCLogic {
       },
       pillars: {
         tag: L==="ar" ? "شوف المنصة وهي تشتغل" : "See the platform running",
-        title: L==="ar" ? "ثماني أدوات، لوحة واحدة" : "Eight tools, one dashboard",
-        sub: L==="ar" ? "اضغط على أي أداة وشوف شاشتها الحقيقية داخل المنصة." : "Pick any tool and see its real screen inside the platform.",
+        title: L==="ar" ? "منصة كاملة، ليس مجرد أداة" : "A full platform, not just a tool",
+        sub: L==="ar" ? "كل موديول من موديولات velorci — تعمل كلها معاً من اللوحة نفسها. اضغط أي واحد لترى شاشته." : "Every velorci module — all of them working together from the same dashboard. Tap any one to see its screen.",
+        seeAll: L==="ar" ? "شاهد كل الخدمات ←" : "See all services →",
         cta: L==="ar" ? "اطلب عرضاً تجريبياً" : "Request a demo",
 
         store: {
@@ -1282,6 +1372,42 @@ class Component extends DCLogic {
             { d:"M41 16h38a7 7 0 0 1 7 7v24H34V23a7 7 0 0 1 7-7zM28 51h64a5.5 5.5 0 0 1 0 11H28a5.5 5.5 0 0 1 0-11zM56.5 62h7v14h-7zM40 80h40l-3.5 5h-33z", name: L==="ar"?"كرسي فردي ضد الماء":"Waterproof single chair", sku:"158274", type: L==="ar"?"رئيسي · 10 متغيّرات":"Parent · 10 children", price:"30.000" },
             { d:"M14 38h92v8.5H14zM26 46.5h7.5v38H26zM86.5 46.5H94v38h-7.5zM33.5 58h53v5.5h-53z", name: L==="ar"?"طاولة ضد الماء":"Waterproof table", sku:"158277", type: L==="ar"?"رئيسي · 10 متغيّرات":"Parent · 10 children", price:"12.000" },
           ],
+        },
+
+        books: {
+          title: L==="ar" ? "المحاسبة" : "Accounting",
+          sub: L==="ar" ? "سبتمبر 2026" : "September 2026",
+          netLabel: L==="ar" ? "صافي الربح هذا الشهر" : "Net profit this month",
+          net: L==="ar" ? "4,280 د.ك" : "KD 4,280",
+          netSub: L==="ar" ? "محسوب من الطلبات المكتملة والمصاريف المسجَّلة" : "Calculated from completed orders and recorded expenses",
+          rows: [
+            { label: L==="ar"?"إيرادات الطلبات":"Order revenue", value: L==="ar"?"6,910 د.ك":"KD 6,910", color:"#7ee2a8" },
+            { label: L==="ar"?"تكلفة المنتجات":"Cost of goods", value: L==="ar"?"1,840 د.ك":"KD 1,840", color:"rgba(232,255,254,.7)" },
+            { label: L==="ar"?"مصاريف تشغيلية":"Operating expenses", value: L==="ar"?"790 د.ك":"KD 790", color:"rgba(232,255,254,.7)" },
+          ],
+        },
+
+        pos: {
+          title: L==="ar" ? "نقطة البيع" : "Point of sale",
+          sub: L==="ar" ? "فاتورة #POS-1184" : "Receipt #POS-1184",
+          lines: [
+            { name: L==="ar"?"كرسي استرخاء كبير":"Large lounge chair", price: L==="ar"?"59.000":"59.000" },
+            { name: L==="ar"?"وسادة ديكور":"Decorative cushion", price: L==="ar"?"7.500":"7.500" },
+            { name: L==="ar"?"سجادة صوف طبيعي":"Natural wool rug", price: L==="ar"?"28.900":"28.900" },
+          ],
+          totalLabel: L==="ar" ? "الإجمالي" : "Total",
+          total: L==="ar" ? "95.400 د.ك" : "KD 95.400",
+          note: L==="ar" ? "الفاتورة تُطبع حرارياً للزبون، والقطع تُخصم من نفس المخزون في اللحظة نفسها." : "The receipt prints thermally for the customer, and the items come off the same stock at that very moment.",
+        },
+
+        ads: {
+          title: L==="ar" ? "الإعلانات" : "Advertising",
+          sub: L==="ar" ? "حملة الجمعة البيضاء" : "White Friday campaign",
+          big: "3.4x",
+          bigLine: L==="ar" ? "عائد على الإنفاق الإعلاني، محسوب من الطلبات التي وصلت فعلاً — لا من نقرات." : "return on ad spend, measured from orders that actually landed — not from clicks.",
+          rows: L==="ar"
+            ? ["كتالوج منتجاتك متصل بحساب ميتا مباشرة","كل طلب مربوط بالإعلان الذي جاء منه","كاتب نصوص إعلانية يقترح عليك الصياغة"]
+            : ["Your product catalogue linked straight to Meta","Every order tied to the ad it came from","An AI copywriter that drafts the wording for you"],
         },
 
         calendar: {
@@ -1587,7 +1713,9 @@ class Component extends DCLogic {
     t.pillars.crm.stats = t.pillars.crm.stats.map((s,i) => ({...s, delay: (.35+i*.1).toFixed(2)+"s"}));
     t.pillars.crm.timeline2 = t.pillars.crm.timeline.slice(0,2).map((x,i) => ({...x, delay: (.6+i*.13).toFixed(2)+"s"}));
     t.pillars.loyalty.rewards2 = t.pillars.loyalty.rewards2.map((r,i) => ({...r, delay: (.6+i*.13).toFixed(2)+"s"}));
-    t.pillars.calendar.events = t.pillars.calendar.events.map((e,i) => ({...e, delay: (.35+i*.13).toFixed(2)+"s"}));
+    t.pillars.books.rows = t.pillars.books.rows.map((r,i) => ({...r, delay: (.4+i*.12).toFixed(2)+"s"}));
+    t.pillars.ads.rows = t.pillars.ads.rows.map((text,i) => ({ text, delay: (.4+i*.12).toFixed(2)+"s" }));
+        t.pillars.calendar.events = t.pillars.calendar.events.map((e,i) => ({...e, delay: (.35+i*.13).toFixed(2)+"s"}));
 
     // staggered entrance delays — each screen plays itself in when its tab opens
     const stagger = (arr, step, start) => arr.map((x, i) => ({...x, delay: (start + i*step).toFixed(2) + "s"}));
@@ -1715,6 +1843,9 @@ class Component extends DCLogic {
       isPillarStore: P==="store",
       isPillarOrders: P==="orders",
       isPillarStock: P==="stock",
+      isPillarBooks: P==="books",
+      isPillarPos: P==="pos",
+      isPillarAds: P==="ads",
       isPillarCalendar: P==="calendar",
       isPillarWa: P==="wa",
       isPillarAi: P==="ai",
