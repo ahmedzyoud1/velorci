@@ -62,6 +62,7 @@
     .r-tabstrip{display:none !important;}
     .r-row{display:flex !important;}
     .r-pillar{margin-bottom:10px !important;}
+    .r-pillar.r-closed{display:none !important;}
   }
   .r-chips{scrollbar-width:none; -ms-overflow-style:none;}
   .r-chips::-webkit-scrollbar{display:none;}
@@ -227,7 +228,7 @@
           </div>
         </sc-for>
 
-        <div style="order:{{ activePillar.order }}; display:grid; grid-template-columns:1fr 330px; gap:26px; align-items:start;" class="r-pillar">
+        <div style="order:{{ activePillar.order }}; display:grid; grid-template-columns:1fr 330px; gap:26px; align-items:start;" class="r-pillar {{ pillarClosedClass }}">
 
           <!-- ====== PREMIUM APP WINDOW ====== -->
           <div style="position:relative; min-width:0;">
@@ -1247,7 +1248,7 @@ const DATA = {
 };
 
 class Component extends DCLogic {
-  state = { page:"home", lang:"ar", pillar:"store", form:{name:"",phone:"",company:"",message:""}, submitted:false, statProgress:0, menuOpen:false, revealProg:0 };
+  state = { page:"home", lang:"ar", pillar:"store", pillarOpen:true, form:{name:"",phone:"",company:"",message:""}, submitted:false, statProgress:0, menuOpen:false, revealProg:0 };
 
   componentDidMount(){
     let step = 0;
@@ -1300,6 +1301,7 @@ class Component extends DCLogic {
     const barsH = [45,70,55,90,65,100,80];
 
     const P = this.state.pillar;
+    const OPEN = this.state.pillarOpen;
     const pillarDef = DATA.pillarDefs.find(p => p.key === P) || DATA.pillarDefs[0];
     const t = {
       dir, headingFont,
@@ -1733,20 +1735,20 @@ class Component extends DCLogic {
       toggleLang: () => this.setState({lang: this.state.lang==="ar" ? "en" : "ar"}),
       pillarTabs: DATA.pillarDefs.map(p => ({
         label: this.pick(p.tab),
-        onClick: () => this.setState({pillar: p.key}),
+        onClick: () => this.setState({pillar: p.key, pillarOpen: true}),
         fg: P===p.key ? "#041316" : "rgba(232,255,254,.72)",
         bg: P===p.key ? "#65D4D2" : "rgba(232,255,254,.035)",
         border: P===p.key ? "1px solid #65D4D2" : "1px solid rgba(101,212,210,.2)",
         shadow: P===p.key ? "0 0 22px rgba(101,212,210,.32)" : "none",
       })),
       pillarRows: DATA.pillarDefs.map((p, i) => {
-        const on = P===p.key;
+        const on = P===p.key && OPEN;
         return {
           label: this.pick(p.tab),
           hint: this.pick(p.badge),
           d: p.d,
           order: i*2,
-          onClick: () => this.setState({pillar: on ? p.key : p.key}),
+          onClick: () => this.setState(on ? {pillarOpen:false} : {pillar:p.key, pillarOpen:true}),
           bg: on ? "rgba(101,212,210,.13)" : "rgba(232,255,254,.03)",
           border: on ? "1px solid rgba(101,212,210,.55)" : "1px solid rgba(101,212,210,.16)",
           shadow: on ? "0 10px 30px rgba(0,0,0,.35)" : "none",
@@ -1766,6 +1768,7 @@ class Component extends DCLogic {
         badge: this.pick(pillarDef.badge),
         order: DATA.pillarDefs.findIndex(p => p.key === P)*2 + 1,
       },
+      pillarClosedClass: OPEN ? "" : "r-closed",
       isPillarStore: P==="store",
       isPillarOrders: P==="orders",
       isPillarStock: P==="stock",
