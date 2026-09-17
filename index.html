@@ -500,33 +500,6 @@
                 </div>
               </sc-if>
 
-              <!-- ---------- ACCOUNTING ---------- -->
-              <sc-if value="{{ isPillarBooks }}" hint-placeholder-val="{{ false }}">
-                <div style="display:flex; flex-direction:column; gap:16px;">
-                  <div style="display:flex; align-items:center; gap:12px; padding-bottom:14px; border-bottom:1px solid rgba(101,212,210,.18);">
-                    <div style="width:38px; height:38px; flex:none; border-radius:12px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(101,212,210,.25);">
-                      <svg viewBox="0 0 24 24" style="width:19px; height:19px;" fill="none" stroke="#041316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h14a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM8 7h8M8 11h8M8 15h4"></path></svg>
-                    </div>
-                    <div style="display:flex; flex-direction:column; min-width:0;">
-                      <span style="font-family:{{ t.headingFont }}; font-size:15px; font-weight:800; color:#E8FFFE;">{{ t.pillars.books.title }}</span>
-                      <span style="font-size:11.5px; color:#65D4D2;">{{ t.pillars.books.sub }}</span>
-                    </div>
-                  </div>
-
-                  <div style="padding:22px; border-radius:18px; background:rgba(101,212,210,.07); border:1px solid rgba(101,212,210,.22); animation:fadeUp .6s .15s ease both;">
-                    <div style="font-size:13px; color:rgba(232,255,254,.6);">{{ t.pillars.books.netLabel }}</div>
-                    <div style="font-family:Poppins,sans-serif; font-size:36px; font-weight:800; color:#65D4D2; margin-top:8px; direction:ltr; unicode-bidi:isolate; animation:pop .7s .3s both;">{{ t.pillars.books.net }}</div>
-                    <div style="font-size:12.5px; color:rgba(232,255,254,.45); margin-top:7px;">{{ t.pillars.books.netSub }}</div>
-                  </div>
-
-                  <sc-for list="{{ t.pillars.books.rows }}" as="bk" hint-placeholder-count="3">
-                    <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:15px 19px; border-radius:16px; background:rgba(232,255,254,.05); border:1px solid rgba(232,255,254,.09); animation:fadeUp .6s {{ bk.delay }} ease both;">
-                      <span style="font-size:14px; color:rgba(232,255,254,.8);">{{ bk.label }}</span>
-                      <span style="flex:none; font-family:Poppins,sans-serif; font-size:16px; font-weight:800; color:{{ bk.color }}; direction:ltr; unicode-bidi:isolate;">{{ bk.value }}</span>
-                    </div>
-                  </sc-for>
-                </div>
-              </sc-if>
 
               <!-- ---------- POS ---------- -->
               <sc-if value="{{ isPillarPos }}" hint-placeholder-val="{{ false }}">
@@ -1105,11 +1078,6 @@ const DATA = {
       title:{ar:"نقاط ومكافآت ترجّع العميل",en:"Points and rewards that bring them back"},
       desc:{ar:"العميل يجمع نقاط مع كل طلب، ويشوف كم باقي للمكافأة الجاية — سبب واضح يخليه يطلب منك مرة ثانية بدل المنافس.",en:"Customers earn points on every order and see how close the next reward is — a clear reason to order from you again instead of a competitor."},
       points:{ar:["مستويات عضوية ومكافآت مرنة","عروض مبنية على تاريخ الشراء","تتبّع نسبة العملاء العائدين"],en:["Flexible tiers and rewards","Offers built on purchase history","Track your returning-customer rate"]} },
-    { key:"books", badge:{ar:"إيراداتك تُقيَّد تلقائياً",en:"Revenue posted automatically"}, blurb:{ar:"إيرادات ومصاريف وقيود وتقارير جاهزة للتصدير",en:"Revenue, expenses, journal entries and exportable reports"}, tab:{ar:"المحاسبة",en:"Accounting"}, frame:"Accounting",
-      d:"M5 3h14a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM8 7h8M8 11h8M8 15h4",
-      title:{ar:"محاسبة تكتب نفسها",en:"Accounting that writes itself"},
-      desc:{ar:"كل طلب يُسجَّل إيراداً لحظة اكتماله، وكل مصروف يُقيَّد في مكانه. لا إكسل، ولا إدخال يدوي في آخر الشهر.",en:"Every completed order is posted as revenue the moment it closes, and every expense lands in its place. No spreadsheets, no month-end data entry."},
-      points:{ar:["إيرادات آلية من الطلبات","مصاريف وقيود محاسبية","تقارير قابلة للتصدير"],en:["Automatic revenue from orders","Expenses and journal entries","Exportable reports"]} },
     { key:"pos", badge:{ar:"مبيعات المحل في نفس النظام",en:"In-store sales in the same system"}, blurb:{ar:"شاشة كاشير بفاتورة حرارية، ومبيعاتها تدخل نفس اللوحة",en:"A cashier screen with thermal receipts, feeding the same dashboard"}, tab:{ar:"نقطة البيع",en:"Point of sale"}, frame:"Point of sale",
       d:"M6 2h12a1 1 0 0 1 1 1v18l-3-2-3 2-3-2-3 2V3a1 1 0 0 1 1-1zM9 7h6M9 11h6",
       title:{ar:"محلّك ومتجرك في حساب واحد",en:"Your shop and your store in one ledger"},
@@ -1187,7 +1155,7 @@ const DATA = {
 };
 
 class Component extends DCLogic {
-  state = { page:"home", lang:"ar", pillar:"store", pillarOpen:true, form:{name:"",phone:"",company:"",message:""}, submitted:false, statProgress:0, menuOpen:false, revealProg:0 };
+  state = { page:"home", lang:"ar", pillar:"store", pillarOpen:false, form:{name:"",phone:"",company:"",message:""}, submitted:false, statProgress:0, menuOpen:false, revealProg:0 };
 
   componentDidMount(){
     let step = 0;
@@ -1370,18 +1338,6 @@ class Component extends DCLogic {
           ],
         },
 
-        books: {
-          title: L==="ar" ? "المحاسبة" : "Accounting",
-          sub: L==="ar" ? "سبتمبر 2026" : "September 2026",
-          netLabel: L==="ar" ? "صافي الربح هذا الشهر" : "Net profit this month",
-          net: L==="ar" ? "4,280 د.ك" : "KD 4,280",
-          netSub: L==="ar" ? "محسوب من الطلبات المكتملة والمصاريف المسجَّلة" : "Calculated from completed orders and recorded expenses",
-          rows: [
-            { label: L==="ar"?"إيرادات الطلبات":"Order revenue", value: L==="ar"?"6,910 د.ك":"KD 6,910", color:"#7ee2a8" },
-            { label: L==="ar"?"تكلفة المنتجات":"Cost of goods", value: L==="ar"?"1,840 د.ك":"KD 1,840", color:"rgba(232,255,254,.7)" },
-            { label: L==="ar"?"مصاريف تشغيلية":"Operating expenses", value: L==="ar"?"790 د.ك":"KD 790", color:"rgba(232,255,254,.7)" },
-          ],
-        },
 
         pos: {
           title: L==="ar" ? "نقطة البيع" : "Point of sale",
@@ -1709,7 +1665,6 @@ class Component extends DCLogic {
     t.pillars.crm.stats = t.pillars.crm.stats.map((s,i) => ({...s, delay: (.35+i*.1).toFixed(2)+"s"}));
     t.pillars.crm.timeline2 = t.pillars.crm.timeline.slice(0,2).map((x,i) => ({...x, delay: (.6+i*.13).toFixed(2)+"s"}));
     t.pillars.loyalty.rewards2 = t.pillars.loyalty.rewards2.map((r,i) => ({...r, delay: (.6+i*.13).toFixed(2)+"s"}));
-    t.pillars.books.rows = t.pillars.books.rows.map((r,i) => ({...r, delay: (.4+i*.12).toFixed(2)+"s"}));
     t.pillars.ads.rows = t.pillars.ads.rows.map((text,i) => ({ text, delay: (.4+i*.12).toFixed(2)+"s" }));
         t.pillars.calendar.events = t.pillars.calendar.events.map((e,i) => ({...e, delay: (.35+i*.13).toFixed(2)+"s"}));
 
@@ -1839,7 +1794,6 @@ class Component extends DCLogic {
       isPillarStore: P==="store",
       isPillarOrders: P==="orders",
       isPillarStock: P==="stock",
-      isPillarBooks: P==="books",
       isPillarPos: P==="pos",
       isPillarAds: P==="ads",
       isPillarCalendar: P==="calendar",
