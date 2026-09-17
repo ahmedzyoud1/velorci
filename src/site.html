@@ -235,7 +235,7 @@
             </div>
             <div style="flex:1; min-width:0;">
               <div style="font-family:{{ t.headingFont }}; font-weight:700; font-size:15px; color:{{ rw.fg }};">{{ rw.label }}</div>
-              <div style="font-size:12px; color:rgba(232,255,254,.45); margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ rw.hint }}</div>
+              <div style="font-size:12.5px; line-height:1.55; color:rgba(232,255,254,.5); margin-top:4px;">{{ rw.hint }}</div>
             </div>
             <svg viewBox="0 0 24 24" style="width:16px; height:16px; flex:none; transform:rotate({{ rw.rotate }}); transition:transform .22s;" fill="none" stroke="{{ rw.chevron }}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5l6 6 6-6"></path></svg>
           </div>
@@ -1696,42 +1696,42 @@ const LEGAL = {
 
 const DATA = {
   pillarDefs: [
-    { key:"store", badge:{ar:"+18% مبيعات هذا الشهر",en:"+18% sales this month"}, tab:{ar:"المتجر الإلكتروني",en:"Online store"}, frame:"yourstore.com",
+    { key:"store", blurb:{ar:"متجر بدومينك الخاص، يبيع ٢٤ ساعة بلا برمجة",en:"Your own domain, selling 24/7, no code"}, badge:{ar:"+18% مبيعات هذا الشهر",en:"+18% sales this month"}, tab:{ar:"المتجر الإلكتروني",en:"Online store"}, frame:"yourstore.com",
       d:"M4 8h16M5 8l1-4h12l1 4M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8M9.5 20v-6h5v6",
       title:{ar:"متجر بدومينك الخاص",en:"A store on your own domain"},
       desc:{ar:"مصمّم بالسحب والإفلات، بدون برمجة ولا مطوّر. العميل يتصفّح ويطلب بنفسه، والطلب يدخل لوحتك مباشرة.",en:"Built drag-and-drop, no code and no developer. Customers browse and order themselves, and the order lands straight in your dashboard."},
       points:{ar:["كوبونات وسلات متروكة وتقييمات","دفع KNET وبطاقات وتقسيط","تقارير مبيعات لحظية"],en:["Coupons, abandoned carts and reviews","KNET, cards and instalments","Live sales reports"]} },
-    { key:"orders", badge:{ar:"12 طلب مفتوح الآن",en:"12 open orders right now"}, tab:{ar:"إدارة الطلبات",en:"Orders"}, frame:"Orders · live board",
+    { key:"orders", blurb:{ar:"من دخول الطلب حتى التسليم على لوح واحد",en:"From order to delivery on one board"}, badge:{ar:"12 طلب مفتوح الآن",en:"12 open orders right now"}, tab:{ar:"إدارة الطلبات",en:"Orders"}, frame:"Orders · live board",
       d:"M8 4h8a2 2 0 0 1 2 2v14.5l-6-3-6 3V6a2 2 0 0 1 2-2zM9.5 9h5M9.5 12.5h5",
       title:{ar:"كل طلباتك على لوح واحد",en:"Every order on one board"},
       desc:{ar:"من اللحظة اللي يدخل فيها الطلب حتى التسليم — مراحل واضحة، مبلغ، طريقة دفع، منطقة، وسائق معيَّن.",en:"From the moment an order lands until delivery — clear stages, amount, payment method, area and assigned driver."},
       points:{ar:["مراحل مخصصة حسب طبيعة عملك","تعيين سائق ومتابعة وقت التنفيذ","فلترة وبحث وتجميع حسب التاريخ"],en:["Custom stages that fit your workflow","Assign a driver and track turnaround","Filter, search and group by date"]} },
-    { key:"stock", badge:{ar:"161 منتج · 28 نقص مرصود",en:"161 products · 28 gaps flagged"}, tab:{ar:"إدارة المخزون",en:"Inventory"}, frame:"Products · inventory",
+    { key:"stock", blurb:{ar:"منتجات ومتغيّرات، والنواقص تُرصد تلقائياً",en:"Products, variants and gaps flagged automatically"}, badge:{ar:"161 منتج · 28 نقص مرصود",en:"161 products · 28 gaps flagged"}, tab:{ar:"إدارة المخزون",en:"Inventory"}, frame:"Products · inventory",
       d:"M12 2.8l8.4 4.5v9.4L12 21.2l-8.4-4.5V7.3zM3.6 7.3L12 11.8l8.4-4.5M12 11.8v9.4",
       title:{ar:"مخزون ومنتجات تحت السيطرة",en:"Products and stock under control"},
       desc:{ar:"منتجات رئيسية بمتغيّرات، تصنيفات، خصائص، ورصد تلقائي للنواقص — مع استيراد وتصدير Excel بضغطة.",en:"Parent products with variants, categories, attributes and automatic gap detection — with one-click Excel import and export."},
       points:{ar:["منتج رئيسي بمتغيّرات متعددة","رصد النواقص في بيانات المنتجات","استيراد من متجر قائم عبر رابط"],en:["Parent products with multiple variants","Detects gaps in product data","Import from an existing store by link"]} },
-    { key:"wa", badge:{ar:"96% نسبة وصول الرسائل",en:"96% message delivery"}, tab:{ar:"واتساب",en:"WhatsApp"}, frame:"WhatsApp Business API",
+    { key:"wa", blurb:{ar:"رقمك الرسمي: تحديثات الطلبات وبث ومحادثات",en:"Your verified number: order updates, broadcasts, chats"}, badge:{ar:"96% نسبة وصول الرسائل",en:"96% message delivery"}, tab:{ar:"واتساب",en:"WhatsApp"}, frame:"WhatsApp Business API",
       d:"M21 11.5a8.4 8.4 0 0 1-12.5 7.3L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z",
       title:{ar:"واتساب أعمال رسمي",en:"Official WhatsApp Business"},
       desc:{ar:"رقمك الموثّق داخل المنصة — محادثات العملاء، تحديثات الطلبات، والبث الجماعي كلها من نفس الشاشة.",en:"Your verified number inside the platform — customer chats, order updates and broadcasts all from one screen."},
       points:{ar:["قوالب معتمدة وإشعارات آلية","بث جماعي لشرائح عملاء محددة","صندوق موحّد لكل المحادثات"],en:["Approved templates and automated notifications","Broadcasts to specific customer segments","One unified inbox for every chat"]} },
-    { key:"ai", badge:{ar:"73% تُحلّ بدون موظف",en:"73% resolved without a human"}, tab:{ar:"وكيل AI",en:"AI agent"}, frame:"AI Agent · settings",
+    { key:"ai", blurb:{ar:"يرد على عملائك ٢٤ ساعة بدل موظف",en:"Answers your customers 24/7 instead of a human"}, badge:{ar:"73% تُحلّ بدون موظف",en:"73% resolved without a human"}, tab:{ar:"وكيل AI",en:"AI agent"}, frame:"AI Agent · settings",
       d:"M12 3l1.9 4.9 4.9 1.9-4.9 1.9L12 16.6l-1.9-4.9L5.2 9.8l4.9-1.9zM18.6 15.4l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z",
       title:{ar:"وكيل ذكاء اصطناعي يرد بدلك",en:"An AI agent that replies for you"},
       desc:{ar:"يتعلّم من منتجاتك وسياساتك، يرد على العملاء ٢٤ ساعة بشخصية تختارها، ويحوّل لموظف بشري وقت ما يحتاج.",en:"Learns your products and policies, answers customers 24/7 with a personality you choose, and hands off to a human when needed."},
       points:{ar:["يتعلّم من سياساتك ومنتجاتك","شخصية ومستوى ذكاء قابلين للاختيار","تحويل فوري لموظف عند الحاجة"],en:["Learns from your policies and products","Selectable personality and intelligence tier","Instant handoff to a human"]} },
-    { key:"crm", badge:{ar:"تصنيف تلقائي لكل عميل",en:"Every customer auto-segmented"}, tab:{ar:"ملف العميل",en:"Customer CRM"}, frame:"CRM · customer profile",
+    { key:"crm", blurb:{ar:"كل طلبات العميل ومحادثاته في ملف واحد",en:"Every order and chat in one customer profile"}, badge:{ar:"تصنيف تلقائي لكل عميل",en:"Every customer auto-segmented"}, tab:{ar:"ملف العميل",en:"Customer CRM"}, frame:"CRM · customer profile",
       d:"M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM8.8 11.6a2.2 2.2 0 1 0 0-4.4 2.2 2.2 0 0 0 0 4.4zM5.3 16.6c.4-1.8 1.8-2.9 3.5-2.9s3.1 1.1 3.5 2.9M15.5 9.5h3.8M15.5 13h3.8",
       title:{ar:"ملف كامل لكل عميل",en:"A full profile for every customer"},
       desc:{ar:"كل طلب ومحادثة وملاحظة تتجمّع تلقائياً في مكان واحد، والمنصة تصنّف عملاءك حسب سلوكهم الفعلي.",en:"Every order, chat and note collects automatically in one place, and the platform segments customers by their actual behaviour."},
       points:{ar:["تصنيف تلقائي: متكرر، خامل، VIP","سجل طلبات ومحادثات كامل","أساس البث والعروض المخصصة"],en:["Auto segments: repeat, dormant, VIP","Full order and conversation history","The base for targeted offers"]} },
-    { key:"loyalty", badge:{ar:"38% من المبيعات عملاء عائدون",en:"38% of sales from returning customers"}, tab:{ar:"برنامج الولاء",en:"Loyalty"}, frame:"Loyalty · member card",
+    { key:"loyalty", blurb:{ar:"نقاط ومكافآت ترجّع العميل يشتري من جديد",en:"Points and rewards that bring customers back"}, badge:{ar:"38% من المبيعات عملاء عائدون",en:"38% of sales from returning customers"}, tab:{ar:"برنامج الولاء",en:"Loyalty"}, frame:"Loyalty · member card",
       d:"M3 11.5h18V19a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-7.5zM2.2 7.6h19.6v3.9H2.2zM12 7.6V20M12 7.6S10.6 3.6 8.1 3.6a2 2 0 1 0 0 4zM12 7.6s1.4-4 3.9-4a2 2 0 1 1 0 4z",
       title:{ar:"نقاط ومكافآت ترجّع العميل",en:"Points and rewards that bring them back"},
       desc:{ar:"العميل يجمع نقاط مع كل طلب، ويشوف كم باقي للمكافأة الجاية — سبب واضح يخليه يطلب منك مرة ثانية بدل المنافس.",en:"Customers earn points on every order and see how close the next reward is — a clear reason to order from you again instead of a competitor."},
       points:{ar:["مستويات عضوية ومكافآت مرنة","عروض مبنية على تاريخ الشراء","تتبّع نسبة العملاء العائدين"],en:["Flexible tiers and rewards","Offers built on purchase history","Track your returning-customer rate"]} },
-    { key:"calendar", badge:{ar:"تخطيط المواسم قبل ما تبدأ",en:"Plan seasons before they start"}, tab:{ar:"التقويم التسويقي",en:"Marketing calendar"}, frame:"Marketing calendar",
+    { key:"calendar", blurb:{ar:"مواسم بلدك وأعيادها جاهزة لتخطيط حملاتك",en:"Your country's seasons, ready to plan campaigns"}, badge:{ar:"تخطيط المواسم قبل ما تبدأ",en:"Plan seasons before they start"}, tab:{ar:"التقويم التسويقي",en:"Marketing calendar"}, frame:"Marketing calendar",
       d:"M4 7h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1zM8 3v4M16 3v4M3 11.5h18",
       title:{ar:"تقويم تسويقي يعرف مواسم بلدك",en:"A marketing calendar that knows your market"},
       desc:{ar:"الأعياد الرسمية ومواسم التسوق والأحداث العالمية لدولتك، جاهزة في تقويم واحد — عشان تجهّز حملتك قبل الموسم مش بعده.",en:"Public holidays, shopping seasons and global events for your country, ready in one calendar — so you prepare the campaign before the season, not after."},
@@ -2465,7 +2465,7 @@ class Component extends DCLogic {
         const on = P===p.key && OPEN;
         return {
           label: this.pick(p.tab),
-          hint: this.pick(p.badge),
+          hint: this.pick(p.blurb),
           d: p.d,
           order: i*2,
           onClick: () => this.setState(on ? {pillarOpen:false} : {pillar:p.key, pillarOpen:true}),
