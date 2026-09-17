@@ -1540,28 +1540,37 @@ class Component extends DCLogic {
       onboard: {
         tag: L==="ar" ? "الانتقال" : "Getting started",
         title: L==="ar" ? "من التوقيع إلى أول طلب" : "From signing up to your first order",
-        sub: L==="ar" ? "أكبر سؤال يوقف التاجر مش «شو المميزات» — بل «كم بدها شغل عشان أنقل عملي؟». هذا اللي بيصير فعلياً، وشغلك ما بيتوقف يوم واحد." : "The question that stops most merchants is not what the features are — it is how much work moving costs them. Here is what actually happens, and your business does not pause for a single day.",
+        sub: L==="ar" ? "السؤال الذي يوقف أغلب التجّار ليس ما الذي تفعله المنصة، بل كم يكلّفهم الانتقال إليها. هذا ما يحدث فعلياً، خطوة خطوة — وعملك لا يتوقف يوماً واحداً." : "The question that stops most merchants is not what the platform does, but what moving to it costs them. Here is what actually happens, step by step — and your business does not pause for a single day.",
         steps: [
           { num:"01", when: L==="ar"?"اليوم الأول":"Day one",
             title: L==="ar"?"نربط الأساسيات":"We connect the essentials",
-            body: L==="ar"?"رقم واتساب الرسمي، ودومينك، وهوية متجرك. رقمك يبقى رقمك — العملاء اللي يعرفوه ما بيلاحظوا إنك انتقلت.":"Your official WhatsApp number, your domain and your store identity. Your number stays yours — customers who know it will not notice you moved." },
+            body: L==="ar"?"رقم واتساب الرسمي، والدومين، وهوية متجرك. رقمك يبقى كما هو، والعملاء الذين يعرفونه لن يلاحظوا أنك انتقلت.":"Your official WhatsApp number, your domain and your store identity. Your number stays the same, so customers who know it will not notice you moved." },
           { num:"02", when: L==="ar"?"اليوم الثاني":"Day two",
-            title: L==="ar"?"منتجاتك تنتقل بنفسها":"Your products move themselves",
-            body: L==="ar"?"عندك متجر شغّال؟ رابط واحد وتنسحب منتجاتك بصورها وأسعارها. ولا عندك متجر؟ ملف Excel يكفي.":"Already have a store? One link pulls your products across with their photos and prices. No store yet? An Excel file is enough." },
+            title: L==="ar"?"منتجاتك تنتقل إليك":"Your products come across",
+            body: L==="ar"?"لديك متجر قائم؟ رابط واحد ينقل منتجاتك بصورها وأسعارها ومتغيّراتها. لا متجر لديك بعد؟ ملف Excel يكفي.":"Already running a store? One link brings your products across with their photos, prices and variants. No store yet? An Excel file is enough." },
           { num:"03", when: L==="ar"?"اليوم الثالث":"Day three",
+            title: L==="ar"?"نضبط مراحل الطلب":"We set your order stages",
+            body: L==="ar"?"مراحلك أنت، لا مراحل جاهزة: تجهيز، خياطة، تعبئة، توصيل — سمِّها كما تناديها داخل عملك بالضبط.":"Your stages, not preset ones: prep, tailoring, packing, delivery — named exactly the way your team already names them." },
+          { num:"04", when: L==="ar"?"اليوم الرابع":"Day four",
             title: L==="ar"?"فريقك يدخل بأدواره":"Your team signs in with their roles",
-            body: L==="ar"?"كل واحد يشوف شغله وبس: المدير اللوحة كاملة، السائق عناوينه، المعبّئ الطلبات الجاهزة، الكاشير شاشة البيع.":"Everyone sees only their own work: the manager gets the full dashboard, the driver their addresses, the packer the ready orders, the cashier the point of sale." },
-          { num:"04", when: L==="ar"?"نفس الأسبوع":"That same week",
-            title: L==="ar"?"أول طلب يدخل اللوحة":"The first order lands on the board",
-            body: L==="ar"?"من متجرك أو من واتساب — بيظهر على لوح الطلبات، وبينمشي بمراحلك أنت، ويوصل العميل تحديث بكل مرحلة.":"From your store or from WhatsApp — it appears on the orders board, moves through the stages you defined, and the customer gets an update at every one." },
+            body: L==="ar"?"لكل دور شاشته: المدير يرى اللوحة كاملة، والسائق عناوينه، والمعبِّئ الطلبات الجاهزة، والكاشير شاشة البيع.":"Every role gets its own screen: the manager sees the full dashboard, the driver their addresses, the packer the ready orders, the cashier the point of sale." },
+          { num:"05", when: L==="ar"?"اليوم الخامس":"Day five",
+            title: L==="ar"?"الدفع والتوصيل":"Payment and delivery",
+            body: L==="ar"?"KNET والبطاقات والتقسيط، ومناطق التوصيل وأسعارها، وأوقات التسليم المتاحة لكل منطقة.":"KNET, cards and instalments, your delivery areas and their rates, and the delivery windows available in each one." },
+          { num:"06", when: L==="ar"?"نهاية الأسبوع":"End of the week",
+            title: L==="ar"?"أول طلب على اللوحة":"The first order on the board",
+            body: L==="ar"?"يصل من متجرك أو من واتساب، فيظهر على لوح الطلبات ويتحرك بين مراحلك، ويصل العميل تحديث عند كل مرحلة.":"It arrives from your store or from WhatsApp, appears on the orders board, moves through your stages, and the customer gets an update at each one." },
+          { num:"07", when: L==="ar"?"متى شئت":"Whenever you are ready",
+            title: L==="ar"?"الأدوات المتقدمة":"The advanced tools",
+            body: L==="ar"?"الوكيل الذكي، وبرنامج الولاء، والتقويم التسويقي — تُفعَّل حين تكون جاهزاً لها، لا في اليوم الأول.":"The AI agent, the loyalty program and the marketing calendar — switched on when you are ready for them, not on day one." },
         ],
-        note: L==="ar" ? "الوكيل الذكي وبرنامج الولاء والتقويم التسويقي بتفعّلهم لما تجهز لهم. مش لازم كل شي من أول يوم." : "The AI agent, the loyalty program and the marketing calendar switch on when you are ready for them. Nothing has to be live on day one.",
+        note: L==="ar" ? "متجرك الحالي يبقى يعمل حتى تقرّر التحويل بنفسك. لا انقطاع، ولا يوم مبيعات ضائع." : "Your current store keeps running until you decide to switch. No downtime, and not one day of sales lost.",
         cta: L==="ar" ? "احجز موعد الانتقال" : "Book your migration slot",
       },
       footer: { rights: L==="ar" ? "© 2026 velorci. جميع الحقوق محفوظة." : "© 2026 velorci. All rights reserved." },
     };
 
-    t.onboard.steps = t.onboard.steps.map((s,i) => ({...s, delay: (.1+i*.12).toFixed(2)+"s"}));
+    t.onboard.steps = t.onboard.steps.map((s,i) => ({...s, delay: (.1+i*.09).toFixed(2)+"s"}));
     t.pillars.orders.list = t.pillars.orders.list.map((o,i) => ({...o, delay: (.15+i*.18).toFixed(2)+"s"}));
     t.pillars.orders.stages = t.pillars.orders.stages.map(s => ({
       label:s.label, count:s.count,
