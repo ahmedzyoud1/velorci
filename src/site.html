@@ -62,6 +62,10 @@
     .r-grid4{grid-template-columns:1fr 1fr !important;}
     .r-grid3{grid-template-columns:1fr 1fr !important;}
     .r-pillar{grid-template-columns:1fr !important; row-gap:52px !important;}
+    .r-shell{display:flex !important; flex-direction:column !important;}
+    .r-tabstrip{display:none !important;}
+    .r-row{display:flex !important;}
+    .r-pillar{margin-bottom:10px !important;}
   }
   .r-chips{scrollbar-width:none; -ms-overflow-style:none;}
   .r-chips::-webkit-scrollbar{display:none;}
@@ -215,13 +219,28 @@
         <h2 style="font-family:{{ t.headingFont }}; font-size:38px; font-weight:800; text-align:center; margin:0 0 12px; color:#E8FFFE;">{{ t.pillars.title }}</h2>
         <p style="text-align:center; color:rgba(232,255,254,.6); font-size:16px; line-height:1.8; margin:0 auto 34px; max-width:600px;">{{ t.pillars.sub }}</p>
 
-        <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin-bottom:24px;">
-          <sc-for list="{{ pillarTabs }}" as="tb" hint-placeholder-count="5">
+        <div class="r-shell">
+
+        <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin-bottom:24px;" class="r-tabstrip">
+          <sc-for list="{{ pillarTabs }}" as="tb" hint-placeholder-count="8">
             <div onClick="{{ tb.onClick }}" style="padding:11px 20px; border-radius:14px; font-family:{{ t.headingFont }}; font-size:14.5px; font-weight:700; cursor:pointer; color:{{ tb.fg }}; background:{{ tb.bg }}; border:{{ tb.border }}; box-shadow:{{ tb.shadow }}; transition:all .22s;" style-hover="border-color:rgba(101,212,210,.55);">{{ tb.label }}</div>
           </sc-for>
         </div>
 
-        <div style="display:grid; grid-template-columns:1fr 330px; gap:26px; align-items:start;" class="r-pillar">
+        <sc-for list="{{ pillarRows }}" as="rw" hint-placeholder-count="8">
+          <div onClick="{{ rw.onClick }}" class="r-row" style="order:{{ rw.order }}; display:none; align-items:center; gap:13px; padding:14px 16px; margin-bottom:8px; border-radius:15px; cursor:pointer; background:{{ rw.bg }}; border:{{ rw.border }}; box-shadow:{{ rw.shadow }}; transition:all .22s;">
+            <div style="width:40px; height:40px; flex:none; border-radius:12px; background:{{ rw.iconBg }}; display:flex; align-items:center; justify-content:center;">
+              <svg viewBox="0 0 24 24" style="width:20px; height:20px; display:block;" fill="none" stroke="{{ rw.iconFg }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{ rw.d }}"></path></svg>
+            </div>
+            <div style="flex:1; min-width:0;">
+              <div style="font-family:{{ t.headingFont }}; font-weight:700; font-size:15px; color:{{ rw.fg }};">{{ rw.label }}</div>
+              <div style="font-size:12px; color:rgba(232,255,254,.45); margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ rw.hint }}</div>
+            </div>
+            <svg viewBox="0 0 24 24" style="width:16px; height:16px; flex:none; transform:rotate({{ rw.rotate }}); transition:transform .22s;" fill="none" stroke="{{ rw.chevron }}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5l6 6 6-6"></path></svg>
+          </div>
+        </sc-for>
+
+        <div style="order:{{ activePillar.order }}; display:grid; grid-template-columns:1fr 330px; gap:26px; align-items:start;" class="r-pillar">
 
           <!-- ====== PREMIUM APP WINDOW ====== -->
           <div style="position:relative; min-width:0;">
@@ -752,6 +771,7 @@
             <div onClick="{{ goTo.contact }}" style="margin-top:auto; padding-top:14px;"><span style="display:inline-block; padding:12px 24px; border-radius:13px; background:#65D4D2; color:#041316; font-family:{{ t.headingFont }}; font-weight:800; font-size:14px; cursor:pointer; box-shadow:0 0 22px rgba(101,212,210,.3);">{{ t.pillars.cta }}</span></div>
           </div>
 
+        </div>
         </div>
       </div>
     </section>
@@ -2439,6 +2459,24 @@ class Component extends DCLogic {
         border: P===p.key ? "1px solid #65D4D2" : "1px solid rgba(101,212,210,.2)",
         shadow: P===p.key ? "0 0 22px rgba(101,212,210,.32)" : "none",
       })),
+      pillarRows: DATA.pillarDefs.map((p, i) => {
+        const on = P===p.key;
+        return {
+          label: this.pick(p.tab),
+          hint: this.pick(p.badge),
+          d: p.d,
+          order: i*2,
+          onClick: () => this.setState({pillar: on ? p.key : p.key}),
+          bg: on ? "rgba(101,212,210,.13)" : "rgba(232,255,254,.03)",
+          border: on ? "1px solid rgba(101,212,210,.55)" : "1px solid rgba(101,212,210,.16)",
+          shadow: on ? "0 10px 30px rgba(0,0,0,.35)" : "none",
+          fg: on ? "#65D4D2" : "#E8FFFE",
+          iconBg: on ? "linear-gradient(135deg,#65D4D2,#0F6F7A)" : "rgba(101,212,210,.12)",
+          iconFg: on ? "#041316" : "#65D4D2",
+          chevron: on ? "#65D4D2" : "rgba(232,255,254,.35)",
+          rotate: on ? "180deg" : "0deg",
+        };
+      }),
       activePillar: {
         frame: pillarDef.frame,
         d: pillarDef.d,
@@ -2446,6 +2484,7 @@ class Component extends DCLogic {
         desc: this.pick(pillarDef.desc),
         points: this.pick(pillarDef.points),
         badge: this.pick(pillarDef.badge),
+        order: DATA.pillarDefs.findIndex(p => p.key === P)*2 + 1,
       },
       isPillarStore: P==="store",
       isPillarOrders: P==="orders",
