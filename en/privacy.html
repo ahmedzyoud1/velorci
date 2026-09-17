@@ -96,6 +96,11 @@
     .r-hero-h1{font-size:38px !important;}
     .r-grid5, .r-grid4, .r-grid3, .r-grid2{grid-template-columns:1fr !important;}
     .r-contact{padding:64px 20px 70px !important;}
+    .r-rail{display:none !important;}
+    .r-step{gap:16px !important;}
+    .r-step > div:first-child{width:52px !important;}
+    .r-step > div:first-child > div:first-child{font-size:40px !important;}
+    .r-step > div:first-child > div:last-child{display:none !important;}
     .r-float{position:static !important; margin-top:14px !important; justify-content:center !important; white-space:normal !important; text-align:center !important;}
     .r-float span{white-space:normal !important;}
     section{padding-left:20px !important; padding-right:20px !important;}
@@ -589,6 +594,47 @@
       </div>
     </section>
 
+    <!-- ONBOARDING TIMELINE -->
+    <section style="position:relative; padding:20px 40px 100px; overflow:hidden;">
+      <div style="position:relative; max-width:1000px; margin:0 auto;">
+
+        <div style="max-width:560px; margin-bottom:56px;">
+          <div style="display:flex; align-items:center; gap:14px; margin-bottom:20px;">
+            <span style="width:34px; height:1px; background:rgba(101,212,210,.5); flex:none;"></span>
+            <span style="font-family:Poppins,sans-serif; font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#65D4D2;">{{ t.onboard.tag }}</span>
+          </div>
+          <h2 style="font-family:{{ t.headingFont }}; font-size:42px; font-weight:800; line-height:1.3; margin:0; color:#E8FFFE;">{{ t.onboard.title }}</h2>
+          <p style="font-size:16.5px; line-height:1.9; color:rgba(232,255,254,.62); margin:18px 0 0;">{{ t.onboard.sub }}</p>
+        </div>
+
+        <div style="position:relative;">
+          <div style="position:absolute; top:12px; bottom:70px; inset-inline-start:37px; width:1px; background:linear-gradient(180deg, rgba(101,212,210,.45), rgba(101,212,210,.05)); pointer-events:none;" class="r-rail"></div>
+
+          <sc-for list="{{ t.onboard.steps }}" as="st" hint-placeholder-count="4">
+            <div style="position:relative; display:flex; align-items:flex-start; gap:30px; padding-bottom:44px; animation:fadeUp .7s {{ st.delay }} ease both;" class="r-step">
+              <div style="position:relative; width:75px; flex:none; text-align:center;">
+                <div style="font-family:Poppins,sans-serif; font-size:56px; font-weight:800; line-height:.85; color:rgba(101,212,210,.13); letter-spacing:-.04em;">{{ st.num }}</div>
+                <div style="position:absolute; top:50%; inset-inline-start:37px; width:9px; height:9px; margin-top:-4px; margin-inline-start:-4px; border-radius:50%; background:#65D4D2; box-shadow:0 0 0 5px rgba(4,19,22,1), 0 0 18px rgba(101,212,210,.6);"></div>
+              </div>
+              <div style="flex:1; min-width:0; padding-top:6px;">
+                <div style="font-family:Poppins,sans-serif; font-size:11.5px; font-weight:700; letter-spacing:.1em; color:rgba(101,212,210,.8); text-transform:uppercase;">{{ st.when }}</div>
+                <div style="font-family:{{ t.headingFont }}; font-size:21px; font-weight:800; color:#E8FFFE; margin-top:9px; line-height:1.4;">{{ st.title }}</div>
+                <div style="font-size:15px; line-height:1.9; color:rgba(232,255,254,.6); margin-top:10px; max-width:620px;">{{ st.body }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap; padding-top:32px; border-top:1px solid rgba(232,255,254,.08);">
+          <p style="flex:1; min-width:260px; font-size:15.5px; line-height:1.9; color:rgba(232,255,254,.55); margin:0;">{{ t.onboard.note }}</p>
+          <div onClick="{{ goTo.contact }}" style="display:inline-flex; align-items:center; gap:10px; cursor:pointer; color:#65D4D2; font-family:{{ t.headingFont }}; font-weight:700; font-size:15.5px; white-space:nowrap; border-bottom:1px solid rgba(101,212,210,.4); padding-bottom:4px; transition:all .2s;" style-hover="border-color:#65D4D2;">
+            {{ t.onboard.cta }}
+            <svg viewBox="0 0 24 24" style="width:16px; height:16px; transform:scaleX({{ t.arrowFlip }});" fill="none" stroke="#65D4D2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12.5 5.5L19 12l-6.5 6.5"></path></svg>
+          </div>
+        </div>
+
+      </div>
+    </section>
     <section style="padding:0 40px 90px;">
       <div style="max-width:1200px; margin:0 auto;">
         <h2 style="font-family:{{ t.headingFont }}; font-size:38px; font-weight:800; text-align:center; margin:0 0 18px; color:#E8FFFE;">{{ t.homeFeatures.title }}</h2>
@@ -2113,6 +2159,28 @@ class Component extends DCLogic {
         successTitle: L==="ar" ? "تم الإرسال بنجاح" : "Message sent",
         successBody: L==="ar" ? "شكراً لتواصلك معنا، سيقوم فريقنا بالرد عليك قريباً." : "Thanks for reaching out — our team will get back to you soon.",
       },
+      arrowFlip: L==="ar" ? "-1" : "1",
+      onboard: {
+        tag: L==="ar" ? "الانتقال" : "Getting started",
+        title: L==="ar" ? "من التوقيع إلى أول طلب" : "From signing up to your first order",
+        sub: L==="ar" ? "أكبر سؤال يوقف التاجر مش «شو المميزات» — بل «كم بدها شغل عشان أنقل عملي؟». هذا اللي بيصير فعلياً، وشغلك ما بيتوقف يوم واحد." : "The question that stops most merchants is not what the features are — it is how much work moving costs them. Here is what actually happens, and your business does not pause for a single day.",
+        steps: [
+          { num:"01", when: L==="ar"?"اليوم الأول":"Day one",
+            title: L==="ar"?"نربط الأساسيات":"We connect the essentials",
+            body: L==="ar"?"رقم واتساب الرسمي، ودومينك، وهوية متجرك. رقمك يبقى رقمك — العملاء اللي يعرفوه ما بيلاحظوا إنك انتقلت.":"Your official WhatsApp number, your domain and your store identity. Your number stays yours — customers who know it will not notice you moved." },
+          { num:"02", when: L==="ar"?"اليوم الثاني":"Day two",
+            title: L==="ar"?"منتجاتك تنتقل بنفسها":"Your products move themselves",
+            body: L==="ar"?"عندك متجر شغّال؟ رابط واحد وتنسحب منتجاتك بصورها وأسعارها. ولا عندك متجر؟ ملف Excel يكفي.":"Already have a store? One link pulls your products across with their photos and prices. No store yet? An Excel file is enough." },
+          { num:"03", when: L==="ar"?"اليوم الثالث":"Day three",
+            title: L==="ar"?"فريقك يدخل بأدواره":"Your team signs in with their roles",
+            body: L==="ar"?"كل واحد يشوف شغله وبس: المدير اللوحة كاملة، السائق عناوينه، المعبّئ الطلبات الجاهزة، الكاشير شاشة البيع.":"Everyone sees only their own work: the manager gets the full dashboard, the driver their addresses, the packer the ready orders, the cashier the point of sale." },
+          { num:"04", when: L==="ar"?"نفس الأسبوع":"That same week",
+            title: L==="ar"?"أول طلب يدخل اللوحة":"The first order lands on the board",
+            body: L==="ar"?"من متجرك أو من واتساب — بيظهر على لوح الطلبات، وبينمشي بمراحلك أنت، ويوصل العميل تحديث بكل مرحلة.":"From your store or from WhatsApp — it appears on the orders board, moves through the stages you defined, and the customer gets an update at every one." },
+        ],
+        note: L==="ar" ? "الوكيل الذكي وبرنامج الولاء والتقويم التسويقي بتفعّلهم لما تجهز لهم. مش لازم كل شي من أول يوم." : "The AI agent, the loyalty program and the marketing calendar switch on when you are ready for them. Nothing has to be live on day one.",
+        cta: L==="ar" ? "احجز موعد الانتقال" : "Book your migration slot",
+      },
       footer: {
         rights: L==="ar" ? `© 2026 ${LT.legalName}. جميع الحقوق محفوظة.` : `© 2026 ${LT.legalName}. All rights reserved.`,
         entityPrefix: L==="ar"
@@ -2228,6 +2296,7 @@ class Component extends DCLogic {
       } : { title:"", updated:"", sections:[] },
     };
 
+    t.onboard.steps = t.onboard.steps.map((s,i) => ({...s, delay: (.1+i*.12).toFixed(2)+"s"}));
     t.pillars.orders.list = t.pillars.orders.list.map((o,i) => ({...o, delay: (.15+i*.18).toFixed(2)+"s"}));
     t.pillars.orders.stages = t.pillars.orders.stages.map(s => ({
       label:s.label, count:s.count,
