@@ -176,7 +176,7 @@
     .r-hdr.menu-open .r-nav-extra > a{padding:11px 14px !important; font-size:13.5px !important; text-align:center !important; opacity:.85 !important;}
     .r-hdr.menu-open .r-actions{display:flex !important; order:4 !important; width:100% !important; flex-direction:column !important; gap:8px !important;}
     .r-hdr.menu-open .r-actions > *{width:100% !important; text-align:center !important; justify-content:center !important; box-sizing:border-box !important;}
-    .r-hero-h1{font-size:38px !important; line-height:1.2 !important;}
+    .r-hero-h1{font-size:38px !important; line-height:1.38 !important;}
     .r-wa{padding:0 !important; width:54px !important; height:54px !important; justify-content:center !important; gap:0 !important; inset-inline-end:16px !important; bottom:16px !important;}
     .r-wa-txt{display:none !important;}
     .r-hero-sec{padding-top:44px !important; padding-bottom:40px !important;}
@@ -245,15 +245,19 @@
           <a href="services.html" style="text-decoration:none; padding:16px 36px; border-radius:12px; border:1px solid rgba(101,212,210,.4); color:#E8FFFE; font-weight:700; font-size:16px; cursor:pointer; font-family:{{ t.headingFont }}; transition:all .2s;" style-hover="background:rgba(101,212,210,.1);">{{ t.hero.cta2 }}</a>
         </div>
 
-        <div style="display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:13px; padding:10px 20px; border-radius:22px; border:1px solid rgba(101,212,210,.28); background:rgba(101,212,210,.06); animation:fadeUp .7s .46s ease both;">
-          <img src="../assets/logo-turq.png" style="height:18px; width:auto; display:block;">
-          <span style="font-size:13px; font-weight:400; color:rgba(232,255,254,.32);">×</span>
-          <span style="display:flex; align-items:center; gap:6px;">
-            <svg viewBox="0 0 24 24" style="width:21px; height:21px; flex:none; display:block;" fill="none" stroke="#0081FB" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 8.4c-2.4 0-4.1 1.6-4.1 3.6s1.7 3.6 4.1 3.6c3.1 0 3.9-7.2 6.8-7.2 2.4 0 4.1 1.6 4.1 3.6s-1.7 3.6-4.1 3.6c-2.9 0-3.7-7.2-6.8-7.2z"></path></svg>
-            <span style="font-family:Poppins,sans-serif; font-size:16px; font-weight:600; letter-spacing:-.01em; color:#E8FFFE;">Meta</span>
-          </span>
-          <span style="width:1px; height:17px; background:rgba(101,212,210,.28);"></span>
-          <span style="font-size:12.5px; font-weight:700; color:rgba(232,255,254,.72);">{{ t.hero.partner }}</span>
+        <div style="margin-top:8px; display:inline-flex; flex-direction:column; align-items:center; gap:12px; padding:15px 30px 16px; border-radius:15px; border:1px solid rgba(232,255,254,.11); background:linear-gradient(180deg, rgba(232,255,254,.05), rgba(232,255,254,.014)); box-shadow:inset 0 1px 0 rgba(232,255,254,.07); animation:fadeUp .7s .46s ease both;">
+          <span style="font-size:{{ t.hero.partnerSize }}; font-weight:700; letter-spacing:{{ t.hero.partnerLS }}; text-transform:{{ t.hero.partnerCase }}; color:rgba(232,255,254,.5); line-height:1;">{{ t.hero.partner }}</span>
+          <div style="display:flex; align-items:center; gap:19px;">
+            <span style="display:flex; align-items:center; gap:8px; direction:ltr;">
+              <img src="../assets/logo-turq.png" style="height:21px; width:auto; display:block;">
+              <span style="font-family:Poppins,sans-serif; font-size:18px; font-weight:600; letter-spacing:-.02em; color:#E8FFFE; line-height:1;">velorci</span>
+            </span>
+            <span style="width:1px; height:21px; background:rgba(232,255,254,.17);"></span>
+            <span style="display:flex; align-items:center; gap:8px; direction:ltr;">
+              <svg viewBox="3 6.9 18 10.2" style="width:30px; height:17px; flex:none; display:block;" fill="none" stroke="url(#metaMarkHero)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="metaMarkHero" x1="3" y1="7" x2="21" y2="17" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0064E0"></stop><stop offset="1" stop-color="#0098FF"></stop></linearGradient></defs><path d="M8.6 8.4c-2.4 0-4.1 1.6-4.1 3.6s1.7 3.6 4.1 3.6c3.1 0 3.9-7.2 6.8-7.2 2.4 0 4.1 1.6 4.1 3.6s-1.7 3.6-4.1 3.6c-2.9 0-3.7-7.2-6.8-7.2z"></path></svg>
+              <span style="font-family:Poppins,sans-serif; font-size:18px; font-weight:600; letter-spacing:-.02em; color:#E8FFFE; line-height:1;">Meta</span>
+            </span>
+          </div>
         </div>
 
         <div style="position:relative; margin-top:44px; width:100%; max-width:960px; animation:fadeUp .8s .5s ease both;">
@@ -1921,7 +1925,10 @@ class Component extends DCLogic {
         sub: L==="ar" ? "حوّل تسويقك من تخمين إلى مبيعات: كل دينار إعلاني تعرف كم رجّع لك، وكل عميل تقدر ترجّعه يشتري من جديد." : "Turn your marketing from guesswork into sales: know what every ad dinar brought back, and turn every customer into a repeat buyer.",
         cta1: L==="ar" ? "اطلب عرضاً" : "Request a demo",
         cta2: L==="ar" ? "استكشف الخدمات" : "Explore services",
-        partner: L==="ar" ? "شريك أعمال معتمد" : "Official Business Partner",
+        partner: L==="ar" ? "شريك أعمال معتمد" : "Official business partner",
+        partnerSize: L==="ar" ? "12px" : "10px",
+        partnerLS: L==="ar" ? "normal" : ".2em",
+        partnerCase: L==="ar" ? "none" : "uppercase",
         chip1: L==="ar" ? "وكيل واتساب AI" : "WhatsApp AI agent",
         chip2: L==="ar" ? "نقطة بيع POS" : "POS",
         chip3: L==="ar" ? "متجرك بدومينك" : "Your store, your domain",
