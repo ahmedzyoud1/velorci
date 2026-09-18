@@ -22,6 +22,7 @@ Run after any change to src/site.html:
 Keep PAGES below in sync with the PAGES list inside src/site.html.
 """
 
+import json
 import pathlib
 import re
 import shutil
@@ -102,6 +103,7 @@ SUBS = (
     (re.compile(r'<meta name="velorci-(?:page|lang)" content="[^"]*">\n?'), ""),
     (re.compile(r'<link rel="canonical" href="[^"]*">\n?'), ""),
     (re.compile(r'<link rel="alternate"[^>]*>\n?'), ""),
+    (re.compile(r'<script type="application/ld\+json">.*?</script>\n?', re.S), ""),
     (re.compile(r'<html[^>]*>'), '<html lang="{lang}" dir="{dir}">'),
 )
 
@@ -150,6 +152,74 @@ def esc(s: str) -> str:
     return s.replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;").replace(">", "&gt;")
 
 
+WHATSAPP = "+96599683994"
+EMAIL = "hello@velorci.com"
+
+
+def jsonld(key: str, url: str, lang: str, title: str, desc: str) -> str:
+    """Structured data for one page: who we are, what this page is, and —
+    on the pages that show them — the product and its price range."""
+    graph = [
+        {
+            "@type": "Organization",
+            "@id": f"{SITE}/#org",
+            "name": "velorci",
+            "url": f"{SITE}/",
+            "logo": f"{SITE}/assets/logo-turq.png",
+            "image": f"{SITE}/assets/og.jpg",
+            "email": EMAIL,
+            "telephone": WHATSAPP,
+            "areaServed": ["KW", "SA", "AE", "QA", "BH", "OM"],
+            "contactPoint": [{
+                "@type": "ContactPoint",
+                "contactType": "sales",
+                "telephone": WHATSAPP,
+                "email": EMAIL,
+                "availableLanguage": ["ar", "en"],
+            }],
+        },
+        {
+            "@type": "WebSite",
+            "@id": f"{SITE}/#website",
+            "url": f"{SITE}/",
+            "name": "velorci",
+            "inLanguage": list(LANGS),
+            "publisher": {"@id": f"{SITE}/#org"},
+        },
+        {
+            "@type": "WebPage",
+            "@id": f"{url}#page",
+            "url": url,
+            "name": title,
+            "description": desc,
+            "inLanguage": lang,
+            "isPartOf": {"@id": f"{SITE}/#website"},
+            "about": {"@id": f"{SITE}/#org"},
+        },
+    ]
+    if key in ("home", "services"):
+        graph.append({
+            "@type": "SoftwareApplication",
+            "@id": f"{SITE}/#app",
+            "name": "velorci",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "Web, iOS, Android",
+            "url": f"{SITE}/",
+            "description": desc,
+            "publisher": {"@id": f"{SITE}/#org"},
+            "offers": {
+                "@type": "AggregateOffer",
+                "priceCurrency": "KWD",
+                "lowPrice": "200",
+                "highPrice": "700",
+                "offerCount": "4",
+            },
+        })
+    body = json.dumps({"@context": "https://schema.org", "@graph": graph},
+                      ensure_ascii=False, indent=2)
+    return f'<script type="application/ld+json">\n{body}\n</script>'
+
+
 def render(base: str, key: str, out_name: str, lang: str, title: str, desc: str) -> str:
     url = f"{SITE}/{lang}/{out_name}"
     fields = {"title": esc(title), "desc": esc(desc), "url": url,
@@ -170,7 +240,8 @@ def render(base: str, key: str, out_name: str, lang: str, title: str, desc: str)
         f'<meta property="og:locale" content="{"ar_KW" if lang == "ar" else "en_US"}">\n'
         f'<link rel="canonical" href="{url}">\n'
         f'{alternates}\n'
-        f'<link rel="alternate" hreflang="x-default" href="{SITE}/ar/{out_name}">'
+        f'<link rel="alternate" hreflang="x-default" href="{SITE}/ar/{out_name}">\n'
+        + jsonld(key, url, lang, title, desc)
     )
     html = html.replace("</head>", head_extra + "\n</head>", 1)
 
