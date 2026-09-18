@@ -245,6 +245,11 @@
           <a href="services.html" style="text-decoration:none; padding:16px 36px; border-radius:12px; border:1px solid rgba(101,212,210,.4); color:#E8FFFE; font-weight:700; font-size:16px; cursor:pointer; font-family:{{ t.headingFont }}; transition:all .2s;" style-hover="background:rgba(101,212,210,.1);">{{ t.hero.cta2 }}</a>
         </div>
 
+        <div style="display:flex; align-items:center; gap:10px; padding:9px 18px; border-radius:22px; border:1px solid rgba(101,212,210,.28); background:rgba(101,212,210,.06); animation:fadeUp .7s .46s ease both;">
+          <svg viewBox="0 0 24 24" style="width:20px; height:20px; flex:none;" fill="none" stroke="#65D4D2" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 8.4c-2.4 0-4.1 1.6-4.1 3.6s1.7 3.6 4.1 3.6c3.1 0 3.9-7.2 6.8-7.2 2.4 0 4.1 1.6 4.1 3.6s-1.7 3.6-4.1 3.6c-2.9 0-3.7-7.2-6.8-7.2z"></path></svg>
+          <span style="font-size:13.5px; font-weight:700; color:rgba(232,255,254,.85);">{{ t.hero.partner }}</span>
+        </div>
+
         <div style="position:relative; margin-top:44px; width:100%; max-width:960px; animation:fadeUp .8s .5s ease both;">
           <div class="r-hchip r-hchip1" style="position:absolute; top:-18px; {{ t.chipSide1 }}:-10px; z-index:3; padding:10px 16px; border-radius:12px; background:#083A3F; border:1px solid rgba(101,212,210,.45); font-size:13px; font-weight:700; color:#65D4D2; animation:floatY 5s ease-in-out infinite; box-shadow:0 10px 30px rgba(0,0,0,.4);">{{ t.hero.chip1 }}</div>
           <div class="r-hchip r-hchip2" style="position:absolute; top:60px; {{ t.chipSide2 }}:-26px; z-index:3; padding:10px 16px; border-radius:12px; background:#083A3F; border:1px solid rgba(101,212,210,.45); font-size:13px; font-weight:700; color:#65D4D2; animation:floatY2 6s ease-in-out infinite; box-shadow:0 10px 30px rgba(0,0,0,.4);">{{ t.hero.chip2 }}</div>
@@ -645,13 +650,17 @@
               <!-- ---------- ADS ---------- -->
               <sc-if value="{{ isPillarAds }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex; flex-direction:column; gap:16px;">
-                  <div style="display:flex; align-items:center; gap:12px; padding-bottom:14px; border-bottom:1px solid rgba(101,212,210,.18);">
+                  <div style="display:flex; align-items:center; flex-wrap:wrap; gap:12px; padding-bottom:14px; border-bottom:1px solid rgba(101,212,210,.18);">
                     <div style="width:38px; height:38px; flex:none; border-radius:12px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(101,212,210,.25);">
                       <svg viewBox="0 0 24 24" style="width:19px; height:19px;" fill="none" stroke="#041316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4a1 1 0 0 0 1 1h3l6 4V5L7 9H4a1 1 0 0 0-1 1zM17.5 8.5a5 5 0 0 1 0 7"></path></svg>
                     </div>
                     <div style="display:flex; flex-direction:column; min-width:0;">
                       <span style="font-family:{{ t.headingFont }}; font-size:15px; font-weight:800; color:#E8FFFE;">{{ t.pillars.ads.title }}</span>
                       <span style="font-size:11.5px; color:#65D4D2;">{{ t.pillars.ads.sub }}</span>
+                    </div>
+                    <div style="margin-inline-start:auto; display:flex; align-items:center; gap:7px; padding:6px 12px; border-radius:20px; border:1px solid rgba(101,212,210,.3); background:rgba(101,212,210,.08); flex:none;">
+                      <svg viewBox="0 0 24 24" style="width:15px; height:15px; flex:none;" fill="none" stroke="#65D4D2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 8.4c-2.4 0-4.1 1.6-4.1 3.6s1.7 3.6 4.1 3.6c3.1 0 3.9-7.2 6.8-7.2 2.4 0 4.1 1.6 4.1 3.6s-1.7 3.6-4.1 3.6c-2.9 0-3.7-7.2-6.8-7.2z"></path></svg>
+                      <span style="font-size:11px; font-weight:700; color:#65D4D2; white-space:nowrap;">{{ t.pillars.ads.partner }}</span>
                     </div>
                   </div>
 
@@ -1751,7 +1760,7 @@ const DATA = {
       d:"M3 10v4a1 1 0 0 0 1 1h3l6 4V5L7 9H4a1 1 0 0 0-1 1zM17.5 8.5a5 5 0 0 1 0 7",
       title:{ar:"إعلانات تعرف نتيجتها",en:"Ads you can actually measure"},
       desc:{ar:"أنشئ إعلان ميتا من داخل المنصة، وتتبّع التحويل حتى الطلب نفسه — لا تخمين في نهاية الشهر عن مصدر مبيعاتك.",en:"Create a Meta ad from inside the platform and follow the conversion all the way to the order — no month-end guessing about where sales came from."},
-      points:{ar:["كتالوج منتجات متصل بحسابك","تتبّع التحويلات حتى الطلب","كاتب نصوص إعلانية بالذكاء الاصطناعي"],en:["Product catalogue linked to your account","Conversions tracked down to the order","An AI ad copywriter"]} },
+      points:{ar:["شريك أعمال معتمد لدى Meta","كتالوج منتجات متصل بحسابك","تتبّع التحويلات حتى الطلب","كاتب نصوص إعلانية بالذكاء الاصطناعي"],en:["An official Meta Business Partner","Product catalogue linked to your account","Conversions tracked down to the order","An AI ad copywriter"]} },
     { key:"calendar", blurb:{ar:"مواسم بلدك وأعيادها جاهزة لتخطيط حملاتك",en:"Your country's seasons, ready to plan campaigns"}, badge:{ar:"تخطيط المواسم قبل أن تبدأ",en:"Plan seasons before they start"}, tab:{ar:"التقويم التسويقي",en:"Marketing calendar"}, frame:"Marketing calendar",
       d:"M4 7h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1zM8 3v4M16 3v4M3 11.5h18",
       title:{ar:"تقويم تسويقي يعرف مواسم بلدك",en:"A marketing calendar that knows your market"},
@@ -1764,7 +1773,7 @@ const DATA = {
     { badge:"WA", title:{ar:"واتساب وذكاء اصطناعي",en:"WhatsApp & AI"}, desc:{ar:"واتساب أعمال رسمي، بث جماعي، ووكيل ذكاء يرد على عملائك تلقائياً.",en:"Official WhatsApp business, broadcasts, and an AI agent replying automatically."} },
     { badge:"AC", title:{ar:"المحاسبة الكاملة",en:"Full Accounting"}, desc:{ar:"إيرادات آلية من الطلبات، مصاريف، قيود، وتقارير قابلة للتصدير.",en:"Automatic revenue from orders, expenses, journal entries and exportable reports."} },
     { badge:"PS", title:{ar:"نقطة البيع POS",en:"Point of Sale"}, desc:{ar:"شاشة كاشير للمحل بفاتورة حرارية، ومبيعاتها تدخل النظام نفسه.",en:"In-store cashier with thermal receipts, feeding the same system."} },
-    { badge:"AD", title:{ar:"إعلانات ميتا",en:"Meta Ads"}, desc:{ar:"إنشاء إعلانات وتتبع تحويلات وكاتب نصوص بالذكاء الاصطناعي.",en:"Create ads, track conversions, with an AI copywriter."} },
+    { badge:"AD", title:{ar:"إعلانات ميتا",en:"Meta Ads"}, desc:{ar:"شريك أعمال معتمد لدى Meta: إنشاء إعلانات وتتبع تحويلات وكاتب نصوص بالذكاء الاصطناعي.",en:"An official Meta Business Partner: create ads, track conversions, with an AI copywriter."} },
   ],
   modules: [
     { badge:"OD", title:{ar:"إدارة الطلبات والتوصيل",en:"Orders & Delivery"}, desc:{ar:"صندوق طلبات موحّد، مراحل مخصصة، تقويم توصيل وتعيين للموظفين.",en:"Unified inbox, custom stages, delivery calendar and staff assignment."} },
@@ -1775,7 +1784,7 @@ const DATA = {
     { badge:"AC", title:{ar:"المحاسبة الكاملة",en:"Full Accounting"}, desc:{ar:"إيرادات آلية، مصاريف، قيود محاسبية، وتقارير قابلة للتصدير.",en:"Automatic revenue, expenses, journal entries and exportable reports."} },
     { badge:"WA", title:{ar:"واتساب أعمال + ذكاء اصطناعي",en:"WhatsApp Business + AI"}, desc:{ar:"قوالب معتمدة، بث جماعي، ووكيل ذكاء يرد تلقائياً على العملاء.",en:"Approved templates, broadcasts, and an AI agent replying to customers."} },
     { badge:"EM", title:{ar:"البريد الإلكتروني",en:"Email"}, desc:{ar:"رسائل آلية للفواتير والتأكيدات مع قوالب قابلة للتخصيص.",en:"Automated invoice and confirmation emails with custom templates."} },
-    { badge:"AD", title:{ar:"الإعلانات",en:"Advertising"}, desc:{ar:"إنشاء إعلانات ميتا، كاتب نصوص بالذكاء الاصطناعي، وتتبع تحويلات.",en:"Create Meta ads, AI ad copywriter, and conversion tracking."} },
+    { badge:"AD", title:{ar:"الإعلانات",en:"Advertising"}, desc:{ar:"شريك أعمال معتمد لدى Meta: إنشاء إعلانات، كاتب نصوص بالذكاء الاصطناعي، وتتبع تحويلات.",en:"An official Meta Business Partner: create Meta ads, AI ad copywriter, and conversion tracking."} },
     { badge:"PM", title:{ar:"المدفوعات الإلكترونية",en:"Payments"}, desc:{ar:"بطاقات وKNET والتقسيط، مرتبطة مباشرة بحالة الطلب.",en:"Cards, KNET and installments, linked to order status."} },
     { badge:"CR", title:{ar:"إدارة العملاء CRM",en:"Customer CRM"}, desc:{ar:"ملف لكل عميل، تصنيف تلقائي، وسجل طلبات كامل.",en:"A profile per customer, automatic segmentation, full order history."} },
     { badge:"RP", title:{ar:"التقارير والفواتير",en:"Reports & Invoices"}, desc:{ar:"لوحة إحصائيات، تقارير مجدولة، وفواتير جاهزة للطباعة.",en:"Dashboards, scheduled reports, and print-ready invoices."} },
@@ -1800,6 +1809,7 @@ const DATA = {
     {ar:"عزل بيانات كامل: بيانات كل عميل معزولة تماماً عن غيره.",en:"Full data isolation: every customer's data is completely separate."},
     {ar:"بدون برمجة: متجر بالسحب والإفلات ودومين خاص.",en:"No code needed: drag-and-drop store builder with your own domain."},
     {ar:"ذكاء اصطناعي عملي: وكيل واتساب وكاتب إعلانات وتحليل لوحة.",en:"Practical AI: WhatsApp agent, ad copywriter and dashboard insights."},
+    {ar:"شريك أعمال معتمد لدى Meta: ربط رسمي لإعلاناتك وكتالوج منتجاتك.",en:"An official Meta Business Partner: a verified connection for your ads and product catalog."},
     {ar:"يعمل على أي جهاز، بلا تنصيب.",en:"Works on any device, no installation needed."},
     {ar:"دعم كامل للعربية والإنجليزية بوضع فاتح وغامق.",en:"Full Arabic and English support, light and dark mode."},
     {ar:"باقات مرنة: فعّل أو أوقف أي موديول حسب حاجتك.",en:"Flexible plans: turn any module on or off as you need."},
@@ -1808,6 +1818,7 @@ const DATA = {
   marquee: [
     {ar:"إدارة الطلبات",en:"Orders"},{ar:"متجر إلكتروني",en:"Online Store"},{ar:"محاسبة كاملة",en:"Accounting"},{ar:"واتساب أعمال",en:"WhatsApp Business"},
     {ar:"وكيل ذكاء اصطناعي",en:"AI Agent"},{ar:"نقطة بيع POS",en:"POS"},{ar:"إعلانات ميتا",en:"Meta Ads"},{ar:"مدفوعات KNET",en:"KNET Payments"},
+    {ar:"شريك أعمال معتمد لدى Meta",en:"Meta Business Partner"},
   ],
   topSellers: [
     { rank:1, name:{ar:"أريكة جلدية فاخرة - أسود",en:"Premium Leather Sofa - Black"}, pcs:31, amount:"1,742.500", pct:100, img:"../assets/prod-1.png" },
@@ -1901,9 +1912,10 @@ class Component extends DCLogic {
       nav: { cta: L==="ar" ? "احجز عرضاً" : "Book a demo", login: L==="ar" ? "دخول لوحة التحكم" : "Dashboard login" },
       hero: {
         title: L==="ar" ? "كل عملك في لوحة واحدة" : "Your entire business in one dashboard",
-        sub: L==="ar" ? "منصة تشغيل أعمال متكاملة تدير الطلبات والتوصيل والمتجر والمحاسبة وواتساب والإعلانات ونقطة البيع — بدون ربط أدوات متفرقة." : "A complete business operating platform managing orders, delivery, store, accounting, WhatsApp, ads and POS — without stitching together separate tools.",
+        sub: L==="ar" ? "عشر أدوات متفرقة ما تكلّم بعضها؟ velorci يجمع الطلبات والتوصيل والمتجر والمحاسبة وواتساب والإعلانات ونقطة البيع في نظام واحد — يشتغل من أول يوم." : "Ten scattered tools that don't talk to each other? velorci brings orders, delivery, store, accounting, WhatsApp, ads and POS into one system — running from day one.",
         cta1: L==="ar" ? "اطلب عرضاً" : "Request a demo",
         cta2: L==="ar" ? "استكشف الخدمات" : "Explore services",
+        partner: L==="ar" ? "شريك أعمال معتمد لدى Meta" : "Official Meta Business Partner",
         chip1: L==="ar" ? "وكيل واتساب AI" : "WhatsApp AI agent",
         chip2: L==="ar" ? "نقطة بيع POS" : "POS",
         chip3: L==="ar" ? "متجرك بدومينك" : "Your store, your domain",
@@ -2038,9 +2050,10 @@ class Component extends DCLogic {
           sub: L==="ar" ? "حملة الجمعة البيضاء" : "White Friday campaign",
           big: "3.4x",
           bigLine: L==="ar" ? "عائد على الإنفاق الإعلاني، محسوب من الطلبات التي وصلت فعلاً — لا من نقرات." : "return on ad spend, measured from orders that actually landed — not from clicks.",
+          partner: L==="ar" ? "شريك أعمال معتمد لدى Meta" : "Official Meta Business Partner",
           rows: L==="ar"
-            ? ["كتالوج منتجاتك متصل بحساب ميتا مباشرة","كل طلب مربوط بالإعلان الذي جاء منه","كاتب نصوص إعلانية يقترح عليك الصياغة"]
-            : ["Your product catalogue linked straight to Meta","Every order tied to the ad it came from","An AI copywriter that drafts the wording for you"],
+            ? ["ربط رسمي بحساب ميتا — نحن شريك أعمال معتمد لديها","كتالوج منتجاتك متصل بحساب ميتا مباشرة","كل طلب مربوط بالإعلان الذي جاء منه","كاتب نصوص إعلانية يقترح عليك الصياغة"]
+            : ["An official Meta connection — we are a Meta Business Partner","Your product catalogue linked straight to Meta","Every order tied to the ad it came from","An AI copywriter that drafts the wording for you"],
         },
 
         calendar: {
