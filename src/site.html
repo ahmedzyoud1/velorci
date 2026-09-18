@@ -157,9 +157,15 @@
           <a href="services.html" style="text-decoration:none; padding:16px 36px; border-radius:12px; border:1px solid rgba(101,212,210,.4); color:#E8FFFE; font-weight:700; font-size:16px; cursor:pointer; font-family:{{ t.headingFont }}; transition:all .2s;" style-hover="background:rgba(101,212,210,.1);">{{ t.hero.cta2 }}</a>
         </div>
 
-        <div style="display:flex; align-items:center; gap:10px; padding:9px 18px; border-radius:22px; border:1px solid rgba(101,212,210,.28); background:rgba(101,212,210,.06); animation:fadeUp .7s .46s ease both;">
-          <svg viewBox="0 0 24 24" style="width:20px; height:20px; flex:none;" fill="none" stroke="#65D4D2" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 8.4c-2.4 0-4.1 1.6-4.1 3.6s1.7 3.6 4.1 3.6c3.1 0 3.9-7.2 6.8-7.2 2.4 0 4.1 1.6 4.1 3.6s-1.7 3.6-4.1 3.6c-2.9 0-3.7-7.2-6.8-7.2z"></path></svg>
-          <span style="font-size:13.5px; font-weight:700; color:rgba(232,255,254,.85);">{{ t.hero.partner }}</span>
+        <div style="display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:13px; padding:10px 20px; border-radius:22px; border:1px solid rgba(101,212,210,.28); background:rgba(101,212,210,.06); animation:fadeUp .7s .46s ease both;">
+          <img src="assets/logo-turq.png" style="height:18px; width:auto; display:block;">
+          <span style="font-size:13px; font-weight:400; color:rgba(232,255,254,.32);">×</span>
+          <span style="display:flex; align-items:center; gap:6px;">
+            <svg viewBox="0 0 24 24" style="width:21px; height:21px; flex:none; display:block;" fill="none" stroke="#0081FB" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 8.4c-2.4 0-4.1 1.6-4.1 3.6s1.7 3.6 4.1 3.6c3.1 0 3.9-7.2 6.8-7.2 2.4 0 4.1 1.6 4.1 3.6s-1.7 3.6-4.1 3.6c-2.9 0-3.7-7.2-6.8-7.2z"></path></svg>
+            <span style="font-family:Poppins,sans-serif; font-size:16px; font-weight:600; letter-spacing:-.01em; color:#E8FFFE;">Meta</span>
+          </span>
+          <span style="width:1px; height:17px; background:rgba(101,212,210,.28);"></span>
+          <span style="font-size:12.5px; font-weight:700; color:rgba(232,255,254,.72);">{{ t.hero.partner }}</span>
         </div>
 
         <div style="position:relative; margin-top:44px; width:100%; max-width:960px; animation:fadeUp .8s .5s ease both;">
@@ -571,7 +577,7 @@
                       <span style="font-size:11.5px; color:#65D4D2;">{{ t.pillars.ads.sub }}</span>
                     </div>
                     <div style="margin-inline-start:auto; display:flex; align-items:center; gap:7px; padding:6px 12px; border-radius:20px; border:1px solid rgba(101,212,210,.3); background:rgba(101,212,210,.08); flex:none;">
-                      <svg viewBox="0 0 24 24" style="width:15px; height:15px; flex:none;" fill="none" stroke="#65D4D2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 8.4c-2.4 0-4.1 1.6-4.1 3.6s1.7 3.6 4.1 3.6c3.1 0 3.9-7.2 6.8-7.2 2.4 0 4.1 1.6 4.1 3.6s-1.7 3.6-4.1 3.6c-2.9 0-3.7-7.2-6.8-7.2z"></path></svg>
+                      <svg viewBox="0 0 24 24" style="width:16px; height:16px; flex:none;" fill="none" stroke="#0081FB" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 8.4c-2.4 0-4.1 1.6-4.1 3.6s1.7 3.6 4.1 3.6c3.1 0 3.9-7.2 6.8-7.2 2.4 0 4.1 1.6 4.1 3.6s-1.7 3.6-4.1 3.6c-2.9 0-3.7-7.2-6.8-7.2z"></path></svg>
                       <span style="font-size:11px; font-weight:700; color:#65D4D2; white-space:nowrap;">{{ t.pillars.ads.partner }}</span>
                     </div>
                   </div>
@@ -1824,10 +1830,10 @@ class Component extends DCLogic {
       nav: { cta: L==="ar" ? "احجز عرضاً" : "Book a demo", login: L==="ar" ? "دخول لوحة التحكم" : "Dashboard login" },
       hero: {
         title: L==="ar" ? "كل عملك في لوحة واحدة" : "Your entire business in one dashboard",
-        sub: L==="ar" ? "عشر أدوات متفرقة ما تكلّم بعضها؟ velorci يجمع الطلبات والتوصيل والمتجر والمحاسبة وواتساب والإعلانات ونقطة البيع في نظام واحد — يشتغل من أول يوم." : "Ten scattered tools that don't talk to each other? velorci brings orders, delivery, store, accounting, WhatsApp, ads and POS into one system — running from day one.",
+        sub: L==="ar" ? "حوّل تسويقك من تخمين إلى مبيعات: كل دينار إعلاني تعرف كم رجّع لك، وكل عميل تقدر ترجّعه يشتري من جديد." : "Turn your marketing from guesswork into sales: know what every ad dinar brought back, and turn every customer into a repeat buyer.",
         cta1: L==="ar" ? "اطلب عرضاً" : "Request a demo",
         cta2: L==="ar" ? "استكشف الخدمات" : "Explore services",
-        partner: L==="ar" ? "شريك أعمال معتمد لدى Meta" : "Official Meta Business Partner",
+        partner: L==="ar" ? "شريك أعمال معتمد" : "Official Business Partner",
         chip1: L==="ar" ? "وكيل واتساب AI" : "WhatsApp AI agent",
         chip2: L==="ar" ? "نقطة بيع POS" : "POS",
         chip3: L==="ar" ? "متجرك بدومينك" : "Your store, your domain",
