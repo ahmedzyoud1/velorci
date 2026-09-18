@@ -1076,6 +1076,10 @@
         <div style="padding:40px 30px; background:rgba(101,212,210,.07); border:1px solid rgba(101,212,210,.35); border-radius:18px; display:flex; flex-direction:column; gap:10px; align-items:flex-start; justify-content:center;">
           <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:20px; color:#65D4D2;">{{ t.contact.successTitle }}</div>
           <div style="font-size:15px; color:rgba(232,255,254,.7); line-height:1.7;">{{ t.contact.successBody }}</div>
+          <a href="{{ waHref }}" target="_blank" rel="noopener" style="margin-top:6px; display:inline-flex; align-items:center; gap:9px; padding:13px 22px; border-radius:26px; background:#25D366; color:#062024; font-family:{{ t.headingFont }}; font-weight:800; font-size:14.5px; text-decoration:none;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#062024" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.41a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.24-8.23 8.24Zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.04s.87 2.37 1 2.53c.12.16 1.72 2.62 4.16 3.68.58.25 1.03.4 1.39.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
+            {{ t.contact.successLink }}
+          </a>
         </div>
       </sc-if>
       <sc-if value="{{ formNotSubmitted }}" hint-placeholder-val="{{ true }}">
@@ -1084,7 +1088,13 @@
           <input value="{{ form.phone }}" onChange="{{ setPhone }}" placeholder="{{ t.contact.phonePlaceholder }}" style="padding:13px 16px; border-radius:10px; border:1px solid rgba(101,212,210,.25); font-size:15px; background:rgba(4,19,22,.6); color:#E8FFFE;">
           <input value="{{ form.company }}" onChange="{{ setCompany }}" placeholder="{{ t.contact.companyPlaceholder }}" style="padding:13px 16px; border-radius:10px; border:1px solid rgba(101,212,210,.25); font-size:15px; background:rgba(4,19,22,.6); color:#E8FFFE;">
           <textarea value="{{ form.message }}" onChange="{{ setMessage }}" placeholder="{{ t.contact.messagePlaceholder }}" rows="4" style="padding:13px 16px; border-radius:10px; border:1px solid rgba(101,212,210,.25); font-size:15px; resize:vertical; background:rgba(4,19,22,.6); color:#E8FFFE;"></textarea>
-          <button type="submit" style="padding:15px; border-radius:10px; border:none; background:#65D4D2; color:#041316; font-weight:800; font-size:15px; cursor:pointer; font-family:{{ t.headingFont }}; box-shadow:0 0 24px rgba(101,212,210,.3);">{{ t.contact.submit }}</button>
+          <sc-if value="{{ hasFormError }}" hint-placeholder-val="{{ false }}">
+            <div role="alert" style="padding:11px 14px; border-radius:10px; background:rgba(232,120,120,.1); border:1px solid rgba(232,120,120,.4); font-size:13.5px; color:#F0A9A9;">{{ formError }}</div>
+          </sc-if>
+          <button type="submit" style="display:flex; align-items:center; justify-content:center; gap:10px; padding:15px; border-radius:10px; border:none; background:#25D366; color:#062024; font-weight:800; font-size:15px; cursor:pointer; font-family:{{ t.headingFont }}; box-shadow:0 0 24px rgba(37,211,102,.28);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#062024" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.41a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.24-8.23 8.24Zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.04s.87 2.37 1 2.53c.12.16 1.72 2.62 4.16 3.68.58.25 1.03.4 1.39.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
+            {{ t.contact.submit }}
+          </button>
         </form>
       </sc-if>
     </section>
@@ -1101,6 +1111,10 @@
         <div style="padding:40px 32px; background:rgba(101,212,210,.07); border:1px solid rgba(101,212,210,.35); border-radius:18px; display:flex; flex-direction:column; gap:12px; text-align:center;">
           <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:22px; color:#65D4D2;">{{ t.subscribe.successTitle }}</div>
           <div style="font-size:15px; color:rgba(232,255,254,.72); line-height:1.8;">{{ t.subscribe.successBody }}</div>
+          <a href="{{ waHref }}" target="_blank" rel="noopener" style="margin-top:8px; display:inline-flex; align-items:center; gap:9px; padding:13px 22px; border-radius:26px; background:#25D366; color:#062024; font-family:{{ t.headingFont }}; font-weight:800; font-size:14.5px; text-decoration:none;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#062024" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.41a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.24-8.23 8.24Zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.04s.87 2.37 1 2.53c.12.16 1.72 2.62 4.16 3.68.58.25 1.03.4 1.39.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
+            {{ t.contact.successLink }}
+          </a>
         </div>
       </section>
     </sc-if>
@@ -1718,7 +1732,7 @@ const DATA = {
 };
 
 class Component extends DCLogic {
-  state = { page:currentPage(), lang:currentLang(), pillar:"store", pillarOpen:false, form:{name:"",phone:"",company:"",message:"",plan:requestedPlan(),biz:"",email:"",agreed:false,trial:requestedTrial()}, submitted:false, subSubmitted:false, agreeWarn:false, statProgress:0, menuOpen:false, revealProg:0 };
+  state = { page:currentPage(), lang:currentLang(), pillar:"store", pillarOpen:false, form:{name:"",phone:"",company:"",message:"",plan:requestedPlan(),biz:"",email:"",agreed:false,trial:requestedTrial()}, submitted:false, subSubmitted:false, agreeWarn:false, waHref:"", formError:"", statProgress:0, menuOpen:false, revealProg:0 };
 
   componentDidMount(){
     let step = 0;
@@ -2240,9 +2254,10 @@ class Component extends DCLogic {
         phonePlaceholder: L==="ar" ? "الهاتف / واتساب" : "Phone / WhatsApp",
         companyPlaceholder: L==="ar" ? "اسم الشركة" : "Company name",
         messagePlaceholder: L==="ar" ? "رسالتك" : "Your message",
-        submit: L==="ar" ? "إرسال" : "Submit",
-        successTitle: L==="ar" ? "تم الإرسال بنجاح" : "Message sent",
-        successBody: L==="ar" ? "شكراً لتواصلك معنا، سيقوم فريقنا بالرد عليك قريباً." : "Thanks for reaching out — our team will get back to you soon.",
+        submit: L==="ar" ? "أرسل عبر واتساب" : "Send on WhatsApp",
+        successTitle: L==="ar" ? "فتحنا لك محادثة واتساب" : "WhatsApp is opening",
+        successBody: L==="ar" ? "بياناتك جاهزة في المحادثة — أرسلها وسنرد عليك حالاً. إن لم تُفتح المحادثة تلقائياً، استخدم الزر أدناه." : "Your details are ready in the chat — send it and we will reply right away. If the chat did not open, use the button below.",
+        successLink: L==="ar" ? "افتح المحادثة" : "Open the chat",
       },
       arrowFlip: L==="ar" ? "-1" : "1",
       onboard: {
@@ -2579,7 +2594,31 @@ class Component extends DCLogic {
       setPhone: e => this.setState({form:{...this.state.form, phone:e.target.value}}),
       setCompany: e => this.setState({form:{...this.state.form, company:e.target.value}}),
       setMessage: e => this.setState({form:{...this.state.form, message:e.target.value}}),
-      submitForm: e => { e.preventDefault(); this.setState({submitted:true}); },
+      submitForm: e => {
+        e.preventDefault();
+        const f = this.state.form, ar = this.state.lang === "ar";
+        const name = f.name.trim(), phone = f.phone.trim();
+        if (!name || !phone) {
+          this.setState({formError: ar ? "من فضلك اكتب اسمك ورقم هاتفك." : "Please enter your name and phone number."});
+          return;
+        }
+        // Everything the visitor typed goes into one WhatsApp message, so the
+        // conversation starts with the details instead of asking for them again.
+        const lines = [
+          ar ? "طلب تواصل من موقع velorci" : "New enquiry from the velorci website",
+          "",
+          (ar ? "الاسم: " : "Name: ") + name,
+          (ar ? "الهاتف: " : "Phone: ") + phone,
+        ];
+        if (f.company.trim()) lines.push((ar ? "الشركة: " : "Company: ") + f.company.trim());
+        if (f.message.trim()) lines.push("", f.message.trim());
+        const href = "https://wa.me/96596984525?text=" + encodeURIComponent(lines.join("\n"));
+        try { window.open(href, "_blank", "noopener"); } catch (err) {}
+        this.setState({submitted:true, waHref:href, formError:""});
+      },
+      waHref: this.state.waHref,
+      formError: this.state.formError,
+      hasFormError: !!this.state.formError,
       setBiz: e => this.setState({form:{...this.state.form, biz:e.target.value}}),
       setEmail: e => this.setState({form:{...this.state.form, email:e.target.value}}),
       subSubmitted: this.state.subSubmitted,
@@ -2594,7 +2633,20 @@ class Component extends DCLogic {
         // The acceptance box is the record that the customer saw the terms,
         // so it gates the submission rather than only styling the button.
         if (!this.state.form.agreed) { this.setState({agreeWarn:true}); return; }
-        this.setState({subSubmitted:true});
+        const f = this.state.form, ar = this.state.lang === "ar";
+        const lines = [
+          ar ? "طلب اشتراك من موقع velorci" : "New subscription request from the velorci website",
+          "",
+          (ar ? "الاسم: " : "Name: ") + f.name.trim(),
+          (ar ? "النشاط: " : "Business: ") + f.biz.trim(),
+          (ar ? "الهاتف: " : "Phone: ") + f.phone.trim(),
+          (ar ? "البريد: " : "Email: ") + f.email.trim(),
+          (ar ? "الباقة: " : "Plan: ") + (f.plan || "-"),
+        ];
+        if (f.trial) lines.push(ar ? "يرغب بتجربة مجانية" : "Wants a free trial");
+        const href = "https://wa.me/96596984525?text=" + encodeURIComponent(lines.join("\n"));
+        try { window.open(href, "_blank", "noopener"); } catch (err) {}
+        this.setState({subSubmitted:true, waHref:href});
         window.scrollTo(0,0);
       },
     };
