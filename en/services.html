@@ -202,97 +202,145 @@
     .r-dash-panels{flex-direction:column !important;}
   }
 
-  /* ---- hero carousel: the platform, one station at a time ---- */
-  .fl{--fl-dur:11.7s; --fl-dir:1; --cw:168px; --gp:14px; --st:calc(var(--cw) + var(--gp));
-    --lead:3; margin-top:40px; width:100%;}
-  [dir="rtl"] .fl{--fl-dir:-1;}
-  .fl-vp{overflow:hidden; padding:22px 0 8px;
-    -webkit-mask-image:linear-gradient(to right,transparent 0,#000 14%,#000 86%,transparent 100%);
-    mask-image:linear-gradient(to right,transparent 0,#000 14%,#000 86%,transparent 100%);}
-  .fl-track{display:flex; gap:var(--gp); width:max-content;
-    margin-inline-start:calc(50% - var(--cw) / 2 - var(--lead) * var(--st));
-    animation:fl-track var(--fl-dur) cubic-bezier(.6,0,.2,1) infinite;}
-  .fl-node{flex:0 0 var(--cw); width:var(--cw); display:flex; flex-direction:column;
-    align-items:center; gap:13px;}
-  .fl-card{width:100%; aspect-ratio:1/.82; border:1px solid rgba(2,58,63,.13); border-radius:12px;
-    background:#FFFFFF; display:flex; align-items:center; justify-content:center;
-    color:rgba(14,23,25,.3); transform:scale(.88);
-    animation:fl-card var(--fl-dur) cubic-bezier(.4,0,.2,1) infinite backwards; animation-delay:var(--d);}
-  .fl-card svg{width:52%; height:auto; overflow:visible;}
-  .fl-label{font-size:13px; font-weight:600; color:rgba(14,23,25,.6); text-align:center; line-height:1.4;
-    animation:fl-label var(--fl-dur) ease-out infinite backwards; animation-delay:var(--d);}
-  .fl-pips{display:flex; justify-content:center; align-items:center; gap:7px; margin-top:22px;}
+  /* ---- hero: nine stations — a swept strip on a wide screen, a carousel on a phone ---- */
+  .fl{--fl-dur:12.0s; margin-top:40px; width:100%; max-width:1200px;}
+  .fl-rail{position:relative; height:1px; background:rgba(2,58,63,.13); margin:0 30px;}
+  .fl-fill{position:absolute; inset-inline-start:0; top:-1px; height:3px; border-radius:2px;
+    background:#023A3F; animation:fl-fill var(--fl-dur) linear infinite;}
+  .fl-fill::after{content:""; position:absolute; inset-inline-end:-4px; top:-3px; width:9px; height:9px;
+    border-radius:50%; background:#023A3F; box-shadow:0 0 0 3px #FFFFFF, 0 0 0 4.5px rgba(2,58,63,.22);}
+  .fl-track{display:flex; gap:9px; margin-top:-7px;}
+  .fl-node{--dx:var(--d); flex:1; display:flex; flex-direction:column; align-items:center;
+    gap:11px; min-width:0;}
+  .fl-ghost,.fl-pips{display:none;}
+  .fl-dot{width:8px; height:8px; border-radius:50%; background:#FFFFFF;
+    box-shadow:inset 0 0 0 1.5px rgba(2,58,63,.22);
+    animation:fl-dot var(--fl-dur) ease-out infinite backwards; animation-delay:var(--dx);}
+  .fl-card{width:100%; aspect-ratio:1/.8; border:1px solid rgba(2,58,63,.14); border-radius:10px;
+    background:#FFFFFF; display:flex; align-items:center; justify-content:center; color:rgba(14,23,25,.3);
+    animation:fl-card var(--fl-dur) ease-out infinite backwards; animation-delay:var(--dx);}
+  .fl-card svg{width:58%; height:auto; overflow:visible;}
+  .fl-label{font-size:12px; font-weight:600; color:rgba(14,23,25,.6); text-align:center; line-height:1.4;
+    animation:fl-label var(--fl-dur) ease-out infinite backwards; animation-delay:var(--dx);}
   .fl-pip{width:7px; height:7px; border-radius:50%; background:rgba(2,58,63,.18); flex:none;
-    animation:fl-pip var(--fl-dur) ease-out infinite backwards; animation-delay:var(--d);}
-  .fl-cap{margin:18px 0 0; font-size:14.5px; line-height:1.7; color:rgba(14,23,25,.62); text-align:center;}
+    animation:fl-pip var(--fl-dur) ease-out infinite backwards; animation-delay:var(--dx);}
+  .fl-cap{margin:24px 0 0; font-size:14.5px; line-height:1.7; color:rgba(14,23,25,.62); text-align:center;}
 
-  @keyframes fl-track{
-    0.000%,7.911%{transform:translateX(calc(var(--fl-dir) * 0 * var(--st)));}
-    11.111%,19.022%{transform:translateX(calc(var(--fl-dir) * -1 * var(--st)));}
-    22.222%,30.133%{transform:translateX(calc(var(--fl-dir) * -2 * var(--st)));}
-    33.333%,41.244%{transform:translateX(calc(var(--fl-dir) * -3 * var(--st)));}
-    44.444%,52.356%{transform:translateX(calc(var(--fl-dir) * -4 * var(--st)));}
-    55.556%,63.467%{transform:translateX(calc(var(--fl-dir) * -5 * var(--st)));}
-    66.667%,74.578%{transform:translateX(calc(var(--fl-dir) * -6 * var(--st)));}
-    77.778%,85.689%{transform:translateX(calc(var(--fl-dir) * -7 * var(--st)));}
-    88.889%,96.800%{transform:translateX(calc(var(--fl-dir) * -8 * var(--st)));}
-    100%{transform:translateX(calc(var(--fl-dir) * -9 * var(--st)));}}
+  /* the line: sweeps, holds, then clears for the next pass */
+  @keyframes fl-fill{0%{width:0; opacity:1;} 85%{width:100%; opacity:1;} 93%{width:100%; opacity:1;}
+    97%{width:100%; opacity:0;} 97.5%{width:0; opacity:0;} 100%{width:0; opacity:1;}}
 
-  /* a station: sliding in · holding the middle · just passed · asleep */
+  /* a station under the sweep: asleep · lit as the head passes · done · asleep */
   @keyframes fl-card{
-    0%{transform:scale(.88); border-color:rgba(2,58,63,.13); color:rgba(14,23,25,.3);
-      box-shadow:0 0 0 rgba(2,58,63,0);}
-    3.4%,11.1%{transform:scale(1); border-color:rgba(2,58,63,.32); color:#023A3F;
-      box-shadow:0 12px 28px rgba(2,58,63,.13);}
-    14.6%,26%{transform:scale(.88); border-color:rgba(2,58,63,.22); color:#023A3F;
-      box-shadow:0 1px 2px rgba(14,23,25,.05);}
-    32%,100%{transform:scale(.88); border-color:rgba(2,58,63,.13); color:rgba(14,23,25,.3);
-      box-shadow:0 0 0 rgba(2,58,63,0);}}
-  @keyframes fl-label{0%{color:rgba(14,23,25,.6);} 3.4%,11.1%{color:#023A3F;}
-    14.6%,26%{color:rgba(14,23,25,.78);} 32%,100%{color:rgba(14,23,25,.6);}}
-  @keyframes fl-pip{0%,2%{background:rgba(2,58,63,.18); transform:scale(1);}
-    4%{background:#023A3F; transform:scale(1.5);}
-    11.1%{background:#023A3F; transform:scale(1.25);}
-    14.6%,96%{background:rgba(2,58,63,.5); transform:scale(1);}
-    99%,100%{background:rgba(2,58,63,.18); transform:scale(1);}}
+    0%,1%{border-color:rgba(2,58,63,.14); background:#FFFFFF; color:rgba(14,23,25,.3);
+      box-shadow:0 0 0 rgba(2,58,63,0); transform:translateY(0);}
+    4%,10%{border-color:rgba(2,58,63,.45); background:#EBF7F7; color:#023A3F;
+      box-shadow:0 8px 20px rgba(2,58,63,.13); transform:translateY(-4px);}
+    14%,30%{border-color:rgba(2,58,63,.26); background:#FFFFFF; color:#023A3F;
+      box-shadow:0 1px 2px rgba(14,23,25,.05); transform:translateY(0);}
+    40%,100%{border-color:rgba(2,58,63,.14); background:#FFFFFF; color:rgba(14,23,25,.3);
+      box-shadow:0 0 0 rgba(2,58,63,0); transform:translateY(0);}}
+  @keyframes fl-label{0%,1%{color:rgba(14,23,25,.6);} 4%,10%{color:#023A3F;}
+    14%,30%{color:rgba(14,23,25,.82);} 40%,100%{color:rgba(14,23,25,.6);}}
+  @keyframes fl-dot{
+    0%,1%{background:#FFFFFF; box-shadow:inset 0 0 0 1.5px rgba(2,58,63,.22); transform:scale(1);}
+    4%{background:#023A3F; box-shadow:inset 0 0 0 4px #023A3F, 0 0 0 5px rgba(2,58,63,.14); transform:scale(1.35);}
+    10%,92%{background:#023A3F; box-shadow:inset 0 0 0 4px #023A3F, 0 0 0 0 rgba(2,58,63,0); transform:scale(1);}
+    99%,100%{background:#FFFFFF; box-shadow:inset 0 0 0 1.5px rgba(2,58,63,.22); transform:scale(1);}}
 
-  /* the drawings themselves */
-  @keyframes fl-draw{0%,3.5%{stroke-dashoffset:calc(var(--len) + 6);} 9.5%,26%{stroke-dashoffset:0;}
-    32%,100%{stroke-dashoffset:calc(var(--len) + 6);}}
-  @keyframes fl-pop{0%,4.5%{opacity:0; transform:scale(.5);} 8.5%{opacity:1; transform:scale(1.14);}
-    10%,26%{opacity:1; transform:scale(1);} 31%,100%{opacity:0; transform:scale(.5);}}
-  @keyframes fl-drop{0%,3.5%{opacity:0; transform:translateY(-13px);} 7%{opacity:1;}
-    9.5%,26%{opacity:1; transform:translateY(0);} 31%,100%{opacity:0; transform:translateY(-13px);}}
-  @keyframes fl-grow{0%,4%{transform:scaleY(.1); opacity:.45;} 9.5%,26%{transform:scaleY(1); opacity:1;}
-    32%,100%{transform:scaleY(.1); opacity:.45;}}
+  /* the drawings themselves, on the strip's clock */
+  @keyframes fl-draw{0%,2%{stroke-dashoffset:calc(var(--len) + 6);} 10%,28%{stroke-dashoffset:0;}
+    38%,100%{stroke-dashoffset:calc(var(--len) + 6);}}
+  @keyframes fl-pop{0%,4%{opacity:0; transform:scale(.5);} 9%{opacity:1; transform:scale(1.14);}
+    11%,28%{opacity:1; transform:scale(1);} 36%,100%{opacity:0; transform:scale(.5);}}
+  @keyframes fl-drop{0%,2%{opacity:0; transform:translateY(-13px);} 6%{opacity:1;}
+    10%,28%{opacity:1; transform:translateY(0);} 36%,100%{opacity:0; transform:translateY(-13px);}}
+  @keyframes fl-grow{0%,3%{transform:scaleY(.1); opacity:.45;} 10%,28%{transform:scaleY(1); opacity:1;}
+    38%,100%{transform:scaleY(.1); opacity:.45;}}
   .fl-d{stroke-dasharray:calc(var(--len) + 6); animation:fl-draw var(--fl-dur) ease-out infinite backwards;
-    animation-delay:var(--d);}
-  .fl-p{animation:fl-pop var(--fl-dur) cubic-bezier(.2,1.4,.4,1) infinite backwards; animation-delay:var(--d);
+    animation-delay:var(--dx);}
+  .fl-p{animation:fl-pop var(--fl-dur) cubic-bezier(.2,1.4,.4,1) infinite backwards; animation-delay:var(--dx);
     transform-box:fill-box; transform-origin:center;}
-  .fl-k{animation:fl-drop var(--fl-dur) cubic-bezier(.3,1.3,.5,1) infinite backwards; animation-delay:var(--d);}
-  .fl-g{animation:fl-grow var(--fl-dur) ease-out infinite backwards; animation-delay:var(--d);
+  .fl-k{animation:fl-drop var(--fl-dur) cubic-bezier(.3,1.3,.5,1) infinite backwards; animation-delay:var(--dx);}
+  .fl-g{animation:fl-grow var(--fl-dur) ease-out infinite backwards; animation-delay:var(--dx);
     transform-origin:center bottom;}
 
-  @media (max-width:1000px){.fl{--cw:150px; --gp:12px;}}
-  @media (max-width:600px){
-    .fl{--cw:128px; --gp:10px; margin-top:32px;}
-    .fl-vp{padding:18px 0 6px;}
-    .fl-label{font-size:11.5px;}
-    .fl-pips{margin-top:18px; gap:6px;}
+  /* ---- on a phone and a small tablet the same nine become a carousel ---- */
+  @media (max-width:1000px){
+    .fl{--fl-dur:11.7s; --fl-dir:1; --cw:150px; --gp:12px; --st:calc(var(--cw) + var(--gp));
+      --lead:3; margin-top:34px;}
+    [dir="rtl"] .fl{--fl-dir:-1;}
+    .fl-rail,.fl-dot{display:none;}
+    .fl-ghost{display:flex;}
+    .fl-pips{display:flex; justify-content:center; align-items:center; gap:7px; margin-top:22px;}
+    .fl-vp{overflow:hidden; padding:20px 0 6px;
+      -webkit-mask-image:linear-gradient(to right,transparent 0,#000 14%,#000 86%,transparent 100%);
+      mask-image:linear-gradient(to right,transparent 0,#000 14%,#000 86%,transparent 100%);}
+    .fl-track{gap:var(--gp); width:max-content; margin-top:0;
+      margin-inline-start:calc(50% - var(--cw) / 2 - var(--lead) * var(--st));
+      animation:fl-track var(--fl-dur) cubic-bezier(.6,0,.2,1) infinite;}
+    .fl-node{--dx:var(--dc); flex:0 0 var(--cw); width:var(--cw); gap:12px;}
+    .fl-card{aspect-ratio:1/.82; border-radius:12px; border-color:rgba(2,58,63,.13); transform:scale(.88);
+      animation-name:fl-cardC; animation-timing-function:cubic-bezier(.4,0,.2,1);}
+    .fl-card svg{width:52%;}
+    .fl-label{font-size:11.5px; animation-name:fl-labelC;}
+    .fl-d{animation-name:fl-drawC;}
+    .fl-p{animation-name:fl-popC;}
+    .fl-k{animation-name:fl-dropC;}
+    .fl-g{animation-name:fl-growC;}
     .fl-cap{font-size:13.5px; margin-top:16px;}
+
+    @keyframes fl-track{
+      0.000%,7.911%{transform:translateX(calc(var(--fl-dir) * 0 * var(--st)));}
+      11.111%,19.022%{transform:translateX(calc(var(--fl-dir) * -1 * var(--st)));}
+      22.222%,30.133%{transform:translateX(calc(var(--fl-dir) * -2 * var(--st)));}
+      33.333%,41.244%{transform:translateX(calc(var(--fl-dir) * -3 * var(--st)));}
+      44.444%,52.356%{transform:translateX(calc(var(--fl-dir) * -4 * var(--st)));}
+      55.556%,63.467%{transform:translateX(calc(var(--fl-dir) * -5 * var(--st)));}
+      66.667%,74.578%{transform:translateX(calc(var(--fl-dir) * -6 * var(--st)));}
+      77.778%,85.689%{transform:translateX(calc(var(--fl-dir) * -7 * var(--st)));}
+      88.889%,96.800%{transform:translateX(calc(var(--fl-dir) * -8 * var(--st)));}
+      100%{transform:translateX(calc(var(--fl-dir) * -9 * var(--st)));}}
+
+    /* a station on the track: sliding in · holding the middle · just passed · asleep */
+    @keyframes fl-cardC{
+      0%{transform:scale(.88); border-color:rgba(2,58,63,.13); color:rgba(14,23,25,.3);
+        box-shadow:0 0 0 rgba(2,58,63,0);}
+      3.4%,11.1%{transform:scale(1); border-color:rgba(2,58,63,.32); color:#023A3F;
+        box-shadow:0 12px 28px rgba(2,58,63,.13);}
+      14.6%,26%{transform:scale(.88); border-color:rgba(2,58,63,.22); color:#023A3F;
+        box-shadow:0 1px 2px rgba(14,23,25,.05);}
+      32%,100%{transform:scale(.88); border-color:rgba(2,58,63,.13); color:rgba(14,23,25,.3);
+        box-shadow:0 0 0 rgba(2,58,63,0);}}
+    @keyframes fl-labelC{0%{color:rgba(14,23,25,.6);} 3.4%,11.1%{color:#023A3F;}
+      14.6%,26%{color:rgba(14,23,25,.78);} 32%,100%{color:rgba(14,23,25,.6);}}
+    @keyframes fl-pip{0%,2%{background:rgba(2,58,63,.18); transform:scale(1);}
+      4%{background:#023A3F; transform:scale(1.5);}
+      11.1%{background:#023A3F; transform:scale(1.25);}
+      14.6%,96%{background:rgba(2,58,63,.5); transform:scale(1);}
+      99%,100%{background:rgba(2,58,63,.18); transform:scale(1);}}
+    @keyframes fl-drawC{0%,3.5%{stroke-dashoffset:calc(var(--len) + 6);} 9.5%,26%{stroke-dashoffset:0;}
+      32%,100%{stroke-dashoffset:calc(var(--len) + 6);}}
+    @keyframes fl-popC{0%,4.5%{opacity:0; transform:scale(.5);} 8.5%{opacity:1; transform:scale(1.14);}
+      10%,26%{opacity:1; transform:scale(1);} 31%,100%{opacity:0; transform:scale(.5);}}
+    @keyframes fl-dropC{0%,3.5%{opacity:0; transform:translateY(-13px);} 7%{opacity:1;}
+      9.5%,26%{opacity:1; transform:translateY(0);} 31%,100%{opacity:0; transform:translateY(-13px);}}
+    @keyframes fl-growC{0%,4%{transform:scaleY(.1); opacity:.45;} 9.5%,26%{transform:scaleY(1); opacity:1;}
+      32%,100%{transform:scaleY(.1); opacity:.45;}}
   }
-  /* a carousel is motion by definition: for a reader who asked for stillness
-     it becomes a plain grid with every station shown as done */
+  @media (max-width:600px){.fl{--cw:128px; --gp:10px; margin-top:32px;}}
+
+  /* both shapes are motion: for a reader who asked for stillness the nine
+     stations become a plain grid, every one of them shown as done */
   @media (prefers-reduced-motion:reduce){
+    .fl-rail,.fl-pips,.fl-ghost,.fl-dot{display:none;}
     .fl-vp{overflow:visible; padding:0; -webkit-mask-image:none; mask-image:none;}
     .fl-track{display:grid; grid-template-columns:repeat(3,minmax(0,150px)); justify-content:center;
       gap:16px 12px; width:auto; margin:0; animation:none;}
     .fl-node{flex:none; width:auto;}
-    .fl-ghost{display:none;}
     .fl-card{animation:none; transform:none; border-color:rgba(2,58,63,.22); color:#023A3F;
       box-shadow:0 1px 2px rgba(14,23,25,.05);}
     .fl-label{animation:none; color:rgba(14,23,25,.78);}
-    .fl-pips{display:none;}
     .fl-d{animation:none; stroke-dashoffset:0;}
     .fl-p,.fl-k{animation:none; opacity:1; transform:none;}
     .fl-g{animation:none; transform:scaleY(1);}
@@ -417,9 +465,11 @@
         </div>
 
         <div class="fl" style="animation:fadeUp .8s .74s ease both;">
+          <div class="fl-rail"><span class="fl-fill"></span></div>
           <div class="fl-vp">
             <div class="fl-track">
-            <div class="fl-node fl-ghost" aria-hidden="true" style="--d:-4.274s;">
+            <div class="fl-node fl-ghost" aria-hidden="true" style="--d:6.887s; --dc:-4.274s;">
+              <span class="fl-dot"></span>
               <div class="fl-card"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   <rect x="3.5" y="22" width="11" height="12" rx="2"/>
   <rect x="25.5" y="22" width="11" height="12" rx="2"/>
@@ -429,7 +479,8 @@
 </svg></div>
               <span class="fl-label">{{ t.hero.flow.n7 }}</span>
             </div>
-            <div class="fl-node fl-ghost" aria-hidden="true" style="--d:-2.974s;">
+            <div class="fl-node fl-ghost" aria-hidden="true" style="--d:8.020s; --dc:-2.974s;">
+              <span class="fl-dot"></span>
               <div class="fl-card"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   <rect x="3.5" y="9" width="33" height="22" rx="3"/>
   <path d="M3.5 15.5h33"/>
@@ -438,7 +489,8 @@
 </svg></div>
               <span class="fl-label">{{ t.hero.flow.n8 }}</span>
             </div>
-            <div class="fl-node fl-ghost" aria-hidden="true" style="--d:-1.674s;">
+            <div class="fl-node fl-ghost" aria-hidden="true" style="--d:9.153s; --dc:-1.674s;">
+              <span class="fl-dot"></span>
               <div class="fl-card"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   <path d="M5.5 34h29"/>
   <g fill="currentColor" stroke="none">
@@ -450,7 +502,8 @@
 </svg></div>
               <span class="fl-label">{{ t.hero.flow.n9 }}</span>
             </div>
-            <div class="fl-node" style="--d:-0.374s;">
+            <div class="fl-node" style="--d:0.087s; --dc:-0.374s;">
+              <span class="fl-dot"></span>
               <div class="fl-card"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   <rect x="4.5" y="8" width="31" height="27" rx="3"/>
   <path d="M4.5 16h31M13 8.5V4M27 8.5V4"/>
@@ -460,7 +513,8 @@
 </svg></div>
               <span class="fl-label">{{ t.hero.flow.n1 }}</span>
             </div>
-            <div class="fl-node" style="--d:0.926s;">
+            <div class="fl-node" style="--d:1.220s; --dc:0.926s;">
+              <span class="fl-dot"></span>
               <div class="fl-card"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   <path d="M5 10.5A3.5 3.5 0 0 1 8.5 7h23a3.5 3.5 0 0 1 3.5 3.5v13a3.5 3.5 0 0 1-3.5 3.5H17l-7.5 5.5V27H8.5A3.5 3.5 0 0 1 5 23.5z"/>
   <path class="fl-d" style="--len:17" d="M11.5 14h17"/>
@@ -470,7 +524,8 @@
 </svg></div>
               <span class="fl-label">{{ t.hero.flow.n2 }}</span>
             </div>
-            <div class="fl-node" style="--d:2.226s;">
+            <div class="fl-node" style="--d:2.353s; --dc:2.226s;">
+              <span class="fl-dot"></span>
               <div class="fl-card"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   <rect x="4" y="11" width="25" height="21" rx="6"/>
   <g class="fl-p" fill="currentColor" stroke="none"><circle cx="11.5" cy="19.5" r="2"/><circle cx="21.5" cy="19.5" r="2"/></g>
@@ -479,7 +534,8 @@
 </svg></div>
               <span class="fl-label">{{ t.hero.flow.n3 }}</span>
             </div>
-            <div class="fl-node" style="--d:3.526s;">
+            <div class="fl-node" style="--d:3.487s; --dc:3.526s;">
+              <span class="fl-dot"></span>
               <div class="fl-card"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   <rect x="3" y="6" width="34" height="28" rx="3"/>
   <path d="M3 13.5h34"/>
@@ -491,7 +547,8 @@
 </svg></div>
               <span class="fl-label">{{ t.hero.flow.n4 }}</span>
             </div>
-            <div class="fl-node" style="--d:4.826s;">
+            <div class="fl-node" style="--d:4.620s; --dc:4.826s;">
+              <span class="fl-dot"></span>
               <div class="fl-card"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   <path class="fl-d" style="--len:35" d="M13.5 14.5V3.5h13v11"/>
   <path class="fl-d" style="--len:15" d="M13.5 14.5l2.2 1.6 2.2-1.6 2.2 1.6 2.2-1.6 2.2 1.6 2-1.6"/>
@@ -502,7 +559,8 @@
 </svg></div>
               <span class="fl-label">{{ t.hero.flow.n5 }}</span>
             </div>
-            <div class="fl-node" style="--d:6.126s;">
+            <div class="fl-node" style="--d:5.753s; --dc:6.126s;">
+              <span class="fl-dot"></span>
               <div class="fl-card"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   <rect x="6.5" y="5" width="27" height="30" rx="3"/>
   <path class="fl-d" style="--len:13" d="M12 13h13"/>
@@ -512,7 +570,8 @@
 </svg></div>
               <span class="fl-label">{{ t.hero.flow.n6 }}</span>
             </div>
-            <div class="fl-node" style="--d:7.426s;">
+            <div class="fl-node" style="--d:6.887s; --dc:7.426s;">
+              <span class="fl-dot"></span>
               <div class="fl-card"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   <rect x="3.5" y="22" width="11" height="12" rx="2"/>
   <rect x="25.5" y="22" width="11" height="12" rx="2"/>
@@ -522,7 +581,8 @@
 </svg></div>
               <span class="fl-label">{{ t.hero.flow.n7 }}</span>
             </div>
-            <div class="fl-node" style="--d:8.726s;">
+            <div class="fl-node" style="--d:8.020s; --dc:8.726s;">
+              <span class="fl-dot"></span>
               <div class="fl-card"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   <rect x="3.5" y="9" width="33" height="22" rx="3"/>
   <path d="M3.5 15.5h33"/>
@@ -531,7 +591,8 @@
 </svg></div>
               <span class="fl-label">{{ t.hero.flow.n8 }}</span>
             </div>
-            <div class="fl-node" style="--d:10.026s;">
+            <div class="fl-node" style="--d:9.153s; --dc:10.026s;">
+              <span class="fl-dot"></span>
               <div class="fl-card"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   <path d="M5.5 34h29"/>
   <g fill="currentColor" stroke="none">
@@ -543,7 +604,8 @@
 </svg></div>
               <span class="fl-label">{{ t.hero.flow.n9 }}</span>
             </div>
-            <div class="fl-node fl-ghost" aria-hidden="true" style="--d:11.326s;">
+            <div class="fl-node fl-ghost" aria-hidden="true" style="--d:0.087s; --dc:11.326s;">
+              <span class="fl-dot"></span>
               <div class="fl-card"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   <rect x="4.5" y="8" width="31" height="27" rx="3"/>
   <path d="M4.5 16h31M13 8.5V4M27 8.5V4"/>
@@ -553,7 +615,8 @@
 </svg></div>
               <span class="fl-label">{{ t.hero.flow.n1 }}</span>
             </div>
-            <div class="fl-node fl-ghost" aria-hidden="true" style="--d:12.626s;">
+            <div class="fl-node fl-ghost" aria-hidden="true" style="--d:1.220s; --dc:12.626s;">
+              <span class="fl-dot"></span>
               <div class="fl-card"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   <path d="M5 10.5A3.5 3.5 0 0 1 8.5 7h23a3.5 3.5 0 0 1 3.5 3.5v13a3.5 3.5 0 0 1-3.5 3.5H17l-7.5 5.5V27H8.5A3.5 3.5 0 0 1 5 23.5z"/>
   <path class="fl-d" style="--len:17" d="M11.5 14h17"/>
@@ -563,7 +626,8 @@
 </svg></div>
               <span class="fl-label">{{ t.hero.flow.n2 }}</span>
             </div>
-            <div class="fl-node fl-ghost" aria-hidden="true" style="--d:13.926s;">
+            <div class="fl-node fl-ghost" aria-hidden="true" style="--d:2.353s; --dc:13.926s;">
+              <span class="fl-dot"></span>
               <div class="fl-card"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   <rect x="4" y="11" width="25" height="21" rx="6"/>
   <g class="fl-p" fill="currentColor" stroke="none"><circle cx="11.5" cy="19.5" r="2"/><circle cx="21.5" cy="19.5" r="2"/></g>
@@ -572,7 +636,8 @@
 </svg></div>
               <span class="fl-label">{{ t.hero.flow.n3 }}</span>
             </div>
-            <div class="fl-node fl-ghost" aria-hidden="true" style="--d:15.226s;">
+            <div class="fl-node fl-ghost" aria-hidden="true" style="--d:3.487s; --dc:15.226s;">
+              <span class="fl-dot"></span>
               <div class="fl-card"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   <rect x="3" y="6" width="34" height="28" rx="3"/>
   <path d="M3 13.5h34"/>
@@ -587,15 +652,15 @@
             </div>
           </div>
           <div class="fl-pips" aria-hidden="true">
-            <span class="fl-pip" style="--d:-0.374s;"></span>
-            <span class="fl-pip" style="--d:0.926s;"></span>
-            <span class="fl-pip" style="--d:2.226s;"></span>
-            <span class="fl-pip" style="--d:3.526s;"></span>
-            <span class="fl-pip" style="--d:4.826s;"></span>
-            <span class="fl-pip" style="--d:6.126s;"></span>
-            <span class="fl-pip" style="--d:7.426s;"></span>
-            <span class="fl-pip" style="--d:8.726s;"></span>
-            <span class="fl-pip" style="--d:10.026s;"></span>
+            <span class="fl-pip" style="--dx:-0.374s;"></span>
+            <span class="fl-pip" style="--dx:0.926s;"></span>
+            <span class="fl-pip" style="--dx:2.226s;"></span>
+            <span class="fl-pip" style="--dx:3.526s;"></span>
+            <span class="fl-pip" style="--dx:4.826s;"></span>
+            <span class="fl-pip" style="--dx:6.126s;"></span>
+            <span class="fl-pip" style="--dx:7.426s;"></span>
+            <span class="fl-pip" style="--dx:8.726s;"></span>
+            <span class="fl-pip" style="--dx:10.026s;"></span>
           </div>
           <p class="fl-cap">{{ t.hero.flow.cap }}</p>
         </div>
