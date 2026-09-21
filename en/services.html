@@ -1614,7 +1614,7 @@
               <div style="font-size:12.5px; font-weight:700; color:#F2A2A2;">{{ t.subscribe.agreeWarning }}</div>
             </sc-if>
             <div style="font-size:12.5px; line-height:1.8; color:rgba(14,23,25,.66);">{{ t.subscribe.terms }}</div>
-            <button type="submit" style="padding:14px 20px; border-radius:6px; border:none; background:{{ submitBtnBg }}; color:#FFFFFF; font-weight:600; font-size:15px; cursor:{{ submitBtnCursor }}; font-family:{{ t.headingFont }}; transition:background .2s;">{{ t.subscribe.submit }}</button>
+            <button type="submit" style="padding:14px 20px; border-radius:6px; border:none; background:{{ submitBtnBg }}; color:{{ submitBtnFg }}; font-weight:600; font-size:15px; cursor:{{ submitBtnCursor }}; font-family:{{ t.headingFont }}; transition:background .2s;">{{ t.subscribe.submit }}</button>
           </form>
         </div>
         <div style="display:flex; flex-direction:column; gap:16px;">
@@ -3096,6 +3096,7 @@ class Component extends DCLogic {
       showAgreeWarning: this.state.agreeWarn && !this.state.form.agreed,
       toggleAgreed: () => this.setState({form:{...this.state.form, agreed:!this.state.form.agreed}, agreeWarn:false}),
       submitBtnBg: this.state.form.agreed ? "#023A3F" : "rgba(2,58,63,.14)",
+      submitBtnFg: this.state.form.agreed ? "#FFFFFF" : "rgba(14,23,25,.66)",
       submitBtnCursor: this.state.form.agreed ? "pointer" : "not-allowed",
       submitSubscribe: e => {
         e.preventDefault();
