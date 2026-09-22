@@ -1,19 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Build a dark-mode preview of the site into /dark/, from the same source.
+"""The dark theme: the light one turned over, on the logo's own colours.
 
-Nothing about the light site changes. This reads src/site.html, maps every
-colour in it to a dark counterpart drawn from the same logo, and writes the
-result through the ordinary page builder into
+src/site.html is written in the light palette and stays that way — it is the
+single source. darken() maps every colour in it to a dark counterpart, and
+build-pages.py decides which of the two goes on the live URLs.
 
-    /dark/ar/index.html   /dark/ar/about.html   ...
-    /dark/en/index.html   /dark/en/about.html   ...
-
-The preview pages carry <meta name="robots" content="noindex"> and are left
-out of sitemap.xml, so they are browsable but not indexed.
-
-The palette is the light one turned over, taken from the logo's own dark
-lockup: the ground is the lockup's ground, the brand is the mark itself.
+The palette comes from the logo's dark lockup: the ground is the lockup's
+ground, the brand is the mark itself.
 
     #0A1214  page            (the lockup's ground, a shade deeper)
     #0E1719  band            (the lockup's ground)
@@ -23,26 +17,12 @@ lockup: the ground is the lockup's ground, the brand is the mark itself.
     #E8F4F3  text
     #06191B  text on brand
 
-Colours are mapped in one pass, by the property each one serves: the same
-ink at 3%% behind a card and at 76%% in a paragraph are different jobs and
-get different answers. Status, WhatsApp and Meta colours keep their meaning.
-
-    python3 build-dark.py
+Colours are mapped in one pass, by the property each one serves: the same ink
+at 3% behind a card and at 76% in a paragraph are different jobs and get
+different answers. Status, WhatsApp and Meta colours keep their meaning.
 """
 
-import importlib.util
-import pathlib
 import re
-import shutil
-import sys
-
-ROOT = pathlib.Path(__file__).parent
-SRC = ROOT / "src" / "site.html"
-OUT = ROOT / "dark"
-
-_spec = importlib.util.spec_from_file_location("build_pages", ROOT / "build-pages.py")
-bp = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(bp)
 
 # ── the palette ─────────────────────────────────────────────────────────────
 PAGE, BAND, CARD, RAISED = "#0A1214", "#0E1719", "#111B1D", "#162224"
@@ -212,40 +192,3 @@ def darken(s: str) -> str:
     out = out.replace("assets/pattern-light.png", "assets/pattern-dark.png")
     out = re.sub(r"assets/prod-(\d)\.png", r"assets/prod-\1-dark.png", out)
     return out
-
-
-PREVIEW_HEAD = '<meta name="robots" content="noindex, nofollow">\n'
-
-
-def main() -> int:
-    if not SRC.exists():
-        print(f"error: {SRC} not found", file=sys.stderr)
-        return 1
-    base = darken(SRC.read_text(encoding="utf-8"))
-
-    if OUT.exists():
-        shutil.rmtree(OUT)
-    count = 0
-    for lang in bp.LANGS:
-        d = OUT / lang
-        d.mkdir(parents=True)
-        for key, out_name, meta in bp.PAGES:
-            title, desc = meta[lang]
-            html = bp.render(base, key, out_name, lang, title, desc)
-            # a preview is not the site: drop what points search engines at it,
-            # and reach the shared assets from one level further down
-            html = re.sub(r'<link rel="canonical"[^>]*>\n?', "", html)
-            html = re.sub(r'<link rel="alternate"[^>]*>\n?', "", html)
-            html = re.sub(r'<script type="application/ld\+json">.*?</script>\n?', "", html, flags=re.S)
-            html = html.replace("</head>", PREVIEW_HEAD + "</head>", 1)
-            html = html.replace('"../assets/', '"../../assets/').replace("(../assets/", "(../../assets/")
-            html = html.replace('src="../support.js"', 'src="../../support.js"')
-            (d / out_name).write_text(html, encoding="utf-8")
-            count += 1
-        print(f"  dark/{lang}/ — {len(bp.PAGES)} pages")
-    print(f"wrote {count} files — preview only, noindex, not in the sitemap")
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())

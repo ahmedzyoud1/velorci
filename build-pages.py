@@ -28,6 +28,16 @@ import re
 import shutil
 import sys
 
+import theme_dark
+
+# Which theme goes on the live URLs. src/site.html is written light and stays
+# that way; "dark" runs it through theme_dark.darken() on the way out. The
+# other theme is still built, at /light/ or /dark/, so the two can be compared
+# — change this one word and re-run to swap them over.
+THEME = "dark"
+
+THEME_COLOUR = {"light": "#FFFFFF", "dark": "#0A1214"}
+
 ROOT = pathlib.Path(__file__).parent
 SRC = ROOT / "src" / "site.html"
 SITE = "https://www.velorci.com"
@@ -235,6 +245,7 @@ def render(base: str, key: str, out_name: str, lang: str, title: str, desc: str)
         for other in LANGS
     )
     head_extra = (
+        f'<meta name="theme-color" content="{THEME_COLOUR[THEME]}">\n'
         f'<meta name="velorci-page" content="{key}">\n'
         f'<meta name="velorci-lang" content="{lang}">\n'
         f'<meta property="og:locale" content="{"ar_KW" if lang == "ar" else "en_US"}">\n'
@@ -278,6 +289,38 @@ def write_sitemap() -> int:
     return len(LANGS) * len(PAGES)
 
 
+def write_preview(name: str, base: str) -> int:
+    """The theme that is not live, kept at /<name>/ so the two can be compared.
+
+    Same pages, one directory deeper, carrying noindex and left out of
+    sitemap.xml: browsable, never a second copy of the site in search.
+    """
+    out = ROOT / name
+    if out.exists():
+        shutil.rmtree(out)
+    count = 0
+    for lang in LANGS:
+        d = out / lang
+        d.mkdir(parents=True)
+        for key, out_name, meta in PAGES:
+            title, desc = meta[lang]
+            html = render(base, key, out_name, lang, title, desc)
+            # a preview is not the site: nothing here should point a crawler at
+            # it, and the shared assets sit one level further up
+            html = re.sub(r'<link rel="canonical"[^>]*>\n?', "", html)
+            html = re.sub(r'<link rel="alternate"[^>]*>\n?', "", html)
+            html = re.sub(r'<script type="application/ld\+json">.*?</script>\n?', "", html, flags=re.S)
+            html = re.sub(r'<meta name="theme-color"[^>]*>',
+                          f'<meta name="theme-color" content="{THEME_COLOUR[name]}">', html)
+            html = html.replace("</head>", '<meta name="robots" content="noindex, nofollow">\n</head>', 1)
+            html = html.replace('"../assets/', '"../../assets/').replace("(../assets/", "(../../assets/")
+            html = html.replace('src="../support.js"', 'src="../../support.js"')
+            (d / out_name).write_text(html, encoding="utf-8")
+            count += 1
+    print(f"  {name}/ — {count} pages, noindex, not in the sitemap")
+    return count
+
+
 def main() -> int:
     if not SRC.exists():
         print(f"error: {SRC} not found", file=sys.stderr)
@@ -292,6 +335,10 @@ def main() -> int:
         print(f"  this file    : {sorted(declared)}", file=sys.stderr)
         return 1
 
+    live = theme_dark.darken(base) if THEME == "dark" else base
+    other = "light" if THEME == "dark" else "dark"
+    alt = base if THEME == "dark" else theme_dark.darken(base)
+
     count = 0
     for lang in LANGS:
         out_dir = ROOT / lang
@@ -301,15 +348,17 @@ def main() -> int:
         for key, out_name, meta in PAGES:
             title, desc = meta[lang]
             (out_dir / out_name).write_text(
-                render(base, key, out_name, lang, title, desc), encoding="utf-8")
+                render(live, key, out_name, lang, title, desc), encoding="utf-8")
             count += 1
-        print(f"  {lang}/ — {len(PAGES)} pages")
+        print(f"  {lang}/ — {len(PAGES)} pages ({THEME})")
+
+    count += write_preview(other, alt)
 
     (ROOT / "index.html").write_text(ROOT_REDIRECT.format(site=SITE), encoding="utf-8")
     print("  index.html — language redirect")
     urls = write_sitemap()
     print(f"  sitemap.xml — {urls} urls, robots.txt")
-    print(f"wrote {count + 3} files")
+    print(f"wrote {count + 3} files — live theme: {THEME}")
     return 0
 
 
