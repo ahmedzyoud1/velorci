@@ -84,456 +84,163 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;family=Cairo:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
 <style>
-  /* ============================================================
-     velorci — design tokens
-     ============================================================ */
-  :root{
-    /* surfaces: a neutral ramp built off the brand ink, not cyan tints */
-    --bg:#041316;
-    --bg-2:#061A1D;
-    --surface:#071F23;
-    --surface-2:#0A272C;
-    --surface-3:#0D3035;
-
-    /* hairlines are neutral — accent borders are reserved for state */
-    --line:rgba(232,255,254,.09);
-    --line-2:rgba(232,255,254,.16);
-    --line-accent:rgba(101,212,210,.42);
-
-    /* brand */
-    --accent:#65D4D2;
-    --accent-deep:#0F6F7A;
-    --accent-wash:rgba(101,212,210,.10);
-    --accent-ink:#041316;
-
-    /* text ramp */
-    --fg:#E8FFFE;
-    --fg-2:rgba(232,255,254,.74);
-    --fg-3:rgba(232,255,254,.54);
-    --fg-4:rgba(232,255,254,.38);
-
-    /* signal */
-    --ok:#3AD07A;
-    --warn:#F0A825;
-    --danger:#E4572E;
-    --wa:#25D366;
-
-    --r1:6px;
-    --r2:10px;
-    --r3:14px;
-
-    --sh-1:0 1px 2px rgba(0,0,0,.4);
-    --sh-2:0 20px 44px -26px rgba(0,0,0,.95);
-
-    --gutter:clamp(20px,5vw,40px);
-    --sec-y:clamp(60px,7.5vw,100px);
-  }
-
+  body{margin:0;background:#041316;}
   *{box-sizing:border-box;}
-  body{margin:0; background:var(--bg); -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;}
-  img{max-width:100%;}
-  a{color:var(--accent); text-decoration:none;}
-  a:hover{color:var(--fg);}
+  a{color:#65D4D2;} a:hover{color:#E8FFFE;}
   input, textarea{font-family:inherit;}
-  input::placeholder, textarea::placeholder{color:var(--fg-4);}
-  ::selection{background:rgba(101,212,210,.28); color:var(--fg);}
-
-  /* ============================================================
-     layout
-     ============================================================ */
-  .sec{padding:var(--sec-y) var(--gutter);}
-  .sec--tight{padding-top:clamp(36px,4.5vw,60px);}
-  .sec--flush-b{padding-bottom:0;}
-  /* one quiet band colour instead of repeated gradient washes */
-  .band{background:var(--bg-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
-  .wrap{max-width:1120px; margin:0 auto;}
-  .wrap--wide{max-width:1180px;}
-  .wrap--mid{max-width:960px;}
-  .wrap--prose{max-width:720px;}
-
-  /* section headers: an eyebrow, a heading, a lede — always the same rhythm */
-  .shead{max-width:640px; margin:0 0 clamp(32px,4vw,52px);}
-  .shead--center{margin-inline:auto; text-align:center;}
-  .eyebrow{display:flex; align-items:center; gap:12px; font-family:Poppins,sans-serif;
-    font-size:11.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
-    color:var(--fg-3); margin:0 0 16px;}
-  .eyebrow::before{content:""; width:22px; height:1px; background:var(--accent); flex:none; opacity:.8;}
-  .shead--center .eyebrow{justify-content:center;}
-
-  h1,h2,h3,h4,p{margin:0;}
-  .h1--page{font-size:clamp(27px,3.4vw,40px); font-weight:800; line-height:1.28; letter-spacing:-.01em; color:var(--fg);}
-  .h1{font-size:clamp(29px,4vw,42px); font-weight:800; line-height:1.26; letter-spacing:-.012em; color:var(--fg);}
-  .h2{font-size:clamp(24px,3.1vw,34px); font-weight:800; line-height:1.3; letter-spacing:-.008em; color:var(--fg);}
-  .h3{font-size:clamp(19px,2vw,22px); font-weight:800; line-height:1.4; color:var(--fg);}
-  .h4{font-size:16px; font-weight:700; line-height:1.45; color:var(--fg);}
-  .lede{font-size:clamp(15.5px,1.4vw,17px); line-height:1.85; color:var(--fg-2);}
-  .body{font-size:15px; line-height:1.85; color:var(--fg-2);}
-  .small{font-size:13.5px; line-height:1.7; color:var(--fg-3);}
-  .micro{font-size:12px; line-height:1.6; color:var(--fg-4);}
-  .shead .lede{margin-top:16px;}
-  /* Latin copy sits tighter than Arabic */
-  [dir="ltr"] .lede{line-height:1.7;}
-  [dir="ltr"] .body{line-height:1.7;}
-  [dir="ltr"] .h1,[dir="ltr"] .h1--page,[dir="ltr"] .h2{line-height:1.16;}
-  /* Poppins for figures — numerals stay consistent in both languages */
-  .num{font-family:Poppins,sans-serif; font-weight:700; font-variant-numeric:tabular-nums; direction:ltr; unicode-bidi:isolate;}
-
-  /* ============================================================
-     buttons — flat, no glow, one clear primary
-     ============================================================ */
-  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px;
-    padding:12px 22px; border-radius:var(--r2); border:1px solid transparent;
-    font-size:14.5px; font-weight:700; line-height:1; cursor:pointer; white-space:nowrap;
-    transition:background-color .16s ease, border-color .16s ease, color .16s ease;}
-  .btn--lg{padding:15px 28px; font-size:15.5px;}
-  .btn--sm{padding:9px 16px; font-size:13.5px;}
-  .btn--block{width:100%;}
-  .btn--primary{background:var(--accent); color:var(--accent-ink); font-weight:800;}
-  .btn--primary:hover{background:#7FE0DE;}
-  .btn--secondary{border-color:var(--line-2); color:var(--fg);}
-  .btn--secondary:hover{border-color:var(--fg-3); background:rgba(232,255,254,.04);}
-  .btn--quiet{border-color:var(--line); color:var(--fg-2);}
-  .btn--quiet:hover{border-color:var(--line-2); color:var(--fg);}
-  .btn--wa{background:var(--wa); color:#04241A; font-weight:800; border:none;}
-  .btn--wa:hover{background:#31E074; color:#04241A;}
-
-  .link-arrow{display:inline-flex; align-items:center; gap:9px; cursor:pointer;
-    color:var(--accent); font-weight:700; font-size:15px; white-space:nowrap;
-    padding-bottom:4px; border-bottom:1px solid rgba(101,212,210,.3); transition:border-color .16s ease;}
-  .link-arrow:hover{border-bottom-color:var(--accent);}
-
-  /* ============================================================
-     surfaces
-     ============================================================ */
-  .panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--r3);}
-  .tile{background:var(--surface-2); border-radius:var(--r2);}
-  .tile--line{border:1px solid var(--line);}
-
-  /* status pill — the only place a full pill radius is used */
-  .chip{display:inline-flex; align-items:center; gap:6px; padding:4px 11px; border-radius:999px;
-    font-size:11.5px; font-weight:700; line-height:1.5; white-space:nowrap;}
-  .chip--quiet{background:rgba(232,255,254,.06); color:var(--fg-3);}
-  .chip--accent{background:var(--accent-wash); color:var(--accent);}
-
-  /* tag: squared, for feature keywords */
-  .tag{display:inline-flex; align-items:center; gap:7px; padding:7px 12px; border-radius:var(--r1);
-    background:rgba(232,255,254,.045); border:1px solid var(--line);
-    font-size:12.5px; font-weight:600; color:var(--fg-2); white-space:nowrap;}
-  .tag--on{background:var(--accent-wash); border-color:rgba(101,212,210,.28); color:var(--accent);}
-
-  /* ranked list marker */
-  .rank{color:var(--fg-4);}
-  .rank--top{color:var(--accent);}
-
-  /* icon slot — flat, stroked. no gradient chips. */
-  .isl{display:flex; align-items:center; justify-content:center; flex:none;
-    width:36px; height:36px; border-radius:var(--r2);
-    background:rgba(101,212,210,.09); border:1px solid rgba(101,212,210,.2);}
-  .isl svg{width:18px; height:18px; display:block;}
-  .isl--lg{width:44px; height:44px; border-radius:var(--r2);}
-  .isl--lg svg{width:21px; height:21px;}
-  .isl--plain{background:rgba(232,255,254,.05); border-color:var(--line);}
-
-  /* monogram (team, avatars) */
-  .mono-av{display:flex; align-items:center; justify-content:center; flex:none;
-    border-radius:50%; background:var(--surface-3); border:1px solid var(--line-2);
-    color:var(--accent); font-family:Poppins,sans-serif; font-weight:700;}
-
-  /* list of rows separated by hairlines — replaces stacks of bordered cards */
-  .rows > * + *{border-top:1px solid var(--line);}
-
-  /* hairline grid — cells divided by rules, not boxed individually */
-  .hgrid{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--r3); overflow:hidden;}
-  .hgrid > *{background:var(--bg); padding:22px 24px;}
-  .hgrid--on-band > *{background:var(--bg-2);}
-  .hgrid--3{grid-template-columns:repeat(3,1fr);}
-  .hgrid--2{grid-template-columns:repeat(2,1fr);}
-
-  /* bullet marker — a short rule, not a rotated diamond */
-  .bul{display:flex; gap:12px; align-items:flex-start;}
-  .bul::before{content:""; flex:none; width:10px; height:1px; margin-top:.7em; background:var(--accent); opacity:.65;}
-
-  /* ============================================================
-     header
-     ============================================================ */
-  .r-hdr{position:sticky; top:0; z-index:50; background:var(--bg);
-    border-bottom:1px solid var(--line); padding:0 var(--gutter);}
-  .hdr-in{max-width:1180px; margin:0 auto; display:flex; align-items:center;
-    justify-content:space-between; gap:20px; min-height:62px; flex-wrap:wrap;}
-  .brand{display:flex; align-items:center; gap:9px; cursor:pointer;}
-  .brand img{height:24px; width:auto; display:block;}
-  .brand span{font-family:Poppins,sans-serif; font-weight:700; font-size:18px; letter-spacing:-.02em; color:var(--fg);}
-  .r-nav{display:flex; align-items:center; gap:2px;}
-  .nav-link{position:relative; padding:8px 13px; border-radius:var(--r1); font-size:14px; font-weight:600;
-    cursor:pointer; color:var(--fg-3); transition:color .16s ease;}
-  .nav-link:hover{color:var(--fg);}
-  .nav-link.is-on{color:var(--fg);}
-  .nav-link.is-on::after{content:""; position:absolute; inset-inline:13px; bottom:-1px; height:1.5px; background:var(--accent);}
-  .r-actions{display:flex; align-items:center; gap:8px;}
-  .lang-btn{padding:7px 11px; border-radius:var(--r1); font-family:Poppins,sans-serif; font-size:12.5px;
-    font-weight:700; cursor:pointer; color:var(--fg-3); border:1px solid var(--line); transition:color .16s, border-color .16s;}
-  .lang-btn:hover{color:var(--fg); border-color:var(--line-2);}
-  .r-burger{display:none; width:38px; height:38px; border-radius:var(--r1); border:1px solid var(--line);
-    align-items:center; justify-content:center; flex-direction:column; gap:4px; cursor:pointer;}
-  .r-burger span{display:block; width:16px; height:1.5px; background:var(--fg-2); border-radius:1px;}
-
-  /* ============================================================
-     hero
-     ============================================================ */
-  .hero{padding:clamp(52px,6.5vw,84px) var(--gutter) clamp(44px,5vw,64px);}
-  .hero-kicker{display:inline-flex; align-items:center; gap:9px;}
-  .hero-kicker img{height:14px; width:auto;}
-  .hero-kicker span{font-family:Poppins,sans-serif; font-size:12px; font-weight:600;
-    letter-spacing:.1em; text-transform:uppercase; color:var(--fg-3);}
-  .r-hero-h1{max-width:640px;}
-  .hero-actions{display:flex; gap:12px; flex-wrap:wrap;}
-
-  /* the three hero facts: a quiet metric strip, not floating badges */
-  .r-chips{display:flex; flex-wrap:wrap; gap:0 clamp(20px,3vw,36px); padding-top:22px; border-top:1px solid var(--line);}
-  .r-hchip{display:flex; align-items:center; gap:8px; padding:6px 0; font-size:13px; font-weight:600; color:var(--fg-2);}
-  .r-hchip::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--accent); flex:none;}
-
-  /* ============================================================
-     product mock (dashboard / phone) — reads like a screenshot
-     ============================================================ */
-  .mock{border:1px solid var(--line-2); border-radius:var(--r3); background:var(--surface);
-    overflow:hidden; box-shadow:var(--sh-2);}
-  .mock-bar{display:flex; align-items:center; gap:7px; padding:10px 14px;
-    border-bottom:1px solid var(--line); background:var(--bg);}
-  .mock-dot{width:8px; height:8px; border-radius:50%; background:rgba(232,255,254,.16);}
-  .mock-url{font-family:Poppins,sans-serif; font-size:11.5px; color:var(--fg-4); margin:0 8px; direction:ltr;}
-  .dash-nav{padding:8px 10px; border-radius:var(--r1); font-size:12px; font-weight:600; color:var(--fg-3);}
-  .dash-nav.is-on{color:var(--fg); background:rgba(232,255,254,.06);}
-  .kpi{padding:13px 15px; border-radius:var(--r2); background:var(--surface-2); display:flex; flex-direction:column; gap:5px;}
-  .kpi__l{font-size:11px; color:var(--fg-4);}
-  .kpi__v{font-family:Poppins,sans-serif; font-size:21px; font-weight:700; color:var(--fg); font-variant-numeric:tabular-nums;}
-
-  /* ============================================================
-     marquee — quiet, edge-faded
-     ============================================================ */
-  .mq{overflow:hidden; padding:14px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
-    -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
-    mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);}
-  .mq__track{display:flex; width:max-content; animation:marquee 60s linear infinite;}
-  .mq__item{display:flex; align-items:center; gap:30px; padding-inline-end:30px;}
-  .mq__item span{font-size:13.5px; font-weight:600; color:var(--fg-4); white-space:nowrap;}
-  .mq__sep{width:3px; height:3px; border-radius:50%; background:rgba(232,255,254,.2); flex:none;}
-
-  /* ============================================================
-     pillars
-     ============================================================ */
-  .r-tabstrip{display:flex; flex-wrap:wrap; gap:4px; padding-bottom:14px; border-bottom:1px solid var(--line); margin-bottom:28px;}
-  .ptab{padding:9px 14px; border-radius:var(--r1); font-size:13.5px; font-weight:600; cursor:pointer;
-    color:var(--fg-3); transition:color .16s ease, background-color .16s ease;}
-  .ptab:hover{color:var(--fg); background:rgba(232,255,254,.04);}
-  .ptab.is-on{color:var(--fg); background:rgba(232,255,254,.07); box-shadow:inset 0 -1.5px 0 var(--accent);}
-  .r-row{display:none; align-items:center; gap:12px; padding:14px 2px; cursor:pointer;
-    border-bottom:1px solid var(--line); transition:background-color .16s ease;}
-  .r-row.is-on{background:rgba(232,255,254,.035);}
-  .pillar-grid{display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:28px; align-items:start;}
-  .pmock{background:var(--surface); border:1px solid var(--line); border-radius:var(--r3); overflow:hidden;}
-  .pmock__head{display:flex; align-items:center; gap:11px; padding:16px 22px; border-bottom:1px solid var(--line);}
-  .pmock__body{padding:22px; display:flex; flex-direction:column; gap:14px; min-height:376px;}
-  .pfeat{padding:18px 20px; border-radius:var(--r2); background:var(--surface-2);}
-  .prow{display:flex; align-items:center; gap:14px; padding:13px 16px; border-radius:var(--r2); background:rgba(232,255,254,.035);}
-  .r-float{display:flex; align-items:center; gap:9px; padding:12px 2px 0; font-size:13px; font-weight:600; color:var(--fg-3);}
-  .r-float > span:first-child{width:6px; height:6px; border-radius:50%; background:var(--accent); flex:none;}
-  .pside{display:flex; flex-direction:column; gap:14px; padding:26px 24px 24px;
-    background:var(--surface); border:1px solid var(--line); border-radius:var(--r3);}
-
-  /* ============================================================
-     onboarding timeline
-     ============================================================ */
-  .r-step{position:relative; display:flex; align-items:flex-start; gap:clamp(18px,2.6vw,30px); padding-bottom:40px;}
-  .r-step__n{position:relative; width:72px; flex:none; padding-inline-start:26px; padding-top:1px;}
-  .r-step__n b{display:block; font-family:Poppins,sans-serif; font-size:13px; font-weight:700;
-    color:var(--fg-4); font-variant-numeric:tabular-nums; letter-spacing:.06em;}
-  .r-step__dot{position:absolute; top:5px; inset-inline-start:0; width:9px; height:9px;
-    border-radius:50%; background:var(--bg-2); border:1.5px solid var(--accent);}
-
-  /* ============================================================
-     pricing
-     ============================================================ */
-  .pkg{position:relative; display:flex; flex-direction:column; gap:14px; padding:26px 22px;
-    background:var(--surface); border:1px solid var(--line); border-radius:var(--r3);}
-  .pkg.is-on{border-color:var(--line-accent); background:var(--surface-2);}
-  .pkg__head{display:flex; align-items:center; justify-content:space-between; gap:10px;}
-  .pkg__name{font-weight:800; font-size:17px; color:var(--fg);}
-  .pkg__price{display:flex; align-items:baseline; gap:6px; padding-bottom:14px; border-bottom:1px solid var(--line);}
-  .pkg__price b{font-family:Poppins,sans-serif; font-size:30px; font-weight:700; color:var(--fg); line-height:1;}
-  .pkg__price span{font-size:13px; font-weight:600; color:var(--fg-3);}
-
-  /* ============================================================
-     forms
-     ============================================================ */
-  .field{width:100%; padding:12px 14px; border-radius:var(--r2); border:1px solid var(--line-2);
-    font-size:15px; background:var(--bg); color:var(--fg); transition:border-color .16s ease;}
-  .field:focus{outline:none; border-color:var(--accent);}
-
-  /* ============================================================
-     floating whatsapp
-     ============================================================ */
-  .r-wa{position:fixed; inset-inline-end:20px; bottom:20px; z-index:90; display:flex; align-items:center;
-    gap:9px; padding:12px 18px; border-radius:999px; background:var(--wa); color:#04241A;
-    font-weight:700; font-size:14px; box-shadow:0 8px 22px rgba(0,0,0,.45); transition:background-color .16s ease;}
-  .r-wa:hover{background:#31E074; color:#04241A;}
-
-  /* ============================================================
-     motion — restrained, and off when the user asks
-     ============================================================ */
-  @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+  input::placeholder, textarea::placeholder{color:rgba(232,255,254,.4);}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:none;}}
+  @keyframes floatY{0%,100%{transform:translateY(-8px);}50%{transform:translateY(8px);}}
+  @keyframes floatY2{0%,100%{transform:translateY(6px);}50%{transform:translateY(-10px);}}
   @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  @keyframes drift{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(60px,-40px) scale(1.15);}}
+  @keyframes drift2{0%,100%{transform:translate(0,0) scale(1.1);}50%{transform:translate(-70px,50px) scale(0.95);}}
   @keyframes barGrow{from{transform:scaleY(0);}to{transform:scaleY(1);}}
-  @keyframes growW{from{transform:scaleX(0);}to{transform:scaleX(1);}}
   @keyframes blink{0%,80%,100%{opacity:.25;}40%{opacity:1;}}
+  @keyframes glowPulse{0%,100%{box-shadow:0 0 30px rgba(101,212,210,.15);}50%{box-shadow:0 0 60px rgba(101,212,210,.35);}}
+  @keyframes spinSlow{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
   @keyframes drawLine{to{stroke-dashoffset:0;}}
   @keyframes areaIn{from{opacity:0;}to{opacity:1;}}
-  @keyframes pop{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
-  @keyframes livePulse{0%,100%{box-shadow:0 0 0 0 rgba(58,208,122,.4);}70%{box-shadow:0 0 0 5px rgba(58,208,122,0);}}
-  .fu{animation:fadeUp .5s ease both;}
-  @media (prefers-reduced-motion: reduce){
-    *,*::before,*::after{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;}
-  }
-
-  /* ============================================================
-     responsive
-     ============================================================ */
-  @media (max-width:1040px){
-    .pillar-grid{grid-template-columns:1fr; gap:22px;}
-    .pside{order:-1;}
-  }
+  @keyframes pop{0%{transform:scale(.6);opacity:0;}70%{transform:scale(1.08);}100%{transform:scale(1);opacity:1;}}
+  @keyframes floatSlow{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+  @keyframes ring{0%{transform:scale(.8);opacity:.6;}100%{transform:scale(1.9);opacity:0;}}
+  @keyframes riseIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+  @keyframes dot{0%,60%,100%{transform:translateY(0);opacity:.35;}30%{transform:translateY(-4px);opacity:1;}}
+  @keyframes livePulse{0%,100%{box-shadow:0 0 0 0 rgba(23,160,92,.55);}70%{box-shadow:0 0 0 7px rgba(23,160,92,0);}}
+  @keyframes knobIn{from{transform:translateX(-19px);}to{transform:none;}}
+  .temj{filter:grayscale(1) brightness(0) saturate(100%) invert(78%) sepia(35%) saturate(560%) hue-rotate(128deg) brightness(95%) contrast(90%);}
   @media (max-width:900px){
     .r-grid4{grid-template-columns:1fr 1fr !important;}
-    .r-grid3, .hgrid--3{grid-template-columns:1fr 1fr !important;}
+    .r-grid3{grid-template-columns:1fr 1fr !important;}
+    .r-pillar{grid-template-columns:1fr !important; row-gap:52px !important;}
     .r-shell{display:flex !important; flex-direction:column !important;}
     .r-tabstrip{display:none !important;}
     .r-row{display:flex !important;}
-    .pillar-grid{margin-bottom:6px !important;}
-    .pillar-grid.r-closed{display:none !important;}
-    .pside{order:0;}
+    .r-pillar{margin-bottom:10px !important;}
+    .r-pillar.r-closed{display:none !important;}
   }
+  .r-chips{scrollbar-width:none; -ms-overflow-style:none;}
+  .r-chips::-webkit-scrollbar{display:none;}
+  .r-burger{display:none;}
   @media (max-width:640px){
-    .hdr-in{min-height:56px; row-gap:10px;}
+    .r-hdr{padding:12px 18px !important; row-gap:12px !important; flex-wrap:wrap !important;}
     .r-burger{display:flex !important;}
     .r-nav{display:none !important;}
     .r-actions{display:none !important;}
-    .r-hdr.menu-open .hdr-in{padding-bottom:12px;}
-    .r-hdr.menu-open .r-nav{display:flex !important; order:3 !important; width:100% !important;
-      flex-direction:column !important; align-items:stretch !important; gap:0 !important;
-      border-top:1px solid var(--line); padding-top:6px;}
-    .r-hdr.menu-open .r-nav .nav-link{padding:13px 4px !important; font-size:15px !important; border-radius:0;}
-    .r-hdr.menu-open .r-nav .nav-link.is-on::after{inset-inline:4px;}
-    .r-hdr.menu-open .r-actions{display:flex !important; order:4 !important; width:100% !important;
-      flex-direction:column !important; gap:8px !important; padding-top:10px; border-top:1px solid var(--line);}
-    .r-hdr.menu-open .r-actions > *{width:100% !important; justify-content:center !important;}
-    .r-grid4, .r-grid3, .r-grid2, .hgrid--3, .hgrid--2{grid-template-columns:1fr !important;}
-    .r-chips{gap:0 !important; flex-direction:column; align-items:flex-start;}
-    .r-wa{padding:0 !important; width:50px !important; height:50px !important;
-      justify-content:center !important; gap:0 !important; inset-inline-end:14px !important; bottom:14px !important;}
+    .r-hdr.menu-open .r-nav{display:flex !important; order:3 !important; width:100% !important; flex-direction:column !important; align-items:stretch !important; gap:4px !important;}
+    .r-hdr.menu-open .r-nav > div{padding:12px 14px !important; font-size:15px !important; text-align:center !important;}
+    .r-hdr.menu-open .r-actions{display:flex !important; order:4 !important; width:100% !important; flex-direction:column !important; gap:8px !important;}
+    .r-hdr.menu-open .r-actions > *{width:100% !important; text-align:center !important; justify-content:center !important; box-sizing:border-box !important;}
+    .r-hero-h1{font-size:38px !important; line-height:1.2 !important;}
+    .r-wa{padding:0 !important; width:54px !important; height:54px !important; justify-content:center !important; gap:0 !important; inset-inline-end:16px !important; bottom:16px !important;}
     .r-wa-txt{display:none !important;}
+    .r-hero-sec{padding-top:44px !important; padding-bottom:40px !important;}
+    .r-hchip{font-size:11.5px !important; padding:8px 12px !important;}
+    .r-hchip1, .r-hchip3{inset-inline-start:6px !important;}
+    .r-hchip2{inset-inline-end:6px !important;}
+    .r-grid4, .r-grid3, .r-grid2{grid-template-columns:1fr !important;}
+    .r-contact{padding:64px 20px 70px !important;}
     .r-rail{display:none !important;}
-    .r-step{gap:14px !important; padding-bottom:30px !important;}
-    .r-step__n{width:56px !important;}
-    .r-contact{gap:36px !important;}
+    .r-step{gap:16px !important;}
+    .r-step > div:first-child{width:52px !important;}
+    .r-step > div:first-child > div:first-child{font-size:40px !important;}
+    .r-step > div:first-child > div:last-child{display:none !important;}
+    .r-float{position:static !important; margin-top:14px !important; justify-content:center !important; white-space:normal !important; text-align:center !important;}
+    .r-float span{white-space:normal !important;}
+    section{padding-left:20px !important; padding-right:20px !important;}
     .r-dash-side{display:none !important;}
     .r-dash-panels{flex-direction:column !important;}
-    .pmock__body{padding:16px !important; min-height:0 !important;}
-    .pmock__head{padding:14px 16px !important;}
-    .kpi{padding:11px 12px !important;}
-    .kpi__v{font-size:17px !important;}
-    .kpi__l{font-size:10.5px !important;}
   }
 </style>
 </helmet>
 <div dir="{{ t.dir }}" style="font-family:{{ t.bodyFont }}; background:#041316; color:#E8FFFE; min-height:100vh; width:100%; overflow-x:hidden;">
 
-  <header class="r-hdr {{ menuClass }}">
-    <div class="hdr-in">
-      <div class="brand" onClick="{{ goTo.home }}">
-        <img src="assets/logo-turq.png" alt="">
-        <span>velorci</span>
-      </div>
-      <div onClick="{{ toggleMenu }}" class="r-burger" role="button" aria-label="menu">
-        <span></span><span></span><span></span>
-      </div>
-      <nav class="r-nav">
-        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
-          <div onClick="{{ item.onClick }}" class="nav-link {{ item.cls }}">{{ item.label }}</div>
-        </sc-for>
-      </nav>
-      <div class="r-actions">
-        <div onClick="{{ toggleLang }}" class="lang-btn">{{ t.langSwitchLabel }}</div>
-        <a href="https://my.velorci.com" target="_blank" rel="noopener" class="btn btn--sm btn--quiet" style="font-family:{{ t.headingFont }};">{{ t.nav.login }}</a>
-        <div onClick="{{ goTo.contact }}" class="btn btn--sm btn--primary" style="font-family:{{ t.headingFont }};">{{ t.nav.cta }}</div>
-      </div>
+  <header style="position:sticky; top:0; z-index:50; background:rgba(4,19,22,.82); backdrop-filter:blur(14px); border-bottom:1px solid rgba(101,212,210,.14); display:flex; align-items:center; justify-content:space-between; padding:14px 40px; gap:16px; flex-wrap:wrap;" class="r-hdr {{ menuClass }}">
+    <div style="display:flex; align-items:center; gap:10px; cursor:pointer;" onClick="{{ goTo.home }}">
+      <img src="assets/logo-turq.png" style="height:28px; width:auto; display:block;">
+      <span style="font-family:Poppins,sans-serif; font-weight:700; font-size:20px; letter-spacing:-0.02em; color:#E8FFFE;">velorci</span>
+    </div>
+    <div onClick="{{ toggleMenu }}" class="r-burger" style="width:42px; height:42px; border-radius:10px; border:1px solid rgba(101,212,210,.4); align-items:center; justify-content:center; flex-direction:column; gap:4px; cursor:pointer; background:rgba(101,212,210,.06);">
+      <span style="display:block; width:18px; height:2px; background:#65D4D2; border-radius:2px;"></span>
+      <span style="display:block; width:18px; height:2px; background:#65D4D2; border-radius:2px;"></span>
+      <span style="display:block; width:18px; height:2px; background:#65D4D2; border-radius:2px;"></span>
+    </div>
+    <nav class="r-nav" style="display:flex; align-items:center; gap:4px; flex-wrap:wrap;">
+      <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+        <div onClick="{{ item.onClick }}" style="padding:9px 16px; border-radius:20px; font-size:14.5px; font-weight:600; cursor:pointer; color:{{ item.color }}; background:{{ item.bg }}; transition:all .2s;" style-hover="color:#65D4D2;">{{ item.label }}</div>
+      </sc-for>
+    </nav>
+    <div class="r-actions" style="display:flex; align-items:center; gap:10px;">
+      <div onClick="{{ toggleLang }}" style="padding:8px 14px; border-radius:20px; border:1px solid rgba(101,212,210,.4); font-size:13px; font-weight:700; cursor:pointer; color:#65D4D2; font-family:Poppins,sans-serif; transition:all .2s;" style-hover="background:rgba(101,212,210,.12);">{{ t.langSwitchLabel }}</div>
+      <a href="https://my.velorci.com" target="_blank" rel="noopener" style="padding:10px 18px; border-radius:22px; border:1px solid rgba(101,212,210,.45); background:transparent; color:#65D4D2; font-weight:700; font-size:14px; text-decoration:none; font-family:{{ t.headingFont }}; white-space:nowrap; transition:all .2s;" style-hover="background:rgba(101,212,210,.12);">{{ t.nav.login }}</a>
+      <div onClick="{{ goTo.contact }}" style="padding:10px 20px; border-radius:22px; background:#65D4D2; color:#041316; font-weight:800; font-size:14px; cursor:pointer; font-family:{{ t.headingFont }}; white-space:nowrap; box-shadow:0 0 24px rgba(101,212,210,.35); transition:transform .2s;" style-hover="transform:translateY(-2px);">{{ t.nav.cta }}</div>
     </div>
   </header>
 
   <!-- HOME -->
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
-    <section class="r-hero-sec hero">
-      <div class="wrap wrap--wide">
-        <div style="display:flex; flex-direction:column; align-items:flex-start; gap:22px; max-width:760px;">
-          <div class="hero-kicker fu">
-            <img src="assets/logo-turq.png" alt="">
-            <span>business operating platform</span>
-          </div>
-          <h1 class="r-hero-h1 h1 fu" style="font-family:{{ t.headingFont }}; animation-delay:.06s;">{{ t.hero.title }}</h1>
-          <p class="lede fu" style="max-width:600px; animation-delay:.12s;">{{ t.hero.sub }}</p>
-          <div class="hero-actions fu" style="animation-delay:.18s;">
-            <div onClick="{{ goTo.contact }}" class="btn btn--lg btn--primary" style="font-family:{{ t.headingFont }};">{{ t.hero.cta1 }}</div>
-            <div onClick="{{ goTo.services }}" class="btn btn--lg btn--secondary" style="font-family:{{ t.headingFont }};">{{ t.hero.cta2 }}</div>
-          </div>
+    <section class="r-hero-sec" style="position:relative; overflow:hidden; padding:90px 40px 60px;">
+      <div style="position:absolute; top:-120px; left:15%; width:480px; height:480px; border-radius:50%; background:radial-gradient(circle, rgba(101,212,210,.22), rgba(101,212,210,0) 70%); filter:blur(50px); animation:drift 14s ease-in-out infinite;"></div>
+      <div style="position:absolute; bottom:-160px; right:8%; width:560px; height:560px; border-radius:50%; background:radial-gradient(circle, rgba(15,111,122,.35), rgba(15,111,122,0) 70%); filter:blur(60px); animation:drift2 18s ease-in-out infinite;"></div>
+      
+    <div style="position:relative; max-width:1200px; margin:0 auto; display:flex; flex-direction:column; align-items:center; text-align:center; gap:24px;">
+        <div style="display:flex; align-items:center; gap:10px; padding:8px 18px; border-radius:22px; border:1px solid rgba(101,212,210,.35); background:rgba(101,212,210,.07); animation:fadeUp .7s ease both;">
+          <img src="assets/logo-turq.png" style="height:16px; width:auto;">
+          <span style="font-family:Poppins,sans-serif; font-size:13px; font-weight:600; letter-spacing:.06em; color:#65D4D2;">business operating platform</span>
+        </div>
+        <h1 class="r-hero-h1" style="font-family:{{ t.headingFont }}; font-size:64px; font-weight:900; line-height:1.28; max-width:900px; margin:0; padding-bottom:8px; background:linear-gradient(135deg, #E8FFFE 30%, #65D4D2); -webkit-background-clip:text; background-clip:text; color:transparent; animation:fadeUp .7s .12s ease both;">{{ t.hero.title }}</h1>
+        <p style="font-size:19px; line-height:1.8; max-width:620px; color:rgba(232,255,254,.75); margin:0; animation:fadeUp .7s .24s ease both;">{{ t.hero.sub }}</p>
+        <div style="display:flex; gap:14px; flex-wrap:wrap; justify-content:center; animation:fadeUp .7s .36s ease both;">
+          <div onClick="{{ goTo.contact }}" style="padding:16px 36px; border-radius:12px; background:#65D4D2; color:#041316; font-weight:800; font-size:16px; cursor:pointer; font-family:{{ t.headingFont }}; box-shadow:0 0 32px rgba(101,212,210,.4); transition:transform .2s;" style-hover="transform:translateY(-3px);">{{ t.hero.cta1 }}</div>
+          <div onClick="{{ goTo.services }}" style="padding:16px 36px; border-radius:12px; border:1px solid rgba(101,212,210,.4); color:#E8FFFE; font-weight:700; font-size:16px; cursor:pointer; font-family:{{ t.headingFont }}; transition:all .2s;" style-hover="background:rgba(101,212,210,.1);">{{ t.hero.cta2 }}</div>
         </div>
 
-        <div style="margin-top:clamp(36px,4.5vw,56px);">
-          <div class="r-chips fu" style="animation-delay:.24s;">
-            <div class="r-hchip r-hchip1">{{ t.hero.chip1 }}</div>
-            <div class="r-hchip r-hchip2">{{ t.hero.chip2 }}</div>
-            <div class="r-hchip r-hchip3">{{ t.hero.chip3 }}</div>
-          </div>
+        <div style="position:relative; margin-top:44px; width:100%; max-width:960px; animation:fadeUp .8s .5s ease both;">
+          <div class="r-hchip r-hchip1" style="position:absolute; top:-18px; {{ t.chipSide1 }}:-10px; z-index:3; padding:10px 16px; border-radius:12px; background:#083A3F; border:1px solid rgba(101,212,210,.45); font-size:13px; font-weight:700; color:#65D4D2; animation:floatY 5s ease-in-out infinite; box-shadow:0 10px 30px rgba(0,0,0,.4);">{{ t.hero.chip1 }}</div>
+          <div class="r-hchip r-hchip2" style="position:absolute; top:60px; {{ t.chipSide2 }}:-26px; z-index:3; padding:10px 16px; border-radius:12px; background:#083A3F; border:1px solid rgba(101,212,210,.45); font-size:13px; font-weight:700; color:#65D4D2; animation:floatY2 6s ease-in-out infinite; box-shadow:0 10px 30px rgba(0,0,0,.4);">{{ t.hero.chip2 }}</div>
+          <div class="r-hchip r-hchip3" style="position:absolute; bottom:40px; {{ t.chipSide1 }}:30px; z-index:3; padding:10px 16px; border-radius:12px; background:#083A3F; border:1px solid rgba(101,212,210,.45); font-size:13px; font-weight:700; color:#65D4D2; animation:floatY2 7s 1s ease-in-out infinite; box-shadow:0 10px 30px rgba(0,0,0,.4);">{{ t.hero.chip3 }}</div>
 
-          <div class="r-dash mock fu" style="margin-top:26px; text-align:{{ t.textAlign }}; animation-delay:.3s;">
-            <div class="mock-bar">
-              <div class="mock-dot"></div>
-              <div class="mock-dot"></div>
-              <div class="mock-dot"></div>
-              <span class="mock-url">my.velorci.com</span>
+          <div style="border-radius:20px; border:1px solid rgba(101,212,210,.3); background:#062024; overflow:hidden; animation:glowPulse 5s ease-in-out infinite; text-align:{{ t.textAlign }};" class="r-dash">
+            <div style="display:flex; align-items:center; gap:8px; padding:12px 18px; border-bottom:1px solid rgba(101,212,210,.15); background:rgba(4,19,22,.6);">
+              <div style="width:10px;height:10px;border-radius:50%;background:#0F6F7A;"></div>
+              <div style="width:10px;height:10px;border-radius:50%;background:#0F6F7A99;"></div>
+              <div style="width:10px;height:10px;border-radius:50%;background:#0F6F7A55;"></div>
+              <span style="font-family:monospace; font-size:12px; color:rgba(232,255,254,.45); margin:0 10px;">my.velorci.com</span>
             </div>
             <div style="display:flex;" class="r-dash-body">
-              <div class="r-dash-side" style="width:186px; flex-shrink:0; border-inline-end:1px solid var(--line); padding:16px 12px; display:flex; flex-direction:column; gap:2px; background:var(--bg);">
-                <div style="display:flex; align-items:center; gap:8px; padding:0 8px 14px;">
-                  <img src="assets/logo-turq.png" style="height:15px;width:auto;" alt="">
-                  <span style="font-family:Poppins,sans-serif;font-weight:700;font-size:12.5px;color:var(--fg);">velorci</span>
+              <div style="width:190px; flex-shrink:0; border-inline-end:1px solid rgba(101,212,210,.12); padding:18px 14px; display:flex; flex-direction:column; gap:6px; background:rgba(4,19,22,.5);" class="r-dash-side">
+                <div style="display:flex; align-items:center; gap:8px; padding:0 8px 12px;">
+                  <img src="assets/logo-turq.png" style="height:16px;width:auto;">
+                  <span style="font-family:Poppins,sans-serif;font-weight:700;font-size:13px;color:#E8FFFE;">velorci</span>
                 </div>
                 <sc-for list="{{ t.dash.menu }}" as="mi" hint-placeholder-count="6">
-                  <div class="dash-nav {{ mi.cls }}">{{ mi.label }}</div>
+                  <div style="padding:9px 12px; border-radius:8px; font-size:12.5px; font-weight:600; color:{{ mi.color }}; background:{{ mi.bg }};">{{ mi.label }}</div>
                 </sc-for>
               </div>
-              <div style="flex:1; min-width:0; padding:18px; display:flex; flex-direction:column; gap:14px;">
-                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;">
+              <div style="flex:1; padding:20px; display:flex; flex-direction:column; gap:16px;">
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px;">
                   <sc-for list="{{ dashStats }}" as="st" hint-placeholder-count="3">
-                    <div class="kpi">
-                      <span class="kpi__l">{{ st.label }}</span>
-                      <span class="kpi__v">{{ st.value }}</span>
+                    <div style="padding:14px; border-radius:12px; background:rgba(101,212,210,.06); border:1px solid rgba(101,212,210,.18); display:flex; flex-direction:column; gap:4px;">
+                      <span style="font-size:11.5px; color:rgba(232,255,254,.55);">{{ st.label }}</span>
+                      <span style="font-family:Poppins,sans-serif; font-size:24px; font-weight:800; color:#65D4D2;">{{ st.value }}</span>
                     </div>
                   </sc-for>
                 </div>
-                <div style="display:flex; gap:10px;" class="r-dash-panels">
-                  <div style="flex:1.35; min-width:0; padding:15px; border-radius:var(--r2); background:var(--surface-2);">
-                    <div style="font-size:11.5px; color:var(--fg-4); margin-bottom:14px;">{{ t.dash.chartTitle }}</div>
-                    <div style="display:flex; align-items:flex-end; gap:7px; height:86px;">
+                <div style="display:flex; gap:12px;" class="r-dash-panels">
+                  <div style="flex:1.3; padding:16px; border-radius:12px; background:rgba(101,212,210,.05); border:1px solid rgba(101,212,210,.15);">
+                    <div style="font-size:12px; color:rgba(232,255,254,.55); margin-bottom:12px;">{{ t.dash.chartTitle }}</div>
+                    <div style="display:flex; align-items:flex-end; gap:8px; height:90px;">
                       <sc-for list="{{ t.dash.bars }}" as="b" hint-placeholder-count="7">
-                        <div style="flex:1; height:{{ b.h }}; border-radius:2px; background:rgba(101,212,210,.55); transform-origin:bottom; animation:barGrow .7s {{ b.delay }} cubic-bezier(.2,.8,.2,1) both;"></div>
+                        <div style="flex:1; height:{{ b.h }}; border-radius:5px 5px 0 0; background:linear-gradient(180deg, #65D4D2, #0F6F7A); transform-origin:bottom; animation:barGrow .9s {{ b.delay }} cubic-bezier(.2,.8,.2,1) both;"></div>
                       </sc-for>
                     </div>
                   </div>
-                  <div style="flex:1; min-width:0; padding:15px; border-radius:var(--r2); background:var(--surface-2); display:flex; flex-direction:column; gap:8px;">
-                    <div style="font-size:11.5px; color:var(--fg-4);">{{ t.dash.ordersTitle }}</div>
+                  <div style="flex:1; padding:16px; border-radius:12px; background:rgba(101,212,210,.05); border:1px solid rgba(101,212,210,.15); display:flex; flex-direction:column; gap:9px;">
+                    <div style="font-size:12px; color:rgba(232,255,254,.55);">{{ t.dash.ordersTitle }}</div>
                     <sc-for list="{{ t.dash.orders }}" as="o" hint-placeholder-count="3">
-                      <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:7px 0; border-top:1px solid var(--line);">
-                        <span style="font-size:12px; color:var(--fg-2);">{{ o.name }}</span>
-                        <span class="chip chip--quiet"><span style="width:5px;height:5px;border-radius:50%;background:{{ o.pill }};"></span>{{ o.stage }}</span>
+                      <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:8px 10px; border-radius:8px; background:rgba(4,19,22,.5);">
+                        <span style="font-size:12px; color:#E8FFFE;">{{ o.name }}</span>
+                        <span style="font-size:10.5px; font-weight:700; padding:3px 9px; border-radius:10px; color:#041316; background:{{ o.pill }};">{{ o.stage }}</span>
                       </div>
                     </sc-for>
                   </div>
@@ -542,95 +249,94 @@
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </div></section>
 
-    <div class="mq">
-      <div class="mq__track">
+    <div style="border-top:1px solid rgba(101,212,210,.14); border-bottom:1px solid rgba(101,212,210,.14); overflow:hidden; padding:16px 0; background:rgba(8,58,63,.25);">
+      <div style="display:flex; gap:36px; width:max-content; animation:marquee 26s linear infinite;">
         <sc-for list="{{ marqueeItems }}" as="mq" hint-placeholder-count="16">
-          <div class="mq__item">
-            <span style="font-family:{{ t.headingFont }};">{{ mq }}</span>
-            <div class="mq__sep"></div>
+          <div style="display:flex; align-items:center; gap:36px;">
+            <span style="font-family:{{ t.headingFont }}; font-size:15px; font-weight:700; color:rgba(232,255,254,.6); white-space:nowrap;">{{ mq }}</span>
+            <div style="width:8px; height:8px; background:#65D4D2; transform:rotate(45deg); flex-shrink:0;"></div>
           </div>
         </sc-for>
       </div>
     </div>
 
     <!-- PLATFORM PILLARS — TABBED SHOWCASE -->
-    <section class="sec">
-      <div class="wrap">
+    <section style="position:relative; padding:90px 40px; overflow:hidden;">
+      <div style="position:absolute; top:-80px; left:50%; width:760px; height:760px; margin-left:-380px; background:radial-gradient(circle, rgba(101,212,210,.09), rgba(101,212,210,0) 62%); pointer-events:none;"></div>
+      <div style="position:relative; max-width:1160px; margin:0 auto;">
 
-        <div class="shead">
-          <h2 class="h2" style="font-family:{{ t.headingFont }};">{{ t.pillars.title }}</h2>
-          <p class="lede">{{ t.pillars.sub }}</p>
-        </div>
+        <h2 style="font-family:{{ t.headingFont }}; font-size:38px; font-weight:800; text-align:center; margin:0 0 12px; color:#E8FFFE;">{{ t.pillars.title }}</h2>
+        <p style="text-align:center; color:rgba(232,255,254,.6); font-size:16px; line-height:1.8; margin:0 auto 34px; max-width:600px;">{{ t.pillars.sub }}</p>
 
         <div class="r-shell">
 
-        <div class="r-tabstrip">
+        <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin-bottom:24px;" class="r-tabstrip">
           <sc-for list="{{ pillarTabs }}" as="tb" hint-placeholder-count="8">
-            <div onClick="{{ tb.onClick }}" class="ptab {{ tb.cls }}" style="font-family:{{ t.headingFont }};">{{ tb.label }}</div>
+            <div onClick="{{ tb.onClick }}" style="padding:11px 20px; border-radius:14px; font-family:{{ t.headingFont }}; font-size:14.5px; font-weight:700; cursor:pointer; color:{{ tb.fg }}; background:{{ tb.bg }}; border:{{ tb.border }}; box-shadow:{{ tb.shadow }}; transition:all .22s;" style-hover="border-color:rgba(101,212,210,.55);">{{ tb.label }}</div>
           </sc-for>
         </div>
 
         <sc-for list="{{ pillarRows }}" as="rw" hint-placeholder-count="8">
-          <div onClick="{{ rw.onClick }}" class="r-row {{ rw.cls }}" style="order:{{ rw.order }};">
-            <div class="isl {{ rw.iconCls }}">
-              <svg viewBox="0 0 24 24" fill="none" stroke="{{ rw.iconFg }}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="{{ rw.d }}"></path></svg>
+          <div onClick="{{ rw.onClick }}" class="r-row" style="order:{{ rw.order }}; display:none; align-items:center; gap:13px; padding:14px 16px; margin-bottom:8px; border-radius:15px; cursor:pointer; background:{{ rw.bg }}; border:{{ rw.border }}; box-shadow:{{ rw.shadow }}; transition:all .22s;">
+            <div style="width:40px; height:40px; flex:none; border-radius:12px; background:{{ rw.iconBg }}; display:flex; align-items:center; justify-content:center;">
+              <svg viewBox="0 0 24 24" style="width:20px; height:20px; display:block;" fill="none" stroke="{{ rw.iconFg }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{ rw.d }}"></path></svg>
             </div>
             <div style="flex:1; min-width:0;">
-              <div style="font-family:{{ t.headingFont }}; font-weight:700; font-size:14.5px; color:{{ rw.fg }};">{{ rw.label }}</div>
-              <div style="font-size:12.5px; line-height:1.6; color:var(--fg-3); margin-top:3px;">{{ rw.hint }}</div>
+              <div style="font-family:{{ t.headingFont }}; font-weight:700; font-size:15px; color:{{ rw.fg }};">{{ rw.label }}</div>
+              <div style="font-size:12.5px; line-height:1.55; color:rgba(232,255,254,.5); margin-top:4px;">{{ rw.hint }}</div>
             </div>
-            <svg viewBox="0 0 24 24" style="width:15px; height:15px; flex:none; transform:rotate({{ rw.rotate }}); transition:transform .2s;" fill="none" stroke="{{ rw.chevron }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5l6 6 6-6"></path></svg>
+            <svg viewBox="0 0 24 24" style="width:16px; height:16px; flex:none; transform:rotate({{ rw.rotate }}); transition:transform .22s;" fill="none" stroke="{{ rw.chevron }}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5l6 6 6-6"></path></svg>
           </div>
         </sc-for>
 
-        <div style="order:{{ activePillar.order }};" class="pillar-grid {{ pillarClosedClass }}">
+        <div style="order:{{ activePillar.order }}; display:grid; grid-template-columns:1fr 330px; gap:26px; align-items:start;" class="r-pillar {{ pillarClosedClass }}">
 
           <!-- ====== ILLUSTRATED PANEL ====== -->
-          <div style="min-width:0;">
-            <div class="pmock" style="direction:{{ t.dir }};">
-            <div class="pmock__body">
+          <div style="position:relative; min-width:0;">
+            <div style="position:absolute; inset:12% 4% -7%; border-radius:48px; background:radial-gradient(58% 58% at 50% 62%, rgba(101,212,210,.26), rgba(101,212,210,0) 72%); filter:blur(50px); pointer-events:none;"></div>
+            <div style="position:relative; border-radius:22px; border:1px solid rgba(101,212,210,.25); background:linear-gradient(180deg, rgba(8,58,63,.5), rgba(4,19,22,.72)); box-shadow:0 30px 80px rgba(0,0,0,.5); direction:{{ t.dir }};">
+            <div style="padding:26px; min-height:400px;">
             <div>
 
               <!-- ---------- STORE ---------- -->
               <sc-if value="{{ isPillarStore }}" hint-placeholder-val="{{ true }}">
-                <div style="display:flex; flex-direction:column; gap:14px;">
+                <div style="display:flex; flex-direction:column; gap:16px;">
 
-                  <div style="display:flex; align-items:center; gap:11px; padding-bottom:14px; border-bottom:1px solid var(--line);">
-                    <div class="isl">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="#65D4D2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h16M5 8l1-4h12l1 4M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8M9.5 20v-6h5v6"></path></svg>
+                  <div style="display:flex; align-items:center; gap:12px; padding-bottom:14px; border-bottom:1px solid rgba(101,212,210,.18);">
+                    <div style="width:38px; height:38px; flex:none; border-radius:12px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(101,212,210,.25);">
+                      <svg viewBox="0 0 24 24" style="width:19px; height:19px;" fill="none" stroke="#041316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h16M5 8l1-4h12l1 4M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8M9.5 20v-6h5v6"></path></svg>
                     </div>
-                    <div style="display:flex; flex-direction:column; min-width:0; gap:2px;">
-                      <span style="font-family:{{ t.headingFont }}; font-size:14.5px; font-weight:700; color:var(--fg);">{{ t.pillars.store.shop }}</span>
-                      <span style="font-size:11.5px; color:var(--fg-4); font-family:Poppins,sans-serif; direction:ltr;">yourstore.com</span>
+                    <div style="display:flex; flex-direction:column; min-width:0;">
+                      <span style="font-family:{{ t.headingFont }}; font-size:15px; font-weight:800; color:#E8FFFE;">{{ t.pillars.store.shop }}</span>
+                      <span style="font-size:11.5px; color:#65D4D2; font-family:Poppins,sans-serif; direction:ltr;">yourstore.com</span>
                     </div>
                   </div>
 
-                  <div class="pfeat fu" style="display:flex; align-items:center; gap:18px; animation-delay:.1s;">
-                    <svg viewBox="0 0 120 100" style="width:98px; height:auto; flex:none;">
-                      <ellipse cx="60" cy="90" rx="34" ry="4" fill="#000" opacity=".3"></ellipse>
-                      <path d="M20 84c-7 0-12-5.5-10.6-12.6C12.6 55 20 42.5 32 35.5c17-10 39-10 56 0 12 7 19.4 19.5 22.6 35.9C112 78.5 107 84 100 84z" fill="rgba(232,255,254,.16)"></path>
-                      <path d="M20 84c-7 0-12-5.5-10.6-12.6C12.6 55 20 42.5 32 35.5c17-10 39-10 56 0 12 7 19.4 19.5 22.6 35.9C112 78.5 107 84 100 84z" fill="rgba(101,212,210,.26)" style="clip-path:inset(0 0 52% 0);"></path>
+                  <div style="display:flex; align-items:center; gap:18px; padding:20px 22px; border-radius:18px; background:rgba(101,212,210,.07); border:1px solid rgba(101,212,210,.22); animation:fadeUp .6s .15s ease both;">
+                    <svg viewBox="0 0 120 100" style="width:110px; height:auto; flex:none;">
+                      <ellipse cx="60" cy="90" rx="34" ry="5" fill="#000" opacity=".28"></ellipse>
+                      <path d="M20 84c-7 0-12-5.5-10.6-12.6C12.6 55 20 42.5 32 35.5c17-10 39-10 56 0 12 7 19.4 19.5 22.6 35.9C112 78.5 107 84 100 84z" fill="rgba(232,255,254,.22)"></path>
+                      <path d="M20 84c-7 0-12-5.5-10.6-12.6C12.6 55 20 42.5 32 35.5c17-10 39-10 56 0 12 7 19.4 19.5 22.6 35.9C112 78.5 107 84 100 84z" fill="rgba(101,212,210,.3)" style="clip-path:inset(0 0 52% 0);"></path>
                     </svg>
                     <div style="flex:1; min-width:0;">
-                      <div style="font-family:{{ t.headingFont }}; font-size:16px; font-weight:700; color:var(--fg); line-height:1.4;">{{ t.pillars.store.heroName }}</div>
-                      <div class="num" style="font-size:19px; color:var(--fg); margin-top:6px;">{{ t.pillars.store.heroPrice }}</div>
-                      <span class="btn btn--sm btn--primary" style="margin-top:14px; font-family:{{ t.headingFont }};">{{ t.pillars.store.buy }}</span>
+                      <div style="font-family:{{ t.headingFont }}; font-size:17px; font-weight:800; color:#E8FFFE; line-height:1.4;">{{ t.pillars.store.heroName }}</div>
+                      <div style="font-family:Poppins,sans-serif; font-size:20px; font-weight:800; color:#65D4D2; margin-top:8px; direction:ltr; unicode-bidi:isolate;">{{ t.pillars.store.heroPrice }}</div>
+                      <span style="display:inline-block; margin-top:13px; padding:10px 24px; border-radius:22px; background:#65D4D2; color:#041316; font-family:{{ t.headingFont }}; font-weight:800; font-size:13.5px; box-shadow:0 0 22px rgba(101,212,210,.3);">{{ t.pillars.store.buy }}</span>
                     </div>
                   </div>
 
-                  <div class="prow fu" style="animation-delay:.2s;">
-                    <svg viewBox="0 0 24 24" style="width:19px; height:19px; flex:none;" fill="none" stroke="#65D4D2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 6h16l-1.7 8.6a2 2 0 0 1-2 1.6H9a2 2 0 0 1-2-1.6L4.6 4H2M9 20.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM17 20.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"></path></svg>
-                    <span style="flex:1; font-size:13.5px; line-height:1.6; color:var(--fg-2);">{{ t.pillars.store.cartLine }}</span>
-                    <span class="num" style="flex:none; min-width:24px; height:24px; border-radius:50%; background:var(--accent); color:var(--accent-ink); font-size:12px; display:flex; align-items:center; justify-content:center;">2</span>
+                  <div style="display:flex; align-items:center; gap:12px; padding:15px 20px; border-radius:16px; background:rgba(232,255,254,.05); border:1px solid rgba(232,255,254,.09); animation:fadeUp .6s .5s ease both;">
+                    <svg viewBox="0 0 24 24" style="width:20px; height:20px; flex:none;" fill="none" stroke="#65D4D2" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 6h16l-1.7 8.6a2 2 0 0 1-2 1.6H9a2 2 0 0 1-2-1.6L4.6 4H2M9 20.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM17 20.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"></path></svg>
+                    <span style="flex:1; font-size:14px; line-height:1.6; color:rgba(232,255,254,.8);">{{ t.pillars.store.cartLine }}</span>
+                    <span style="flex:none; width:26px; height:26px; border-radius:50%; background:#65D4D2; color:#041316; font-family:Poppins,sans-serif; font-size:13px; font-weight:800; display:flex; align-items:center; justify-content:center; animation:pop .5s .9s both;">2</span>
                   </div>
 
-                  <div style="display:flex; flex-wrap:wrap; gap:7px;" class="fu">
+                  <div style="display:flex; flex-wrap:wrap; gap:8px; animation:fadeUp .6s .75s ease both;">
                     <sc-for list="{{ t.pillars.store.tools }}" as="tl" hint-placeholder-count="11">
-                      <span class="tag">
-                        <svg viewBox="0 0 24 24" style="width:12px; height:12px; flex:none;" fill="none" stroke="#65D4D2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ tl.d }}"></path></svg>{{ tl.label }}
+                      <span style="display:inline-flex; align-items:center; gap:7px; padding:8px 14px; border-radius:20px; background:rgba(101,212,210,.09); border:1px solid rgba(101,212,210,.24); font-size:12.5px; font-weight:700; color:rgba(232,255,254,.82); white-space:nowrap;">
+                        <svg viewBox="0 0 24 24" style="width:13px; height:13px; flex:none;" fill="none" stroke="#65D4D2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ tl.d }}"></path></svg>{{ tl.label }}
                       </span>
                     </sc-for>
                   </div>
@@ -639,37 +345,37 @@
               </sc-if>
               <!-- ---------- ORDERS ---------- -->
               <sc-if value="{{ isPillarOrders }}" hint-placeholder-val="{{ false }}">
-                <div style="display:flex; flex-direction:column; gap:14px;">
-                  <div style="display:flex; align-items:center; gap:11px; padding-bottom:14px; border-bottom:1px solid var(--line);">
-                    <div class="isl">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="#65D4D2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8a2 2 0 0 1 2 2v14.5l-6-3-6 3V6a2 2 0 0 1 2-2z"></path></svg>
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                  <div style="display:flex; align-items:center; gap:12px; padding-bottom:14px; border-bottom:1px solid rgba(101,212,210,.18);">
+                    <div style="width:38px; height:38px; flex:none; border-radius:12px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(101,212,210,.25);">
+                      <svg viewBox="0 0 24 24" style="width:19px; height:19px;" fill="none" stroke="#041316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8a2 2 0 0 1 2 2v14.5l-6-3-6 3V6a2 2 0 0 1 2-2z"></path></svg>
                     </div>
-                    <div style="display:flex; flex-direction:column; min-width:0; gap:2px;">
-                      <span style="font-family:{{ t.headingFont }}; font-size:14.5px; font-weight:700; color:var(--fg);">{{ t.pillars.orders.title }}</span>
-                      <span style="font-size:11.5px; color:var(--fg-4);">{{ t.pillars.orders.headSub }}</span>
+                    <div style="display:flex; flex-direction:column; min-width:0;">
+                      <span style="font-family:{{ t.headingFont }}; font-size:15px; font-weight:800; color:#E8FFFE;">{{ t.pillars.orders.title }}</span>
+                      <span style="font-size:11.5px; color:#65D4D2;">{{ t.pillars.orders.headSub }}</span>
                     </div>
                   </div>
 
                   <sc-for list="{{ t.pillars.orders.list }}" as="od" hint-placeholder-count="2">
-                    <div class="pfeat fu" style="animation-delay:{{ od.delay }};">
+                    <div style="padding:20px 22px; border-radius:18px; background:rgba(101,212,210,.07); border:1px solid rgba(101,212,210,.22); animation:fadeUp .6s {{ od.delay }} ease both;">
                       <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
-                        <span class="chip" style="background:{{ od.stateBg }}; color:{{ od.stateFg }};">{{ od.state }}</span>
-                        <span class="num" style="font-size:12px; font-weight:600; color:var(--fg-4);">{{ od.inv }}</span>
+                        <span style="padding:5px 14px; border-radius:20px; background:{{ od.stateBg }}; color:{{ od.stateFg }}; font-size:12px; font-weight:800;">{{ od.state }}</span>
+                        <span style="font-family:Poppins,sans-serif; font-size:12.5px; font-weight:700; color:rgba(232,255,254,.5); direction:ltr; unicode-bidi:isolate;">{{ od.inv }}</span>
                       </div>
-                      <div class="num" style="font-size:26px; color:var(--fg); margin-top:10px;">{{ od.amount }}</div>
-                      <div style="display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin-top:12px;">
-                        <span style="display:inline-flex; align-items:center; gap:7px; font-size:13px; color:var(--fg-2);">
-                          <span style="width:6px; height:6px; border-radius:50%; background:#3AD07A; animation:livePulse 2.4s infinite;"></span>{{ od.customer }}
+                      <div style="font-family:Poppins,sans-serif; font-size:30px; font-weight:800; color:#65D4D2; margin-top:12px; direction:ltr; unicode-bidi:isolate;">{{ od.amount }}</div>
+                      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:12px;">
+                        <span style="display:inline-flex; align-items:center; gap:7px; font-size:13.5px; color:rgba(232,255,254,.8);">
+                          <span style="width:8px; height:8px; border-radius:50%; background:#3ad07a; animation:livePulse 2.2s infinite;"></span>{{ od.customer }}
                         </span>
-                        <span class="chip chip--quiet">{{ od.area }}</span>
-                        <span class="chip chip--quiet">{{ od.pay }}</span>
+                        <span style="padding:4px 12px; border-radius:16px; background:rgba(232,255,254,.06); border:1px solid rgba(232,255,254,.1); font-size:12px; color:rgba(232,255,254,.65);">{{ od.area }}</span>
+                        <span style="padding:4px 12px; border-radius:16px; background:rgba(232,255,254,.06); border:1px solid rgba(232,255,254,.1); font-size:12px; color:rgba(232,255,254,.65);">{{ od.pay }}</span>
                       </div>
                     </div>
                   </sc-for>
 
-                  <div style="display:flex; gap:7px; flex-wrap:wrap;" class="fu">
+                  <div style="display:flex; gap:9px; flex-wrap:wrap; animation:fadeUp .6s .6s ease both;">
                     <sc-for list="{{ t.pillars.orders.stages }}" as="sg" hint-placeholder-count="4">
-                      <span class="tag {{ sg.cls }}">{{ sg.label }}<span class="num" style="font-weight:600; opacity:.6;">{{ sg.count }}</span></span>
+                      <span style="display:inline-flex; align-items:center; gap:7px; padding:8px 15px; border-radius:20px; background:{{ sg.chipBg }}; border:1px solid {{ sg.chipBorder }}; font-size:12.5px; font-weight:700; color:{{ sg.chipFg }};">{{ sg.label }}<span style="font-family:Poppins,sans-serif; opacity:.7;">{{ sg.count }}</span></span>
                     </sc-for>
                   </div>
                 </div>
@@ -677,34 +383,34 @@
 
               <!-- ---------- INVENTORY ---------- -->
               <sc-if value="{{ isPillarStock }}" hint-placeholder-val="{{ false }}">
-                <div style="display:flex; flex-direction:column; gap:14px;">
-                  <div style="display:flex; align-items:center; gap:11px; padding-bottom:14px; border-bottom:1px solid var(--line);">
-                    <div class="isl">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="#65D4D2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8l8.4 4.5v9.4L12 21.2l-8.4-4.5V7.3zM3.6 7.3L12 11.8l8.4-4.5M12 11.8v9.4"></path></svg>
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                  <div style="display:flex; align-items:center; gap:12px; padding-bottom:14px; border-bottom:1px solid rgba(101,212,210,.18);">
+                    <div style="width:38px; height:38px; flex:none; border-radius:12px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(101,212,210,.25);">
+                      <svg viewBox="0 0 24 24" style="width:19px; height:19px;" fill="none" stroke="#041316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8l8.4 4.5v9.4L12 21.2l-8.4-4.5V7.3zM3.6 7.3L12 11.8l8.4-4.5M12 11.8v9.4"></path></svg>
                     </div>
-                    <div style="display:flex; flex-direction:column; min-width:0; gap:2px;">
-                      <span style="font-family:{{ t.headingFont }}; font-size:14.5px; font-weight:700; color:var(--fg);">{{ t.pillars.stock.title }}</span>
-                      <span style="font-size:11.5px; color:var(--fg-4);">{{ t.pillars.stock.headSub }}</span>
+                    <div style="display:flex; flex-direction:column; min-width:0;">
+                      <span style="font-family:{{ t.headingFont }}; font-size:15px; font-weight:800; color:#E8FFFE;">{{ t.pillars.stock.title }}</span>
+                      <span style="font-size:11.5px; color:#65D4D2;">{{ t.pillars.stock.headSub }}</span>
                     </div>
                   </div>
 
-                  <div class="fu" style="display:flex; align-items:center; gap:16px; padding:18px 20px; border-radius:var(--r2); background:rgba(228,87,46,.09); border-inline-start:2px solid var(--danger); animation-delay:.1s;">
-                    <span class="num" style="font-size:30px; color:#F0673E; line-height:1;">28</span>
-                    <span style="flex:1; font-size:13.5px; line-height:1.65; color:var(--fg-2);">{{ t.pillars.stock.gapLine }}</span>
+                  <div style="display:flex; align-items:center; gap:16px; padding:20px 22px; border-radius:18px; background:rgba(228,87,46,.1); border:1px solid rgba(228,87,46,.32); animation:fadeUp .6s .15s ease both;">
+                    <span style="font-family:Poppins,sans-serif; font-size:34px; font-weight:800; color:#F0673E; line-height:1; animation:pop .6s .3s both;">28</span>
+                    <span style="flex:1; font-size:14px; line-height:1.65; color:rgba(232,255,254,.82);">{{ t.pillars.stock.gapLine }}</span>
                   </div>
 
                   <sc-for list="{{ t.pillars.stock.rows }}" as="rw" hint-placeholder-count="3">
-                    <div class="prow fu" style="animation-delay:{{ rw.delay }};">
-                      <svg viewBox="0 0 120 100" style="width:48px; height:auto; flex:none;">
+                    <div style="display:flex; align-items:center; gap:15px; padding:14px 18px; border-radius:16px; background:rgba(232,255,254,.05); border:1px solid rgba(232,255,254,.09); animation:fadeUp .6s {{ rw.delay }} ease both;">
+                      <svg viewBox="0 0 120 100" style="width:52px; height:auto; flex:none;">
                         <ellipse cx="60" cy="90" rx="26" ry="4" fill="#000" opacity=".3"></ellipse>
-                        <path d="{{ rw.d }}" fill="rgba(232,255,254,.16)"></path>
-                        <path d="{{ rw.d }}" fill="rgba(101,212,210,.26)" style="clip-path:inset(0 0 52% 0);"></path>
+                        <path d="{{ rw.d }}" fill="rgba(232,255,254,.22)"></path>
+                        <path d="{{ rw.d }}" fill="rgba(101,212,210,.3)" style="clip-path:inset(0 0 52% 0);"></path>
                       </svg>
                       <div style="flex:1; min-width:0;">
-                        <div style="font-size:14px; font-weight:600; color:var(--fg);">{{ rw.name }}</div>
-                        <div style="font-size:12px; color:var(--fg-4); margin-top:3px;">{{ rw.type }}</div>
+                        <div style="font-size:14.5px; font-weight:700; color:#E8FFFE;">{{ rw.name }}</div>
+                        <div style="font-size:12px; color:rgba(232,255,254,.5); margin-top:4px;">{{ rw.type }}</div>
                       </div>
-                      <span class="num" style="flex:none; font-size:15px; color:var(--fg);">{{ rw.price }}</span>
+                      <span style="flex:none; font-family:Poppins,sans-serif; font-size:16px; font-weight:800; color:#65D4D2; direction:ltr; unicode-bidi:isolate;">{{ rw.price }}</span>
                     </div>
                   </sc-for>
                 </div>
@@ -712,64 +418,64 @@
 
               <!-- ---------- WHATSAPP ---------- -->
               <sc-if value="{{ isPillarWa }}" hint-placeholder-val="{{ false }}">
-                <div style="display:flex; flex-direction:column; gap:12px;">
-                  <div style="display:flex; align-items:center; gap:11px; padding-bottom:14px; border-bottom:1px solid var(--line);">
-                    <div class="isl">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="#65D4D2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.5 7.3L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z"></path></svg>
+                <div style="display:flex; flex-direction:column; gap:14px;">
+                  <div style="display:flex; align-items:center; gap:12px; padding-bottom:14px; border-bottom:1px solid rgba(101,212,210,.18);">
+                    <div style="width:38px; height:38px; flex:none; border-radius:12px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(101,212,210,.25);">
+                      <svg viewBox="0 0 24 24" style="width:19px; height:19px;" fill="none" stroke="#041316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.5 7.3L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z"></path></svg>
                     </div>
-                    <div style="display:flex; flex-direction:column; min-width:0; gap:2px;">
-                      <span style="font-family:{{ t.headingFont }}; font-size:14.5px; font-weight:700; color:var(--fg);">{{ t.pillars.wa.inbox }}</span>
-                      <span style="font-size:11.5px; color:var(--fg-4);">{{ t.pillars.wa.badge }}</span>
+                    <div style="display:flex; flex-direction:column; min-width:0;">
+                      <span style="font-family:{{ t.headingFont }}; font-size:15px; font-weight:800; color:#E8FFFE;">{{ t.pillars.wa.inbox }}</span>
+                      <span style="font-size:11.5px; color:#65D4D2;">{{ t.pillars.wa.badge }}</span>
                     </div>
                   </div>
 
                   <sc-for list="{{ t.pillars.wa.chats3 }}" as="ch" hint-placeholder-count="3">
-                    <div class="prow fu" style="animation-delay:{{ ch.delay }};">
-                      <div style="width:36px; height:36px; flex:none; border-radius:50%; background:{{ ch.avatarBg }}; display:flex; align-items:center; justify-content:center; font-family:{{ t.headingFont }}; font-weight:700; font-size:14px; color:#fff;">{{ ch.initial }}</div>
+                    <div style="display:flex; align-items:center; gap:13px; padding:14px 18px; border-radius:16px; background:rgba(232,255,254,.05); border:1px solid rgba(232,255,254,.09); animation:fadeUp .6s {{ ch.delay }} ease both;">
+                      <div style="width:40px; height:40px; flex:none; border-radius:50%; background:{{ ch.avatarBg }}; display:flex; align-items:center; justify-content:center; font-family:{{ t.headingFont }}; font-weight:800; font-size:15px; color:#fff;">{{ ch.initial }}</div>
                       <div style="flex:1; min-width:0;">
                         <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                          <span style="font-size:13.5px; font-weight:600; color:var(--fg);">{{ ch.name }}</span>
-                          <span class="chip chip--accent">{{ ch.tag }}</span>
+                          <span style="font-size:14px; font-weight:700; color:#E8FFFE;">{{ ch.name }}</span>
+                          <span style="padding:2px 9px; border-radius:12px; background:rgba(101,212,210,.14); border:1px solid rgba(101,212,210,.32); color:#65D4D2; font-size:10.5px; font-weight:700;">{{ ch.tag }}</span>
                         </div>
-                        <div style="font-size:12.5px; line-height:1.6; color:var(--fg-3); margin-top:3px;">{{ ch.msg }}</div>
+                        <div style="font-size:12.5px; line-height:1.6; color:rgba(232,255,254,.55); margin-top:4px;">{{ ch.msg }}</div>
                       </div>
                     </div>
                   </sc-for>
 
-                  <div style="display:flex; align-items:center; gap:10px;" class="fu">
-                    <div style="width:36px; height:36px; flex:none; border-radius:50%; background:var(--surface-3); border:1px solid var(--line-2); display:flex; align-items:center; justify-content:center; font-family:Poppins,sans-serif; font-weight:700; font-size:12px; color:var(--accent);">AI</div>
-                    <div style="display:flex; align-items:center; gap:5px; padding:13px 16px; border-radius:var(--r2) var(--r2) var(--r2) 3px; background:var(--surface-2);">
-                      <span style="width:6px; height:6px; border-radius:50%; background:#65D4D2; animation:blink 1.3s 0s infinite;"></span>
-                      <span style="width:6px; height:6px; border-radius:50%; background:#65D4D2; animation:blink 1.3s .2s infinite;"></span>
-                      <span style="width:6px; height:6px; border-radius:50%; background:#65D4D2; animation:blink 1.3s .4s infinite;"></span>
+                  <div style="display:flex; align-items:center; gap:11px; animation:fadeUp .6s .75s ease both;">
+                    <div style="width:40px; height:40px; flex:none; border-radius:50%; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; font-family:Poppins,sans-serif; font-weight:800; font-size:13px; color:#041316;">AI</div>
+                    <div style="display:flex; align-items:center; gap:6px; padding:15px 19px; border-radius:16px 16px 16px 5px; background:rgba(101,212,210,.16); border:1px solid rgba(101,212,210,.3);">
+                      <span style="width:7px; height:7px; border-radius:50%; background:#65D4D2; animation:blink 1.2s 0s infinite;"></span>
+                      <span style="width:7px; height:7px; border-radius:50%; background:#65D4D2; animation:blink 1.2s .2s infinite;"></span>
+                      <span style="width:7px; height:7px; border-radius:50%; background:#65D4D2; animation:blink 1.2s .4s infinite;"></span>
                     </div>
-                    <span style="font-size:12.5px; color:var(--fg-4);">{{ t.pillars.wa.typing }}</span>
+                    <span style="font-size:12.5px; color:rgba(232,255,254,.55);">{{ t.pillars.wa.typing }}</span>
                   </div>
                 </div>
               </sc-if>
               <!-- ---------- AI AGENT ---------- -->
               <sc-if value="{{ isPillarAi }}" hint-placeholder-val="{{ false }}">
-                <div style="display:flex; flex-direction:column; gap:14px;">
-                  <div style="display:flex; align-items:center; gap:11px; padding-bottom:14px; border-bottom:1px solid var(--line);">
-                    <div class="isl">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="#65D4D2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.9 4.9 1.9-4.9 1.9L12 16.6l-1.9-4.9L5.2 9.8l4.9-1.9z"></path></svg>
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                  <div style="display:flex; align-items:center; gap:12px; padding-bottom:14px; border-bottom:1px solid rgba(101,212,210,.18);">
+                    <div style="width:38px; height:38px; flex:none; border-radius:12px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(101,212,210,.25);">
+                      <svg viewBox="0 0 24 24" style="width:19px; height:19px;" fill="none" stroke="#041316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.9 4.9 1.9-4.9 1.9L12 16.6l-1.9-4.9L5.2 9.8l4.9-1.9z"></path></svg>
                     </div>
-                    <div style="display:flex; flex-direction:column; min-width:0; gap:2px;">
-                      <span style="font-family:{{ t.headingFont }}; font-size:14.5px; font-weight:700; color:var(--fg);">{{ t.pillars.ai.agentName }}</span>
-                      <span style="display:inline-flex; align-items:center; gap:7px; font-size:11.5px; color:#3AD07A; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#3AD07A; animation:livePulse 2.4s infinite;"></span>{{ t.pillars.ai.running }}</span>
+                    <div style="display:flex; flex-direction:column; min-width:0;">
+                      <span style="font-family:{{ t.headingFont }}; font-size:15px; font-weight:800; color:#E8FFFE;">{{ t.pillars.ai.agentName }}</span>
+                      <span style="display:inline-flex; align-items:center; gap:7px; font-size:11.5px; color:#3ad07a; font-weight:700; margin-top:2px;"><span style="width:7px; height:7px; border-radius:50%; background:#3ad07a; animation:livePulse 2.2s infinite;"></span>{{ t.pillars.ai.running }}</span>
                     </div>
                   </div>
 
-                  <div class="pfeat fu" style="display:flex; align-items:center; gap:18px; animation-delay:.1s;">
-                    <span class="num" style="font-size:36px; color:var(--fg); line-height:1;">73%</span>
-                    <span style="flex:1; font-size:13.5px; line-height:1.7; color:var(--fg-2);">{{ t.pillars.ai.solvedLine }}</span>
+                  <div style="display:flex; align-items:center; gap:18px; padding:22px; border-radius:18px; background:rgba(101,212,210,.07); border:1px solid rgba(101,212,210,.22); animation:fadeUp .6s .15s ease both;">
+                    <span style="font-family:Poppins,sans-serif; font-size:40px; font-weight:800; color:#65D4D2; line-height:1; animation:pop .7s .3s both;">73%</span>
+                    <span style="flex:1; font-size:14px; line-height:1.7; color:rgba(232,255,254,.82);">{{ t.pillars.ai.solvedLine }}</span>
                   </div>
 
-                  <div style="font-size:11.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--fg-4); font-family:Poppins,sans-serif; margin-top:4px;" class="fu">{{ t.pillars.ai.knowledgeLabel }}</div>
-                  <div style="display:flex; flex-wrap:wrap; gap:7px;" class="fu">
+                  <div style="font-size:12px; font-weight:700; letter-spacing:.06em; color:rgba(232,255,254,.45); font-family:Poppins,sans-serif; animation:fadeUp .6s .45s ease both;">{{ t.pillars.ai.knowledgeLabel }}</div>
+                  <div style="display:flex; flex-wrap:wrap; gap:9px; animation:fadeUp .6s .55s ease both;">
                     <sc-for list="{{ t.pillars.ai.knowledge }}" as="kn" hint-placeholder-count="4">
-                      <span class="tag">
-                        <svg viewBox="0 0 24 24" style="width:12px; height:12px; flex:none;" fill="none" stroke="#3AD07A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.2 5.2L20 7"></path></svg>{{ kn }}
+                      <span style="display:inline-flex; align-items:center; gap:8px; padding:10px 16px; border-radius:20px; background:rgba(232,255,254,.05); border:1px solid rgba(232,255,254,.1); font-size:13px; color:rgba(232,255,254,.82);">
+                        <svg viewBox="0 0 24 24" style="width:14px; height:14px; flex:none;" fill="none" stroke="#3ad07a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.2 5.2L20 7"></path></svg>{{ kn }}
                       </span>
                     </sc-for>
                   </div>
@@ -778,43 +484,43 @@
 
               <!-- ---------- CRM ---------- -->
               <sc-if value="{{ isPillarCrm }}" hint-placeholder-val="{{ false }}">
-                <div style="display:flex; flex-direction:column; gap:14px;">
-                  <div style="display:flex; align-items:center; gap:11px; padding-bottom:14px; border-bottom:1px solid var(--line);">
-                    <div class="isl">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="#65D4D2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM8.8 11.6a2.2 2.2 0 1 0 0-4.4 2.2 2.2 0 0 0 0 4.4zM5.3 16.6c.4-1.8 1.8-2.9 3.5-2.9s3.1 1.1 3.5 2.9M15.5 9.5h3.8M15.5 13h3.8"></path></svg>
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                  <div style="display:flex; align-items:center; gap:12px; padding-bottom:14px; border-bottom:1px solid rgba(101,212,210,.18);">
+                    <div style="width:38px; height:38px; flex:none; border-radius:12px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(101,212,210,.25);">
+                      <svg viewBox="0 0 24 24" style="width:19px; height:19px;" fill="none" stroke="#041316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM8.8 11.6a2.2 2.2 0 1 0 0-4.4 2.2 2.2 0 0 0 0 4.4zM5.3 16.6c.4-1.8 1.8-2.9 3.5-2.9s3.1 1.1 3.5 2.9M15.5 9.5h3.8M15.5 13h3.8"></path></svg>
                     </div>
-                    <div style="display:flex; flex-direction:column; min-width:0; gap:2px;">
-                      <span style="font-family:{{ t.headingFont }}; font-size:14.5px; font-weight:700; color:var(--fg);">{{ t.pillars.crm.headTitle }}</span>
-                      <span style="font-size:11.5px; color:var(--fg-4);">{{ t.pillars.crm.headSub }}</span>
+                    <div style="display:flex; flex-direction:column; min-width:0;">
+                      <span style="font-family:{{ t.headingFont }}; font-size:15px; font-weight:800; color:#E8FFFE;">{{ t.pillars.crm.headTitle }}</span>
+                      <span style="font-size:11.5px; color:#65D4D2;">{{ t.pillars.crm.headSub }}</span>
                     </div>
                   </div>
 
-                  <div class="pfeat fu" style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; animation-delay:.1s;">
-                    <div style="width:48px; height:48px; flex:none; border-radius:var(--r2); background:var(--surface-3); border:1px solid var(--line-2); display:flex; align-items:center; justify-content:center; font-family:{{ t.headingFont }}; font-weight:700; font-size:19px; color:var(--accent);">{{ t.pillars.crm.initial }}</div>
+                  <div style="display:flex; align-items:center; gap:16px; padding:20px 22px; border-radius:18px; background:rgba(101,212,210,.07); border:1px solid rgba(101,212,210,.22); flex-wrap:wrap; animation:fadeUp .6s .15s ease both;">
+                    <div style="width:54px; height:54px; flex:none; border-radius:17px; background:linear-gradient(145deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; font-family:{{ t.headingFont }}; font-weight:800; font-size:22px; color:#041316; box-shadow:0 10px 24px rgba(101,212,210,.28);">{{ t.pillars.crm.initial }}</div>
                     <div style="flex:1; min-width:140px;">
-                      <div style="font-family:{{ t.headingFont }}; font-size:17px; font-weight:700; color:var(--fg);">{{ t.pillars.crm.name }}</div>
-                      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:8px;">
+                      <div style="font-family:{{ t.headingFont }}; font-size:18px; font-weight:800; color:#E8FFFE;">{{ t.pillars.crm.name }}</div>
+                      <div style="display:flex; gap:7px; flex-wrap:wrap; margin-top:9px;">
                         <sc-for list="{{ t.pillars.crm.tags }}" as="tg" hint-placeholder-count="3">
-                          <span class="chip chip--accent">{{ tg }}</span>
+                          <span style="padding:4px 12px; border-radius:16px; background:rgba(101,212,210,.12); border:1px solid rgba(101,212,210,.3); color:#65D4D2; font-size:11.5px; font-weight:700;">{{ tg }}</span>
                         </sc-for>
                       </div>
                     </div>
                   </div>
 
-                  <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                  <div style="display:flex; gap:11px; flex-wrap:wrap;">
                     <sc-for list="{{ t.pillars.crm.stats }}" as="cs" hint-placeholder-count="3">
-                      <div class="fu" style="flex:1; min-width:104px; padding:14px 16px; border-radius:var(--r2); background:rgba(232,255,254,.035); animation-delay:{{ cs.delay }};">
-                        <div class="num" style="font-size:20px; color:var(--fg);">{{ cs.value }}</div>
-                        <div style="font-size:12px; color:var(--fg-4); margin-top:4px;">{{ cs.label }}</div>
+                      <div style="flex:1; min-width:110px; padding:16px 18px; border-radius:16px; background:rgba(232,255,254,.05); border:1px solid rgba(232,255,254,.09); animation:fadeUp .6s {{ cs.delay }} ease both;">
+                        <div style="font-family:Poppins,sans-serif; font-size:22px; font-weight:800; color:#65D4D2; direction:ltr; unicode-bidi:isolate;">{{ cs.value }}</div>
+                        <div style="font-size:12px; color:rgba(232,255,254,.55); margin-top:5px;">{{ cs.label }}</div>
                       </div>
                     </sc-for>
                   </div>
 
                   <sc-for list="{{ t.pillars.crm.timeline2 }}" as="tl" hint-placeholder-count="2">
-                    <div class="fu" style="display:flex; align-items:center; gap:12px; padding:12px 2px; border-top:1px solid var(--line); animation-delay:{{ tl.delay }};">
-                      <span style="width:5px; height:5px; flex:none; border-radius:50%; background:var(--accent);"></span>
-                      <span style="flex:1; font-size:13px; line-height:1.6; color:var(--fg-2);">{{ tl.text }}</span>
-                      <span style="flex:none; font-size:11.5px; color:var(--fg-4);">{{ tl.time }}</span>
+                    <div style="display:flex; align-items:center; gap:13px; padding:14px 18px; border-radius:16px; background:rgba(232,255,254,.04); border:1px solid rgba(232,255,254,.08); animation:fadeUp .6s {{ tl.delay }} ease both;">
+                      <span style="width:9px; height:9px; flex:none; border-radius:50%; background:#65D4D2; box-shadow:0 0 0 5px rgba(101,212,210,.12);"></span>
+                      <span style="flex:1; font-size:13.5px; line-height:1.6; color:rgba(232,255,254,.8);">{{ tl.text }}</span>
+                      <span style="flex:none; font-size:11.5px; color:rgba(232,255,254,.4);">{{ tl.time }}</span>
                     </div>
                   </sc-for>
                 </div>
@@ -822,30 +528,30 @@
 
               <!-- ---------- LOYALTY ---------- -->
               <sc-if value="{{ isPillarLoyalty }}" hint-placeholder-val="{{ false }}">
-                <div style="display:flex; flex-direction:column; gap:14px;">
-                  <div style="display:flex; align-items:center; gap:11px; padding-bottom:14px; border-bottom:1px solid var(--line);">
-                    <div class="isl">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="#65D4D2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5h18V19a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zM2.2 7.6h19.6v3.9H2.2zM12 7.6V20M12 7.6S10.6 3.6 8.1 3.6a2 2 0 1 0 0 4zM12 7.6s1.4-4 3.9-4a2 2 0 1 1 0 4z"></path></svg>
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                  <div style="display:flex; align-items:center; gap:12px; padding-bottom:14px; border-bottom:1px solid rgba(101,212,210,.18);">
+                    <div style="width:38px; height:38px; flex:none; border-radius:12px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(101,212,210,.25);">
+                      <svg viewBox="0 0 24 24" style="width:19px; height:19px;" fill="none" stroke="#041316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5h18V19a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zM2.2 7.6h19.6v3.9H2.2zM12 7.6V20M12 7.6S10.6 3.6 8.1 3.6a2 2 0 1 0 0 4zM12 7.6s1.4-4 3.9-4a2 2 0 1 1 0 4z"></path></svg>
                     </div>
-                    <div style="display:flex; flex-direction:column; min-width:0; gap:2px;">
-                      <span style="font-family:{{ t.headingFont }}; font-size:14.5px; font-weight:700; color:var(--fg);">{{ t.pillars.loyalty.title }}</span>
-                      <span style="font-size:11.5px; color:var(--fg-4);">{{ t.pillars.loyalty.sub }}</span>
+                    <div style="display:flex; flex-direction:column; min-width:0;">
+                      <span style="font-family:{{ t.headingFont }}; font-size:15px; font-weight:800; color:#E8FFFE;">{{ t.pillars.loyalty.title }}</span>
+                      <span style="font-size:11.5px; color:#65D4D2;">{{ t.pillars.loyalty.sub }}</span>
                     </div>
                   </div>
 
-                  <div class="pfeat fu" style="padding:22px 20px; animation-delay:.1s;">
-                    <div class="num" style="font-size:40px; font-weight:700; line-height:1; color:var(--fg);">1,240</div>
-                    <div style="font-size:13px; color:var(--fg-3); margin-top:8px;">{{ t.pillars.loyalty.pointsLabel }}</div>
-                    <div style="height:6px; border-radius:3px; background:rgba(232,255,254,.08); margin-top:18px; overflow:hidden;">
-                      <div style="height:100%; width:76%; border-radius:3px; background:var(--accent); transform-origin:{{ t.chipSide1 }}; animation:growW .9s .3s cubic-bezier(.22,1,.36,1) both;"></div>
+                  <div style="padding:24px 22px; border-radius:18px; background:rgba(101,212,210,.07); border:1px solid rgba(101,212,210,.22); text-align:center; animation:fadeUp .6s .15s ease both;">
+                    <div style="font-family:Poppins,sans-serif; font-size:46px; font-weight:900; line-height:1; color:#65D4D2; animation:pop .7s .3s both;">1,240</div>
+                    <div style="font-size:13.5px; color:rgba(232,255,254,.65); margin-top:9px;">{{ t.pillars.loyalty.pointsLabel }}</div>
+                    <div style="height:10px; border-radius:7px; background:rgba(232,255,254,.08); margin-top:18px; overflow:hidden;">
+                      <div style="height:100%; width:76%; border-radius:7px; background:linear-gradient(90deg,#0F6F7A,#65D4D2); animation:growW 1.1s .45s cubic-bezier(.22,1,.36,1) both;"></div>
                     </div>
-                    <div style="font-size:12.5px; color:var(--fg-4); margin-top:10px;">{{ t.pillars.loyalty.toNext }}</div>
+                    <div style="font-size:12.5px; color:rgba(232,255,254,.5); margin-top:10px;">{{ t.pillars.loyalty.toNext }}</div>
                   </div>
 
                   <sc-for list="{{ t.pillars.loyalty.rewards2 }}" as="rd" hint-placeholder-count="2">
-                    <div class="prow fu" style="justify-content:space-between; animation-delay:{{ rd.delay }};">
-                      <span style="font-size:13.5px; font-weight:600; color:var(--fg-2);">{{ rd.name }}</span>
-                      <span class="chip" style="flex:none; background:rgba(58,208,122,.14); color:#7EE2A8;">{{ rd.state }}</span>
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:15px 19px; border-radius:16px; background:rgba(232,255,254,.05); border:1px solid rgba(232,255,254,.09); animation:fadeUp .6s {{ rd.delay }} ease both;">
+                      <span style="font-size:14px; font-weight:600; color:rgba(232,255,254,.85);">{{ rd.name }}</span>
+                      <span style="flex:none; padding:5px 14px; border-radius:16px; background:rgba(58,208,122,.16); border:1px solid rgba(58,208,122,.34); color:#7ee2a8; font-size:12px; font-weight:700;">{{ rd.state }}</span>
                     </div>
                   </sc-for>
                 </div>
@@ -854,98 +560,98 @@
 
               <!-- ---------- POS ---------- -->
               <sc-if value="{{ isPillarPos }}" hint-placeholder-val="{{ false }}">
-                <div style="display:flex; flex-direction:column; gap:14px;">
-                  <div style="display:flex; align-items:center; gap:11px; padding-bottom:14px; border-bottom:1px solid var(--line);">
-                    <div class="isl">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="#65D4D2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12a1 1 0 0 1 1 1v18l-3-2-3 2-3-2-3 2V3a1 1 0 0 1 1-1zM9 7h6M9 11h6"></path></svg>
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                  <div style="display:flex; align-items:center; gap:12px; padding-bottom:14px; border-bottom:1px solid rgba(101,212,210,.18);">
+                    <div style="width:38px; height:38px; flex:none; border-radius:12px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(101,212,210,.25);">
+                      <svg viewBox="0 0 24 24" style="width:19px; height:19px;" fill="none" stroke="#041316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12a1 1 0 0 1 1 1v18l-3-2-3 2-3-2-3 2V3a1 1 0 0 1 1-1zM9 7h6M9 11h6"></path></svg>
                     </div>
-                    <div style="display:flex; flex-direction:column; min-width:0; gap:2px;">
-                      <span style="font-family:{{ t.headingFont }}; font-size:14.5px; font-weight:700; color:var(--fg);">{{ t.pillars.pos.title }}</span>
-                      <span style="font-size:11.5px; color:var(--fg-4);">{{ t.pillars.pos.sub }}</span>
+                    <div style="display:flex; flex-direction:column; min-width:0;">
+                      <span style="font-family:{{ t.headingFont }}; font-size:15px; font-weight:800; color:#E8FFFE;">{{ t.pillars.pos.title }}</span>
+                      <span style="font-size:11.5px; color:#65D4D2;">{{ t.pillars.pos.sub }}</span>
                     </div>
                   </div>
 
-                  <div class="pfeat fu" style="animation-delay:.1s;">
+                  <div style="padding:22px; border-radius:18px; background:rgba(101,212,210,.07); border:1px solid rgba(101,212,210,.22); animation:fadeUp .6s .15s ease both;">
                     <sc-for list="{{ t.pillars.pos.lines }}" as="ln" hint-placeholder-count="3">
-                      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:7px 0; font-size:13.5px; color:var(--fg-2);">
+                      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:7px 0; font-size:13.5px; color:rgba(232,255,254,.72);">
                         <span>{{ ln.name }}</span>
-                        <span class="num" style="flex:none; font-weight:600;">{{ ln.price }}</span>
+                        <span style="flex:none; font-family:Poppins,sans-serif; direction:ltr; unicode-bidi:isolate;">{{ ln.price }}</span>
                       </div>
                     </sc-for>
-                    <div style="height:1px; background:var(--line); margin:12px 0;"></div>
+                    <div style="height:1px; background:rgba(101,212,210,.22); margin:12px 0;"></div>
                     <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-                      <span style="font-family:{{ t.headingFont }}; font-size:14.5px; font-weight:700; color:var(--fg);">{{ t.pillars.pos.totalLabel }}</span>
-                      <span class="num" style="font-size:25px; color:var(--fg);">{{ t.pillars.pos.total }}</span>
+                      <span style="font-family:{{ t.headingFont }}; font-size:15px; font-weight:800; color:#E8FFFE;">{{ t.pillars.pos.totalLabel }}</span>
+                      <span style="font-family:Poppins,sans-serif; font-size:28px; font-weight:800; color:#65D4D2; direction:ltr; unicode-bidi:isolate; animation:pop .6s .45s both;">{{ t.pillars.pos.total }}</span>
                     </div>
                   </div>
 
-                  <div class="prow fu" style="animation-delay:.2s;">
-                    <svg viewBox="0 0 24 24" style="width:19px; height:19px; flex:none;" fill="none" stroke="#65D4D2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V4h12v5M6 18H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-1M6 14h12v7H6z"></path></svg>
-                    <span style="flex:1; font-size:13.5px; line-height:1.7; color:var(--fg-2);">{{ t.pillars.pos.note }}</span>
+                  <div style="display:flex; align-items:center; gap:13px; padding:15px 19px; border-radius:16px; background:rgba(232,255,254,.05); border:1px solid rgba(232,255,254,.09); animation:fadeUp .6s .5s ease both;">
+                    <svg viewBox="0 0 24 24" style="width:20px; height:20px; flex:none;" fill="none" stroke="#65D4D2" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V4h12v5M6 18H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-1M6 14h12v7H6z"></path></svg>
+                    <span style="flex:1; font-size:14px; line-height:1.7; color:rgba(232,255,254,.8);">{{ t.pillars.pos.note }}</span>
                   </div>
                 </div>
               </sc-if>
 
               <!-- ---------- ADS ---------- -->
               <sc-if value="{{ isPillarAds }}" hint-placeholder-val="{{ false }}">
-                <div style="display:flex; flex-direction:column; gap:14px;">
-                  <div style="display:flex; align-items:center; gap:11px; padding-bottom:14px; border-bottom:1px solid var(--line);">
-                    <div class="isl">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="#65D4D2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4a1 1 0 0 0 1 1h3l6 4V5L7 9H4a1 1 0 0 0-1 1zM17.5 8.5a5 5 0 0 1 0 7"></path></svg>
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                  <div style="display:flex; align-items:center; gap:12px; padding-bottom:14px; border-bottom:1px solid rgba(101,212,210,.18);">
+                    <div style="width:38px; height:38px; flex:none; border-radius:12px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(101,212,210,.25);">
+                      <svg viewBox="0 0 24 24" style="width:19px; height:19px;" fill="none" stroke="#041316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4a1 1 0 0 0 1 1h3l6 4V5L7 9H4a1 1 0 0 0-1 1zM17.5 8.5a5 5 0 0 1 0 7"></path></svg>
                     </div>
-                    <div style="display:flex; flex-direction:column; min-width:0; gap:2px;">
-                      <span style="font-family:{{ t.headingFont }}; font-size:14.5px; font-weight:700; color:var(--fg);">{{ t.pillars.ads.title }}</span>
-                      <span style="font-size:11.5px; color:var(--fg-4);">{{ t.pillars.ads.sub }}</span>
+                    <div style="display:flex; flex-direction:column; min-width:0;">
+                      <span style="font-family:{{ t.headingFont }}; font-size:15px; font-weight:800; color:#E8FFFE;">{{ t.pillars.ads.title }}</span>
+                      <span style="font-size:11.5px; color:#65D4D2;">{{ t.pillars.ads.sub }}</span>
                     </div>
                   </div>
 
-                  <div class="pfeat fu" style="display:flex; align-items:center; gap:18px; animation-delay:.1s;">
-                    <span class="num" style="font-size:36px; color:var(--fg); line-height:1;">{{ t.pillars.ads.big }}</span>
-                    <span style="flex:1; font-size:13.5px; line-height:1.7; color:var(--fg-2);">{{ t.pillars.ads.bigLine }}</span>
+                  <div style="display:flex; align-items:center; gap:18px; padding:22px; border-radius:18px; background:rgba(101,212,210,.07); border:1px solid rgba(101,212,210,.22); animation:fadeUp .6s .15s ease both;">
+                    <span style="font-family:Poppins,sans-serif; font-size:40px; font-weight:800; color:#65D4D2; line-height:1; animation:pop .7s .3s both;">{{ t.pillars.ads.big }}</span>
+                    <span style="flex:1; font-size:14px; line-height:1.7; color:rgba(232,255,254,.82);">{{ t.pillars.ads.bigLine }}</span>
                   </div>
 
                   <sc-for list="{{ t.pillars.ads.rows }}" as="ad" hint-placeholder-count="3">
-                    <div class="prow fu" style="animation-delay:{{ ad.delay }};">
-                      <svg viewBox="0 0 24 24" style="width:16px; height:16px; flex:none;" fill="none" stroke="#65D4D2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.2 5.2L20 7"></path></svg>
-                      <span style="flex:1; font-size:13.5px; line-height:1.7; color:var(--fg-2);">{{ ad.text }}</span>
+                    <div style="display:flex; align-items:center; gap:13px; padding:15px 19px; border-radius:16px; background:rgba(232,255,254,.05); border:1px solid rgba(232,255,254,.09); animation:fadeUp .6s {{ ad.delay }} ease both;">
+                      <svg viewBox="0 0 24 24" style="width:17px; height:17px; flex:none;" fill="none" stroke="#65D4D2" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.2 5.2L20 7"></path></svg>
+                      <span style="flex:1; font-size:14px; line-height:1.7; color:rgba(232,255,254,.8);">{{ ad.text }}</span>
                     </div>
                   </sc-for>
                 </div>
               </sc-if>
               <!-- ---------- MARKETING CALENDAR ---------- -->
               <sc-if value="{{ isPillarCalendar }}" hint-placeholder-val="{{ false }}">
-                <div style="display:flex; flex-direction:column; gap:14px;">
-                  <div style="display:flex; align-items:center; gap:11px; padding-bottom:14px; border-bottom:1px solid var(--line);">
-                    <div class="isl">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="#65D4D2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1zM8 3v4M16 3v4M3 11.5h18"></path></svg>
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                  <div style="display:flex; align-items:center; gap:12px; padding-bottom:14px; border-bottom:1px solid rgba(101,212,210,.18);">
+                    <div style="width:38px; height:38px; flex:none; border-radius:12px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(101,212,210,.25);">
+                      <svg viewBox="0 0 24 24" style="width:19px; height:19px;" fill="none" stroke="#041316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1zM8 3v4M16 3v4M3 11.5h18"></path></svg>
                     </div>
-                    <div style="display:flex; flex-direction:column; min-width:0; gap:2px;">
-                      <span style="font-family:{{ t.headingFont }}; font-size:14.5px; font-weight:700; color:var(--fg);">{{ t.pillars.calendar.title }}</span>
-                      <span style="font-size:11.5px; color:var(--fg-4);">{{ t.pillars.calendar.monthLabel }}</span>
+                    <div style="display:flex; flex-direction:column; min-width:0;">
+                      <span style="font-family:{{ t.headingFont }}; font-size:15px; font-weight:800; color:#E8FFFE;">{{ t.pillars.calendar.title }}</span>
+                      <span style="font-size:11.5px; color:#65D4D2;">{{ t.pillars.calendar.monthLabel }}</span>
                     </div>
                   </div>
 
-                  <div class="pfeat fu" style="display:flex; align-items:center; gap:16px; animation-delay:.1s;">
-                    <span class="num" style="font-size:30px; color:var(--fg); line-height:1;">20</span>
-                    <span style="flex:1; font-size:13.5px; line-height:1.7; color:var(--fg-2);">{{ t.pillars.calendar.alertLine }}</span>
+                  <div style="display:flex; align-items:center; gap:16px; padding:20px 22px; border-radius:18px; background:rgba(101,212,210,.07); border:1px solid rgba(101,212,210,.22); animation:fadeUp .6s .15s ease both;">
+                    <span style="font-family:Poppins,sans-serif; font-size:34px; font-weight:800; color:#65D4D2; line-height:1; animation:pop .6s .3s both;">20</span>
+                    <span style="flex:1; font-size:14px; line-height:1.7; color:rgba(232,255,254,.82);">{{ t.pillars.calendar.alertLine }}</span>
                   </div>
 
                   <sc-for list="{{ t.pillars.calendar.events }}" as="ev" hint-placeholder-count="3">
-                    <div class="prow fu" style="border-inline-start:2px solid {{ ev.dot }}; animation-delay:{{ ev.delay }};">
-                      <div style="flex:none; text-align:center; min-width:38px;">
-                        <div class="num" style="font-size:18px; color:var(--fg); line-height:1;">{{ ev.day }}</div>
-                        <div style="font-size:10.5px; color:var(--fg-4); margin-top:3px;">{{ ev.month }}</div>
+                    <div style="display:flex; align-items:center; gap:14px; padding:15px 19px; border-radius:16px; background:rgba(232,255,254,.05); border:1px solid rgba(232,255,254,.09); border-inline-start:3px solid {{ ev.dot }}; animation:fadeUp .6s {{ ev.delay }} ease both;">
+                      <div style="flex:none; text-align:center; min-width:42px;">
+                        <div style="font-family:Poppins,sans-serif; font-size:19px; font-weight:800; color:#E8FFFE; line-height:1;">{{ ev.day }}</div>
+                        <div style="font-size:10.5px; color:rgba(232,255,254,.45); margin-top:3px;">{{ ev.month }}</div>
                       </div>
                       <div style="flex:1; min-width:0;">
-                        <div style="font-size:13.5px; font-weight:600; color:var(--fg);">{{ ev.name }}</div>
-                        <div style="font-size:12px; color:var(--fg-4); margin-top:3px;">{{ ev.kind }}</div>
+                        <div style="font-size:14px; font-weight:700; color:#E8FFFE;">{{ ev.name }}</div>
+                        <div style="font-size:12px; color:rgba(232,255,254,.5); margin-top:4px;">{{ ev.kind }}</div>
                       </div>
                     </div>
                   </sc-for>
 
-                  <div style="display:flex; gap:7px; flex-wrap:wrap;" class="fu">
+                  <div style="display:flex; gap:8px; flex-wrap:wrap; animation:fadeUp .6s .7s ease both;">
                     <sc-for list="{{ t.pillars.calendar.kinds }}" as="kd" hint-placeholder-count="4">
-                      <span class="tag"><span style="width:6px; height:6px; border-radius:50%; background:{{ kd.dot }};"></span>{{ kd.label }}</span>
+                      <span style="display:inline-flex; align-items:center; gap:7px; padding:8px 15px; border-radius:20px; background:rgba(232,255,254,.05); border:1px solid rgba(232,255,254,.1); font-size:12.5px; font-weight:700; color:rgba(232,255,254,.75);"><span style="width:8px; height:8px; border-radius:50%; background:{{ kd.dot }};"></span>{{ kd.label }}</span>
                     </sc-for>
                   </div>
                 </div>
@@ -955,206 +661,209 @@
 
             </div>
 
-            <div class="r-float">
-              <span></span>
-              <span style="font-family:{{ t.headingFont }};">{{ activePillar.badge }}</span>
+            <div style="position:absolute; bottom:-24px; inset-inline-start:30px; z-index:4; display:flex; align-items:center; gap:11px; padding:13px 20px; border-radius:16px; background:linear-gradient(150deg, rgba(9,42,47,.96), rgba(4,19,22,.96)); border:1px solid rgba(101,212,210,.4); box-shadow:0 22px 50px rgba(0,0,0,.6), 0 0 34px rgba(101,212,210,.2); backdrop-filter:blur(8px);" class="r-float">
+              <span style="width:9px; height:9px; border-radius:50%; background:#65D4D2; box-shadow:0 0 12px rgba(101,212,210,.95); flex:none;"></span>
+              <span style="font-family:{{ t.headingFont }}; font-size:13.5px; font-weight:700; color:#E8FFFE; white-space:nowrap;">{{ activePillar.badge }}</span>
             </div>
 
           </div>
 
           <!-- ====== SIDE COPY ====== -->
-          <div class="pside">
-            <div class="isl isl--lg">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#65D4D2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="{{ activePillar.d }}"></path></svg>
+          <div style="min-width:0; display:flex; flex-direction:column; gap:14px; padding:28px 24px; border:1px solid rgba(101,212,210,.2); border-radius:20px; background:rgba(101,212,210,.04);">
+            <div style="width:50px; height:50px; border-radius:14px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 22px rgba(101,212,210,.22);">
+              <svg viewBox="0 0 24 24" style="width:24px; height:24px; display:block;" fill="none" stroke="#041316" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{ activePillar.d }}"></path></svg>
             </div>
-            <div class="h3" style="font-family:{{ t.headingFont }};">{{ activePillar.title }}</div>
-            <div class="body" style="font-size:14.5px;">{{ activePillar.desc }}</div>
-            <div style="display:flex; flex-direction:column; gap:10px; margin-top:4px; padding-top:16px; border-top:1px solid var(--line);">
+            <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:21px; line-height:1.4; color:#E8FFFE;">{{ activePillar.title }}</div>
+            <div style="font-size:14.5px; line-height:1.85; color:rgba(232,255,254,.65);">{{ activePillar.desc }}</div>
+            <div style="display:flex; flex-direction:column; gap:9px; margin-top:4px;">
               <sc-for list="{{ activePillar.points }}" as="pt" hint-placeholder-count="3">
-                <div class="bul">
-                  <span style="font-size:13.5px; line-height:1.65; color:var(--fg-2);">{{ pt }}</span>
+                <div style="display:flex; align-items:flex-start; gap:10px;">
+                  <svg viewBox="0 0 24 24" style="width:16px; height:16px; flex:none; margin-top:3px;" fill="none" stroke="#65D4D2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.2 5.2L20 7"></path></svg>
+                  <span style="font-size:13.5px; line-height:1.65; color:rgba(232,255,254,.72);">{{ pt }}</span>
                 </div>
               </sc-for>
             </div>
-            <div onClick="{{ goTo.contact }}" style="margin-top:auto; padding-top:18px;"><span class="btn btn--primary" style="font-family:{{ t.headingFont }};">{{ t.pillars.cta }}</span></div>
+            <div onClick="{{ goTo.contact }}" style="margin-top:auto; padding-top:14px;"><span style="display:inline-block; padding:12px 24px; border-radius:13px; background:#65D4D2; color:#041316; font-family:{{ t.headingFont }}; font-weight:800; font-size:14px; cursor:pointer; box-shadow:0 0 22px rgba(101,212,210,.3);">{{ t.pillars.cta }}</span></div>
           </div>
 
         </div>
         </div>
 
-        <div style="margin-top:36px; padding-top:24px; border-top:1px solid var(--line);">
-          <div onClick="{{ goTo.services }}" class="link-arrow" style="font-family:{{ t.headingFont }};">{{ t.pillars.seeAll }}</div>
+        <div style="text-align:center; margin-top:40px;">
+          <div onClick="{{ goTo.services }}" style="display:inline-block; padding:13px 30px; border-radius:12px; border:1px solid rgba(101,212,210,.4); color:#65D4D2; font-weight:700; font-size:15px; cursor:pointer; font-family:{{ t.headingFont }}; transition:all .2s;" style-hover="background:rgba(101,212,210,.1);">{{ t.pillars.seeAll }}</div>
         </div>
       </div>
     </section>
 
     <!-- ONBOARDING TIMELINE -->
-    <section class="sec band">
-      <div class="wrap wrap--mid">
+    <section style="position:relative; padding:20px 40px 100px; overflow:hidden;">
+      <div style="position:relative; max-width:1000px; margin:0 auto;">
 
-        <div class="shead">
-          <div class="eyebrow">{{ t.onboard.tag }}</div>
-          <h2 class="h2" style="font-family:{{ t.headingFont }};">{{ t.onboard.title }}</h2>
-          <p class="lede">{{ t.onboard.sub }}</p>
+        <div style="max-width:560px; margin-bottom:56px;">
+          <div style="display:flex; align-items:center; gap:14px; margin-bottom:20px;">
+            <span style="width:34px; height:1px; background:rgba(101,212,210,.5); flex:none;"></span>
+            <span style="font-family:Poppins,sans-serif; font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#65D4D2;">{{ t.onboard.tag }}</span>
+          </div>
+          <h2 style="font-family:{{ t.headingFont }}; font-size:42px; font-weight:800; line-height:1.3; margin:0; color:#E8FFFE;">{{ t.onboard.title }}</h2>
+          <p style="font-size:16.5px; line-height:1.9; color:rgba(232,255,254,.62); margin:18px 0 0;">{{ t.onboard.sub }}</p>
         </div>
 
         <div style="position:relative;">
-          <div class="r-rail" style="position:absolute; top:8px; bottom:56px; inset-inline-start:4px; width:1px; background:var(--line); pointer-events:none;"></div>
+          <div style="position:absolute; top:12px; bottom:70px; inset-inline-start:37px; width:1px; background:linear-gradient(180deg, rgba(101,212,210,.45), rgba(101,212,210,.05)); pointer-events:none;" class="r-rail"></div>
 
           <sc-for list="{{ t.onboard.steps }}" as="st" hint-placeholder-count="4">
-            <div class="r-step fu" style="animation-delay:{{ st.delay }};">
-              <div class="r-step__n">
-                <span class="r-step__dot"></span>
-                <b>{{ st.num }}</b>
+            <div style="position:relative; display:flex; align-items:flex-start; gap:30px; padding-bottom:44px; animation:fadeUp .7s {{ st.delay }} ease both;" class="r-step">
+              <div style="position:relative; width:75px; flex:none; text-align:center;">
+                <div style="font-family:Poppins,sans-serif; font-size:56px; font-weight:800; line-height:.85; color:rgba(101,212,210,.13); letter-spacing:-.04em;">{{ st.num }}</div>
+                <div style="position:absolute; top:50%; inset-inline-start:37px; width:9px; height:9px; margin-top:-4px; margin-inline-start:-4px; border-radius:50%; background:#65D4D2; box-shadow:0 0 0 5px rgba(4,19,22,1), 0 0 18px rgba(101,212,210,.6);"></div>
               </div>
-              <div style="flex:1; min-width:0;">
-                <div style="font-family:Poppins,sans-serif; font-size:11.5px; font-weight:700; letter-spacing:.1em; color:var(--accent); text-transform:uppercase;">{{ st.when }}</div>
-                <div class="h4" style="font-family:{{ t.headingFont }}; font-size:19px; font-weight:800; margin-top:8px;">{{ st.title }}</div>
-                <div class="body" style="margin-top:8px; max-width:600px;">{{ st.body }}</div>
+              <div style="flex:1; min-width:0; padding-top:6px;">
+                <div style="font-family:Poppins,sans-serif; font-size:11.5px; font-weight:700; letter-spacing:.1em; color:rgba(101,212,210,.8); text-transform:uppercase;">{{ st.when }}</div>
+                <div style="font-family:{{ t.headingFont }}; font-size:21px; font-weight:800; color:#E8FFFE; margin-top:9px; line-height:1.4;">{{ st.title }}</div>
+                <div style="font-size:15px; line-height:1.9; color:rgba(232,255,254,.6); margin-top:10px; max-width:620px;">{{ st.body }}</div>
               </div>
             </div>
           </sc-for>
         </div>
 
-        <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap; padding-top:28px; border-top:1px solid var(--line);">
-          <p class="small" style="flex:1; min-width:260px;">{{ t.onboard.note }}</p>
-          <div onClick="{{ goTo.contact }}" class="link-arrow" style="font-family:{{ t.headingFont }};">
+        <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap; padding-top:32px; border-top:1px solid rgba(232,255,254,.08);">
+          <p style="flex:1; min-width:260px; font-size:15.5px; line-height:1.9; color:rgba(232,255,254,.55); margin:0;">{{ t.onboard.note }}</p>
+          <div onClick="{{ goTo.contact }}" style="display:inline-flex; align-items:center; gap:10px; cursor:pointer; color:#65D4D2; font-family:{{ t.headingFont }}; font-weight:700; font-size:15.5px; white-space:nowrap; border-bottom:1px solid rgba(101,212,210,.4); padding-bottom:4px; transition:all .2s;" style-hover="border-color:#65D4D2;">
             {{ t.onboard.cta }}
-            <svg viewBox="0 0 24 24" style="width:15px; height:15px; transform:scaleX({{ t.arrowFlip }});" fill="none" stroke="#65D4D2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12.5 5.5L19 12l-6.5 6.5"></path></svg>
+            <svg viewBox="0 0 24 24" style="width:16px; height:16px; transform:scaleX({{ t.arrowFlip }});" fill="none" stroke="#65D4D2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12.5 5.5L19 12l-6.5 6.5"></path></svg>
           </div>
         </div>
 
       </div>
     </section>
 
-    <!-- AI ASSISTANT -->
-    <section class="sec">
-      <div class="wrap wrap--mid" style="display:flex; align-items:center; gap:clamp(32px,5vw,64px); flex-wrap:wrap;">
-        <div style="flex:1; min-width:290px; display:flex; flex-direction:column; gap:16px;">
-          <div class="isl isl--lg" style="font-family:Poppins,sans-serif; font-weight:700; font-size:15px; color:#65D4D2;">AI</div>
-          <h2 class="h2" style="font-family:{{ t.headingFont }};">{{ t.aiSection.title }}</h2>
-          <p class="lede">{{ t.aiSection.body }}</p>
-          <div style="display:flex; flex-direction:column; gap:10px; margin-top:4px;">
-            <sc-for list="{{ t.aiSection.points }}" as="pt" hint-placeholder-count="3">
-              <div class="bul">
-                <span style="font-size:14.5px; line-height:1.7; color:var(--fg-2);">{{ pt }}</span>
-              </div>
-            </sc-for>
-          </div>
-        </div>
-        <div class="panel" style="flex:1; min-width:290px; max-width:400px; padding:18px; display:flex; flex-direction:column; gap:10px;">
-          <div style="display:flex; align-items:center; gap:10px; padding-bottom:12px; border-bottom:1px solid var(--line);">
-            <div class="mono-av" style="width:32px; height:32px; font-size:12px;">v</div>
-            <div style="display:flex; flex-direction:column; gap:2px;">
-              <span style="font-size:13px; font-weight:600; color:var(--fg);">{{ t.aiSection.chatName }}</span>
-              <span style="font-size:11px; color:var(--fg-4);">{{ t.aiSection.chatStatus }}</span>
-            </div>
-          </div>
-          <div class="fu" style="align-self:flex-start; max-width:85%; padding:10px 13px; border-radius:var(--r2) var(--r2) var(--r2) 3px; background:var(--surface-2); font-size:13.5px; line-height:1.6; color:var(--fg-2); animation-delay:.15s;">{{ t.aiSection.msg1 }}</div>
-          <div class="fu" style="align-self:flex-end; max-width:85%; padding:10px 13px; border-radius:var(--r2) var(--r2) 3px var(--r2); background:rgba(101,212,210,.12); font-size:13.5px; line-height:1.6; color:var(--fg); animation-delay:.5s;">{{ t.aiSection.msg2 }}<div style="margin-top:5px; font-size:10px; font-weight:700; color:var(--accent); letter-spacing:.05em;">AI ✓</div></div>
-          <div class="fu" style="align-self:flex-start; max-width:85%; padding:10px 13px; border-radius:var(--r2) var(--r2) var(--r2) 3px; background:var(--surface-2); font-size:13.5px; line-height:1.6; color:var(--fg-2); animation-delay:.85s;">{{ t.aiSection.msg3 }}</div>
-          <div class="fu" style="align-self:flex-end; display:flex; gap:5px; padding:12px 15px; border-radius:var(--r2) var(--r2) 3px var(--r2); background:rgba(101,212,210,.12); animation-delay:1.2s;">
-            <div style="width:6px; height:6px; border-radius:50%; background:#65D4D2; animation:blink 1.3s 0s infinite;"></div>
-            <div style="width:6px; height:6px; border-radius:50%; background:#65D4D2; animation:blink 1.3s .2s infinite;"></div>
-            <div style="width:6px; height:6px; border-radius:50%; background:#65D4D2; animation:blink 1.3s .4s infinite;"></div>
-          </div>
-        </div>
-      </div>
-    </section>
+    
 
     <!-- MOBILE APP SHOWCASE -->
-    <section data-reveal="" class="sec band">
-      <div class="wrap wrap--mid" style="display:flex; align-items:center; gap:clamp(36px,5vw,64px); flex-wrap:wrap; justify-content:center;">
-        <div style="flex:1; min-width:290px; display:flex; flex-direction:column; gap:16px;">
-          <div class="eyebrow">{{ t.showcase.tag }}</div>
-          <h2 class="h2" style="font-family:{{ t.headingFont }}; margin-top:-6px;">{{ t.showcase.title }}</h2>
-          <p class="lede">{{ t.showcase.body }}</p>
-          <div class="rows" style="margin-top:8px;">
+    <section data-reveal="" style="position:relative; padding:90px 40px 60px; overflow:hidden;">
+      <div style="position:absolute; top:10%; {{ t.chipSide2 }}:5%; width:420px; height:420px; border-radius:50%; background:radial-gradient(circle, rgba(101,212,210,.14), rgba(101,212,210,0) 70%); filter:blur(50px); animation:drift 16s ease-in-out infinite;"></div>
+      <section style="padding:90px 40px; background:linear-gradient(180deg, rgba(8,58,63,.35), rgba(4,19,22,0));">
+      <div style="max-width:1050px; margin:0 auto; display:flex; align-items:center; gap:56px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:300px; display:flex; flex-direction:column; gap:18px;">
+          <div style="width:48px; height:48px; border-radius:12px; background:#65D4D2; display:flex; align-items:center; justify-content:center; font-family:Poppins,sans-serif; font-weight:800; font-size:16px; color:#041316; box-shadow:0 0 28px rgba(101,212,210,.45);">AI</div>
+          <h2 style="font-family:{{ t.headingFont }}; font-size:34px; font-weight:800; margin:0; color:#E8FFFE;">{{ t.aiSection.title }}</h2>
+          <p style="font-size:16.5px; line-height:1.8; color:rgba(232,255,254,.7); margin:0;">{{ t.aiSection.body }}</p>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <sc-for list="{{ t.aiSection.points }}" as="pt" hint-placeholder-count="3">
+              <div style="display:flex; gap:10px; align-items:center;">
+                <div style="width:7px; height:7px; background:#65D4D2; transform:rotate(45deg); flex-shrink:0;"></div>
+                <span style="font-size:14.5px; color:rgba(232,255,254,.8);">{{ pt }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="flex:1; min-width:300px; max-width:420px; border-radius:20px; border:1px solid rgba(101,212,210,.3); background:#062024; padding:20px; display:flex; flex-direction:column; gap:12px; animation:floatY 7s ease-in-out infinite;">
+          <div style="display:flex; align-items:center; gap:10px; padding-bottom:12px; border-bottom:1px solid rgba(101,212,210,.15);">
+            <div style="width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; font-family:Poppins,sans-serif; font-weight:800; font-size:12px; color:#041316;">v</div>
+            <div style="display:flex; flex-direction:column;">
+              <span style="font-size:13.5px; font-weight:700; color:#E8FFFE;">{{ t.aiSection.chatName }}</span>
+              <span style="font-size:11px; color:#65D4D2;">{{ t.aiSection.chatStatus }}</span>
+            </div>
+          </div>
+          <div style="align-self:flex-start; max-width:85%; padding:10px 14px; border-radius:14px 14px 14px 4px; background:rgba(232,255,254,.08); font-size:13.5px; line-height:1.6; color:#E8FFFE; animation:fadeUp .6s .2s ease both;">{{ t.aiSection.msg1 }}</div>
+          <div style="align-self:flex-end; max-width:85%; padding:10px 14px; border-radius:14px 14px 4px 14px; background:rgba(101,212,210,.16); border:1px solid rgba(101,212,210,.3); font-size:13.5px; line-height:1.6; color:#E8FFFE; animation:fadeUp .6s .9s ease both;">{{ t.aiSection.msg2 }}<div style="margin-top:6px; font-size:10px; font-weight:700; color:#65D4D2; letter-spacing:.05em;">AI ✓</div></div>
+          <div style="align-self:flex-start; max-width:85%; padding:10px 14px; border-radius:14px 14px 14px 4px; background:rgba(232,255,254,.08); font-size:13.5px; line-height:1.6; color:#E8FFFE; animation:fadeUp .6s 1.6s ease both;">{{ t.aiSection.msg3 }}</div>
+          <div style="align-self:flex-end; display:flex; gap:5px; padding:12px 16px; border-radius:14px 14px 4px 14px; background:rgba(101,212,210,.16); border:1px solid rgba(101,212,210,.3); animation:fadeUp .6s 2.3s ease both;">
+            <div style="width:7px; height:7px; border-radius:50%; background:#65D4D2; animation:blink 1.2s 0s infinite;"></div>
+            <div style="width:7px; height:7px; border-radius:50%; background:#65D4D2; animation:blink 1.2s .2s infinite;"></div>
+            <div style="width:7px; height:7px; border-radius:50%; background:#65D4D2; animation:blink 1.2s .4s infinite;"></div>
+          </div>
+        </div>
+      </div>
+    </section><div style="position:relative; max-width:1080px; margin:0 auto; display:flex; align-items:center; gap:60px; flex-wrap:wrap; justify-content:center;">
+        <div style="flex:1; min-width:300px; display:flex; flex-direction:column; gap:18px;">
+          <span style="font-family:Poppins,sans-serif; font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#65D4D2;">{{ t.showcase.tag }}</span>
+          <h2 style="font-family:{{ t.headingFont }}; font-size:36px; font-weight:800; margin:0; color:#E8FFFE;">{{ t.showcase.title }}</h2>
+          <p style="font-size:16.5px; line-height:1.8; color:rgba(232,255,254,.7); margin:0;">{{ t.showcase.body }}</p>
+          <div style="display:flex; flex-direction:column; gap:12px; margin-top:4px;">
             <sc-for list="{{ t.showcase.points }}" as="pt" hint-placeholder-count="3">
-              <div class="bul" style="padding:14px 0;">
-                <span style="font-size:14.5px; line-height:1.65; color:var(--fg-2);">{{ pt }}</span>
+              <div style="display:flex; gap:12px; align-items:center; padding:14px 16px; background:rgba(101,212,210,.05); border:1px solid rgba(101,212,210,.16); border-radius:12px; transition:all .25s;" style-hover="border-color:rgba(101,212,210,.5); transform:translateX(0) translateY(-2px);">
+                <div style="width:9px; height:9px; background:#65D4D2; transform:rotate(45deg); flex-shrink:0;"></div>
+                <span style="font-size:15px; color:rgba(232,255,254,.85);">{{ pt }}</span>
               </div>
             </sc-for>
           </div>
         </div>
 
-        <div style="position:relative; flex-shrink:0;">
-          <div style="width:290px; border-radius:36px; border:1px solid var(--line-2); background:#03191c; padding:10px 10px 0; box-shadow:var(--sh-2);">
-            <div style="border-radius:28px; overflow:hidden; background:var(--bg); direction:{{ t.dir }};">
-              <div style="display:flex; align-items:center; justify-content:space-between; padding:9px 18px 5px; font-family:Poppins,sans-serif;">
-                <span style="font-size:13px; font-weight:600; color:var(--fg-2);">{{ t.showcase.phone.statusTime }}</span>
-                <div style="display:flex; align-items:center; gap:6px; color:var(--fg-3);">
-                  <span style="font-size:10px;">●●●</span>
-                  <span style="font-size:10px;">▮</span>
-
+        <div style="position:relative; flex-shrink:0; animation:floatSlow 7s ease-in-out infinite;">
+          <div style="width:300px; border-radius:42px; border:1px solid rgba(101,212,210,.3); background:#03191c; padding:12px 12px 0; box-shadow:0 30px 80px rgba(0,0,0,.5), 0 0 60px rgba(101,212,210,.12);">
+            <div style="border-radius:32px; overflow:hidden; background:#041316; direction:{{ t.dir }};">
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 20px 6px; font-family:Poppins,sans-serif;">
+                <span style="font-size:14px; font-weight:700; color:#E8FFFE;">{{ t.showcase.phone.statusTime }}</span>
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <span style="font-size:11px; color:#E8FFFE;">●●●</span>
+                  <span style="font-size:11px; color:#E8FFFE;">▮</span>
+                  
                 </div>
               </div>
-              <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 16px; border-bottom:1px solid var(--line);">
-                <div style="display:flex; align-items:center; gap:11px;">
-                  <div style="display:flex; flex-direction:column; gap:3px;"><span style="width:15px;height:1.5px;background:var(--fg-3);"></span><span style="width:15px;height:1.5px;background:var(--fg-3);"></span><span style="width:15px;height:1.5px;background:var(--fg-3);"></span></div>
-                  <span style="font-family:{{ t.headingFont }}; font-size:16px; font-weight:700; color:var(--fg);">{{ t.showcase.phone.header }}</span>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 18px; border-bottom:1px solid rgba(101,212,210,.12);">
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div style="display:flex; flex-direction:column; gap:3px;"><span style="width:16px;height:2px;background:#65D4D2;"></span><span style="width:16px;height:2px;background:#65D4D2;"></span><span style="width:16px;height:2px;background:#65D4D2;"></span></div>
+                  <span style="font-family:{{ t.headingFont }}; font-size:18px; font-weight:800; color:#65D4D2;">{{ t.showcase.phone.header }}</span>
                 </div>
-                <div style="display:flex; align-items:center; gap:11px; color:var(--fg-3);">
-                  <svg viewBox="0 0 24 24" style="width:15px;height:15px;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5A8 8 0 1 0 18 17M20 6v5.5h-5.5"></path></svg>
-                  <span style="position:relative; display:flex;">
-                    <svg viewBox="0 0 24 24" style="width:15px;height:15px;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 16V11a6 6 0 1 0-12 0v5l-1.5 2.5h15zM10 19.5a2 2 0 0 0 4 0"></path></svg>
-                    <span style="position:absolute; top:-5px; {{ t.chipSide2 }}:-5px; background:#F5A623; color:#041316; font-size:8px; font-weight:800; border-radius:50%; width:12px; height:12px; display:flex; align-items:center; justify-content:center; font-family:Poppins,sans-serif;">2</span>
-                  </span>
-                  <svg viewBox="0 0 24 24" style="width:15px;height:15px;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zM12 2v2M12 20v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2 12h2M20 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"></path></svg>
+                <div style="display:flex; align-items:center; gap:12px; color:#65D4D2; font-size:13px;">
+                  <span>⟳</span>
+                  <span style="position:relative;">◔<span style="position:absolute; top:-6px; {{ t.chipSide2 }}:-6px; background:#F5A623; color:#041316; font-size:8px; font-weight:800; border-radius:50%; width:13px; height:13px; display:flex; align-items:center; justify-content:center;">2</span></span>
+                  <span>☀</span>
                 </div>
               </div>
-              <div style="padding:12px 12px 14px; display:flex; flex-direction:column; gap:9px;">
-
-                <div style="display:flex; gap:5px; overflow:hidden;">
+              <div style="padding:12px 14px 16px; display:flex; flex-direction:column; gap:10px;">
+                
+                <div style="display:flex; gap:6px; overflow:hidden;">
                   <sc-for list="{{ t.showcase.phone.chips }}" as="ch" hint-placeholder-count="5">
-                    <span style="padding:5px 10px; border-radius:var(--r1); background:rgba(232,255,254,.05); font-size:10.5px; font-weight:600; color:var(--fg-3); white-space:nowrap;">{{ ch }}</span>
+                    <span style="padding:6px 11px; border-radius:16px; background:rgba(101,212,210,.08); border:1px solid rgba(101,212,210,.18); font-size:11px; font-weight:600; color:rgba(232,255,254,.75); white-space:nowrap;">{{ ch }}</span>
                   </sc-for>
                 </div>
-                <div style="padding:14px; border-radius:var(--r2); background:var(--surface);">
+                <div style="padding:16px; border-radius:16px; background:rgba(101,212,210,.05); border:1px solid rgba(101,212,210,.15);">
                   <div style="display:flex; align-items:center; justify-content:flex-end; gap:8px; margin-bottom:6px;">
-                    <span style="font-size:11.5px; color:var(--fg-4);">{{ t.showcase.phone.netLabel }}</span>
-                    <svg viewBox="0 0 24 24" style="width:14px;height:14px;" fill="none" stroke="#65D4D2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 6.5C17 4.6 14.8 3.5 12 3.5S7 4.6 7 6.5s2.2 2.8 5 3.4 5 1.5 5 3.6-2.2 3-5 3-5-1.1-5-3"></path></svg>
+                    <span style="font-size:12px; color:rgba(232,255,254,.6);">{{ t.showcase.phone.netLabel }}</span>
+                    <span style="width:22px;height:22px;border-radius:6px;background:rgba(101,212,210,.15);display:flex;align-items:center;justify-content:center;font-size:11px;"><span class="temj">💰</span></span>
                   </div>
                   <div style="display:flex; align-items:baseline; justify-content:flex-end; gap:6px;">
-                    <span style="font-size:12px; color:var(--fg-3);">{{ t.showcase.phone.cur }}</span>
-                    <span class="num" style="font-size:27px; color:var(--fg); letter-spacing:-.01em;">{{ netRevenue }}</span>
+                    <span style="font-size:13px; color:rgba(232,255,254,.6);">{{ t.showcase.phone.cur }}</span>
+                    <span style="font-family:Poppins,sans-serif; font-size:30px; font-weight:800; color:#E8FFFE; letter-spacing:-.01em;">{{ netRevenue }}</span>
                   </div>
                   <div style="text-align:{{ t.chipSide2 }}; font-size:11px; color:#F5A623; margin-top:2px;">{{ t.showcase.phone.returned }}</div>
-                  <svg viewBox="0 0 300 80" style="width:100%; height:60px; margin-top:8px; overflow:visible;">
-                    <defs><linearGradient id="rev" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#65D4D2" stop-opacity=".28"></stop><stop offset="1" stop-color="#65D4D2" stop-opacity="0"></stop></linearGradient></defs>
-                    <path d="M0,60 L20,48 L40,20 L60,44 L80,30 L100,52 L120,46 L140,54 L160,40 L180,56 L200,34 L220,50 L240,26 L260,42 L280,30 L300,46 L300,80 L0,80 Z" fill="url(#rev)" style="animation:areaIn 1s .3s both;"></path>
-                    <path d="M0,60 L20,48 L40,20 L60,44 L80,30 L100,52 L120,46 L140,54 L160,40 L180,56 L200,34 L220,50 L240,26 L260,42 L280,30 L300,46" fill="none" stroke="#65D4D2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray:900; stroke-dashoffset:900; animation:drawLine 1.5s .2s cubic-bezier(.4,0,.2,1) forwards;"></path>
+                  <svg viewBox="0 0 300 80" style="width:100%; height:64px; margin-top:8px; overflow:visible;">
+                    <defs><linearGradient id="rev" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#65D4D2" stop-opacity=".35"></stop><stop offset="1" stop-color="#65D4D2" stop-opacity="0"></stop></linearGradient></defs>
+                    <path d="M0,60 L20,48 L40,20 L60,44 L80,30 L100,52 L120,46 L140,54 L160,40 L180,56 L200,34 L220,50 L240,26 L260,42 L280,30 L300,46 L300,80 L0,80 Z" fill="url(#rev)" style="animation:areaIn 1.2s .4s both;"></path>
+                    <path d="M0,60 L20,48 L40,20 L60,44 L80,30 L100,52 L120,46 L140,54 L160,40 L180,56 L200,34 L220,50 L240,26 L260,42 L280,30 L300,46" fill="none" stroke="#65D4D2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray:900; stroke-dashoffset:900; animation:drawLine 1.8s .2s cubic-bezier(.4,0,.2,1) forwards;"></path>
                   </svg>
                 </div>
-                <div style="display:flex; gap:8px;">
-                  <div style="flex:1; padding:11px; border-radius:var(--r2); background:var(--surface);">
-                    <div style="text-align:{{ t.chipSide2 }}; font-size:10.5px; color:var(--fg-4);">{{ t.showcase.phone.avgLabel }}</div>
-                    <div class="num" style="text-align:{{ t.chipSide2 }}; font-size:17px; color:var(--fg); margin-top:2px;">{{ avgOrder }}</div>
+                <div style="display:flex; gap:10px;">
+                  <div style="flex:1; padding:12px; border-radius:14px; background:rgba(101,212,210,.05); border:1px solid rgba(101,212,210,.15);">
+                    <div style="text-align:{{ t.chipSide2 }}; font-size:11px; color:rgba(232,255,254,.6);">{{ t.showcase.phone.avgLabel }}</div>
+                    <div style="text-align:{{ t.chipSide2 }}; font-family:Poppins,sans-serif; font-size:19px; font-weight:800; color:#E8FFFE; margin-top:2px;">{{ avgOrder }}</div>
                   </div>
-                  <div style="flex:1; padding:11px; border-radius:var(--r2); background:var(--surface);">
-                    <div style="text-align:{{ t.chipSide2 }}; font-size:10.5px; color:var(--fg-4);">{{ t.showcase.phone.ordersLabel }}</div>
-                    <div class="num" style="text-align:{{ t.chipSide2 }}; font-size:17px; color:var(--fg); margin-top:2px;">{{ ordersCount }}</div>
-                    <div style="display:flex; align-items:flex-end; gap:2px; height:20px; margin-top:6px;">
+                  <div style="flex:1; padding:12px; border-radius:14px; background:rgba(101,212,210,.05); border:1px solid rgba(101,212,210,.15);">
+                    <div style="text-align:{{ t.chipSide2 }}; font-size:11px; color:rgba(232,255,254,.6);">{{ t.showcase.phone.ordersLabel }}</div>
+                    <div style="text-align:{{ t.chipSide2 }}; font-family:Poppins,sans-serif; font-size:19px; font-weight:800; color:#E8FFFE; margin-top:2px;">{{ ordersCount }}</div>
+                    <div style="display:flex; align-items:flex-end; gap:2px; height:22px; margin-top:6px;">
                       <sc-for list="{{ phoneBars }}" as="pb" hint-placeholder-count="20">
-                        <div style="flex:1; height:{{ pb.h }}; background:rgba(101,212,210,.5); border-radius:1px; transform-origin:bottom; animation:barGrow .6s {{ pb.delay }} ease both;"></div>
+                        <div style="flex:1; height:{{ pb.h }}; background:#65D4D2; border-radius:1px; transform-origin:bottom; animation:barGrow .7s {{ pb.delay }} ease both;"></div>
                       </sc-for>
                     </div>
                   </div>
                 </div>
-                <div style="display:flex; align-items:center; justify-content:space-between; padding:12px 14px; border-radius:var(--r2); background:var(--surface);">
-                  <span style="font-size:11.5px; color:var(--fg-3);">{{ t.showcase.phone.waRead }} <svg viewBox="0 0 24 24" style="width:12px;height:12px;vertical-align:-1px;" fill="none" stroke="#3AD07A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.2 5.2L20 7"></path></svg></span>
-                  <div style="display:flex; align-items:center; gap:7px;">
-                    <span style="font-size:11.5px; color:var(--fg-4);">WhatsApp</span>
-                    <svg viewBox="0 0 24 24" style="width:14px;height:14px;" fill="none" stroke="#65D4D2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.5 7.3L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z"></path></svg>
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-radius:16px; background:rgba(101,212,210,.05); border:1px solid rgba(101,212,210,.15);">
+                  <span style="font-size:12px; color:rgba(232,255,254,.7);">{{ t.showcase.phone.waRead }} <span class="temj">✅</span></span>
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:12px; color:rgba(232,255,254,.6);">WhatsApp</span>
+                    <span style="width:22px;height:22px;border-radius:6px;background:rgba(101,212,210,.15);display:flex;align-items:center;justify-content:center;font-size:11px;"><span class="temj">💬</span></span>
                   </div>
                 </div>
               </div>
-              <div style="display:flex; align-items:center; justify-content:space-around; padding:9px 8px 14px; border-top:1px solid var(--line);">
-                <span style="font-size:9.5px; color:var(--accent); text-align:center; display:flex; flex-direction:column; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5M5.5 9.5V20h13V9.5"></path></svg>{{ t.showcase.phone.tabs.0 }}</span>
-                <span style="font-size:9.5px; color:var(--fg-4); text-align:center; display:flex; flex-direction:column; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.5 7.3L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z"></path></svg>{{ t.showcase.phone.tabs.1 }}</span>
-                <span style="width:38px; height:38px; border-radius:50%; background:var(--accent-deep); display:flex; align-items:center; justify-content:center; margin-top:-13px; border:3px solid var(--bg); color:#E8FFFE;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8zM9 7V5.5a3 3 0 0 1 6 0V7"></path></svg></span>
-                <span style="font-size:9.5px; color:var(--fg-4); text-align:center; display:flex; flex-direction:column; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4a1 1 0 0 0 1 1h3l6 4V5L7 9H4a1 1 0 0 0-1 1zM17.5 8.5a5 5 0 0 1 0 7"></path></svg>{{ t.showcase.phone.tabs.3 }}</span>
-                <span style="font-size:9.5px; color:var(--fg-4); text-align:center; display:flex; flex-direction:column; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M7.5 16V11M12 16V7.5M16.5 16v-3"></path></svg>{{ t.showcase.phone.tabs.4 }}</span>
+              <div style="display:flex; align-items:center; justify-content:space-around; padding:10px 8px 16px; border-top:1px solid rgba(101,212,210,.12); background:rgba(4,19,22,.6);">
+                <span style="font-size:10px; color:#65D4D2; text-align:center;"><span class="temj">⌂</span><br>{{ t.showcase.phone.tabs.0 }}</span>
+                <span style="font-size:10px; color:rgba(232,255,254,.5); text-align:center;"><span class="temj">💬</span><br>{{ t.showcase.phone.tabs.1 }}</span>
+                <span style="width:40px; height:40px; border-radius:50%; background:#0F6F7A; display:flex; align-items:center; justify-content:center; font-size:16px; margin-top:-14px; border:3px solid #041316;"><span class="temj">🛍</span></span>
+                <span style="font-size:10px; color:rgba(232,255,254,.5); text-align:center;"><span class="temj">📢</span><br>{{ t.showcase.phone.tabs.3 }}</span>
+                <span style="font-size:10px; color:rgba(232,255,254,.5); text-align:center;"><span class="temj">📈</span><br>{{ t.showcase.phone.tabs.4 }}</span>
               </div>
             </div>
           </div>
@@ -1163,90 +872,80 @@
     </section>
 
     <!-- TOP SELLERS -->
-
+    
 
     <!-- VISITOR ANALYTICS -->
-    <section data-reveal="" class="sec">
-      <div class="wrap wrap--mid">
-        <div class="shead">
-          <h2 class="h2" style="font-family:{{ t.headingFont }};">{{ t.sellers.title }}</h2>
-          <p class="lede">{{ t.sellers.sub }}</p>
+    <section data-reveal="" style="padding:20px 40px 90px;">
+      <div style="max-width:1000px; margin:0 auto;">
+        <div style="display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:12px;">
+          <span style="width:40px; height:40px; border-radius:10px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; font-size:20px;">🏆</span>
+          <h2 style="font-family:{{ t.headingFont }}; font-size:34px; font-weight:800; text-align:center; margin:0; color:#E8FFFE;">{{ t.sellers.title }}</h2>
         </div>
-        <div class="panel" style="padding:4px 20px;">
-          <div class="rows">
+        <p style="text-align:center; color:rgba(232,255,254,.6); font-size:16px; max-width:600px; margin:0 auto 40px;">{{ t.sellers.sub }}</p>
+        <div style="display:flex; flex-direction:column; gap:10px; padding:22px; background:rgba(101,212,210,.04); border:1px solid rgba(101,212,210,.16); border-radius:18px;">
           <sc-for list="{{ sellers }}" as="s" hint-placeholder-count="6">
-            <div style="display:flex; align-items:center; gap:14px; padding:14px 0;">
-              <div class="num {{ s.rankCls }}" style="width:22px; flex-shrink:0; font-size:12.5px; text-align:center;">{{ s.rank }}</div>
-              <div style="width:46px; height:46px; border-radius:var(--r2); flex-shrink:0; overflow:hidden; border:1px solid var(--line);"><img src="{{ s.img }}" style="width:100%; height:100%; object-fit:cover; display:block;" alt=""></div>
-              <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:8px;">
-                <span style="font-size:14px; font-weight:600; color:var(--fg); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ s.name }}</span>
-                <div style="height:3px; border-radius:2px; background:rgba(232,255,254,.07); overflow:hidden;">
-                  <div style="height:100%; width:{{ s.barW }}; border-radius:2px; background:{{ s.barColor }}; transition:width .1s linear;"></div>
+            <div style="display:flex; align-items:center; gap:14px; padding:12px 10px; border-radius:12px; transition:background .2s;" style-hover="background:rgba(101,212,210,.06);">
+              <div style="width:28px; height:28px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-family:Poppins,sans-serif; font-weight:800; font-size:13px; background:{{ s.rankBg }}; color:{{ s.rankFg }}; border:{{ s.rankBorder }};">{{ s.rank }}</div>
+              <div style="width:52px; height:52px; border-radius:11px; flex-shrink:0; overflow:hidden; border:1px solid rgba(101,212,210,.3);"><img src="{{ s.img }}" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+              <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:7px;">
+                <span style="font-size:14.5px; font-weight:600; color:#E8FFFE; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ s.name }}</span>
+                <div style="height:7px; border-radius:4px; background:rgba(232,255,254,.08); overflow:hidden;">
+                  <div style="height:100%; width:{{ s.barW }}; border-radius:4px; background:linear-gradient(90deg,#0F6F7A,#65D4D2); transition:width .1s linear;"></div>
                 </div>
               </div>
-              <div style="flex-shrink:0; text-align:{{ t.chipSide2 }}; display:flex; flex-direction:column; gap:3px;">
-                <span class="num" style="font-size:14px; color:var(--fg);">{{ s.pcs }} <span style="font-size:11px; font-weight:500; color:var(--fg-4); font-family:{{ t.bodyFont }};">{{ t.sellers.pcs }}</span></span>
-                <span style="font-size:11.5px; color:var(--fg-4);">{{ s.amount }} {{ t.sellers.cur }}</span>
+              <div style="flex-shrink:0; text-align:{{ t.chipSide2 }}; display:flex; flex-direction:column; gap:2px;">
+                <span style="font-family:Poppins,sans-serif; font-size:15px; font-weight:800; color:#E8FFFE;">{{ s.pcs }} <span style="font-size:11px; font-weight:600; color:rgba(232,255,254,.5);">{{ t.sellers.pcs }}</span></span>
+                <span style="font-size:12px; color:#65D4D2;">{{ s.amount }} {{ t.sellers.cur }}</span>
               </div>
             </div>
           </sc-for>
-          </div>
         </div>
       </div>
     </section>
 
-    <section data-reveal="" class="sec band">
-      <div class="wrap">
-        <div class="shead">
-          <div class="eyebrow">{{ t.analytics.tag }}</div>
-          <h2 class="h2" style="font-family:{{ t.headingFont }};">{{ t.analytics.title }}</h2>
-          <p class="lede">{{ t.analytics.sub }}</p>
+    <section data-reveal="" style="padding:80px 40px; background:linear-gradient(180deg, rgba(8,58,63,.35), rgba(4,19,22,0));">
+      <div style="max-width:1100px; margin:0 auto;">
+        <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:12px; margin-bottom:36px;">
+          <span style="font-family:Poppins,sans-serif; font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#65D4D2;">{{ t.analytics.tag }}</span>
+          <h2 style="font-family:{{ t.headingFont }}; font-size:34px; font-weight:800; margin:0; color:#E8FFFE;">{{ t.analytics.title }}</h2>
+          <p style="font-size:16px; line-height:1.7; color:rgba(232,255,254,.7); max-width:600px; margin:0;">{{ t.analytics.sub }}</p>
         </div>
-        <div style="display:flex; align-items:center; gap:14px; padding:16px 22px; border-radius:var(--r3) var(--r3) 0 0; background:var(--surface); border:1px solid var(--line); border-bottom:none;">
-          <svg viewBox="0 0 24 24" style="width:20px;height:20px;flex:none;" fill="none" stroke="#65D4D2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM17 7.5h.01M8 5l1-2h6l1 2"></path></svg>
-          <div style="text-align:{{ t.chipSide2 }}; flex:1;">
-            <div style="font-size:11.5px; color:var(--fg-4);">{{ t.analytics.topSource }}</div>
-            <div style="font-family:{{ t.headingFont }}; font-size:17px; font-weight:700; color:var(--fg); margin-top:2px;">{{ t.analytics.topSourceVal }}</div>
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 22px; border-radius:14px; background:linear-gradient(120deg,#083A3F,#0F6F7A); margin-bottom:16px; box-shadow:0 10px 30px rgba(0,0,0,.3);">
+          <span style="width:34px;height:34px;border-radius:9px;background:rgba(101,212,210,.2);display:flex;align-items:center;justify-content:center;font-size:16px;">📸</span>
+          <div style="text-align:{{ t.chipSide2 }};">
+            <div style="font-size:12px; color:rgba(232,255,254,.75);">{{ t.analytics.topSource }}</div>
+            <div style="font-family:{{ t.headingFont }}; font-size:19px; font-weight:800; color:#E8FFFE;">{{ t.analytics.topSourceVal }}</div>
           </div>
         </div>
-        <div class="hgrid hgrid--3 hgrid--on-band r-grid3" style="border-radius:0 0 var(--r3) var(--r3);">
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px;" class="r-grid3">
           <sc-for list="{{ analyticsCards }}" as="a" hint-placeholder-count="6">
-            <div style="display:flex; flex-direction:column; gap:5px;">
-              <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
-                <div style="font-size:12.5px; color:var(--fg-3);">{{ a.label }}</div>
-                <sc-if value="{{ a.delta }}" hint-placeholder-val="{{ false }}">
-                  <span class="num" style="font-size:11px; font-weight:700; color:{{ a.deltaColor }};">{{ a.delta }}</span>
-                </sc-if>
-              </div>
-              <div class="num" style="font-size:26px; color:var(--fg); text-align:{{ t.textAlign }};">{{ a.value }}</div>
-              <div style="font-size:12px; color:var(--fg-4);">{{ a.sub }}</div>
+            <div style="position:relative; padding:22px; border-radius:16px; background:rgba(101,212,210,.05); border:1px solid rgba(101,212,210,.16); display:flex; flex-direction:column; gap:6px; transition:transform .25s, border-color .25s;" style-hover="transform:translateY(-4px); border-color:rgba(101,212,210,.5);">
+              <sc-if value="{{ a.delta }}" hint-placeholder-val="{{ false }}">
+                <span style="position:absolute; top:18px; inset-inline-start:18px; font-size:11px; font-weight:800; padding:3px 9px; border-radius:10px; color:{{ a.deltaColor }}; background:{{ a.deltaBg }};">{{ a.delta }}</span>
+              </sc-if>
+              <div style="text-align:{{ t.chipSide2 }}; font-size:13px; color:rgba(232,255,254,.6);">{{ a.label }}</div>
+              <div style="text-align:{{ t.chipSide2 }}; font-family:Poppins,sans-serif; font-size:28px; font-weight:800; color:#E8FFFE;">{{ a.value }}</div>
+              <div style="text-align:{{ t.chipSide2 }}; font-size:12px; color:rgba(232,255,254,.4);">{{ a.sub }}</div>
             </div>
           </sc-for>
         </div>
       </div>
-    </section>
-
-    <section class="sec">
-      <div class="wrap wrap--wide">
-        <div class="shead">
-          <h2 class="h2" style="font-family:{{ t.headingFont }};">{{ t.packages.title }}</h2>
-        </div>
-        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; align-items:stretch;" class="r-grid4">
+    </section><section style="padding:90px 40px 70px;">
+      <div style="max-width:1200px; margin:0 auto;">
+        <h2 style="font-family:{{ t.headingFont }}; font-size:38px; font-weight:800; text-align:center; margin:0 0 48px; color:#E8FFFE;">{{ t.packages.title }}</h2>
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:18px; align-items:stretch;" class="r-grid4">
           <sc-for list="{{ t.packages.items }}" as="pk" hint-placeholder-count="4">
-            <div class="pkg {{ pk.cls }}">
-              <div class="pkg__head">
-                <sc-if value="{{ pk.highlight }}" hint-placeholder-val="{{ false }}">
-                  <span class="chip chip--accent" style="order:2;">{{ t.packages.popular }}</span>
-                </sc-if>
-                <div class="pkg__name" style="font-family:{{ t.headingFont }};">{{ pk.name }}</div>
-              </div>
-              <div class="pkg__price">
-                <b>{{ pk.priceNum }}</b> <span>{{ pk.priceCur }}</span>
-              </div>
+            <div style="position:relative; padding:28px 22px; background:{{ pk.bg }}; border-radius:18px; border:{{ pk.border }}; display:flex; flex-direction:column; gap:16px; transition:all .3s;" style-hover="transform:translateY(-6px);">
+              <sc-if value="{{ pk.highlight }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute; top:-12px; inset-inline-start:22px; padding:4px 14px; border-radius:12px; background:#65D4D2; color:#041316; font-size:11.5px; font-weight:800;">{{ t.packages.popular }}</div>
+              </sc-if>
+              <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:20px; color:{{ pk.titleColor }};">{{ pk.name }}</div>
+              <div style="font-family:Poppins,sans-serif; font-size:28px; font-weight:800; color:#65D4D2; margin-bottom:6px;">{{ pk.priceNum }} <span style="font-size:14px; font-weight:600; color:rgba(232,255,254,.6);">{{ pk.priceCur }}</span></div>
               <div style="display:flex; flex-direction:column; gap:10px;">
                 <sc-for list="{{ pk.bullets }}" as="b" hint-placeholder-count="4">
-                  <div class="bul">
-                    <span style="font-size:13.5px; line-height:1.6; color:var(--fg-2);">{{ b }}</span>
+                  <div style="display:flex; gap:9px; align-items:flex-start;">
+                    <div style="width:6px; height:6px; background:#65D4D2; transform:rotate(45deg); flex-shrink:0; margin-top:7px;"></div>
+                    <span style="font-size:13.5px; line-height:1.6; color:rgba(232,255,254,.75);">{{ b }}</span>
                   </div>
                 </sc-for>
               </div>
@@ -1256,93 +955,77 @@
       </div>
     </section>
 
-    <section class="sec band" style="position:relative; overflow:hidden;">
-      <img src="assets/pattern-dark.png" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:760px; max-width:110%; opacity:.07; pointer-events:none;" alt="">
-      <div class="wrap wrap--prose" style="position:relative; display:flex; flex-direction:column; align-items:center; text-align:center; gap:16px;">
-        <h2 class="h2" style="font-family:{{ t.headingFont }};">{{ t.finalCta.title }}</h2>
-        <p class="lede">{{ t.finalCta.sub }}</p>
-        <div onClick="{{ goTo.contact }}" class="btn btn--lg btn--primary" style="margin-top:10px; font-family:{{ t.headingFont }};">{{ t.finalCta.cta }}</div>
+    <section style="position:relative; padding:80px 40px 90px; text-align:center; overflow:hidden;">
+      <img src="assets/pattern-dark.png" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:900px; max-width:90%; opacity:.14; pointer-events:none;">
+      <div style="position:relative; display:flex; flex-direction:column; align-items:center; gap:18px;">
+        <h2 style="font-family:{{ t.headingFont }}; font-size:40px; font-weight:900; color:#E8FFFE; margin:0; max-width:700px;">{{ t.finalCta.title }}</h2>
+        <p style="color:rgba(232,255,254,.65); font-size:17px; margin:0;">{{ t.finalCta.sub }}</p>
+        <div onClick="{{ goTo.contact }}" style="margin-top:10px; padding:17px 42px; border-radius:14px; background:#65D4D2; color:#041316; font-weight:800; font-size:17px; cursor:pointer; font-family:{{ t.headingFont }}; box-shadow:0 0 40px rgba(101,212,210,.45); transition:transform .2s;" style-hover="transform:translateY(-3px) scale(1.02);">{{ t.finalCta.cta }}</div>
       </div>
     </section>
   </sc-if>
 
   <!-- ABOUT -->
   <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
-    <section class="sec sec--flush-b">
-      <div class="wrap fu">
-        <h1 class="h1--page" style="font-family:{{ t.headingFont }};">{{ t.about.title }}</h1>
-        <p class="lede" style="margin-top:20px; max-width:680px;">{{ t.about.pitch }}</p>
+    <section style="padding:90px 40px 30px; max-width:900px; margin:0 auto; display:flex; flex-direction:column; gap:20px; text-align:center; animation:fadeUp .6s ease both;">
+      <h1 style="font-family:{{ t.headingFont }}; font-size:48px; font-weight:900; margin:0; background:linear-gradient(135deg,#E8FFFE 30%,#65D4D2); -webkit-background-clip:text; background-clip:text; color:transparent;">{{ t.about.title }}</h1>
+      <p style="font-size:18px; line-height:1.85; color:rgba(232,255,254,.75); margin:0;">{{ t.about.pitch }}</p>
+    </section>
+    <section style="padding:40px 40px 30px; max-width:1000px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:18px; animation:fadeUp .6s .15s ease both;" class="r-grid2">
+      <div style="padding:30px; background:rgba(101,212,210,.05); border:1px solid rgba(101,212,210,.2); border-radius:16px; display:flex; flex-direction:column; gap:12px;">
+        <div style="font-family:{{ t.headingFont }}; font-weight:700; font-size:19px; color:#65D4D2;">{{ t.about.audienceTitle }}</div>
+        <div style="font-size:15px; line-height:1.8; color:rgba(232,255,254,.7);">{{ t.about.audienceBody }}</div>
+      </div>
+      <div style="padding:30px; background:rgba(101,212,210,.05); border:1px solid rgba(101,212,210,.2); border-radius:16px; display:flex; flex-direction:column; gap:12px;">
+        <div style="font-family:{{ t.headingFont }}; font-weight:700; font-size:19px; color:#65D4D2;">{{ t.about.techTitle }}</div>
+        <div style="font-size:15px; line-height:1.8; color:rgba(232,255,254,.7);">{{ t.about.techBody }}</div>
       </div>
     </section>
-    <section class="sec sec--tight sec--flush-b">
-      <div class="wrap fu" style="animation-delay:.1s;">
-        <div class="hgrid hgrid--2 r-grid2">
-          <div style="display:flex; flex-direction:column; gap:10px;">
-            <div class="h4" style="font-family:{{ t.headingFont }}; color:var(--accent);">{{ t.about.audienceTitle }}</div>
-            <div class="body">{{ t.about.audienceBody }}</div>
+    <section style="padding:40px 40px 100px; max-width:1100px; margin:0 auto; animation:fadeUp .6s .3s ease both;">
+      <h2 style="font-family:{{ t.headingFont }}; font-size:32px; font-weight:800; text-align:center; margin:0 0 36px; color:#E8FFFE;">{{ t.about.whyTitle }}</h2>
+      <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:14px;" class="r-grid2">
+        <sc-for list="{{ t.about.whyItems }}" as="w" hint-placeholder-count="8">
+          <div style="display:flex; gap:12px; align-items:flex-start; padding:18px 20px; background:rgba(101,212,210,.05); border-radius:14px; border:1px solid rgba(101,212,210,.18); transition:all .25s;" style-hover="border-color:rgba(101,212,210,.5); background:rgba(101,212,210,.09);">
+            <div style="width:9px; height:9px; background:#65D4D2; transform:rotate(45deg); flex-shrink:0; margin-top:7px;"></div>
+            <div style="font-size:15px; line-height:1.7; color:rgba(232,255,254,.85);">{{ w }}</div>
           </div>
-          <div style="display:flex; flex-direction:column; gap:10px;">
-            <div class="h4" style="font-family:{{ t.headingFont }}; color:var(--accent);">{{ t.about.techTitle }}</div>
-            <div class="body">{{ t.about.techBody }}</div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="sec">
-      <div class="wrap fu" style="animation-delay:.2s;">
-        <div class="shead">
-          <h2 class="h2" style="font-family:{{ t.headingFont }};">{{ t.about.whyTitle }}</h2>
-        </div>
-        <div class="hgrid hgrid--2 r-grid2">
-          <sc-for list="{{ t.about.whyItems }}" as="w" hint-placeholder-count="8">
-            <div class="bul">
-              <div style="font-size:14.5px; line-height:1.7; color:var(--fg-2);">{{ w }}</div>
-            </div>
-          </sc-for>
-        </div>
+        </sc-for>
       </div>
     </section>
   </sc-if>
 
   <!-- SERVICES -->
   <sc-if value="{{ isServices }}" hint-placeholder-val="{{ false }}">
-    <section class="sec sec--flush-b">
-      <div class="wrap wrap--wide fu">
-        <h1 class="h1--page" style="font-family:{{ t.headingFont }};">{{ t.services.title }}</h1>
-        <p class="lede" style="margin-top:18px; max-width:620px;">{{ t.services.sub }}</p>
+    <section style="padding:90px 40px 20px; max-width:1000px; margin:0 auto; text-align:center; display:flex; flex-direction:column; gap:16px; animation:fadeUp .6s ease both;">
+      <h1 style="font-family:{{ t.headingFont }}; font-size:48px; font-weight:900; margin:0; background:linear-gradient(135deg,#E8FFFE 30%,#65D4D2); -webkit-background-clip:text; background-clip:text; color:transparent;">{{ t.services.title }}</h1>
+      <p style="font-size:17px; line-height:1.8; color:rgba(232,255,254,.7); margin:0;">{{ t.services.sub }}</p>
+    </section>
+    <section style="padding:50px 40px 90px; max-width:1200px; margin:0 auto; animation:fadeUp .6s .15s ease both;">
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px;" class="r-grid3">
+        <sc-for list="{{ t.services.modules }}" as="m" hint-placeholder-count="12">
+          <div style="padding:26px 24px; background:rgba(101,212,210,.04); border:1px solid rgba(101,212,210,.16); border-radius:16px; display:flex; flex-direction:column; gap:12px; transition:all .3s;" style-hover="transform:translateY(-6px); border-color:rgba(101,212,210,.5); background:rgba(101,212,210,.08); box-shadow:0 16px 40px rgba(0,0,0,.35);">
+            <div style="width:40px; height:40px; border-radius:10px; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; font-family:Poppins,sans-serif; font-weight:800; font-size:12px; color:#041316;">{{ m.badge }}</div>
+            <div style="font-family:{{ t.headingFont }}; font-weight:700; font-size:17px; color:#E8FFFE;">{{ m.title }}</div>
+            <div style="font-size:13.5px; line-height:1.7; color:rgba(232,255,254,.6);">{{ m.desc }}</div>
+          </div>
+        </sc-for>
       </div>
     </section>
-    <section class="sec sec--tight">
-      <div class="wrap wrap--wide fu" style="animation-delay:.1s;">
-        <div class="hgrid hgrid--3 r-grid3">
-          <sc-for list="{{ t.services.modules }}" as="m" hint-placeholder-count="12">
-            <div style="display:flex; flex-direction:column; gap:9px;">
-              <div class="num" style="font-size:11px; font-weight:700; letter-spacing:.12em; color:var(--accent);">{{ m.badge }}</div>
-              <div class="h4" style="font-family:{{ t.headingFont }};">{{ m.title }}</div>
-              <div class="small">{{ m.desc }}</div>
-            </div>
-          </sc-for>
-        </div>
-      </div>
-    </section>
-    <section class="sec band">
-      <div class="wrap wrap--wide">
-        <div class="shead">
-          <h2 class="h2" style="font-family:{{ t.headingFont }};">{{ t.packages.title }}</h2>
-        </div>
-        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; align-items:stretch;" class="r-grid4">
+    <section style="padding:70px 40px 100px; background:linear-gradient(180deg, rgba(8,58,63,.35), rgba(4,19,22,0));">
+      <div style="max-width:1200px; margin:0 auto;">
+        <h2 style="font-family:{{ t.headingFont }}; font-size:34px; font-weight:800; text-align:center; margin:0 0 44px; color:#E8FFFE;">{{ t.packages.title }}</h2>
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:18px;" class="r-grid4">
           <sc-for list="{{ t.packages.items }}" as="pk" hint-placeholder-count="4">
-            <div class="pkg {{ pk.cls }}">
-              <div class="pkg__head">
-                <sc-if value="{{ pk.highlight }}" hint-placeholder-val="{{ false }}">
-                  <span class="chip chip--accent" style="order:2;">{{ t.packages.popular }}</span>
-                </sc-if>
-                <div class="pkg__name" style="font-family:{{ t.headingFont }};">{{ pk.name }}</div>
-              </div>
+            <div style="position:relative; padding:28px 22px; background:{{ pk.bg }}; border-radius:18px; border:{{ pk.border }}; display:flex; flex-direction:column; gap:16px; transition:all .3s;" style-hover="transform:translateY(-6px);">
+              <sc-if value="{{ pk.highlight }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute; top:-12px; inset-inline-start:22px; padding:4px 14px; border-radius:12px; background:#65D4D2; color:#041316; font-size:11.5px; font-weight:800;">{{ t.packages.popular }}</div>
+              </sc-if>
+              <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:20px; color:{{ pk.titleColor }};">{{ pk.name }}</div>
               <div style="display:flex; flex-direction:column; gap:10px;">
                 <sc-for list="{{ pk.bullets }}" as="b" hint-placeholder-count="4">
-                  <div class="bul">
-                    <span style="font-size:13.5px; line-height:1.6; color:var(--fg-2);">{{ b }}</span>
+                  <div style="display:flex; gap:9px; align-items:flex-start;">
+                    <div style="width:6px; height:6px; background:#65D4D2; transform:rotate(45deg); flex-shrink:0; margin-top:7px;"></div>
+                    <span style="font-size:13.5px; line-height:1.6; color:rgba(232,255,254,.75);">{{ b }}</span>
                   </div>
                 </sc-for>
               </div>
@@ -1355,61 +1038,57 @@
 
   <!-- TEAM -->
   <sc-if value="{{ isTeam }}" hint-placeholder-val="{{ false }}">
-    <section class="sec sec--flush-b">
-      <div class="wrap fu">
-        <h1 class="h1--page" style="font-family:{{ t.headingFont }};">{{ t.team.title }}</h1>
-        <p class="lede" style="margin-top:18px; max-width:620px;">{{ t.team.sub }}</p>
-      </div>
+    <section style="padding:90px 40px 20px; max-width:900px; margin:0 auto; text-align:center; display:flex; flex-direction:column; gap:16px; animation:fadeUp .6s ease both;">
+      <h1 style="font-family:{{ t.headingFont }}; font-size:48px; font-weight:900; margin:0; background:linear-gradient(135deg,#E8FFFE 30%,#65D4D2); -webkit-background-clip:text; background-clip:text; color:transparent;">{{ t.team.title }}</h1>
+      <p style="font-size:17px; line-height:1.8; color:rgba(232,255,254,.7); margin:0;">{{ t.team.sub }}</p>
     </section>
-    <section class="sec sec--tight">
-      <div class="wrap fu" style="animation-delay:.1s;">
-        <div class="hgrid hgrid--3 r-grid3">
-          <sc-for list="{{ t.team.roles }}" as="r" hint-placeholder-count="6">
-            <div style="display:flex; flex-direction:column; gap:12px;">
-              <div class="mono-av" style="width:44px; height:44px; font-size:16px;">{{ r.initial }}</div>
-              <div class="h4" style="font-family:{{ t.headingFont }};">{{ r.name }}</div>
-              <div class="small">{{ r.desc }}</div>
-            </div>
-          </sc-for>
-        </div>
+    <section style="padding:50px 40px 100px; max-width:1100px; margin:0 auto; animation:fadeUp .6s .15s ease both;">
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px;" class="r-grid3">
+        <sc-for list="{{ t.team.roles }}" as="r" hint-placeholder-count="6">
+          <div style="padding:30px 24px; background:rgba(101,212,210,.04); border:1px solid rgba(101,212,210,.16); border-radius:16px; display:flex; flex-direction:column; gap:12px; text-align:center; align-items:center; transition:all .3s;" style-hover="transform:translateY(-6px); border-color:rgba(101,212,210,.5); background:rgba(101,212,210,.08);">
+            <div style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,#65D4D2,#0F6F7A); display:flex; align-items:center; justify-content:center; font-family:Poppins,sans-serif; font-weight:800; font-size:19px; color:#041316;">{{ r.initial }}</div>
+            <div style="font-family:{{ t.headingFont }}; font-weight:700; font-size:17px; color:#E8FFFE;">{{ r.name }}</div>
+            <div style="font-size:14px; line-height:1.7; color:rgba(232,255,254,.6);">{{ r.desc }}</div>
+          </div>
+        </sc-for>
       </div>
     </section>
   </sc-if>
 
   <!-- CONTACT -->
   <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
-    <section class="sec r-contact" style="max-width:1000px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:clamp(36px,5vw,56px);">
-      <div class="fu" style="display:flex; flex-direction:column; gap:18px;">
-        <h1 class="h1--page" style="font-family:{{ t.headingFont }};">{{ t.contact.title }}</h1>
-        <p class="lede">{{ t.contact.body }}</p>
-        <div class="rows" style="margin-top:8px;">
-          <div style="padding:13px 0; font-size:14.5px; color:var(--fg-2);"><strong style="color:var(--fg-4); font-weight:600;">{{ t.contact.emailLabel }}</strong> hello@velorci.com</div>
-          <div style="padding:13px 0; font-size:14.5px; color:var(--fg-2);"><strong style="color:var(--fg-4); font-weight:600;">{{ t.contact.whatsappLabel }}</strong> +965 9698 4525</div>
-          <div style="padding:13px 0; font-size:14.5px; color:var(--fg-2);"><strong style="color:var(--fg-4); font-weight:600;">{{ t.contact.regionLabel }}</strong> {{ t.contact.regionValue }}</div>
+    <section style="padding:90px 40px 100px; max-width:1000px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:48px; animation:fadeUp .6s ease both;" class="r-contact r-grid2">
+      <div style="display:flex; flex-direction:column; gap:18px;">
+        <h1 style="font-family:{{ t.headingFont }}; font-size:42px; font-weight:900; margin:0; background:linear-gradient(135deg,#E8FFFE 30%,#65D4D2); -webkit-background-clip:text; background-clip:text; color:transparent;">{{ t.contact.title }}</h1>
+        <p style="font-size:16px; line-height:1.8; color:rgba(232,255,254,.7); margin:0;">{{ t.contact.body }}</p>
+        <div style="display:flex; flex-direction:column; gap:12px; margin-top:8px;">
+          <div style="font-size:14.5px; color:rgba(232,255,254,.6);"><strong style="color:#65D4D2;">{{ t.contact.emailLabel }}</strong> hello@velorci.com</div>
+          <div style="font-size:14.5px; color:rgba(232,255,254,.6);"><strong style="color:#65D4D2;">{{ t.contact.whatsappLabel }}</strong> +965 9698 4525</div>
+          <div style="font-size:14.5px; color:rgba(232,255,254,.6);"><strong style="color:#65D4D2;">{{ t.contact.regionLabel }}</strong> {{ t.contact.regionValue }}</div>
         </div>
-        <img src="assets/pattern-dark.png" style="width:220px; opacity:.18; margin-top:16px;" alt="">
+        <img src="assets/pattern-dark.png" style="width:260px; opacity:.3; margin-top:20px;">
       </div>
       <sc-if value="{{ formSubmitted }}" hint-placeholder-val="{{ false }}">
-        <div class="panel" style="padding:32px 28px; display:flex; flex-direction:column; gap:10px; align-items:flex-start; justify-content:center;">
-          <div class="h3" style="font-family:{{ t.headingFont }}; color:var(--accent);">{{ t.contact.successTitle }}</div>
-          <div class="body">{{ t.contact.successBody }}</div>
-          <a href="{{ waHref }}" target="_blank" rel="noopener" class="btn btn--wa" style="margin-top:8px; font-family:{{ t.headingFont }};">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.41a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.24-8.23 8.24Zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.04s.87 2.37 1 2.53c.12.16 1.72 2.62 4.16 3.68.58.25 1.03.4 1.39.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
+        <div style="padding:40px 30px; background:rgba(101,212,210,.07); border:1px solid rgba(101,212,210,.35); border-radius:18px; display:flex; flex-direction:column; gap:10px; align-items:flex-start; justify-content:center;">
+          <div style="font-family:{{ t.headingFont }}; font-weight:800; font-size:20px; color:#65D4D2;">{{ t.contact.successTitle }}</div>
+          <div style="font-size:15px; color:rgba(232,255,254,.7); line-height:1.7;">{{ t.contact.successBody }}</div>
+          <a href="{{ waHref }}" target="_blank" rel="noopener" style="margin-top:6px; display:inline-flex; align-items:center; gap:9px; padding:13px 22px; border-radius:26px; background:#25D366; color:#062024; font-family:{{ t.headingFont }}; font-weight:800; font-size:14.5px; text-decoration:none;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#062024" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.41a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.24-8.23 8.24Zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.04s.87 2.37 1 2.53c.12.16 1.72 2.62 4.16 3.68.58.25 1.03.4 1.39.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
             {{ t.contact.successLink }}
           </a>
         </div>
       </sc-if>
       <sc-if value="{{ formNotSubmitted }}" hint-placeholder-val="{{ true }}">
-        <form onSubmit="{{ submitForm }}" class="panel fu" style="display:flex; flex-direction:column; gap:12px; padding:28px; animation-delay:.1s;">
-          <input value="{{ form.name }}" onChange="{{ setName }}" placeholder="{{ t.contact.namePlaceholder }}" class="field">
-          <input value="{{ form.phone }}" onChange="{{ setPhone }}" placeholder="{{ t.contact.phonePlaceholder }}" class="field">
-          <input value="{{ form.company }}" onChange="{{ setCompany }}" placeholder="{{ t.contact.companyPlaceholder }}" class="field">
-          <textarea value="{{ form.message }}" onChange="{{ setMessage }}" placeholder="{{ t.contact.messagePlaceholder }}" rows="4" class="field" style="resize:vertical;"></textarea>
+        <form onSubmit="{{ submitForm }}" style="display:flex; flex-direction:column; gap:14px; padding:30px; background:rgba(101,212,210,.04); border:1px solid rgba(101,212,210,.2); border-radius:18px;">
+          <input value="{{ form.name }}" onChange="{{ setName }}" placeholder="{{ t.contact.namePlaceholder }}" style="padding:13px 16px; border-radius:10px; border:1px solid rgba(101,212,210,.25); font-size:15px; background:rgba(4,19,22,.6); color:#E8FFFE;">
+          <input value="{{ form.phone }}" onChange="{{ setPhone }}" placeholder="{{ t.contact.phonePlaceholder }}" style="padding:13px 16px; border-radius:10px; border:1px solid rgba(101,212,210,.25); font-size:15px; background:rgba(4,19,22,.6); color:#E8FFFE;">
+          <input value="{{ form.company }}" onChange="{{ setCompany }}" placeholder="{{ t.contact.companyPlaceholder }}" style="padding:13px 16px; border-radius:10px; border:1px solid rgba(101,212,210,.25); font-size:15px; background:rgba(4,19,22,.6); color:#E8FFFE;">
+          <textarea value="{{ form.message }}" onChange="{{ setMessage }}" placeholder="{{ t.contact.messagePlaceholder }}" rows="4" style="padding:13px 16px; border-radius:10px; border:1px solid rgba(101,212,210,.25); font-size:15px; resize:vertical; background:rgba(4,19,22,.6); color:#E8FFFE;"></textarea>
           <sc-if value="{{ hasFormError }}" hint-placeholder-val="{{ false }}">
-            <div role="alert" style="padding:11px 14px; border-radius:var(--r2); background:rgba(232,120,120,.08); border-inline-start:2px solid #E4572E; font-size:13.5px; color:#F0A9A9;">{{ formError }}</div>
+            <div role="alert" style="padding:11px 14px; border-radius:10px; background:rgba(232,120,120,.1); border:1px solid rgba(232,120,120,.4); font-size:13.5px; color:#F0A9A9;">{{ formError }}</div>
           </sc-if>
-          <button type="submit" class="btn btn--wa btn--block" style="margin-top:4px; padding:14px; font-size:15px; font-family:{{ t.headingFont }};">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.41a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.24-8.23 8.24Zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.04s.87 2.37 1 2.53c.12.16 1.72 2.62 4.16 3.68.58.25 1.03.4 1.39.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
+          <button type="submit" style="display:flex; align-items:center; justify-content:center; gap:10px; padding:15px; border-radius:10px; border:none; background:#25D366; color:#062024; font-weight:800; font-size:15px; cursor:pointer; font-family:{{ t.headingFont }}; box-shadow:0 0 24px rgba(37,211,102,.28);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#062024" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.41a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.24-8.23 8.24Zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.04s.87 2.37 1 2.53c.12.16 1.72 2.62 4.16 3.68.58.25 1.03.4 1.39.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
             {{ t.contact.submit }}
           </button>
         </form>
@@ -1417,19 +1096,17 @@
     </section>
   </sc-if>
 
-  <footer style="padding:32px var(--gutter); border-top:1px solid var(--line);">
-    <div class="wrap wrap--wide" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
-      <div style="display:flex; align-items:center; gap:9px;">
-        <img src="assets/logo-turq.png" style="height:20px; width:auto; display:block;" alt="">
-        <span style="font-family:Poppins,sans-serif; font-weight:700; font-size:14px; color:var(--fg-2);">velorci</span>
-      </div>
-      <div style="font-size:12.5px; color:var(--fg-4);">{{ t.footer.rights }}</div>
+  <footer style="padding:38px 40px; border-top:1px solid rgba(101,212,210,.14); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+    <div style="display:flex; align-items:center; gap:9px;">
+      <img src="assets/logo-turq.png" style="height:22px; width:auto; display:block;">
+      <span style="font-family:Poppins,sans-serif; font-weight:700; font-size:15px; color:#E8FFFE;">velorci</span>
     </div>
+    <div style="font-size:13px; color:rgba(232,255,254,.45);">{{ t.footer.rights }}</div>
   </footer>
 
   <!-- ---------- FLOATING WHATSAPP ---------- -->
-  <a href="{{ t.wa.href }}" target="_blank" rel="noopener" aria-label="{{ t.wa.label }}" class="r-wa" style="font-family:{{ t.headingFont }};">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.41a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.24-8.23 8.24Zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.04s.87 2.37 1 2.53c.12.16 1.72 2.62 4.16 3.68.58.25 1.03.4 1.39.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
+  <a href="{{ t.wa.href }}" target="_blank" rel="noopener" aria-label="{{ t.wa.label }}" class="r-wa" style="position:fixed; inset-inline-end:22px; bottom:22px; z-index:90; display:flex; align-items:center; gap:10px; padding:13px 20px 13px 16px; border-radius:30px; background:#25D366; color:#062024; font-family:{{ t.headingFont }}; font-weight:800; font-size:14.5px; text-decoration:none; box-shadow:0 10px 30px rgba(0,0,0,.45), 0 0 0 5px rgba(37,211,102,.16); transition:transform .2s, box-shadow .2s;" style-hover="transform:translateY(-3px); box-shadow:0 16px 40px rgba(0,0,0,.5), 0 0 0 8px rgba(37,211,102,.22);">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="#062024" style="flex-shrink:0;" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.41a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.24-8.23 8.24Zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.04s.87 2.37 1 2.53c.12.16 1.72 2.62 4.16 3.68.58.25 1.03.4 1.39.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
     <span class="r-wa-txt">{{ t.wa.label }}</span>
   </a>
 </div>
@@ -1693,11 +1370,11 @@ class Component extends DCLogic {
             { date:"2026-09-17", inv:"INV-26-4393", state: L==="ar"?"مفتوح":"Open", age: L==="ar"?"6 أيام":"6 d",
               amount: L==="ar"?"49.300 د.ك":"KD 49.300", promo:"FREEDELIVERY (2)", pay: L==="ar"?"نقداً":"Cash",
               customer: L==="ar"?"عميل تجريبي":"Demo customer", repeat:"4x", area: L==="ar"?"الظهر":"Al Dhaher",
-              accent:"#E4572E", stateBg:"rgba(228,87,46,.14)", stateFg:"#F0885F" },
+              accent:"#E4572E", stateBg:"#FDEAE4", stateFg:"#C2532E" },
             { date:"2026-09-15", inv:"INV-26-4392", state: L==="ar"?"قيد التنفيذ":"In progress", age: L==="ar"?"4 أيام":"4 d",
               amount: L==="ar"?"98.600 د.ك":"KD 98.600", promo:"FREEDELIVERY (2)", pay:"KNET",
               customer: L==="ar"?"عميل تجريبي":"Demo customer", repeat:"2x", area: L==="ar"?"صباح الأحمد":"Sabah Al Ahmad",
-              accent:"#F0A825", stateBg:"rgba(240,168,37,.14)", stateFg:"#F0BE63" },
+              accent:"#F0A825", stateBg:"#FFF3E2", stateFg:"#A76A12" },
           ],
         },
 
@@ -1964,7 +1641,9 @@ class Component extends DCLogic {
             priceCur: L==="ar"?"د.ك":"KD",
             bullets: this.pick(p.bullets),
             highlight: !!p.highlight,
-            cls: p.highlight ? "is-on" : "",
+            bg: p.highlight ? "rgba(101,212,210,.09)" : "rgba(232,255,254,.03)",
+            border: p.highlight ? "1.5px solid rgba(101,212,210,.65)" : "1px solid rgba(101,212,210,.18)",
+            titleColor: p.highlight ? "#65D4D2" : "#E8FFFE",
           };
         }),
       },
@@ -2053,7 +1732,9 @@ class Component extends DCLogic {
     t.pillars.orders.list = t.pillars.orders.list.map((o,i) => ({...o, delay: (.15+i*.18).toFixed(2)+"s"}));
     t.pillars.orders.stages = t.pillars.orders.stages.map(s => ({
       label:s.label, count:s.count,
-      cls: s.active ? "tag--on" : "",
+      chipBg: s.active ? "rgba(101,212,210,.14)" : "rgba(232,255,254,.05)",
+      chipBorder: s.active ? "rgba(101,212,210,.4)" : "rgba(232,255,254,.1)",
+      chipFg: s.active ? "#65D4D2" : "rgba(232,255,254,.6)",
     }));
     t.pillars.stock.rows = t.pillars.stock.rows.map((r,i) => ({...r, delay: (.35+i*.12).toFixed(2)+"s"}));
     t.pillars.wa.chats3 = t.pillars.wa.chats.slice(0,3).map((c,i) => ({
@@ -2145,7 +1826,8 @@ class Component extends DCLogic {
       navItems: navDefs.map(it => ({
         label: it[L],
         onClick: () => this.setState({page: it.key, menuOpen:false}),
-        cls: this.state.page===it.key ? "is-on" : "",
+        color: this.state.page===it.key ? "#65D4D2" : "rgba(232,255,254,.7)",
+        bg: this.state.page===it.key ? "rgba(101,212,210,.12)" : "transparent",
       })),
       goTo: {
         home: () => this.setState({page:"home", menuOpen:false}),
@@ -2156,7 +1838,10 @@ class Component extends DCLogic {
       pillarTabs: DATA.pillarDefs.map(p => ({
         label: this.pick(p.tab),
         onClick: () => this.setState({pillar: p.key, pillarOpen: true}),
-        cls: P===p.key ? "is-on" : "",
+        fg: P===p.key ? "#041316" : "rgba(232,255,254,.72)",
+        bg: P===p.key ? "#65D4D2" : "rgba(232,255,254,.035)",
+        border: P===p.key ? "1px solid #65D4D2" : "1px solid rgba(101,212,210,.2)",
+        shadow: P===p.key ? "0 0 22px rgba(101,212,210,.32)" : "none",
       })),
       pillarRows: DATA.pillarDefs.map((p, i) => {
         const on = P===p.key && OPEN;
@@ -2166,11 +1851,13 @@ class Component extends DCLogic {
           d: p.d,
           order: i*2,
           onClick: () => this.setState(on ? {pillarOpen:false} : {pillar:p.key, pillarOpen:true}),
-          cls: on ? "is-on" : "",
+          bg: on ? "rgba(101,212,210,.13)" : "rgba(232,255,254,.03)",
+          border: on ? "1px solid rgba(101,212,210,.55)" : "1px solid rgba(101,212,210,.16)",
+          shadow: on ? "0 10px 30px rgba(0,0,0,.35)" : "none",
           fg: on ? "#65D4D2" : "#E8FFFE",
-          iconCls: on ? "" : "isl--plain",
-          iconFg: on ? "#65D4D2" : "rgba(232,255,254,.5)",
-          chevron: on ? "#65D4D2" : "rgba(232,255,254,.3)",
+          iconBg: on ? "linear-gradient(135deg,#65D4D2,#0F6F7A)" : "rgba(101,212,210,.12)",
+          iconFg: on ? "#041316" : "#65D4D2",
+          chevron: on ? "#65D4D2" : "rgba(232,255,254,.35)",
           rotate: on ? "180deg" : "0deg",
         };
       }),
@@ -2205,8 +1892,9 @@ class Component extends DCLogic {
       ordersCount: Math.round(550*revealEase).toLocaleString("en"),
       sellers: DATA.topSellers.map(s => ({
         rank: s.rank,
-        rankCls: s.rank<=3 ? "rank rank--top" : "rank",
-        barColor: s.rank<=3 ? "#65D4D2" : "rgba(101,212,210,.4)",
+        rankBg: s.rank===1?"#65D4D2":s.rank===2?"rgba(101,212,210,.28)":s.rank===3?"rgba(15,111,122,.4)":"rgba(232,255,254,.08)",
+        rankFg: s.rank===1?"#041316":s.rank<=3?"#65D4D2":"rgba(232,255,254,.6)",
+        rankBorder: s.rank<=3?"1px solid rgba(101,212,210,.5)":"1px solid rgba(232,255,254,.12)",
         medal: s.rank<=3,
         name: this.pick(s.name),
         pcs: Math.round(s.pcs*revealEase),
@@ -2220,7 +1908,8 @@ class Component extends DCLogic {
         const v = c.target*revealEase;
         const num = (c.dec ? v.toFixed(c.dec) : Math.round(v).toLocaleString("en"));
         return { label:c.label, value: num + (c.suffix||""), sub:c.sub, delta:c.delta,
-          deltaColor: c.up ? "#5FD394" : "#E07A6A" };
+          deltaColor: c.up ? "#1a8a4a" : "#c0392b",
+          deltaBg: c.up ? "rgba(58,208,122,.15)" : "rgba(224,79,79,.12)" };
       }),
       marqueeItems: [...mq, ...mq],
       form: this.state.form,
@@ -2265,7 +1954,8 @@ function navMenu(L){
     : ["Home","E-Commerce Store","Customers (CRM)","Reports","Products","Accounting","WhatsApp","Ads","Orders"];
   return items.map((label,i) => ({
     label,
-    cls: i===0 ? "is-on" : "",
+    color: i===0 ? "#65D4D2" : "rgba(232,255,254,.6)",
+    bg: i===0 ? "rgba(101,212,210,.12)" : "transparent",
   }));
 }
 
