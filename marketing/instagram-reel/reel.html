@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>velorci reel</title>
+<style>
+  @font-face{font-family:Cairo;font-weight:500;src:url(fonts/Cairo-500.ttf)}
+  @font-face{font-family:Cairo;font-weight:700;src:url(fonts/Cairo-700.ttf)}
+  @font-face{font-family:Cairo;font-weight:800;src:url(fonts/Cairo-800.ttf)}
+  @font-face{font-family:Cairo;font-weight:900;src:url(fonts/Cairo-900.ttf)}
+  @font-face{font-family:Poppins;font-weight:600;src:url(fonts/Poppins-600.ttf)}
+  @font-face{font-family:Poppins;font-weight:700;src:url(fonts/Poppins-700.ttf)}
+  @font-face{font-family:Poppins;font-weight:800;src:url(fonts/Poppins-800.ttf)}
+  :root{--bg:#041316;--bg2:#062024;--teal:#65D4D2;--ice:#E8FFFE;--deep:#0F6F7A;--muted:#5C868D;--line:#0C3B42;--wa:#25D366}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+  body{font-family:Cairo,sans-serif;color:var(--ice);position:relative}
+  .abs{position:absolute}
+  .center{left:50%;transform:translateX(-50%)}
+  #glow{inset:0;background:radial-gradient(900px 900px at 50% 38%,rgba(101,212,210,.18),transparent 70%),radial-gradient(700px 700px at 80% 95%,rgba(15,111,122,.35),transparent 70%)}
+  #pattern{left:-200px;top:0;width:1480px;height:2400px;background:url(../../assets/pattern-dark.png) repeat;background-size:531px 181px;opacity:.06}
+  .brand{top:90px;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:18px;font-family:Poppins;font-weight:700;font-size:44px;letter-spacing:.5px}
+  .brand img{width:78px}
+  h1{font-weight:900;font-size:92px;line-height:1.25;text-align:center}
+  h1 em{font-style:normal;color:var(--teal)}
+  .sub{font-weight:700;font-size:44px;color:var(--teal);text-align:center}
+  .card{background:linear-gradient(160deg,#0a2a30,#061a1e);border:2px solid var(--line);border-radius:44px;box-shadow:0 40px 90px rgba(0,0,0,.5)}
+  .chip{display:inline-flex;align-items:center;gap:14px;padding:18px 34px;border-radius:999px;background:rgba(101,212,210,.12);border:2px solid rgba(101,212,210,.45);font-weight:800;font-size:38px;color:var(--ice);white-space:nowrap}
+  .chip i{width:18px;height:18px;border-radius:50%;background:var(--teal);display:block}
+  .bubble{padding:22px 30px;border-radius:30px;font-size:36px;font-weight:700;max-width:620px;line-height:1.45}
+  .in{background:#12353b;border-top-right-radius:8px}
+  .out{background:#0F6F7A;border-top-left-radius:8px}
+  .wa-dot{width:74px;height:74px;border-radius:50%;background:var(--wa);display:grid;place-items:center}
+  .wa-dot svg{width:44px;height:44px}
+  #cap{left:90px;right:90px;bottom:300px;text-align:center;font-weight:800;font-size:40px;line-height:1.5;color:#fff}
+  #cap span{background:rgba(4,19,22,.78);padding:6px 22px;border-radius:16px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+  .browser-bar{height:86px;border-bottom:2px solid var(--line);display:flex;align-items:center;gap:14px;padding:0 34px;direction:ltr}
+  .browser-bar b{width:20px;height:20px;border-radius:50%;background:#1c4a51;display:block}
+  .url{margin-left:20px;flex:1;background:#08262b;border-radius:18px;padding:8px 26px;font-family:Poppins;font-size:28px;color:var(--teal)}
+  .prod{border-radius:26px;overflow:hidden;background:#0b2e33}
+  .prod img{width:100%;display:block}
+  .prod div{padding:14px 20px;font-size:30px;font-weight:800;display:flex;justify-content:space-between}
+  .prod div span{color:var(--teal)}
+  .cta{padding:34px 60px;border-radius:999px;background:var(--wa);color:#04291a;font-weight:900;font-size:52px;display:inline-flex;gap:22px;align-items:center;white-space:nowrap}
+  .cta svg{width:60px;height:60px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="wa" viewBox="0 0 32 32"><path fill="currentColor" d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.9 2 7L3 29l6.4-2c2 1.1 4.3 1.7 6.6 1.7 7.2 0 13-5.7 13-12.8C29 8.7 23.2 3 16 3zm0 23.4c-2.1 0-4.1-.6-5.9-1.7l-.4-.2-3.8 1.2 1.2-3.7-.3-.4a10.4 10.4 0 0 1-1.7-5.8C5.1 9.9 10 5.2 16 5.2s10.9 4.7 10.9 10.6S22 26.4 16 26.4zm6-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6.3-.5v-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.7s1.2 3.2 1.4 3.4c.2.2 2.4 3.6 5.8 5 .8.4 1.4.6 1.9.7.8.3 1.6.2 2.2.1.7-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.1-.3-.2-.6-.4z"/></symbol>
+</svg>
+
+<div id="pattern" class="abs"></div>
+<div id="glow" class="abs"></div>
+<div class="brand abs" id="brand"><span>velorci</span><img src="../../assets/logo-turq.png" alt=""></div>
+
+<!-- S1: fragmented -->
+<div id="s1" class="abs" style="inset:0">
+  <h1 class="abs" id="s1h" style="top:300px;left:0;right:0">طلباتك في مكان<br>وعملاؤك في مكان آخر؟</h1>
+  <div class="abs card" id="s1wa" style="width:600px;height:380px;top:560px;right:60px;padding:34px">
+    <div style="display:flex;gap:20px;align-items:center;margin-bottom:28px"><div class="wa-dot" style="color:#fff"><svg><use href="#wa"/></svg></div><b style="font-size:40px">واتساب</b></div>
+    <div class="bubble in" style="margin-bottom:18px">وين طلبي؟ 🤔</div>
+    <div class="bubble in" style="width:440px">عندكم هذا المقاس؟</div>
+  </div>
+  <div class="abs card" id="s1web" style="width:600px;height:400px;top:1060px;right:110px;overflow:hidden">
+    <div class="browser-bar"><b></b><b></b><b></b><div class="url">yourstore.com</div></div>
+    <div style="display:flex;gap:22px;padding:30px;direction:ltr">
+      <div class="prod" style="width:250px"><img src="../../assets/prod-2.png"></div>
+      <div class="prod" style="width:250px"><img src="../../assets/prod-5.png"></div>
+    </div>
+  </div>
+  <div class="abs card" id="s1xls" style="width:380px;height:220px;top:950px;left:50px;padding:30px;font-family:Poppins;font-size:30px;color:var(--muted);direction:ltr;line-height:1.6">orders_final_v3.xlsx<br>▦▦▦▦▦▦<br>▦▦▦▦▦▦</div>
+</div>
+
+<!-- S2: integration -->
+<div id="s2" class="abs" style="inset:0">
+  <svg id="s2lines" class="abs" style="left:0;top:0" width="1080" height="1920">
+    <path id="l1" d="M270 670 C 300 850, 450 860, 540 900" stroke="#65D4D2" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path id="l2" d="M810 670 C 780 850, 630 860, 540 900" stroke="#65D4D2" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path id="l3" d="M540 1200 L 540 1100" stroke="#65D4D2" stroke-width="6" fill="none" stroke-linecap="round"/>
+  </svg>
+  <div class="abs card" id="n1" style="width:240px;height:240px;left:150px;top:430px;display:grid;place-items:center"><div class="wa-dot" style="width:130px;height:130px;color:#fff"><svg style="width:80px;height:80px"><use href="#wa"/></svg></div></div>
+  <div class="abs card" id="n2" style="width:240px;height:240px;left:690px;top:430px;display:grid;place-items:center;font-size:110px">🛍️</div>
+  <div class="abs card" id="n3" style="width:240px;height:240px;left:420px;top:1190px;display:grid;place-items:center;font-size:110px">📦</div>
+  <div class="abs" id="n1l" style="left:150px;width:240px;top:685px;text-align:center;font-weight:800;font-size:38px">واتساب</div>
+  <div class="abs" id="n2l" style="left:690px;width:240px;top:685px;text-align:center;font-weight:800;font-size:38px">الموقع</div>
+  <div class="abs" id="n3l" style="left:420px;width:240px;top:1440px;text-align:center;font-weight:800;font-size:38px">الطلبات</div>
+  <div class="abs" id="hub" style="left:390px;top:800px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,#0c3b42,#062024);border:4px solid var(--teal);display:grid;place-items:center;box-shadow:0 0 120px rgba(101,212,210,.45)"><img src="../../assets/logo-turq.png" style="width:190px"></div>
+  <h1 class="abs" id="s2h" style="top:260px;left:0;right:0;font-size:84px">كلّه <em>متكامل</em></h1>
+</div>
+
+<!-- S3: WhatsApp -->
+<div id="s3" class="abs" style="inset:0">
+  <div class="abs" id="s3h" style="top:250px;left:0;right:0;text-align:center">
+    <div style="display:inline-flex;align-items:center;gap:24px"><div class="wa-dot" style="width:96px;height:96px;color:#fff"><svg style="width:58px;height:58px"><use href="#wa"/></svg></div><h1 style="font-size:84px">واتساب أعمال</h1></div>
+  </div>
+  <div class="abs card" id="phone" style="width:760px;height:640px;left:160px;top:410px;padding:0;overflow:hidden">
+    <div style="height:120px;background:#0a3137;display:flex;align-items:center;gap:22px;padding:0 36px">
+      <div style="width:76px;height:76px;border-radius:50%;background:var(--deep);display:grid;place-items:center;font-weight:900;font-size:36px">س</div>
+      <div><b style="font-size:36px">سارة</b><div style="font-size:26px;color:var(--teal)" id="typing">متصلة الآن</div></div>
+    </div>
+    <div style="padding:40px 36px;display:flex;flex-direction:column;gap:26px">
+      <div class="bubble in" id="m1" style="align-self:flex-start">مرحبا، طلبي وصل لوين؟</div>
+      <div class="bubble out" id="m2" style="align-self:flex-end">أهلاً سارة 👋 طلبك #1042 خرج للتوصيل وسيصلك اليوم.
+        <div style="font-size:24px;color:#b9f3f1;margin-top:8px;font-family:Poppins;direction:ltr;text-align:left">AI ✓✓</div></div>
+      <div class="bubble in" id="m3" style="align-self:flex-start">ممتاز، شكراً! 🙏</div>
+    </div>
+  </div>
+  <div class="abs" id="s3chips" style="top:1090px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:22px">
+    <span class="chip" id="c31"><i></i>رقم رسمي موثّق</span>
+    <span class="chip" id="c32"><i></i>وكيل ذكي يرد تلقائياً</span>
+    <span class="chip" id="c33"><i></i>رسائل جماعية</span>
+  </div>
+</div>
+
+<!-- S4: Website & tools -->
+<div id="s4" class="abs" style="inset:0">
+  <h1 class="abs" id="s4h" style="top:250px;left:0;right:0;font-size:84px">متجرك على <em>دومينك</em></h1>
+  <div class="abs card" id="site" style="width:900px;height:740px;left:90px;top:410px;overflow:hidden">
+    <div class="browser-bar"><b></b><b></b><b></b><div class="url">yourstore.com</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:26px;padding:34px">
+      <div class="prod" id="p1"><img src="../../assets/prod-2.png" style="height:200px;object-fit:cover"><div>كرسي <span>45 د.ك</span></div></div>
+      <div class="prod" id="p2"><img src="../../assets/prod-3.png" style="height:200px;object-fit:cover"><div>خزانة <span>120 د.ك</span></div></div>
+      <div class="prod" id="p3"><img src="../../assets/prod-4.png" style="height:200px;object-fit:cover"><div>طاولة <span>80 د.ك</span></div></div>
+      <div class="prod" id="p4"><img src="../../assets/prod-5.png" style="height:200px;object-fit:cover"><div>مقعد <span>35 د.ك</span></div></div>
+    </div>
+  </div>
+  <div class="abs card" id="notif" style="width:720px;left:180px;top:1080px;padding:26px 30px;display:flex;gap:22px;align-items:center;border-color:var(--wa)">
+    <div class="wa-dot" style="color:#fff;flex:none"><svg><use href="#wa"/></svg></div>
+    <div style="font-size:32px;font-weight:700;line-height:1.4">سلة متروكة؟ أرسلنا تذكيراً<br><span style="color:var(--teal)">+ كوبون خصم 10%</span></div>
+  </div>
+  <div class="abs" id="s4chips" style="top:1225px;left:0;right:0;display:flex;flex-wrap:wrap;justify-content:center;gap:16px;padding:0 60px">
+    <span class="chip" id="c41"><i></i>بدون برمجة</span>
+    <span class="chip" id="c42"><i></i>كوبونات</span>
+    <span class="chip" id="c43"><i></i>سلات متروكة</span>
+    <span class="chip" id="c44"><i></i>تقييمات</span>
+  </div>
+</div>
+
+<!-- S5: CTA -->
+<div id="s5" class="abs" style="inset:0">
+  <img class="abs" id="s5logo" src="../../assets/logo-turq.png" style="width:420px;left:330px;top:420px">
+  <div class="abs" id="s5name" style="top:720px;left:0;right:0;text-align:center;font-family:Poppins;font-weight:800;font-size:130px">velorci</div>
+  <h1 class="abs" id="s5h" style="top:920px;left:0;right:0;font-size:76px">كل عملك في <em>لوحة واحدة</em></h1>
+  <div class="abs" id="s5cta" style="top:1140px;left:0;right:0;text-align:center"><span class="cta"><svg style="color:#04291a"><use href="#wa"/></svg>راسلنا الآن</span></div>
+  <div class="abs" id="s5num" style="top:1320px;left:0;right:0;text-align:center;font-family:Poppins;font-weight:700;font-size:54px;direction:ltr">+965 9698 4525</div>
+  <div class="abs" id="s5url" style="top:1410px;left:0;right:0;text-align:center;font-family:Poppins;font-weight:600;font-size:40px;color:var(--teal)">velorci.com</div>
+</div>
+
+<div id="cap" class="abs"><span id="capt"></span></div>
+
+<script>
+// Voice-over lines; timing drives both captions and scenes.
+const VO = [
+  [0.2, 3.6,  'طلباتك على واتساب، ومتجرك على الموقع… وكلٌّ في مكان؟'],
+  [3.8, 7.2,  'مع velorci، كل شيء متكامل في لوحة واحدة.'],
+  [7.4, 11.6, 'واتساب أعمال رسمي، ووكيل ذكي يرد على عملائك تلقائياً.'],
+  [11.8,16.0, 'ومتجر بدومينك الخاص، بلا برمجة: كوبونات، وتذكير بالسلات المتروكة.'],
+  [16.2,19.8, 'velorci… راسلنا الآن على واتساب.'],
+];
+const DUR = 20;
+const $ = id => document.getElementById(id);
+const cl = (x,a=0,b=1) => Math.min(b, Math.max(a, x));
+const p = (t,a,b) => cl((t-a)/(b-a));
+const eo = x => 1 - Math.pow(1-x, 3);
+const eio = x => x<.5 ? 4*x*x*x : 1 - Math.pow(-2*x+2, 3)/2;
+const back = x => { const c=1.70158, c3=c+1; return 1 + c3*Math.pow(x-1,3) + c*Math.pow(x-1,2); };
+function set(id, o, tf){ const e=$(id); e.style.opacity=o; if(tf!==undefined) e.style.transform=tf; }
+// scene visibility with crossfade
+function scene(t,a,b,f=.35){ return Math.min(p(t,a-f,a+f*0.2), 1-p(t,b-f*0.2,b+f)); }
+function pop(t,a,d=.45){ const x=p(t,a,a+d); return [cl(x*2), `scale(${.6+.4*back(x)})`]; }
+function rise(t,a,d=.5,dy=60){ const x=eo(p(t,a,a+d)); return [x, `translateY(${(1-x)*dy}px)`]; }
+
+function render(t){
+  $('pattern').style.transform = `translateY(${-t*14}px)`;
+  const brandO = 1 - scene(t,16,99,.3);
+  set('brand', cl(p(t,0,.5))*brandO);
+
+  // S1
+  const v1 = scene(t,0,3.7); $('s1').style.opacity = v1;
+  { const [o,tf]=rise(t,.1,.6); set('s1h',o,tf); }
+  const shake = k => Math.sin(t*9+k)*6;
+  { const x=eo(p(t,.5,1.1)); set('s1wa',x,`translate(${(1-x)*300}px,0) rotate(${-4+shake(0)*.2}deg)`); }
+  { const x=eo(p(t,.9,1.5)); set('s1web',x,`translate(${-(1-x)*300}px,0) rotate(${3+shake(1)*.2}deg)`); }
+  { const x=eo(p(t,1.3,1.9)); set('s1xls',x*.9,`translateY(${(1-x)*80}px) rotate(${-7+shake(2)*.3}deg)`); }
+
+  // S2
+  const v2 = scene(t,3.7,7.3); $('s2').style.opacity = v2;
+  { const [o,tf]=rise(t,3.8,.5); set('s2h',o,tf); }
+  [['n1',3.9],['n2',4.1],['n3',4.3]].forEach(([id,a])=>{ const [o,tf]=pop(t,a); set(id,o,tf); set(id+'l',o); });
+  ['l1','l2','l3'].forEach((id,i)=>{ const e=$(id), L=e.getTotalLength(); e.style.strokeDasharray=L; e.style.strokeDashoffset=L*(1-eio(p(t,4.6+i*.15,5.4+i*.15))); });
+  { const [o,tf]=pop(t,5.2,.6); const pulse=1+.04*Math.sin(Math.max(0,t-5.8)*6)*p(t,5.8,6); set('hub',o,tf.replace(')',`) scale(${pulse})`)); }
+
+  // S3
+  const v3 = scene(t,7.3,11.7); $('s3').style.opacity = v3;
+  { const [o,tf]=rise(t,7.4,.5); set('s3h',o,tf); }
+  { const x=eo(p(t,7.5,8.1)); set('phone',x,`translateY(${(1-x)*140}px)`); }
+  { const [o,tf]=rise(t,8.1,.35,30); set('m1',o,tf); }
+  $('typing').textContent = (t>8.5 && t<9.3) ? 'الوكيل الذكي يكتب…' : 'متصلة الآن';
+  { const [o,tf]=rise(t,9.3,.35,30); set('m2',o,tf); }
+  { const [o,tf]=rise(t,10.4,.35,30); set('m3',o,tf); }
+  [['c31',9.6],['c32',9.9],['c33',10.2]].forEach(([id,a])=>{ const [o,tf]=pop(t,a,.4); set(id,o,tf); });
+
+  // S4
+  const v4 = scene(t,11.7,16.1); $('s4').style.opacity = v4;
+  { const [o,tf]=rise(t,11.8,.5); set('s4h',o,tf); }
+  { const x=eo(p(t,11.9,12.5)); set('site',x,`translateY(${(1-x)*140}px) scale(${.94+.06*x})`); }
+  ['p1','p2','p3','p4'].forEach((id,i)=>{ const [o,tf]=pop(t,12.3+i*.15,.4); set(id,o,tf); });
+  { const x=eo(p(t,13.6,14.1)); set('notif',x,`translateY(${(1-x)*-120}px)`); }
+  [['c41',14.2],['c42',14.4],['c43',14.6],['c44',14.8]].forEach(([id,a])=>{ const [o,tf]=pop(t,a,.4); set(id,o,tf); });
+
+  // S5
+  const v5 = scene(t,16.1,99); $('s5').style.opacity = v5;
+  { const [o,tf]=pop(t,16.2,.7); set('s5logo',o,tf); }
+  { const [o,tf]=rise(t,16.6,.5); set('s5name',o,tf); }
+  { const [o,tf]=rise(t,17.0,.5); set('s5h',o,tf); }
+  { const [o,tf]=pop(t,17.5,.5); const b=1+.035*Math.sin(Math.max(0,t-18)*5)*p(t,18,18.3); set('s5cta',o,tf+` scale(${b})`); }
+  { const [o,tf]=rise(t,17.8,.4); set('s5num',o,tf); }
+  { const [o,tf]=rise(t,18.0,.4); set('s5url',o,tf); }
+
+  // captions
+  const line = VO.find(([a,b])=>t>=a && t<b);
+  $('capt').textContent = line ? line[2] : '';
+  $('cap').style.opacity = line ? cl(Math.min(p(t,line[0],line[0]+.15), 1-p(t,line[1]-.15,line[1]))) : 0;
+}
+window.render = render;
+window.DUR = DUR;
+if (!location.search.includes('capture')) {
+  const t0 = performance.now();
+  (function loop(){ render(((performance.now()-t0)/1000) % DUR); requestAnimationFrame(loop); })();
+} else render(0);
+</script>
+</body>
+</html>
