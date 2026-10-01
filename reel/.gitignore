@@ -1,1 +1,4 @@
 soundtrack.wav
+soundtrack-*.wav
+vo-*.wav
+.vo-cache/

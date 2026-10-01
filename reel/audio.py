@@ -3,8 +3,11 @@
 Every cue is read from timeline.js, so the sound lands on the same frames as
 the picture. Nothing is sampled: drums, synths, UI sounds, impacts and the
 reverb are all generated here.   python3 audio.py
+With a voice-over (voiceover.py) the score ducks under it:
+    python3 audio.py --vo vo-ar.wav --out soundtrack-ar-vo.wav
 Requires numpy, scipy, pyloudnorm.
 """
+import argparse
 import json
 import os
 import re
@@ -16,6 +19,10 @@ from scipy.ndimage import minimum_filter1d
 from scipy.signal import butter, fftconvolve, istft, lfilter, sosfilt, stft
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+ap = argparse.ArgumentParser()
+ap.add_argument("--vo", help="voice-over wav (48 kHz) to mix over the score")
+ap.add_argument("--out", default="soundtrack.wav")
+ARGS = ap.parse_args()
 TL = json.loads(re.search(r"=\s*(\{.*\})\s*;", open(os.path.join(HERE, "timeline.js")).read(), re.S).group(1))
 SR = 48000
 DUR = TL["duration"]
@@ -551,6 +558,24 @@ thr = 0.35
 gr = np.where(lvl > thr, (thr / lvl) ** (1 - 1 / 1.6), 1.0)
 mix *= gr
 
+# voice-over: duck the score ~8 dB under speech, sit the voice on top with a touch of room
+if ARGS.vo:
+    _, vo = wavfile.read(os.path.join(HERE, ARGS.vo) if not os.path.isabs(ARGS.vo) else ARGS.vo)
+    vo = vo.astype(float) / 32767
+    vo = (vo.mean(axis=1) if vo.ndim > 1 else vo)[:N]
+    vo = np.pad(vo, (0, N - len(vo)))
+    env = np.abs(vo)
+    att = lfilter([1 - np.exp(-1 / (0.02 * SR))], [1, -np.exp(-1 / (0.02 * SR))], env)
+    env = att
+    env = minimum_filter1d(-env, size=int(0.12 * SR)) * -1          # hold through syllable gaps
+    env = lfilter([1 - np.exp(-1 / (0.18 * SR))], [1, -np.exp(-1 / (0.18 * SR))], env)  # smooth release
+    env = np.clip(env / (np.percentile(env[env > 1e-4], 90) + 1e-9), 0, 1)
+    mix *= 1 - 0.6 * env
+    speech = np.abs(vo) > 0.02
+    k = 1.15 * np.sqrt(np.mean(mix ** 2)) / (np.sqrt(np.mean(vo[speech] ** 2)) + 1e-9)
+    vo_st = np.vstack([vo, vo]) * k
+    mix += vo_st + reverb(vo_st * 0.12, make_ir(0.5, 0.008, 6000))
+
 # loudness to -14 LUFS, then a look-ahead peak limiter at -1 dBFS
 meter = pyln.Meter(SR)
 loud = meter.integrated_loudness(mix.T)
@@ -567,6 +592,6 @@ fade = int(0.35 * SR)
 mix[:, -fade:] *= np.linspace(1, 0, fade) ** 1.5
 
 print("integrated loudness after limiter: %.1f LUFS" % meter.integrated_loudness(mix.T))
-out = os.path.join(HERE, "soundtrack.wav")
+out = os.path.join(HERE, ARGS.out)
 wavfile.write(out, SR, (mix.T * 32767).astype(np.int16))
 print("wrote", out)
