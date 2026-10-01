@@ -1,6 +1,9 @@
 # Velorci: Instagram Reel
 
-A 30-second 9:16 (1080×1920, 30 fps) ad for Velorci. The output is `velorci-reel.mp4` (H.264 with AAC audio, -14 LUFS).
+A 30-second 9:16 (1080×1920, 30 fps) ad for Velorci, in two cuts. The output is H.264 with AAC audio at -14 LUFS:
+
+- `velorci-reel.mp4`: English.
+- `velorci-reel-ar.mp4`: Arabic. Right-to-left, Cairo for Arabic text, and every interface translated. Customer messages are in Gulf dialect.
 
 The picture is real-time HTML/CSS/SVG that's posed one frame at a time. The soundtrack is synthesized in code. Both read the same cue sheet, so every cut, ping and hit lands on its frame. There's no stock footage, sampled audio or third-party logo.
 
@@ -16,10 +19,11 @@ The picture is real-time HTML/CSS/SVG that's posed one frame at a time. The soun
 ## Files
 
 - `timeline.js`: cue sheet shared by picture and sound (cuts, pings, beat, impacts).
+- `strings-ar.js`: Arabic copy, keyed by the English string it replaces. The Arabic captions are in `reel.js` (`CAPS`).
 - `index.html`, `reel.js`: the film. `window.seek(t)` poses any moment.
 - `audio.py`: soundtrack synth (drums, bass, pads, arps, UI sounds, impacts, reverb, loudness).
-- `render.mjs`: captures frames in headless Chromium and encodes with ffmpeg. Each frame blends 3 samples, which gives a 180° shutter's motion blur.
-- `fonts/`: Poppins (SIL OFL). The brand mark and product images come from `../assets`.
+- `render.mjs`: captures frames in headless Chromium and encodes with ffmpeg. Each frame blends 5 samples, which gives a 180° shutter's motion blur.
+- `fonts/`: Poppins and Cairo (SIL OFL). The brand mark and product images come from `../assets`.
 
 ## Rebuild
 
@@ -27,14 +31,15 @@ The picture is real-time HTML/CSS/SVG that's posed one frame at a time. The soun
 pip install numpy scipy pyloudnorm   # audio
 npm i -g playwright                  # or a local install; needs Chromium
 python3 audio.py                     # -> soundtrack.wav
-node render.mjs                      # -> velorci-reel.mp4 (about 10 min on 4 cores)
+node render.mjs                      # -> velorci-reel.mp4 (about 8 min on 4 cores)
+node render.mjs --lang ar            # -> velorci-reel-ar.mp4
 node render.mjs --stills 3,10.4,27.9 # PNG stills for quick review
 ```
 
-To preview in a browser, serve this folder and open `index.html?play` (click to start) or `index.html?t=12.5` for a single moment.
+To preview in a browser, serve this folder and open `index.html?play` (click to start) or `index.html?t=12.5` for a single moment. Add `&lang=ar` for the Arabic cut.
 
 ## Notes
 
 - The owner is a backlit silhouette, not a filmed actor. If you shoot or generate live-action plates, they slot in at `#s1own` (seated, stressed, 0–4 s) and `#s6own` (standing, relaxed, 24–27.5 s).
 - Key text stays between y≈280 and y≈1600 and clear of the right edge, so Instagram's UI doesn't cover it.
-- Copy, names, prices (KWD) and product names are all set in `reel.js`.
+- Copy, names, prices (KWD) and product names are all set in `reel.js`, with the Arabic copy in `strings-ar.js`.

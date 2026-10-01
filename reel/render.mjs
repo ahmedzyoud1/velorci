@@ -1,6 +1,7 @@
 // Renders reel/index.html into an MP4.
 //   node render.mjs                         full render -> velorci-reel.mp4
 //   node render.mjs --stills 1,8.2,27.9     PNG stills of single moments (for review)
+//   node render.mjs --lang ar               Arabic cut -> velorci-reel-ar.mp4
 // Options: --fps 30 --sub 3 (samples per frame, motion blur) --workers 4 --out file.mp4 --from 0 --to 30
 import { execSync, spawn } from 'node:child_process';
 import { mkdirSync, rmSync, existsSync } from 'node:fs';
@@ -18,9 +19,10 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const arg = (k, d) => { const i = process.argv.indexOf('--' + k); return i > 0 ? process.argv[i + 1] : d; };
 const fps = +arg('fps', 30), sub = +arg('sub', 5), workers = +arg('workers', Math.max(1, Math.min(4, cpus().length)));
 const shutter = 0.5; // 180-degree shutter
-const out = path.resolve(here, arg('out', 'velorci-reel.mp4'));
+const lang = arg('lang', 'en'); // --lang ar renders the Arabic cut
+const out = path.resolve(here, arg('out', lang === 'en' ? 'velorci-reel.mp4' : `velorci-reel-${lang}.mp4`));
 const audio = path.resolve(here, arg('audio', 'soundtrack.wav'));
-const url = pathToFileURL(path.join(here, 'index.html')).href;
+const url = pathToFileURL(path.join(here, 'index.html')).href + (lang === 'en' ? '' : `?lang=${lang}`);
 
 async function openPage(browser) {
   const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });

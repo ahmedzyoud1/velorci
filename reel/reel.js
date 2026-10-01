@@ -5,6 +5,11 @@
 (() => {
 const TL = window.TL;
 const frame = document.getElementById('frame');
+/* language: index.html?lang=ar renders the Arabic, right-to-left cut */
+const LANG = new URLSearchParams(location.search).get('lang') === 'ar' ? 'ar' : 'en', RTL = LANG === 'ar';
+if (RTL) { frame.dir = 'rtl'; frame.classList.add('ar'); }
+const X = (en, ar) => (RTL ? ar : en);
+const tr = s => (RTL && window.AR && window.AR[s]) || s;
 
 /* ---------------- utilities ---------------- */
 const $ = (s, r = document) => r.querySelector(s);
@@ -108,7 +113,7 @@ const sheetApp = o => {
   const tpl = `2.2em ${o.cols.map(c => c + 'em').join(' ')}`;
   let cells = '<div class="hd"></div>' + o.head.map(x => `<div class="hd">${x}</div>`).join('');
   o.rows.forEach((r, ri) => { cells += `<div class="hd">${ri + 1}</div>` + r.map((x, ci) => `<div class="${(o.mark && o.mark[ri + ',' + ci]) || (x === '#REF!' || x === 'Unreconciled' ? 'err' : '')}">${x}</div>`).join(''); });
-  return `<div class="app sheet" style="width:${o.w}em;height:${o.h}em"><div class="ah"><div class="at">${o.title}</div><div class="as" style="margin-left:auto;opacity:.85">${o.sub || ''}</div></div><div class="fx">fx&nbsp;&nbsp;${o.fx || '=SUM(D2:D14)'}</div><div class="grid" style="grid-template-columns:${tpl}">${cells}</div></div>`;
+  return `<div class="app sheet" style="width:${o.w}em;height:${o.h}em"><div class="ah"><div class="at">${o.title}</div><div class="as" style="margin-inline-start:auto;opacity:.85">${o.sub || ''}</div></div><div class="fx">fx&nbsp;&nbsp;${o.fx || '=SUM(D2:D14)'}</div><div class="grid" style="grid-template-columns:${tpl}">${cells}</div></div>`;
 };
 const posApp = o => `<div class="app pos" style="width:${o.w}em;height:${o.h}em"><div class="ah"><div class="av">${icon('pos', '1.1em', '#fff', 2)}</div><div><div class="at">${o.title}</div><div class="as">${o.sub}</div></div></div><div>${o.rows.map(r => `<div class="tx ${r[3] || ''}"><span>${r[0]} <span class="mut">${r[1]}</span></span><span class="amt">${r[2]}</span></div>`).join('')}</div></div>`;
 const invApp = o => `<div class="app inv" style="width:${o.w}em;height:${o.h}em"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><h4>Invoice</h4><div style="font-size:.7em;opacity:.6">${o.no}</div></div><div class="stamp">OVERDUE</div></div><div style="margin-top:.9em">${o.lines.map(l => `<div class="ln"><span>${l[0]}</span><span>${l[1]}</span></div>`).join('')}</div><div class="ln" style="border:none;font-weight:600;font-size:.85em"><span>Total due</span><span>${o.total}</span></div><div style="font-size:.66em;color:#D64541;margin-top:.4em">${o.note}</div></div>`;
@@ -195,7 +200,7 @@ function dashboard() {
     <div class="row a-inv" style="display:block"><div style="display:flex;justify-content:space-between"><span class="nm">Velvet Ottoman</span><span class="sb" style="color:#F5A623">6 left</span></div><div class="bar"><i data-grow class="low" style="width:9%"></i></div><div class="hl"></div></div>
    </div>
   </div>
-  <div class="card d-wa a-wa"><div class="wa-ic">${icon('chat', 34, '#65D4D2', 2)}</div><div style="flex:1;min-width:0"><div class="nm" style="font-size:22px">Yousef M. <span class="sb" style="margin-left:8px">WhatsApp · 2 days ago</span></div><div class="sb" style="font-size:19px;margin-top:4px;color:#BFD5D8">“Can you hold the sofa until Thursday?”</div></div><div class="hl" style="inset:-2px;border-radius:30px"></div></div>
+  <div class="card d-wa a-wa"><div class="wa-ic">${icon('chat', 34, '#65D4D2', 2)}</div><div style="flex:1;min-width:0"><div class="nm" style="font-size:22px">Yousef M. <span class="sb" style="margin-inline-start:8px">WhatsApp · 2 days ago</span></div><div class="sb" style="font-size:19px;margin-top:4px;color:#BFD5D8">“Can you hold the sofa until Thursday?”</div></div><div class="hl" style="inset:-2px;border-radius:30px"></div></div>
   <div class="scanline"></div><div class="sweep"></div>
  </div>`;
 }
@@ -226,7 +231,7 @@ function modBody(i) {
     case 4: return `<div class="st" style="margin-bottom:18px" ${D(0)}><span>Net profit · September</span><b style="font-size:52px">KWD <span data-num="27580">27,580</span></b><span style="color:#65D4D2;font-weight:600">↑ 22% vs. August</span></div>
       <div class="stat2"><div class="st" ${D(.04)}><b data-num="48920">48,920</b><span>Revenue</span></div><div class="st" ${D(.07)}><b data-num="21340">21,340</b><span>Expenses</span></div></div>
       <div class="card" style="height:250px;display:flex;align-items:flex-end;gap:22px;padding:28px 30px" ${D(.1)}>${[46, 58, 52, 67, 74, 92].map((v, k) => `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:10px;height:100%;justify-content:flex-end"><div data-growy style="width:100%;height:${v}%;border-radius:12px;background:${k === 5 ? '#65D4D2' : 'rgba(101,212,210,.28)'};transform-origin:50% 100%"></div><span class="sb">${['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'][k]}</span></div>`).join('')}</div>`;
-    case 5: return `${[['FK', 'Fahad K.', 'Can I change the color?', '2m', 1], ['SM', 'Sara M.', 'Thank you! Received.', '8m', 0], ['DS', 'Dana S.', 'Is the rug washable?', '15m', 1]].map((r, k) => `<div class="or" ${D(k * .04)}><div class="ini" style="width:56px;height:56px">${r[0]}</div><div style="flex:1;min-width:0"><div class="nm" style="font-size:22px">${r[1]}</div><div class="sb" style="font-size:18px">${r[2]}</div></div><div style="text-align:right"><div class="sb">${r[3]}</div>${r[4] ? '<div style="width:14px;height:14px;border-radius:50%;background:#65D4D2;margin:8px 0 0 auto"></div>' : ''}</div></div>`).join('')}
+    case 5: return `${[['FK', 'Fahad K.', 'Can I change the color?', '2m', 1], ['SM', 'Sara M.', 'Thank you! Received.', '8m', 0], ['DS', 'Dana S.', 'Is the rug washable?', '15m', 1]].map((r, k) => `<div class="or" ${D(k * .04)}><div class="ini" style="width:56px;height:56px">${r[0]}</div><div style="flex:1;min-width:0"><div class="nm" style="font-size:22px">${r[1]}</div><div class="sb" style="font-size:18px">${r[2]}</div></div><div style="text-align:end"><div class="sb">${r[3]}</div>${r[4] ? '<div style="width:14px;height:14px;border-radius:50%;background:#65D4D2;margin-top:8px;margin-inline-start:auto"></div>' : ''}</div></div>`).join('')}
       <div class="card" style="margin-top:18px;padding:22px" ${D(.14)}><div class="bub2 in">Hi! Where is my order #4822?</div><div class="bub2 out" style="display:flex;gap:10px;align-items:flex-end;width:fit-content">Out for delivery, arriving by 6 PM. ${icon('dcheck', 24, '#0F6F7A', 2.2)}</div><span class="chip" style="margin-top:6px">${icon('ai', 20, '#65D4D2', 2)} Auto-reply sent</span></div>`;
     case 6: return `<div class="stat2"><div class="st" ${D(0)}><b>6.2×</b><span>ROAS this month</span></div><div class="st" ${D(.05)}><b>KWD <span data-num="7688">7,688</span></b><span>Attributed revenue</span></div></div>
       ${[['Autumn Collection', 'Instagram', '6.2×', 86], ['Win-back', 'WhatsApp broadcast', '4.8×', 68], ['Search', 'Google', '3.9×', 52], ['New arrivals', 'Email', '3.1×', 40]].map((r, k) => `<div class="or" style="display:block" ${D(.08 + k * .04)}><div style="display:flex;justify-content:space-between;align-items:center"><div><div class="nm" style="font-size:23px">${r[0]}</div><div class="sb" style="font-size:17px">${r[1]}</div></div><div style="font-size:28px;font-weight:600;color:#65D4D2">${r[2]}</div></div><div class="bar" style="height:10px;margin-top:10px"><i data-grow style="width:${r[3]}%"></i></div></div>`).join('')}`;
@@ -234,11 +239,11 @@ function modBody(i) {
       return `<div class="st" ${D(0)}><span>Revenue · this month</span><b style="font-size:54px">KWD <span data-num="48920">48,920</span></b><span style="color:#65D4D2;font-weight:600">↑ 18.4%</span></div>
       <div class="card" style="margin-top:18px;height:340px;padding:20px" ${D(.06)}><svg width="690" height="300" viewBox="0 0 690 300" style="overflow:visible"><defs><linearGradient id="mg7" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#65D4D2" stop-opacity=".38"/><stop offset="1" stop-color="#65D4D2" stop-opacity="0"/></linearGradient></defs><path d="${c.area}" fill="url(#mg7)"/><path class="draw" d="${c.line}" fill="none" stroke="#65D4D2" stroke-width="5" stroke-linecap="round"/></svg></div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px">${[['4.8%', 'Conversion'], ['53.9', 'Avg. order'], ['41%', 'Returning']].map((m, k) => `<div class="st" style="padding:16px 18px" ${D(.1 + k * .03)}><b style="font-size:32px">${m[0]}</b><span style="font-size:17px">${m[1]}</span></div>`).join('')}</div>`; }
-    case 8: return `<div class="flow"><svg width="6" height="560" style="position:absolute;left:58px;top:60px"><line x1="3" y1="0" x2="3" y2="560" stroke="rgba(101,212,210,.35)" stroke-width="3" stroke-dasharray="8 8"/></svg>
-      ${[['bell', 'When', 'New order received'], ['chat', 'Then', 'Send WhatsApp confirmation'], ['inventory', 'Then', 'Update inventory'], ['truck', 'Then', 'Assign a driver'], ['user', 'After delivery', 'Ask for a review']].map((r, k) => `<div class="fn" ${D(k * .05)}><div class="fi">${icon(r[0], 28, '#65D4D2', 2)}</div><div><span class="k">${r[1]}</span>${r[2]}</div>${k === 0 ? '<div class="flowdot" style="position:absolute;left:44px;top:96px;width:18px;height:18px;border-radius:50%;background:#E8FFFE;box-shadow:0 0 18px #65D4D2"></div>' : ''}</div>`).join('')}</div>`;
+    case 8: return `<div class="flow"><svg width="6" height="560" style="position:absolute;${X('left:58px', 'right:50px')};top:60px"><line x1="3" y1="0" x2="3" y2="560" stroke="rgba(101,212,210,.35)" stroke-width="3" stroke-dasharray="8 8"/></svg>
+      ${[['bell', 'When', 'New order received'], ['chat', 'Then', 'Send WhatsApp confirmation'], ['inventory', 'Then', 'Update inventory'], ['truck', 'Then', 'Assign a driver'], ['user', 'After delivery', 'Ask for a review']].map((r, k) => `<div class="fn" ${D(k * .05)}><div class="fi">${icon(r[0], 28, '#65D4D2', 2)}</div><div><span class="k">${r[1]}</span>${r[2]}</div>${k === 0 ? `<div class="flowdot" style="position:absolute;${X('left:44px', 'right:41px')};top:96px;width:18px;height:18px;border-radius:50%;background:#E8FFFE;box-shadow:0 0 18px #65D4D2"></div>` : ''}</div>`).join('')}</div>`;
     case 9: return `<div class="bub2 in" style="font-size:24px" ${D(0)}>How did we do this week?</div>
-      <div class="card" style="padding:26px;border-color:rgba(101,212,210,.4)" ${D(.08)}><div style="display:flex;align-items:center;gap:12px;color:#65D4D2;font-weight:600;font-size:20px;letter-spacing:.06em">${icon('ai', 26, '#65D4D2', 2)} VELORCI AI</div>
-       <div style="font-size:27px;line-height:1.45;margin-top:14px">Revenue is up <b style="color:#65D4D2">18%</b>. Linen Sofa is your top seller. Restock <b style="color:#65D4D2">40 units</b> before Thursday.</div></div>
+      <div class="card" style="padding:26px;border-color:rgba(101,212,210,.4)" ${D(.08)}><div style="display:flex;align-items:center;gap:12px;color:#65D4D2;font-weight:600;font-size:20px;letter-spacing:.06em">${icon('ai', 26, '#65D4D2', 2)} ${X('VELORCI AI', 'ذكاء <span class="lat">velorci</span>')}</div>
+       <div style="font-size:27px;line-height:1.45;margin-top:14px">${X('Revenue is up <b style="color:#65D4D2">18%</b>. Linen Sofa is your top seller. Restock <b style="color:#65D4D2">40 units</b> before Thursday.', 'ارتفعت الإيرادات <b style="color:#65D4D2">18%</b>. كنبة الكتان هي الأكثر مبيعاً. اطلب <b style="color:#65D4D2">40 قطعة</b> قبل الخميس.')}</div></div>
       <div style="margin-top:22px" ${D(.16)}><span class="chip">${icon('inventory', 20, '#65D4D2', 2)} Create restock order</span><span class="chip">${icon('chat', 20, '#65D4D2', 2)} Notify top customers</span><span class="chip">${icon('analytics', 20, '#65D4D2', 2)} Weekly report</span></div>`;
   }
 }
@@ -270,7 +275,7 @@ function runPops(A, t) {
   }
   for (const c of A.counts) {
     const v = Math.round(lerp(c.a, c.b, E.inQ(P(TF, c.t0, c.t1))));
-    c.e.textContent = v >= 999 ? '999+' : String(v);
+    c.e.textContent = RTL ? LRI + (v >= 999 ? '999+' : v) + PDI : (v >= 999 ? '999+' : String(v));
   }
 }
 /* r = time relative to the moment the element group "arrives" */
@@ -658,11 +663,12 @@ const S5 = {};
   S5.w = $('#s5w', el); S5.svg = $('#s5svg', el); S5.chipsL = $('#s5chips', el);
   S5.dash = h(objHTML(dashboard())); S5.w.appendChild(S5.dash);
   S5.A = prep(S5.dash); S5.scan = $('.scanline', S5.dash); S5.grid = $('.dgrid', S5.dash); S5.ai = $('.ai-txt', S5.dash);
+  // [anchor, chip side EN, chip side AR, icon, colour, text]; the side flips where the RTL layout mirrors the anchor
   const sigs = [
     ['a-sales', 'L', 'trend', '#65D4D2', 'Sales opportunity detected'],
-    ['a-cust', 'R', 'user', '#3ad07a', 'Customer ready to buy'],
-    ['a-inv', 'L', 'inventory', '#F5A623', 'Low stock detected'],
-    ['a-wa', 'R', 'chat', '#65D4D2', 'Follow-up recommended'],
+    ['a-cust', X('R', 'L'), 'user', '#3ad07a', 'Customer ready to buy'],
+    ['a-inv', X('L', 'R'), 'inventory', '#F5A623', 'Low stock detected'],
+    ['a-wa', X('R', 'L'), 'chat', '#65D4D2', 'Follow-up recommended'],
   ];
   S5.sigs = sigs.map((s, k) => {
     const chip = h(`<div class="sig"><div class="si" style="background:${s[3]}22;border:1.5px solid ${s[3]}88;color:${s[3]}">${icon(s[2], 34, s[3], 2)}</div><div><div class="sk">AI INSIGHT</div><div class="st2">${s[4]}</div></div></div>`);
@@ -686,7 +692,7 @@ function renderS5(t) {
   S5.scan.style.opacity = f2(sc > 0 && sc < 1 ? 1 : 0);
   S5.scan.style.transform = `translateY(${f2(lerp(-260, 1210, E.ioC(sc)))}px)`;
   S5.grid.style.opacity = f2(.9 * P(t, TL.scan[0], TL.scan[0] + .25) * (1 - .6 * P(t, TL.scan[1] - .1, TL.scan[1] + .4)));
-  S5.ai.textContent = TF < TL.scan[0] ? 'AI · Live' : TF < TL.scan[1] ? 'Analyzing…' : (TF < TL.signals[3] ? 'AI · Insights' : '4 insights');
+  S5.ai.textContent = tr(TF < TL.scan[0] ? 'AI · Live' : TF < TL.scan[1] ? 'Analyzing…' : (TF < TL.signals[3] ? 'AI · Insights' : '4 insights'));
   const fade = 1 - P(t, 23.55, 23.85);
   for (const g of S5.sigs) {
     const on = t >= g.t0 - .1;
@@ -698,7 +704,7 @@ function renderS5(t) {
     const ar = { l: (r.left - fr.left) / sc2, r: (r.right - fr.left) / sc2, t: (r.top - fr.top) / sc2, b: (r.bottom - fr.top) / sc2 };
     let ax, ay = (ar.t + ar.b) / 2;
     if (g.anchor.classList.contains('a-sales')) ax = ar.l;
-    else if (g.anchor.classList.contains('a-wa')) ax = ar.l + 6;
+    else if (g.anchor.classList.contains('a-wa')) ax = g.side === 'R' ? ar.l + 6 : ar.r - 6; // the chat icon end of the row
     else ax = g.side === 'L' ? ar.l + 6 : ar.r - 6;
     if (!g.w) { g.w = g.chip.offsetWidth; g.h = g.chip.offsetHeight; }
     const u = E.outE(P(t, g.t0, g.t0 + .5)), cy = ay - g.h / 2 + (g.k === 0 ? -150 : g.k === 3 ? 96 : 0);
@@ -822,6 +828,29 @@ function renderS7(t) {
   S7.card.style.transform = `scale(${f2(1 + .03 * P(t, T0, 30))})`;
 }
 
+/* ---------------- localization ---------------- */
+// Swap every rendered English string for its Arabic copy (strings-ar.js). Amounts become "18.500 د.ك".
+// Codes, phone numbers and signed amounts sit in LTR isolates so RTL text can't reorder them (#4825, +965 •••• 0142, #REF!).
+const LRI = '\u2066', PDI = '\u2069';
+const isolate = t => (/[\u0600-\u06FF]/.test(t)
+  ? t.replace(/[+−#]?[A-Za-z0-9][A-Za-z0-9.,·•\/:!%\-]*(?:\s+•+\s+\d+)?/g, m => LRI + m + PDI)
+  : /[A-Za-z0-9#]/.test(t) ? LRI + t + PDI : t);
+function localize(root) {
+  const AR = window.AR || {}, miss = new Set(), keep = /^(velorci(\.com)?|VIP|CRM|KNET|fx.*|.*\.xlsx|support@|[A-Z]{2}-\d{2}|INV-\d+|#REF!|#\d+|[\d.,%+−·×\/ :↑]+)$/;
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); const nodes = []; let n;
+  while ((n = w.nextNode())) nodes.push(n);
+  for (const node of nodes) {
+    const raw = node.nodeValue, t = raw.trim(); if (!t) continue;
+    let out = AR[t];
+    if (out == null) { const m = t.match(/^(−?)KWD ([\d.,·]+)$/); if (m) out = `${m[1]}${m[2]} د.ك`; }
+    if (out == null) { const m = t.match(/^(.+) · KWD ([\d.,]+)$/); if (m && AR[m[1]]) out = `${AR[m[1]]} · ${m[2]} د.ك`; }
+    if (out == null && /[A-Za-z]/.test(t) && !keep.test(t)) miss.add(t);
+    node.nodeValue = raw.replace(t, isolate(out ?? t));
+  }
+  window.__untranslated = [...miss];
+}
+if (RTL) localize(frame);
+
 /* ---------------- captions ---------------- */
 const capLayer = h('<div id="caps"></div>');
 const caps = [];
@@ -832,7 +861,8 @@ function cap(o) {
     const line = h('<div></div>');
     ln.split(' ').forEach((w, i, arr) => {
       const acc = w.startsWith('*');
-      const s = h(`<span class="w${acc ? ' acc' : ''}">${w.replace(/\*/g, '')}</span>`);
+      const lat = RTL && /[A-Za-z]/.test(w);
+      const s = h(`<span class="w${acc ? ' acc' : ''}${lat ? ' lat' : ''}">${w.replace(/\*/g, '')}</span>`);
       line.appendChild(s); if (i < arr.length - 1) line.appendChild(document.createTextNode(' '));
       words.push(s);
     });
@@ -841,18 +871,27 @@ function cap(o) {
   capLayer.appendChild(el);
   caps.push(Object.assign({ el, words, stagger: .07 }, o));
 }
-cap({ lines: ['Your business', 'shouldn’t feel like this.'], tin: .45, tout: 3.78, y: 430, size: 76 });
-cap({ lines: ['Too many tools.'], tin: 4.15, tout: 7.86, y: 372, size: 82, weight: 700, dim: 6.45 });
-cap({ lines: ['Too much data.'], tin: 5.3, tout: 7.86, y: 470, size: 82, weight: 700, dim: 6.45 });
-cap({ lines: ['Zero *control.*'], tin: 6.45, tout: 7.86, y: 568, size: 82, weight: 700, stagger: .1 });
-cap({ lines: ['Meet *Velorci.*'], tin: 10.35, tout: 11.7, y: 600, size: 108, weight: 600, stagger: .12 });
-cap({ lines: ['One platform.'], tin: 12.12, tout: 14.36, y: 430, size: 84 });
-cap({ lines: ['Every operation.'], tin: 14.5, tout: 16.88, y: 430, size: 84 });
-cap({ lines: ['*Connected.*'], tin: 17.3, tout: 19.62, y: 470, size: 96 });
-cap({ lines: ['Your business', 'doesn’t just run.'], tin: 20.25, tout: 22.3, y: 420, size: 78 });
-cap({ lines: ['It gets *smarter.*'], tin: 22.42, tout: 23.86, y: 440, size: 96, weight: 700, stagger: .1 });
-cap({ lines: ['RUN YOUR BUSINESS.'], tin: 25.2, tout: 27.32, y: 300, size: 80, weight: 700, cls: 'caps', stagger: .09 });
-cap({ lines: ['*FROM* *ONE* *PLACE.*'], tin: 25.62, tout: 27.32, y: 398, size: 80, weight: 700, cls: 'caps', stagger: .09 });
+const CAPS = RTL ? [
+  ['عملك يستحق', 'أفضل من هذا.'], ['أدوات كثيرة.'], ['بيانات مبعثرة.'], ['ولا *سيطرة.*'], ['تعرّف على *velorci.*'],
+  ['منصة واحدة.'], ['لكل عملياتك.'], ['*كل* *شيء* *متّصل.*'], ['أعمالك', 'لا تسير فحسب،'], ['بل تزداد *ذكاءً.*'],
+  ['أدِر أعمالك'], ['*من* *مكان* *واحد.*'],
+] : [
+  ['Your business', 'shouldn’t feel like this.'], ['Too many tools.'], ['Too much data.'], ['Zero *control.*'], ['Meet *Velorci.*'],
+  ['One platform.'], ['Every operation.'], ['*Connected.*'], ['Your business', 'doesn’t just run.'], ['It gets *smarter.*'],
+  ['RUN YOUR BUSINESS.'], ['*FROM* *ONE* *PLACE.*'],
+];
+cap({ lines: CAPS[0], tin: .45, tout: 3.78, y: 430, size: 76 });
+cap({ lines: CAPS[1], tin: 4.15, tout: 7.86, y: 372, size: 82, weight: 700, dim: 6.45 });
+cap({ lines: CAPS[2], tin: 5.3, tout: 7.86, y: 470, size: 82, weight: 700, dim: 6.45 });
+cap({ lines: CAPS[3], tin: 6.45, tout: 7.86, y: 568, size: 82, weight: 700, stagger: .1 });
+cap({ lines: CAPS[4], tin: 10.35, tout: 11.7, y: 600, size: X(108, 100), weight: 600, stagger: .12 });
+cap({ lines: CAPS[5], tin: 12.12, tout: 14.36, y: 430, size: 84 });
+cap({ lines: CAPS[6], tin: 14.5, tout: 16.88, y: 430, size: 84 });
+cap({ lines: CAPS[7], tin: 17.3, tout: 19.62, y: 470, size: 96 });
+cap({ lines: CAPS[8], tin: 20.25, tout: 22.3, y: 420, size: 78 });
+cap({ lines: CAPS[9], tin: 22.42, tout: 23.86, y: 440, size: 96, weight: 700, stagger: .1 });
+cap({ lines: CAPS[10], tin: 25.2, tout: 27.32, y: 300, size: X(80, 88), weight: 700, cls: 'caps', stagger: .09 });
+cap({ lines: CAPS[11], tin: 25.62, tout: 27.32, y: X(398, 410), size: X(80, 88), weight: 700, cls: 'caps', stagger: .09 });
 function renderCaps(t) {
   for (const c of caps) {
     const vis = t >= c.tin - .01 && t < c.tout + .01;
