@@ -3,10 +3,10 @@
 //   node promo/render.mjs                         -> promo/out/video.mp4 (silent)
 //   node promo/render.mjs --stills 0.5,4.6,27     -> promo/out/still-<t>.jpg only
 //
-// Real screenshots: any promo/screens/f1..f13.(png|jpg|webp) replaces the recreated UI of that feature.
+// Real screenshots: promo/screens/<name>.(png|jpg|webp) puts that screenshot in a phone frame (names: shop, dash, f1..f12).
 import { createRequire } from 'node:module';
 import { spawn } from 'node:child_process';
-import { existsSync, mkdirSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -21,11 +21,13 @@ const FPS = 30;
 const args = process.argv.slice(2);
 const stillsArg = args.includes('--stills') ? args[args.indexOf('--stills') + 1] : null;
 
+// every image directly in screens/ is a real app screenshot, keyed by its base name (f2, dash, shop…)
 const real = {};
-for (let i = 1; i <= 13; i++) {
-  for (const ext of ['png', 'jpg', 'jpeg', 'webp']) {
-    const p = join(here, 'screens', `f${i}.${ext}`);
-    if (existsSync(p)) { real[`f${i}`] = `screens/f${i}.${ext}`; break; }
+const shotsDir = join(here, 'screens');
+if (existsSync(shotsDir)) {
+  for (const f of readdirSync(shotsDir)) {
+    const m = f.match(/^(.+)\.(png|jpe?g|webp)$/i);
+    if (m) real[m[1]] = `screens/${f}`;
   }
 }
 if (Object.keys(real).length) console.log('real screenshots:', real);
