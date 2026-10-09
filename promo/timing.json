@@ -1,0 +1,12 @@
+{
+  "name": "velorci-ad",
+  "total": 54.0,
+  "intro": 6.0,
+  "slot": 3.0,
+  "grid": 1.5,
+  "bpm": 160,
+  "grid0": 0.0,
+  "s1": { "notif0": 0.375, "notifStep": 0.375, "zoom": 1.85, "dash": 2.15, "withv": 2.6 },
+  "end": { "tag": 1.2, "cta": 3.0 },
+  "vo": { "voice": "ar-KW-FahedNeural", "introRate": "+15%", "rate": "+0%", "endRate": "+3%" }
+}

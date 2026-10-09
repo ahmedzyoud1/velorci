@@ -743,15 +743,21 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 const $ = s => document.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
-/* ---------------- timing (seconds) — music runs at 150 BPM, 1 bar = 1.6s ---------------- */
-const TOTAL = 30;
-const SLOT = 1.6;
-const F = {   // feature start times
-  f1: 4.0,  f2: 5.6,  f3: 7.2,  f4: 8.8,
-  f5: 10.4, f6: 12.0, f7: 13.6, f8: 15.2,
-  f9: 16.8, f10: 18.4, f11: 20.0, f12: 21.6, f13: 23.2,
-};
-const SCENES = { s2: 4.0, s3: 10.4, s4: 16.8, s5: 24.8, logo: 26.4 };
+/* ---------------- timing (seconds) ----------------
+   render.mjs injects window.TIMING from timing.json (54 s cut with VO) or timing-30s.json (fast 30 s cut).
+   Every feature gets one slot; feature animations stretch with the slot (K). */
+const TM = Object.assign({
+  total: 30, intro: 4.0, slot: 1.6, grid: 1.6,
+  s1: { notif0: .4, notifStep: .4, zoom: 2.0, dash: 2.3, withv: 2.8 },
+  end: { tag: .9, cta: 2.45 },
+}, window.TIMING || {});
+const TOTAL = TM.total;
+const SLOT = TM.slot;
+const K = SLOT / 1.6;
+const F = {};
+['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12', 'f13'].forEach((k, i) => { F[k] = TM.intro + SLOT * i; });
+const SCENES = { s2: TM.intro, s3: TM.intro + 4 * SLOT, s4: TM.intro + 8 * SLOT, s5: TM.intro + 13 * SLOT };
+SCENES.logo = SCENES.s5 + TM.grid;
 
 /* ---------------- optional real screenshots (injected by render.mjs or set by hand) ---------------- */
 const REAL = window.REAL_SCREENS || {};
@@ -816,28 +822,28 @@ function transition(at) {           // light sweep + soft flash on a scene cut
   tl.fromTo('.hook', { scale: 1.1 }, { scale: 1, duration: .5, ease: 'power3.out' }, 0);
   tl.fromTo(words[2], { color: '#E8FFFE' }, { color: '#65D4D2', duration: .25 }, .25);
   tl.fromTo('#shop', { opacity: 1, y: 60, scale: .96 }, { opacity: 1, y: 0, scale: 1, duration: .6, ease: 'power3.out' }, 0);
-  pan($('#shop'), 0.2, 1.8);
-  pan($('#s1dash'), 2.5, 1.3);
+  pan($('#shop'), 0.2, TM.s1.zoom - 0.2);
+  pan($('#s1dash'), TM.s1.dash + .2, TM.intro - TM.s1.dash - .5);
   ['#n1', '#n2', '#n3', '#n4'].forEach((n, i) => {
-    tl.fromTo(n, { opacity: 0, y: -60, scale: .85 }, { opacity: 1, y: 0, scale: 1, duration: .28, ease: 'back.out(2.2)' }, 0.4 + i * 0.4);
+    tl.fromTo(n, { opacity: 0, y: -60, scale: .85 }, { opacity: 1, y: 0, scale: 1, duration: .28, ease: 'back.out(2.2)' }, TM.s1.notif0 + i * TM.s1.notifStep);
   });
   // zoom-through into the velorci dashboard (lands on the 2.4s downbeat)
-  tl.to('#shop', { scale: 1.6, opacity: 0, filter: 'blur(14px)', duration: .45, ease: 'power3.in' }, 2.0);
-  tl.to(['#n1', '#n2', '#n3', '#n4'], { opacity: 0, y: -40, scale: 1.08, filter: 'blur(10px)', duration: .35, stagger: .03, ease: 'power2.in' }, 2.0);
-  tl.fromTo('#s1dash', { opacity: 0, scale: .82, y: 80, filter: 'blur(14px)' }, { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)', duration: .5, ease: 'power3.out' }, 2.3);
-  counter($('#d1'), 32, 2.5, .9);
-  counter($('#d2'), 4280, 2.5, .9);
-  counter($('#d3'), 12, 2.5, .9);
-  tl.to('#bars u', { scaleY: 1, duration: .45, stagger: .06, ease: 'back.out(1.6)' }, 2.55);
-  tl.fromTo('#withv', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .35, ease: 'power3.out' }, 2.8);
-  tl.to('#s1', { opacity: 0, y: -60, filter: 'blur(10px)', duration: .3, ease: 'power2.in' }, 3.72);
-  tl.set('#s1', { display: 'none' }, 4.02);
+  tl.to('#shop', { scale: 1.6, opacity: 0, filter: 'blur(14px)', duration: .45, ease: 'power3.in' }, TM.s1.zoom);
+  tl.to(['#n1', '#n2', '#n3', '#n4'], { opacity: 0, y: -40, scale: 1.08, filter: 'blur(10px)', duration: .35, stagger: .03, ease: 'power2.in' }, TM.s1.zoom);
+  tl.fromTo('#s1dash', { opacity: 0, scale: .82, y: 80, filter: 'blur(14px)' }, { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)', duration: .5, ease: 'power3.out' }, TM.s1.dash);
+  counter($('#d1'), 32, TM.s1.dash + .2, .9);
+  counter($('#d2'), 4280, TM.s1.dash + .2, .9);
+  counter($('#d3'), 12, TM.s1.dash + .2, .9);
+  tl.to('#bars u', { scaleY: 1, duration: .45, stagger: .06, ease: 'back.out(1.6)' }, TM.s1.dash + .25);
+  tl.fromTo('#withv', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .35, ease: 'power3.out' }, TM.s1.withv);
+  tl.to('#s1', { opacity: 0, y: -60, filter: 'blur(10px)', duration: .3, ease: 'power2.in' }, TM.intro - .28);
+  tl.set('#s1', { display: 'none' }, TM.intro + .02);
 })();
-transition(4.0);
+transition(SCENES.s2);
 
 /* top bar for the feature scenes */
-tl.fromTo('#top', { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: .4, ease: 'power2.out' }, 4.0);
-tl.to('#top', { opacity: 0, duration: .3 }, 24.6);
+tl.fromTo('#top', { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: .4, ease: 'power2.out' }, SCENES.s2);
+tl.to('#top', { opacity: 0, duration: .3 }, SCENES.s5 - .2);
 
 /* ================= feature frames ================= */
 const order = Object.keys(F);
@@ -853,7 +859,7 @@ function frame(id, idx) {
   tl.to($$('#dots u')[idx], { backgroundColor: '#65D4D2', duration: .2 }, T);
   // auto counters / typers inside the frame
   $$('[data-count]', f).forEach(el => counter(el, +el.dataset.count, T + .2, .8));
-  $$('[data-type]', f).forEach(el => typer(el, el.dataset.type, T + +el.dataset.at, +el.dataset.dur));
+  $$('[data-type]', f).forEach(el => typer(el, el.dataset.type, T + K * el.dataset.at, +el.dataset.dur));
   // exit (scene ends use a slightly longer, blurrier exit under the sweep)
   const outAt = T + SLOT - (isSceneEnd ? .32 : .26);
   tl.to(f, { opacity: 0, x: 100, filter: 'blur(10px)', duration: isSceneEnd ? .32 : .26, ease: 'power2.in' }, outAt);
@@ -872,105 +878,105 @@ function popIn(sel, at, from = { y: 40, scale: .85 }) {
 
 /* ---------- F1 abandoned carts ---------- */
 (function (T) {
-  tl.to('#f1btn', { scale: .9, backgroundColor: '#65D4D2', color: '#041316', duration: .08, yoyo: true, repeat: 1 }, T + .55);
-  tl.to('#f1p1', { opacity: 0, duration: .1 }, T + .7);
-  tl.fromTo('#f1p2', { opacity: 0, scale: .6 }, { opacity: 1, scale: 1, duration: .2, ease: 'back.out(3)' }, T + .7);
-  popIn('#f1b', T + .72, { x: -60, scale: .9 });
-  tl.to('#f1p2', { opacity: 0, duration: .1 }, T + 1.08);
-  tl.fromTo('#f1p3', { opacity: 0, scale: .6 }, { opacity: 1, scale: 1, duration: .22, ease: 'back.out(3)' }, T + 1.08);
-  tl.to('#f1r1', { boxShadow: '0 0 0 3px #2FB37A, 0 12px 30px rgba(47,179,122,.25)', duration: .2 }, T + 1.08);
-  popIn('#f1c', T + 1.12, { y: 40, scale: .7 });
+  tl.to('#f1btn', { scale: .9, backgroundColor: '#65D4D2', color: '#041316', duration: .08, yoyo: true, repeat: 1 }, T + K * .55);
+  tl.to('#f1p1', { opacity: 0, duration: .1 }, T + K * .7);
+  tl.fromTo('#f1p2', { opacity: 0, scale: .6 }, { opacity: 1, scale: 1, duration: .2, ease: 'back.out(3)' }, T + K * .7);
+  popIn('#f1b', T + K * .72, { x: -60, scale: .9 });
+  tl.to('#f1p2', { opacity: 0, duration: .1 }, T + K * 1.08);
+  tl.fromTo('#f1p3', { opacity: 0, scale: .6 }, { opacity: 1, scale: 1, duration: .22, ease: 'back.out(3)' }, T + K * 1.08);
+  tl.to('#f1r1', { boxShadow: '0 0 0 3px #2FB37A, 0 12px 30px rgba(47,179,122,.25)', duration: .2 }, T + K * 1.08);
+  popIn('#f1c', T + K * 1.12, { y: 40, scale: .7 });
 })(F.f1);
 
 /* ---------- F2 gift cards ---------- */
 (function (T) {
-  tl.to('#f2tg .on', { opacity: 1, duration: .15 }, T + .35);
-  tl.to('#f2tg .k', { x: -34, duration: .15, ease: 'power2.out' }, T + .35);
-  tl.fromTo('#f2form', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .2 }, T + .45);
-  tl.fromTo('#f2card', { opacity: 0, y: 80, rotation: 6, scale: .8 }, { opacity: 1, y: 0, rotation: -5, scale: 1, duration: .38, ease: 'back.out(1.8)' }, T + 1.0);
-  popIn('#f2tag', T + 1.18, { y: 30, scale: .8 });
+  tl.to('#f2tg .on', { opacity: 1, duration: .15 }, T + K * .35);
+  tl.to('#f2tg .k', { x: -34, duration: .15, ease: 'power2.out' }, T + K * .35);
+  tl.fromTo('#f2form', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .2 }, T + K * .45);
+  tl.fromTo('#f2card', { opacity: 0, y: 80, rotation: 6, scale: .8 }, { opacity: 1, y: 0, rotation: -5, scale: 1, duration: .38, ease: 'back.out(1.8)' }, T + K * 1.0);
+  popIn('#f2tag', T + K * 1.18, { y: 30, scale: .8 });
 })(F.f2);
 
 /* ---------- F3 back in stock ---------- */
 (function (T) {
-  tl.to('#f3bar', { scaleX: 1, duration: .35, ease: 'power2.out' }, T + .3);
-  tl.to('#f3out', { opacity: 0, duration: .1 }, T + .55);
-  tl.fromTo('#f3in', { opacity: 0, scale: .6 }, { opacity: 1, scale: 1, duration: .22, ease: 'back.out(3)' }, T + .55);
-  tl.to('#f3bell', { rotation: 18, duration: .06, yoyo: true, repeat: 5, transformOrigin: '50% 10%', ease: 'sine.inOut' }, T + .6);
-  counter($('#f3n'), 18, T + .62, .5);
-  counter($('#f3c'), 7, T + .9, .45);
-  popIn('#f3a', T + .7, { x: -60, scale: .9 });
-  tl.fromTo('#f3b', { opacity: 0, y: 30, scale: .9 }, { opacity: 1, y: 0, scale: 1, duration: .28, ease: 'back.out(2)' }, T + .95);
+  tl.to('#f3bar', { scaleX: 1, duration: .35, ease: 'power2.out' }, T + K * .3);
+  tl.to('#f3out', { opacity: 0, duration: .1 }, T + K * .55);
+  tl.fromTo('#f3in', { opacity: 0, scale: .6 }, { opacity: 1, scale: 1, duration: .22, ease: 'back.out(3)' }, T + K * .55);
+  tl.to('#f3bell', { rotation: 18, duration: .06, yoyo: true, repeat: 5, transformOrigin: '50% 10%', ease: 'sine.inOut' }, T + K * .6);
+  counter($('#f3n'), 18, T + K * .62, .5);
+  counter($('#f3c'), 7, T + K * .9, .45);
+  popIn('#f3a', T + K * .7, { x: -60, scale: .9 });
+  tl.fromTo('#f3b', { opacity: 0, y: 30, scale: .9 }, { opacity: 1, y: 0, scale: 1, duration: .28, ease: 'back.out(2)' }, T + K * .95);
 })(F.f3);
 
 /* ---------- F4 bundles ---------- */
 (function (T) {
-  ['#b1', '#b2', '#b3'].forEach((b, i) => tl.fromTo(b, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: .25, ease: 'back.out(2)' }, T + .12 + i * .08));
-  tl.fromTo(['#pl1', '#pl2'], { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: .2, stagger: .06, ease: 'back.out(3)' }, T + .4);
-  tl.to('#b1', { x: -60, scale: .92, duration: .3, ease: 'power3.inOut' }, T + .62);
-  tl.to('#b3', { x: 60, scale: .92, duration: .3, ease: 'power3.inOut' }, T + .62);
-  tl.to('#b2', { scale: .96, duration: .3, ease: 'power3.inOut' }, T + .62);
-  tl.to(['#pl1'], { x: -30, duration: .3, ease: 'power3.inOut' }, T + .62);
-  tl.to(['#pl2'], { x: 30, duration: .3, ease: 'power3.inOut' }, T + .62);
-  tl.fromTo('#bres', { opacity: 0, y: 30, scale: .95 }, { opacity: 1, y: 0, scale: 1, duration: .3, ease: 'back.out(1.8)' }, T + .85);
-  popIn('#f4c', T + 1.05, { y: 30, scale: .7 });
+  ['#b1', '#b2', '#b3'].forEach((b, i) => tl.fromTo(b, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: .25, ease: 'back.out(2)' }, T + K * .12 + i * .08));
+  tl.fromTo(['#pl1', '#pl2'], { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: .2, stagger: .06, ease: 'back.out(3)' }, T + K * .4);
+  tl.to('#b1', { x: -60, scale: .92, duration: .3, ease: 'power3.inOut' }, T + K * .62);
+  tl.to('#b3', { x: 60, scale: .92, duration: .3, ease: 'power3.inOut' }, T + K * .62);
+  tl.to('#b2', { scale: .96, duration: .3, ease: 'power3.inOut' }, T + K * .62);
+  tl.to(['#pl1'], { x: -30, duration: .3, ease: 'power3.inOut' }, T + K * .62);
+  tl.to(['#pl2'], { x: 30, duration: .3, ease: 'power3.inOut' }, T + K * .62);
+  tl.fromTo('#bres', { opacity: 0, y: 30, scale: .95 }, { opacity: 1, y: 0, scale: 1, duration: .3, ease: 'back.out(1.8)' }, T + K * .85);
+  popIn('#f4c', T + K * 1.05, { y: 30, scale: .7 });
 })(F.f4);
 
 /* ---------- F5 SEO ---------- */
 (function (T) {
-  tl.fromTo('#f5serp', { opacity: 0, y: 90, scale: .92 }, { opacity: 1, y: 0, scale: 1, duration: .38, ease: 'back.out(1.6)' }, T + .95);
-  tl.fromTo('#f5serp .tt', { backgroundColor: 'rgba(101,212,210,0)' }, { backgroundColor: 'rgba(101,212,210,.28)', duration: .2, yoyo: true, repeat: 1 }, T + 1.2);
+  tl.fromTo('#f5serp', { opacity: 0, y: 90, scale: .92 }, { opacity: 1, y: 0, scale: 1, duration: .38, ease: 'back.out(1.6)' }, T + K * .95);
+  tl.fromTo('#f5serp .tt', { backgroundColor: 'rgba(101,212,210,0)' }, { backgroundColor: 'rgba(101,212,210,.28)', duration: .2, yoyo: true, repeat: 1 }, T + K * 1.2);
 })(F.f5);
 
 /* ---------- F6 store design ---------- */
 (function (T) {
   const cur = '#f6cur', p2 = posOf($('#sw2')), p3 = posOf($('#sw3'));
-  tl.fromTo(cur, { opacity: 0, x: p2.x + 160, y: p2.y + 90 }, { opacity: 1, x: p2.x + 90, y: p2.y + 60, duration: .25, ease: 'power2.out' }, T + .25);
-  tl.to(cur, { x: p2.x + 22, y: p2.y + 26, duration: .2, ease: 'power2.inOut' }, T + .45);
-  tl.to(cur, { scale: .8, duration: .06, yoyo: true, repeat: 1 }, T + .65);
-  tl.to('#sw2', { boxShadow: '0 0 0 5px #0B2A2E', duration: .1 }, T + .66);
-  tl.to('#sfd', { '--acc': '#C2532E', '--acc2': '#F5A623', '--bgc': '#FFF7F0', duration: .25 }, T + .68);
-  tl.to(cur, { x: p3.x + 22, y: p3.y + 26, duration: .2, ease: 'power2.inOut' }, T + .95);
-  tl.to(cur, { scale: .8, duration: .06, yoyo: true, repeat: 1 }, T + 1.15);
-  tl.to('#sw2', { boxShadow: '0 0 0 2px #DCE9E9', duration: .1 }, T + 1.16);
-  tl.to('#sw3', { boxShadow: '0 0 0 5px #0B2A2E', duration: .1 }, T + 1.16);
-  popIn('#f6c', T + .9, { y: 30, scale: .7 });
-  tl.to('#sfd', { '--acc': '#1E1E1E', '--acc2': '#C9A24A', '--bgc': '#F7F5EF', duration: .25 }, T + 1.18);
-  typer($('#sfdT1'), 'تخفيضات الصيف', T + 1.2, .01);
+  tl.fromTo(cur, { opacity: 0, x: p2.x + 160, y: p2.y + 90 }, { opacity: 1, x: p2.x + 90, y: p2.y + 60, duration: .25, ease: 'power2.out' }, T + K * .25);
+  tl.to(cur, { x: p2.x + 22, y: p2.y + 26, duration: .2, ease: 'power2.inOut' }, T + K * .45);
+  tl.to(cur, { scale: .8, duration: .06, yoyo: true, repeat: 1 }, T + K * .65);
+  tl.to('#sw2', { boxShadow: '0 0 0 5px #0B2A2E', duration: .1 }, T + K * .66);
+  tl.to('#sfd', { '--acc': '#C2532E', '--acc2': '#F5A623', '--bgc': '#FFF7F0', duration: .25 }, T + K * .68);
+  tl.to(cur, { x: p3.x + 22, y: p3.y + 26, duration: .2, ease: 'power2.inOut' }, T + K * .95);
+  tl.to(cur, { scale: .8, duration: .06, yoyo: true, repeat: 1 }, T + K * 1.15);
+  tl.to('#sw2', { boxShadow: '0 0 0 2px #DCE9E9', duration: .1 }, T + K * 1.16);
+  tl.to('#sw3', { boxShadow: '0 0 0 5px #0B2A2E', duration: .1 }, T + K * 1.16);
+  popIn('#f6c', T + K * .9, { y: 30, scale: .7 });
+  tl.to('#sfd', { '--acc': '#1E1E1E', '--acc2': '#C9A24A', '--bgc': '#F7F5EF', duration: .25 }, T + K * 1.18);
+  typer($('#sfdT1'), 'تخفيضات الصيف', T + K * 1.2, .01);
 })(F.f6);
 
 /* ---------- F7 AI ---------- */
 (function (T) {
-  tl.fromTo('#f7m1', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .15 }, T + .1);
-  tl.fromTo('#f7m2', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .15 }, T + .68);
-  tl.to('#f7typ u', { y: -8, duration: .12, stagger: .06, yoyo: true, repeat: 3, ease: 'sine.inOut' }, T + .7);
-  tl.to('#f7m2', { opacity: 0, height: 0, marginTop: 0, padding: 0, duration: .1 }, T + .95);
-  tl.fromTo('#f7m3', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .2 }, T + .97);
-  tl.fromTo('#f7mini', { opacity: 0, x: -120, rotation: -4 }, { opacity: 1, x: 0, rotation: -3, duration: .35, ease: 'back.out(1.6)' }, T + 1.0);
-  tl.fromTo('#f7bn', { scale: .4, opacity: 0 }, { scale: 1, opacity: 1, duration: .3, ease: 'back.out(2)' }, T + 1.12);
+  tl.fromTo('#f7m1', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .15 }, T + K * .1);
+  tl.fromTo('#f7m2', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .15 }, T + K * .68);
+  tl.to('#f7typ u', { y: -8, duration: .12, stagger: .06, yoyo: true, repeat: 3, ease: 'sine.inOut' }, T + K * .7);
+  tl.to('#f7m2', { opacity: 0, height: 0, marginTop: 0, padding: 0, duration: .1 }, T + K * .95);
+  tl.fromTo('#f7m3', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .2 }, T + K * .97);
+  tl.fromTo('#f7mini', { opacity: 0, x: -120, rotation: -4 }, { opacity: 1, x: 0, rotation: -3, duration: .35, ease: 'back.out(1.6)' }, T + K * 1.0);
+  tl.fromTo('#f7bn', { scale: .4, opacity: 0 }, { scale: 1, opacity: 1, duration: .3, ease: 'back.out(2)' }, T + K * 1.12);
 })(F.f7);
 
 /* ---------- F8 reviews ---------- */
 (function (T) {
-  $$('#f8stars svg').forEach((s, i) => tl.to(s, { scale: 1, duration: .2, ease: 'back.out(3)' }, T + .2 + i * .08));
-  counter($('#f8avg'), 4.8, T + .25, .7, v => v.toFixed(1));
-  popIn('#f8c', T + .75, { y: 30, scale: .7 });
-  tl.fromTo('#f8r1', { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: .25, ease: 'power3.out' }, T + .7);
-  tl.fromTo('#f8r2', { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: .25, ease: 'power3.out' }, T + .88);
+  $$('#f8stars svg').forEach((s, i) => tl.to(s, { scale: 1, duration: .2, ease: 'back.out(3)' }, T + K * .2 + i * .08));
+  counter($('#f8avg'), 4.8, T + K * .25, .7, v => v.toFixed(1));
+  popIn('#f8c', T + K * .75, { y: 30, scale: .7 });
+  tl.fromTo('#f8r1', { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: .25, ease: 'power3.out' }, T + K * .7);
+  tl.fromTo('#f8r2', { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: .25, ease: 'power3.out' }, T + K * .88);
 })(F.f8);
 
 /* ---------- F9 loyalty ---------- */
 (function (T) {
-  counter($('#f9pts'), 1240, T + .2, .8);
-  tl.to('#f9bar', { scaleX: 0.83, duration: .8, ease: 'power2.out' }, T + .2);
-  popIn('#f9c', T + .95, { y: 40, scale: .7 });
-  tl.to('#f9pts', { color: '#65D4D2', duration: .1, yoyo: true, repeat: 1 }, T + 1.05);
+  counter($('#f9pts'), 1240, T + K * .2, .8);
+  tl.to('#f9bar', { scaleX: 0.83, duration: .8, ease: 'power2.out' }, T + K * .2);
+  popIn('#f9c', T + K * .95, { y: 40, scale: .7 });
+  tl.to('#f9pts', { color: '#65D4D2', duration: .1, yoyo: true, repeat: 1 }, T + K * 1.05);
 })(F.f9);
 
 /* ---------- F10 retargeting ---------- */
 (function (T) {
   $$('#f10 .px').forEach((row, i) => {
-    const at = T + .25 + i * .12;
+    const at = T + K * .25 + i * .12;
     tl.to(row.querySelector('.lg b'), { scale: 1, duration: .18, ease: 'back.out(3)' }, at);
     tl.to(row, { borderColor: '#2FB37A', backgroundColor: '#F2FBF7', duration: .12 }, at);
     tl.to(row.querySelector('.f10off'), { opacity: 0, duration: .06 }, at);
@@ -978,45 +984,45 @@ function popIn(sel, at, from = { y: 40, scale: .85 }) {
     tl.to(row.querySelector('.st'), { color: '#17834F', duration: .06 }, at);
     tl.to(row.querySelector('.f10off'), { opacity: 1, duration: .08 }, at + .07);
   });
-  tl.fromTo('#f10ad', { opacity: 0, x: -120, rotation: -6 }, { opacity: 1, x: 0, rotation: -3, duration: .35, ease: 'back.out(1.6)' }, T + .78);
-  popIn('#f10c', T + 1.12, { y: 30, scale: .7 });
+  tl.fromTo('#f10ad', { opacity: 0, x: -120, rotation: -6 }, { opacity: 1, x: 0, rotation: -3, duration: .35, ease: 'back.out(1.6)' }, T + K * .78);
+  popIn('#f10c', T + K * 1.12, { y: 30, scale: .7 });
 })(F.f10);
 
 /* ---------- F11 payments ---------- */
 (function (T) {
   const pms = $$('#f11 .pm');
   pms.forEach((p, i) => {
-    tl.to(p, { borderColor: '#2FB37A', backgroundColor: '#F2FBF7', duration: .1 }, T + .2 + i * .085);
-    tl.to(p.querySelector('.ck'), { scale: 1, duration: .16, ease: 'back.out(3)' }, T + .2 + i * .085);
+    tl.to(p, { borderColor: '#2FB37A', backgroundColor: '#F2FBF7', duration: .1 }, T + K * .2 + i * .085);
+    tl.to(p.querySelector('.ck'), { scale: 1, duration: .16, ease: 'back.out(3)' }, T + K * .2 + i * .085);
   });
-  popIn('#f11c', T + 1.0, { y: 40, scale: .7 });
+  popIn('#f11c', T + K * 1.0, { y: 40, scale: .7 });
 })(F.f11);
 
 /* ---------- F12 multi currency ---------- */
 (function (T) {
-  tl.to('#f12tg .on', { opacity: 1, duration: .12 }, T + .2);
-  tl.to('#f12tg .k', { x: -34, duration: .12 }, T + .2);
-  popIn('#f12fl', T + .3, { x: -60, scale: .9 });
+  tl.to('#f12tg .on', { opacity: 1, duration: .12 }, T + K * .2);
+  tl.to('#f12tg .k', { x: -34, duration: .12 }, T + K * .2);
+  popIn('#f12fl', T + K * .3, { x: -60, scale: .9 });
   const p2 = $$('#f12price2 div');
   [.62, .9, 1.18].forEach((dt, i) => {
-    tl.to(p2[i], { opacity: 0, y: -50, duration: .12, ease: 'power2.in' }, T + dt);
-    tl.fromTo(p2[i + 1], { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: .14, ease: 'power2.out' }, T + dt + .07);
+    tl.to(p2[i], { opacity: 0, y: -50, duration: .12, ease: 'power2.in' }, T + K * dt);
+    tl.fromTo(p2[i + 1], { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: .14, ease: 'power2.out' }, T + K * dt + .07);
   });
   const prices = $$('#f12price div'), curs = $$('#f12 .f12cur');
   [.42, .74, 1.06].forEach((dt, i) => {
-    tl.to(prices[i], { opacity: 0, y: -60, duration: .14, ease: 'power2.in' }, T + dt);
-    tl.fromTo(prices[i + 1], { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: .16, ease: 'power2.out' }, T + dt + .08);
-    tl.to(curs[i], { opacity: 0, duration: .08 }, T + dt);
-    tl.to(curs[i + 1], { opacity: 1, duration: .1 }, T + dt + .06);
+    tl.to(prices[i], { opacity: 0, y: -60, duration: .14, ease: 'power2.in' }, T + K * dt);
+    tl.fromTo(prices[i + 1], { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: .16, ease: 'power2.out' }, T + K * dt + .08);
+    tl.to(curs[i], { opacity: 0, duration: .08 }, T + K * dt);
+    tl.to(curs[i + 1], { opacity: 1, duration: .1 }, T + K * dt + .06);
   });
 })(F.f12);
 
 /* ---------- F13 integrations hub ---------- */
 (function (T) {
-  tl.fromTo('#f13 .core', { scale: .4, opacity: 0 }, { scale: 1, opacity: 1, duration: .35, ease: 'back.out(2)' }, T + .05);
-  $$('#f13 .lines path').forEach((p, i) => tl.to(p, { strokeDashoffset: 0, duration: .3, ease: 'power2.out' }, T + .2 + i * .07));
-  $$('#f13 .nd').forEach((n, i) => tl.to(n, { scale: 1, duration: .22, ease: 'back.out(2.5)' }, T + .3 + i * .07));
-  tl.to('#f13 .core', { boxShadow: '0 0 140px rgba(101,212,210,.8)', duration: .25, yoyo: true, repeat: 1 }, T + 1.0);
+  tl.fromTo('#f13 .core', { scale: .4, opacity: 0 }, { scale: 1, opacity: 1, duration: .35, ease: 'back.out(2)' }, T + K * .05);
+  $$('#f13 .lines path').forEach((p, i) => tl.to(p, { strokeDashoffset: 0, duration: .3, ease: 'power2.out' }, T + K * .2 + i * .07));
+  $$('#f13 .nd').forEach((n, i) => tl.to(n, { scale: 1, duration: .22, ease: 'back.out(2.5)' }, T + K * .3 + i * .07));
+  tl.to('#f13 .core', { boxShadow: '0 0 140px rgba(101,212,210,.8)', duration: .25, yoyo: true, repeat: 1 }, T + K * 1.0);
 })(F.f13);
 
 /* ---------- scene pills ---------- */
@@ -1050,11 +1056,11 @@ transition(SCENES.s5);
   tl.fromTo('#ring', { opacity: .9, scale: 1 }, { opacity: 0, scale: 90, duration: .9, ease: 'power2.out' }, L);
   tl.fromTo('#end .mark', { opacity: 0, scale: .3, rotation: -12 }, { opacity: 1, scale: 1, rotation: 0, duration: .6, ease: 'back.out(1.8)' }, L);
   tl.fromTo('#end .wm', { opacity: 0, y: 40, letterSpacing: '20px' }, { opacity: 1, y: 0, letterSpacing: '-5px', duration: .6, ease: 'power3.out' }, L + .2);
-  tl.fromTo('#end .tag', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .45, ease: 'power3.out' }, L + .9);
-  tl.fromTo('#end .cta', { opacity: 0, y: 30, scale: .9 }, { opacity: 1, y: 0, scale: 1, duration: .45, ease: 'back.out(2)' }, L + 2.45);
-  tl.fromTo('#end .url', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .4, ease: 'power3.out' }, L + 2.65);
+  tl.fromTo('#end .tag', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .45, ease: 'power3.out' }, L + TM.end.tag);
+  tl.fromTo('#end .cta', { opacity: 0, y: 30, scale: .9 }, { opacity: 1, y: 0, scale: 1, duration: .45, ease: 'back.out(2)' }, L + TM.end.cta);
+  tl.fromTo('#end .url', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .4, ease: 'power3.out' }, L + TM.end.cta + .2);
   tl.to('#end .cta', { boxShadow: '0 0 0 26px rgba(101,212,210,0), 0 30px 80px rgba(101,212,210,.35)', duration: .8, ease: 'power2.out' }, L + 2.9);
-  tl.to('#end .mark', { scale: 1.04, duration: 3.6, ease: 'sine.inOut' }, L + .6);
+  tl.to('#end .mark', { scale: 1.04, duration: TOTAL - L - .6, ease: 'sine.inOut' }, L + .6);
 })(SCENES.s5, SCENES.logo);
 
 /* end marker so the timeline is exactly TOTAL seconds */

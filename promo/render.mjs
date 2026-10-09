@@ -1,12 +1,13 @@
 // Renders promo/index.html frame by frame (1080x1920 @ 30fps) and pipes the frames into ffmpeg.
 //
-//   node promo/render.mjs                         -> promo/out/video.mp4 (silent)
+//   node promo/render.mjs                         -> promo/out/<name>.video.mp4 (silent), timing from timing.json
+//   node promo/render.mjs --timing timing-30s.json  the fast 30 s cut
 //   node promo/render.mjs --stills 0.5,4.6,27     -> promo/out/still-<t>.jpg only
 //
 // Real screenshots: promo/screens/<name>.(png|jpg|webp) puts that screenshot in a phone frame (names: shop, dash, f1..f12).
 import { createRequire } from 'node:module';
 import { spawn } from 'node:child_process';
-import { existsSync, mkdirSync, readdirSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -20,6 +21,8 @@ mkdirSync(out, { recursive: true });
 const FPS = 30;
 const args = process.argv.slice(2);
 const stillsArg = args.includes('--stills') ? args[args.indexOf('--stills') + 1] : null;
+const timingFile = join(here, args.includes('--timing') ? args[args.indexOf('--timing') + 1] : 'timing.json');
+const timing = existsSync(timingFile) ? JSON.parse(readFileSync(timingFile, 'utf8')) : {};
 
 // every image directly in screens/ is a real app screenshot, keyed by its base name (f2, dash, shop…)
 const real = {};
@@ -36,7 +39,7 @@ const browser = await chromium.launch({
   args: ['--force-color-profile=srgb', '--disable-lcd-text', '--font-render-hinting=none'],
 });
 const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
-await page.addInitScript(r => { window.RENDER_MODE = true; window.REAL_SCREENS = r; }, real);
+await page.addInitScript(([r, t]) => { window.RENDER_MODE = true; window.REAL_SCREENS = r; window.TIMING = t; }, [real, timing]);
 await page.goto(pathToFileURL(join(here, 'index.html')).href);
 await page.evaluate(() => window.ready);
 const total = await page.evaluate(() => window.TOTAL);
@@ -58,7 +61,7 @@ if (stillsArg) {
 }
 
 const frames = Math.round(total * FPS);
-const target = join(out, 'video.mp4');
+const target = join(out, `${timing.name || 'velorci-ad'}.video.mp4`);
 const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',
   '-c:v', 'libx264', '-preset', 'slow', '-crf', '17', '-pix_fmt', 'yuv420p', '-r', String(FPS), '-movflags', '+faststart', target], { stdio: ['pipe', 'inherit', 'inherit'] });
 

@@ -1,13 +1,17 @@
-"""Builds the audio for the velorci 30s ad.
+"""Builds the audio for the velorci ad from a timing file (the same one render.mjs uses).
 
-    python build_audio.py                  -> out/music.wav, out/sfx.wav, out/mix_music.wav
-    python build_audio.py --vo vo.wav      -> also out/mix_vo.wav (music ducked under a recorded VO)
-    python build_audio.py --guide-vo       -> synthesises a scratch guide VO with Piper first (timing only)
+    python build_audio.py                         -> out/<name>.music.wav / .sfx.wav / .mix_music.wav   (timing.json)
+    python build_audio.py --edge-vo               -> also synthesises the Gulf voice-over (Microsoft neural TTS)
+                                                     and writes out/<name>.vo.wav and .mix_vo.wav
+    python build_audio.py --vo voice.wav          -> mixes a recorded voice-over instead (aligned to 0 s)
+    python build_audio.py --timing timing-30s.json  the fast 30 s cut
 
-The music is synthesised here (no samples, no licences): 150 BPM, A minor, one bar = 1.6 s,
-so every feature cut in index.html (4.0 + 1.6n) and the logo hit (26.4 s) land on a downbeat.
+The music is synthesised here (no samples, no licences), A minor, at the timing file's BPM. Bars start at
+grid0 + n*bar, and the timing files are laid out so every feature cut and the logo hit land on a downbeat.
 """
 import argparse
+import asyncio
+import json
 import os
 import subprocess
 import sys
@@ -18,18 +22,29 @@ from scipy import signal
 from scipy.io import wavfile
 
 SR = 48000
-DUR = 30.0
-N = int(SR * DUR)
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, '..', 'out')
 rng = np.random.default_rng(7)
 
-BEAT = 0.4                 # 150 BPM
-BAR = 4 * BEAT
-GRID0 = 0.8                # first downbeat; bars start at 0.8 + 1.6k
-LOGO = 26.4
-SCENES = [4.0, 10.4, 16.8, 24.8]
-FEATURES = [4.0 + 1.6 * i for i in range(13)]
+# set by configure()
+DUR = N = BEAT = BAR = GRID0 = LOGO = K = 0.0
+SCENES, FEATURES, T = [], [], {}
+
+
+def configure(t):
+    """Derive every time position from the timing file (mirrors index.html)."""
+    global DUR, N, BEAT, BAR, GRID0, LOGO, K, SCENES, FEATURES, T
+    T = t
+    DUR = float(t['total'])
+    N = int(SR * DUR)
+    BEAT = 60.0 / t['bpm']
+    BAR = 4 * BEAT
+    GRID0 = float(t.get('grid0', 0.0))
+    slot, intro = float(t['slot']), float(t['intro'])
+    K = slot / 1.6
+    FEATURES = [intro + slot * i for i in range(13)]
+    SCENES = [intro, intro + 4 * slot, intro + 8 * slot, intro + 13 * slot]
+    LOGO = SCENES[3] + float(t['grid'])
 
 
 def bar_start(k):
@@ -239,105 +254,116 @@ CH = {   # chord tones (pad), arp tones, bass root
 PROG = ['Am', 'F', 'C', 'G']
 
 
-def chord_for_bar(k):
-    if k == 15:
+def section_at(t0):
+    s2, s3, s4, s5 = SCENES
+    if t0 < s2 - 1e-6:
+        return 'intro'
+    if t0 < s4 - 1e-6:
+        return 'main'
+    if t0 < s5 - 1e-6:
+        return 'peak'
+    if t0 < LOGO - 1e-6:
+        return 'build'
+    return 'logo'
+
+
+def chord_at(t0, section):
+    if section == 'build':
         return 'G'
-    if k >= 16:
+    if section == 'logo':
         return 'Am'
-    return PROG[(k - 2) % 4]
+    return PROG[int(round((t0 - SCENES[0]) / BAR)) % 4]      # Am lands on the first feature
+
+
+def notif_times():
+    s1 = T.get('s1', {})
+    return [s1.get('notif0', .4) + i * s1.get('notifStep', .4) for i in range(4)]
 
 
 def build_music():
     drums, bass, pad, arp, fx = buf(), buf(), buf(), buf(), buf()
     kicks = []
 
-    # 0.0 opening hit + pre-roll chord
+    # 0.0 opening hit (+ a pre-roll chord when the grid starts later)
     place(fx, impact(1.6) * 0.55, 0.0)
     place(drums, kick(), 0.0, 0.9)
     kicks.append(0.0)
-    place(pad, pad_chord(CH['Am'][0], 0.8, 1200), 0.0, 0.9)
-    # notification pings (scene 1)
-    for i, f in enumerate([880.0, 1046.5, 1318.5, 1760.0]):
-        place(arp, bell(f), 0.4 + 0.4 * i, 0.22, pan=(-0.3 if i % 2 else 0.3))
+    if GRID0 > 0:
+        place(pad, pad_chord(CH['Am'][0], GRID0, 1200), 0.0, 0.9)
+    for i, (t, f) in enumerate(zip(notif_times(), [880.0, 1046.5, 1318.5, 1760.0])):   # scene-1 notification pings
+        place(arp, bell(f), t, 0.22, pan=(-0.3 if i % 2 else 0.3))
 
-    for k in range(0, 17):
+    k = 0
+    while bar_start(k) < LOGO - 1e-6:
         t0 = bar_start(k)
-        name = chord_for_bar(k)
-        pv, av, root = CH[name]
-        section = 'intro' if k < 2 else 'build' if k == 15 else 'logo' if k >= 16 else 'main' if k < 10 else 'peak'
+        section = section_at(t0)
+        pv, av, root = CH[chord_at(t0, section)]
+        last_intro_bar = section == 'intro' and abs(t0 + BAR - SCENES[0]) < 1e-6
 
-        if section == 'logo':
-            break
-
-        # pads
         fc = {'intro': 900, 'main': 1700, 'peak': 2600, 'build': 2000}[section]
         place(pad, pad_chord(pv, BAR + 0.15, fc), t0, 1.0)
 
         for b in range(4):
             tb = t0 + b * BEAT
-            # kick: four on the floor; filtered feel in intro; drops out for the last half of the build
-            if not (section == 'build' and b >= 2):
-                g = 0.55 if section == 'intro' else 0.9
-                place(drums, kick(), tb, g)
+            if not (section == 'build' and b >= 2):          # kick drops out for the end of the build
+                place(drums, kick(), tb, 0.55 if section == 'intro' else 0.9)
                 kicks.append(tb)
-            # clap on 2 & 4
             if section in ('main', 'peak') and b in (1, 3):
                 place(drums, clap(), tb, 0.32, pan=0.05)
-            # hats
-            if section != 'intro' or k == 1:
+            if section != 'intro' or last_intro_bar:
                 place(drums, hat(open_=True), tb + BEAT / 2, 0.10 if section != 'peak' else 0.12, pan=-0.25)
             if section == 'peak':
                 for s16 in (0.25, 0.75):
                     place(drums, hat(), tb + s16 * BEAT, 0.07, pan=0.3)
-            # bass: off-beat 8ths
             if section in ('main', 'peak', 'build'):
                 place(bass, bass_note(root, BEAT / 2 * 0.9), tb + BEAT / 2, 0.42)
-            elif section == 'intro' and k == 1:
+            elif last_intro_bar:
                 place(bass, bass_note(root, BEAT / 2 * 0.9), tb + BEAT / 2, 0.25)
 
-        # arp: 16ths over chord tones
         if section in ('main', 'peak', 'build'):
             pat = [0, 1, 2, 3, 2, 1, 2, 3, 0, 1, 2, 3, 2, 3, 1, 2]
             for i, p in enumerate(pat):
                 f = av[p] * (2 if section == 'peak' and i % 4 == 0 else 1)
-                bright = 2200 if section == 'main' else 3600
-                place(arp, pluck(f, 0.22, bright), t0 + i * BEAT / 4, 0.10, pan=(0.35 if i % 2 else -0.35))
+                place(arp, pluck(f, 0.22, 2200 if section == 'main' else 3600), t0 + i * BEAT / 4, 0.10,
+                      pan=(0.35 if i % 2 else -0.35))
 
-        # build-ups into scene changes
-        if k == 1:                                          # into the 4.0 drop
+        if last_intro_bar:                                   # roll + riser into the first feature
             for i in range(8):
-                place(drums, snare(), t0 + 0.8 + i * 0.1, 0.12 + 0.03 * i)
-            place(fx, noise_riser(1.6, 300, 9000) * 0.18, t0)
+                place(drums, snare(), t0 + BAR / 2 + i * BAR / 16, 0.12 + 0.03 * i)
+            place(fx, noise_riser(BAR, 300, 9000) * 0.18, t0)
         if section == 'build':
             for i in range(16):
                 place(drums, snare(), t0 + i * BEAT / 4, 0.08 + 0.016 * i)
             place(fx, noise_riser(BAR, 300, 12000) * 0.22, t0)
-            # pitch riser
             t = tvec(BAR)
             f = 220 * 2 ** (t / BAR * 2)
             place(fx, np.sin(2 * np.pi * np.cumsum(f) / SR) * (t / BAR) ** 2 * 0.08, t0)
+        k += 1
 
-    # 2.4: dashboard lands
-    place(fx, impact(1.0) * 0.25, 2.4)
+    place(fx, impact(1.0) * 0.25, T.get('s1', {}).get('dash', 2.3) + .1)      # dashboard lands
 
-    # logo hit (26.4) and tail to 30.0
-    place(fx, impact(3.6) * 0.9, LOGO)
+    # logo hit and tail
+    tail = DUR - LOGO
+    place(fx, impact(min(3.6, tail)) * 0.9, LOGO)
     place(drums, kick(0.8), LOGO, 1.0)
     kicks.append(LOGO)
     crash = hp(rng.standard_normal(int(2.5 * SR)), 3000) * np.exp(-tvec(2.5) / 0.7)
     place(fx, crash * 0.18, LOGO)
     final = CH['Am'][0] + [659.25]
-    place(pad, pad_chord(final, DUR - LOGO, 2400) * np.linspace(1, 0.0, int((DUR - LOGO) * SR)) ** 0.6, LOGO, 1.5)
+    place(pad, pad_chord(final, tail, 2400) * np.linspace(1, 0.0, int(tail * SR)) ** 0.6, LOGO, 1.5)
     for i, f in enumerate([880.0, 1318.5, 1760.0, 1318.5]):
-        place(arp, bell(f, 1.6), LOGO + 0.4 * i, 0.16 - 0.02 * i, pan=(0.3 if i % 2 else -0.3))
+        place(arp, bell(f, 1.6), LOGO + 2 * BEAT * i, 0.16 - 0.02 * i, pan=(0.3 if i % 2 else -0.3))
+    if tail > 4.5:                                           # long end card: a soft pulse under the voice-over
+        tb = LOGO + 2 * BAR
+        while tb < DUR - BAR:
+            place(drums, kick(0.5), tb, 0.35)
+            kicks.append(tb)
+            tb += BAR
 
-    # sidechain duck for bass + pad from the kicks
-    t = np.arange(N) / SR
-    duck = np.ones(N)
+    duck = np.ones(N)                                         # sidechain from the kicks
     for tk in kicks:
         i = int(tk * SR)
-        n = int(0.32 * SR)
-        j = min(N, i + n)
+        j = min(N, i + int(0.32 * SR))
         duck[i:j] = np.minimum(duck[i:j], 1 - 0.65 * np.exp(-np.arange(j - i) / SR / 0.09))
     bass *= duck
     pad *= 0.5 + 0.5 * duck
@@ -345,53 +371,101 @@ def build_music():
     ir = reverb_ir()
     wet = reverb(pad * 0.5 + arp * 0.8 + fx * 0.15, ir)
     mix = drums + bass + pad + arp + fx + wet * 0.6
-    mix = hp(mix, 28)
-    return mix
+    return hp(mix, 28)
+
+
+# UI moments that have a visual pop in index.html (offsets are for a 1.6 s slot, scaled by K)
+EVENTS = [('f1', 0.55, 1500), ('f1', 1.08, 1900), ('f2', 0.35, 1200), ('f2', 1.0, 1600), ('f3', 0.55, 1900),
+          ('f4', 0.85, 1500), ('f5', 0.95, 1300), ('f6', 0.9, 1100), ('f7', 0.97, 1600), ('f8', 0.75, 1700),
+          ('f9', 0.95, 1900), ('f10', 0.78, 1300), ('f11', 1.0, 2000), ('f12', 0.3, 1200), ('f12', 0.62, 1300),
+          ('f12', 0.9, 1400), ('f13', 1.0, 1600)]
 
 
 def build_sfx():
     sfx = buf()
-    for T in SCENES:                                      # light sweep on every scene cut
-        place(sfx, whoosh(0.7) * 0.32, T - 0.35, pan=0.0)
-    for T in FEATURES:                                    # soft tick on feature changes
-        if T not in SCENES:
-            place(sfx, tick() * 0.22, T)
-    # UI moments that have a visual pop in index.html
-    F = dict(zip(['f%d' % i for i in range(1, 14)], FEATURES))
-    events = [(F['f1'] + 0.55, 1500), (F['f1'] + 1.08, 1900), (F['f2'] + 0.35, 1200), (F['f2'] + 1.0, 1600),
-              (F['f3'] + 0.55, 1900), (F['f4'] + 0.85, 1500), (F['f5'] + 0.95, 1300), (F['f6'] + 0.65, 1100),
-              (F['f6'] + 1.15, 1100), (F['f7'] + 0.97, 1600), (F['f8'] + 0.2, 1700), (F['f9'] + 0.95, 1900),
-              (F['f10'] + 0.78, 1300), (F['f11'] + 1.0, 2000), (F['f12'] + 0.42, 1200), (F['f12'] + 0.74, 1300),
-              (F['f12'] + 1.06, 1400), (F['f13'] + 1.0, 1600)]
-    for t, f in events:
-        place(sfx, pop(f) * 0.16, t, pan=float(rng.uniform(-0.3, 0.3)))
-    for i in range(4):                                     # scene 1 notification pops
-        place(sfx, pop(1400 + 150 * i) * 0.2, 0.4 + 0.4 * i)
+    for t in SCENES:
+        place(sfx, whoosh(0.7) * 0.32, t - 0.35)
+    for t in FEATURES:
+        if all(abs(t - s) > 1e-6 for s in SCENES):
+            place(sfx, tick() * 0.22, t)
+    for fid, off, f in EVENTS:
+        place(sfx, pop(f) * 0.16, FEATURES[int(fid[1:]) - 1] + K * off, pan=float(rng.uniform(-0.3, 0.3)))
+    for i, t in enumerate(notif_times()):
+        place(sfx, pop(1400 + 150 * i) * 0.2, t)
     return sfx
 
 
 # ---------------------------------------------------------------- voice-over
-# Line-up for the voice actor (seconds). Each phrase starts with its feature on screen.
-VO_CUES = [
-    (0.12, 1.25, 'تَبِي تْكَبِّرْ تِجَارْتَكْ؟'),
-    (1.45, 2.45, 'مَعَ فِيلُورْسِي، عِنْدَكْ الأَدَوَاتْ اللِّي تِحْتَاجْهَا بْمَكَانْ وَاحِدْ!'),
-    (4.05, 1.5, 'اِسْتَرْجِعْ السَّلَّاتْ المَتْرُوكَة،'),
-    (5.65, 1.5, 'قَدِّمْ بِطَاقَاتْ إِهْدَاءْ،'),
-    (7.25, 1.5, 'نَبِّهْ عُمَلَاءَكْ عِنْدَ رُجُوعْ المُنْتَجَاتْ،'),
-    (8.85, 1.5, 'وَأَنْشِئْ بَاقَاتْ وَعُرُوضْ مُمَيَّزَة!'),
-    (10.45, 1.5, 'حَسِّنْ ظُهُورْ مَتْجَرَكْ فِي جُوجِلْ،'),
-    (12.05, 1.5, 'صَمِّمْهْ عَلَى ذُوقَكْ،'),
-    (13.65, 1.5, 'طَوِّرْهْ بِالذَّكَاءِ الاِصْطِنَاعِي،'),
-    (15.25, 1.5, 'وَابْنِ ثِقَةْ عُمَلَاءَكْ بِالتَّقْيِيمَاتْ!'),
-    (16.85, 1.5, 'كَافِئْ عُمَلَاءَكْ،'),
-    (18.45, 1.5, 'أَعِدْ اِسْتِهْدَافْ المُهْتَمِّينْ،'),
-    (20.05, 1.5, 'وَارْبُطْ مَتْجَرَكْ بِبَوَّابَاتِ الدَّفْعْ'),
-    (21.65, 1.5, 'وَالعُمْلَاتْ'),
-    (23.25, 2.0, 'وَأَدَوَاتِ التَّسْوِيقْ وَالتَّوَاصُلِ الاِجْتِمَاعِي!'),
-    (26.45, 0.85, 'فِيلُورْسِي...'),
-    (27.4, 1.5, 'كُلّْ أَدَوَاتْ تِجَارْتَكْ، بْمَنَصَّة وَحْدَة.'),
-    (28.95, 0.95, 'اِكْتَشِفْهَا اليُومْ!'),
+# The script, one phrase per beat of the picture. 'at' is the feature/scene the phrase starts with.
+VO_SCRIPT = [
+    ('intro', 'تبي تكبّر تجارتك؟ مع فيلورسي، عندك الأدوات اللي تحتاجها بمكان واحد!'),
+    ('f1', 'استرجع السلات المتروكة،'),
+    ('f2', 'قدّم بطاقات إهداء،'),
+    ('f3', 'نبّه عملاءك عند رجوع المنتجات،'),
+    ('f4', 'وأنشئ باقات وعروض مميزة!'),
+    ('f5', 'حسّن ظهور متجرك في جوجل،'),
+    ('f6', 'صمّمه على ذوقك،'),
+    ('f7', 'طوّره بالذكاء الاصطناعي،'),
+    ('f8', 'وابنِ ثقة عملائك بالتقييمات!'),
+    ('f9', 'كافئ عملاءك،'),
+    ('f10', 'أعد استهداف المهتمين،'),
+    ('f11', 'واربط متجرك ببوابات الدفع،'),
+    ('f12', 'والعملات،'),
+    ('f13', 'وأدوات التسويق والتواصل الاجتماعي!'),
+    ('logo', 'فيلورسي... كل أدوات تجارتك، بمنصة واحدة. اكتشفها اليوم!'),
 ]
+
+
+def vo_slots():
+    """(start, max length, text, rate) for every phrase."""
+    v = T.get('vo', {})
+    out = []
+    for at, text in VO_SCRIPT:
+        if at == 'intro':
+            out.append((0.10, SCENES[0] - 0.30, text, v.get('introRate', '+10%')))
+        elif at == 'logo':
+            out.append((LOGO + 0.05, DUR - LOGO - 0.45, text, v.get('endRate', '+0%')))
+        else:
+            t0 = FEATURES[int(at[1:]) - 1]
+            out.append((t0 + 0.15, float(T['slot']) - 0.3, text, v.get('rate', '+0%')))
+    return out
+
+
+def edge_say(text, voice, rate):
+    """Microsoft neural TTS (the Edge read-aloud voices) -> trimmed mono float array at SR."""
+    import ssl
+    import edge_tts
+    import edge_tts.communicate as C
+    ca = os.environ.get('SSL_CERT_FILE')
+    if ca:                                   # use the environment's CA bundle (e.g. behind a TLS proxy)
+        C._SSL_CTX = ssl.create_default_context(cafile=ca)
+    with tempfile.TemporaryDirectory() as d:
+        mp3, wav = os.path.join(d, 'a.mp3'), os.path.join(d, 'a.wav')
+        asyncio.run(edge_tts.Communicate(text, voice, rate=rate, proxy=os.environ.get('HTTPS_PROXY')).save(mp3))
+        subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', mp3, '-ac', '1', '-ar', str(SR), wav], check=True)
+        return trim(read_wav(wav))
+
+
+def rate_up(rate, factor):
+    return f'{int(rate.strip("%+")) + int(np.ceil((factor - 1) * 100)) + 2:+d}%'
+
+
+def edge_vo():
+    voice = T.get('vo', {}).get('voice', 'ar-KW-FahedNeural')
+    vo = np.zeros(N)
+    for t0, maxd, text, rate in vo_slots():
+        x = edge_say(text, voice, rate)
+        if len(x) / SR > maxd:                               # too long for its slot: re-read a little faster
+            rate = rate_up(rate, len(x) / SR / maxd)
+            x = edge_say(text, voice, rate)
+        if len(x) / SR > maxd:
+            x = atempo(x, len(x) / SR / maxd)
+        i = int(t0 * SR)
+        j = min(N, i + len(x))
+        vo[i:j] += x[: j - i]
+        print(f'  vo @ {t0:6.2f}s  {len(x) / SR:4.2f}s / {maxd:4.2f}s  rate {rate}  {text}')
+    vo = hp(vo, 80)
+    return vo / (np.abs(vo).max() + 1e-9) * 0.9
 
 
 def read_wav(path):
@@ -410,16 +484,6 @@ def trim(x, thr=0.01):
     return x[max(0, idx[0] - 200): idx[-1] + 400] if len(idx) else x
 
 
-def piper_say(text, length_scale, piper, model):
-    with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as f:
-        path = f.name
-    subprocess.run([piper, '--model', model, '--length_scale', f'{length_scale:.3f}', '--sentence_silence', '0',
-                    '--output_file', path], input=text.encode(), check=True, capture_output=True)
-    x = trim(read_wav(path))
-    os.unlink(path)
-    return x
-
-
 def atempo(x, speed):
     with tempfile.TemporaryDirectory() as d:
         a, b = os.path.join(d, 'a.wav'), os.path.join(d, 'b.wav')
@@ -428,31 +492,7 @@ def atempo(x, speed):
         return read_wav(b)
 
 
-def guide_vo(piper, model):
-    vo = np.zeros(N)
-    report = []
-    for t, maxd, text in VO_CUES:
-        x = piper_say(text, 0.95, piper, model)
-        d = len(x) / SR
-        if d > maxd:
-            ls = max(0.55, 0.95 * maxd / d)
-            x = piper_say(text, ls, piper, model)
-            d = len(x) / SR
-        speed = 1.0
-        if d > maxd:                                   # still long: time-stretch (pitch kept) with ffmpeg atempo
-            speed = d / maxd
-            x = atempo(x, speed)
-            d = len(x) / SR
-        i = int(t * SR)
-        j = min(N, i + len(x))
-        vo[i:j] += x[: j - i]
-        report.append((t, d, maxd, speed))
-    vo = hp(vo, 90)
-    vo = vo / (np.abs(vo).max() + 1e-9) * 0.9
-    return vo, report
 
-
-# ---------------------------------------------------------------- mix
 def duck_curve(vo, depth_db=-9.0):
     env = np.abs(vo)
     win = int(0.05 * SR)
@@ -482,35 +522,34 @@ def write(path, x):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--vo', help='recorded VO wav, already aligned to the 30 s picture')
-    ap.add_argument('--guide-vo', action='store_true', help='synthesise a scratch guide VO with Piper')
-    ap.add_argument('--piper', default=os.environ.get('PIPER_BIN', 'piper'))
-    ap.add_argument('--piper-model', default=os.environ.get('PIPER_MODEL', ''))
+    ap.add_argument('--timing', default=os.path.join(HERE, '..', 'timing.json'))
+    ap.add_argument('--vo', help='recorded VO wav, already aligned to the picture (starts at 0 s)')
+    ap.add_argument('--edge-vo', action='store_true', help='synthesise the Gulf VO with Microsoft neural TTS')
     a = ap.parse_args()
+    with open(a.timing, encoding='utf-8') as f:
+        configure(json.load(f))
+    name = T.get('name', 'velorci-ad')
     os.makedirs(OUT, exist_ok=True)
+    o = lambda s: os.path.join(OUT, f'{name}.{s}.wav')
 
     music = norm(build_music(), 0.8)
     sfx = build_sfx()
-    write(os.path.join(OUT, 'music.wav'), music)
-    write(os.path.join(OUT, 'sfx.wav'), norm(sfx, 0.8))
-    write(os.path.join(OUT, 'mix_music.wav'), norm(music + sfx * 0.9, 0.89))
-    print('wrote music.wav, sfx.wav, mix_music.wav')
+    write(o('music'), music)
+    write(o('sfx'), norm(sfx, 0.8))
+    write(o('mix_music'), norm(music + sfx * 0.9, 0.89))
+    print(f'wrote {name}.music / .sfx / .mix_music  ({DUR:.1f} s)')
 
     vo = None
     if a.vo:
         vo = read_wav(a.vo)[:N]
         vo = np.pad(vo, (0, N - len(vo)))
-    elif a.guide_vo:
-        vo, rep = guide_vo(a.piper, a.piper_model)
-        write(os.path.join(OUT, 'vo_guide.wav'), np.vstack([vo, vo]))
-        for t, d, m, sp in rep:
-            print(f'  vo @ {t:5.2f}s  {d:4.2f}s (slot {m:.2f}s)  stretch x{sp:.2f}')
+    elif a.edge_vo:
+        vo = edge_vo()
+        write(o('vo'), np.vstack([vo, vo]))
     if vo is not None:
-        g = duck_curve(vo)
-        bed = (music + sfx * 0.9) * g
-        mix = bed * 0.75 + np.vstack([vo, vo]) * 0.95
-        write(os.path.join(OUT, 'mix_vo.wav'), norm(mix, 0.89))
-        print('wrote mix_vo.wav')
+        bed = (music + sfx * 0.9) * duck_curve(vo)
+        write(o('mix_vo'), norm(bed * 0.75 + np.vstack([vo, vo]) * 0.95, 0.89))
+        print(f'wrote {name}.mix_vo')
 
 
 if __name__ == '__main__':

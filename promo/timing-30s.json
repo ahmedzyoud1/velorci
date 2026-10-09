@@ -1,0 +1,11 @@
+{
+  "name": "velorci-ad-30s",
+  "total": 30.0,
+  "intro": 4.0,
+  "slot": 1.6,
+  "grid": 1.6,
+  "bpm": 150,
+  "grid0": 0.8,
+  "s1": { "notif0": 0.4, "notifStep": 0.4, "zoom": 2.0, "dash": 2.3, "withv": 2.8 },
+  "end": { "tag": 0.9, "cta": 2.45 }
+}
