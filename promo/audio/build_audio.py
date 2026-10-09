@@ -1,11 +1,11 @@
 """Builds the audio for the velorci ad from a timing file (the same one render.mjs uses).
 
     python build_audio.py                         -> out/<name>.music.wav / .sfx.wav / .mix_music.wav   (timing.json)
-    python build_audio.py --edge-vo               -> also synthesises the Gulf voice-over (Microsoft neural TTS)
-                                                     and writes out/<name>.vo.wav and .mix_vo.wav
+    python build_audio.py --vo-lines vo/          -> also mixes the voice-over, one wav per phrase (intro.wav, f1.wav …
+                                                     logo.wav), each placed on its cue and sped up if it overruns its
+                                                     slot; writes out/<name>.vo.wav and .mix_vo.wav (audio/vo = the Gulf VO)
+    python build_audio.py --edge-vo               -> same, synthesised with Microsoft neural TTS (reads close to MSA)
     python build_audio.py --vo voice.wav          -> mixes a recorded voice-over instead (aligned to 0 s)
-    python build_audio.py --vo-lines vo/          -> one wav per phrase (intro.wav, f1.wav … logo.wav), each placed
-                                                     on its cue and sped up if it overruns its slot
     python build_audio.py --timing timing-30s.json  the fast 30 s cut
 
 The music is synthesised here (no samples, no licences), A minor, at the timing file's BPM. Bars start at
@@ -405,7 +405,7 @@ VO_SCRIPT = [
     ('f2', 'ضيف بطاقة إهداء ويّا الطلب،'),
     ('f3', 'بلّغ زباينك أول ما يتوفّر المنتج،'),
     ('f4', 'وسوّي باقات وخصومات على الكمية!'),
-    ('f5', 'ضبّط ظهور متجرك في قوقل،'),
+    ('f5', 'ضبّط ظهور متجرك على قوقل،'),
     ('f6', 'صمّمه على كيفك،'),
     ('f7', 'وطوّره بالذكاء الاصطناعي،'),
     ('f8', 'وخلّ التقييمات تكسب لك الثقة!'),

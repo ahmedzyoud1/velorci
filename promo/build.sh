@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 # Rebuilds the velorci ad.
 #
-#   ./build.sh                       54 s cut with the Gulf voice-over (Microsoft neural TTS, needs network)
+#   ./build.sh                       54 s cut with the Gulf voice-over in audio/vo/ (one wav per phrase)
 #                                    -> deliverables/velorci-ad.mp4 and velorci-ad_no-vo.mp4
 #   ./build.sh --vo voice.wav        same, with a recorded voice-over (aligned to 0 s) instead of TTS
-#   ./build.sh --vo-lines dir/       same, with one wav per phrase (intro.wav, f1.wav … f13.wav, logo.wav) placed on its cue
+#   ./build.sh --vo-lines dir/       same, with another folder of phrases (intro.wav, f1.wav … f13.wav, logo.wav)
 #   ./build.sh --cut 30              fast 30 s cut, music only -> deliverables/velorci-ad-30s.mp4
 #   ./build.sh --skip-render ...     reuse the rendered picture in out/ (audio-only changes)
 #
-# Needs: node + playwright (Chromium), ffmpeg, python3 with numpy, scipy (and edge-tts for the TTS voice-over).
+# Needs: node + playwright (Chromium), ffmpeg, python3 with numpy and scipy.
 set -euo pipefail
 cd "$(dirname "$0")"
 
-VO=""; LINES=""; RENDER=1; CUT=""
+VO=""; LINES="audio/vo"; RENDER=1; CUT=""
 while [ $# -gt 0 ]; do
   case "$1" in
     --vo) VO="$2"; shift 2 ;;
@@ -32,9 +32,7 @@ if [ "$CUT" = 30 ]; then
 fi
 
 [ "$RENDER" = 1 ] && node render.mjs
-if [ -n "$VO" ]; then python3 audio/build_audio.py --vo "$VO"
-elif [ -n "$LINES" ]; then python3 audio/build_audio.py --vo-lines "$LINES"
-else python3 audio/build_audio.py --edge-vo; fi
+if [ -n "$VO" ]; then python3 audio/build_audio.py --vo "$VO"; else python3 audio/build_audio.py --vo-lines "$LINES"; fi
 python3 mux.py out/velorci-ad.video.mp4 out/velorci-ad.mix_vo.wav deliverables/velorci-ad.mp4
 python3 mux.py out/velorci-ad.video.mp4 out/velorci-ad.mix_music.wav deliverables/velorci-ad_no-vo.mp4
 ffmpeg -hide_banner -loglevel error -y -i out/velorci-ad.video.mp4 -frames:v 1 -q:v 2 deliverables/cover.jpg
