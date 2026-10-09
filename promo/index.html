@@ -1,0 +1,993 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Velorci Ad 30s</title>
+<!--
+  Velorci — 30s vertical ad (1080x1920).
+  Every animation lives on one paused GSAP timeline so render.mjs can seek frame by frame.
+  Open in a browser to preview: Space = play/pause, ← → = step, R = restart.
+  Real screenshots: drop PNG/JPG files into promo/screens/ named f1..f13 (see README).
+-->
+<style>
+@font-face{font-family:"Cairo";src:url("vendor/Cairo.ttf") format("truetype");font-weight:200 1000;font-display:block}
+:root{
+  --ink:#041316; --deep:#083A3F; --teal:#0F6F7A; --mint:#65D4D2; --ice:#E8FFFE; --slate:#607878;
+  --amber:#F5A623; --green:#2FB37A; --red:#E4572E;
+  --paper:#F3F9F9; --card:#FFFFFF; --line:#DCE9E9; --text:#0B2A2E; --mut:#5F7B7D;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--ink)}
+body{font-family:"Cairo","Noto Color Emoji",sans-serif;color:var(--ice);-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--ink)}
+.abs{position:absolute}
+svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+/* ---------- background ---------- */
+#bg{position:absolute;inset:0;background:radial-gradient(1200px 900px at 50% 38%,#0B3B41 0%,#06242A 45%,#041316 100%)}
+#pattern{position:absolute;left:-200px;top:-200px;width:1480px;height:2320px;background:url("../assets/pattern-dark.png") repeat;background-size:531px 181px;opacity:.05;mix-blend-mode:screen}
+.glow{position:absolute;border-radius:50%;filter:blur(120px);opacity:.55}
+#g1{width:760px;height:760px;left:-260px;top:180px;background:#0F6F7A}
+#g2{width:700px;height:700px;right:-280px;top:1080px;background:#65D4D2;opacity:.22}
+#vignette{position:absolute;inset:0;background:radial-gradient(900px 1500px at 50% 50%,transparent 60%,rgba(0,0,0,.55) 100%);pointer-events:none}
+
+/* ---------- top bar ---------- */
+#top{position:absolute;top:92px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:22px;opacity:0}
+#top .brand{display:flex;align-items:center;gap:14px;direction:ltr;font-weight:800;font-size:34px;letter-spacing:-.5px;color:var(--ice)}
+#top .brand img{height:30px}
+#dots{display:flex;gap:10px;direction:rtl}
+#dots u{display:block;width:44px;height:6px;border-radius:3px;background:rgba(232,255,254,.16)}
+
+/* ---------- feature heading ---------- */
+.feat{position:absolute;inset:0;visibility:hidden}
+.fhead{position:absolute;top:212px;left:60px;right:60px;text-align:center}
+.num{display:inline-flex;align-items:center;gap:12px;padding:6px 22px 8px;border-radius:40px;background:rgba(101,212,210,.12);border:1.5px solid rgba(101,212,210,.4);color:var(--mint);font-weight:800;font-size:28px;direction:ltr}
+.num b{color:var(--ice);font-weight:900}
+.fhead h2{font-size:82px;line-height:1.15;font-weight:900;margin-top:14px;letter-spacing:-.5px}
+.fhead h2 em{font-style:normal;color:var(--mint)}
+.fhead p{font-size:38px;font-weight:600;color:rgba(232,255,254,.78);margin-top:4px}
+
+/* ---------- app window ---------- */
+.win{position:absolute;left:100px;top:540px;width:880px;height:780px;background:var(--paper);border-radius:42px;overflow:hidden;color:var(--text);
+  box-shadow:0 50px 120px rgba(0,0,0,.55),0 0 0 1.5px rgba(101,212,210,.35),0 0 80px rgba(101,212,210,.12)}
+.wbar{height:86px;display:flex;align-items:center;gap:16px;padding:0 32px;background:#fff;border-bottom:1.5px solid var(--line)}
+.wbar .wic{width:52px;height:52px;border-radius:16px;background:var(--deep);color:var(--mint);display:grid;place-items:center;font-size:30px}
+.wbar b{font-size:31px;font-weight:800}
+.wbar .sp{flex:1}
+.wbar i{font-style:normal;font-size:22px;color:var(--mut);direction:ltr;background:var(--paper);padding:6px 16px;border-radius:20px}
+.wbar .dots{display:flex;gap:8px;direction:ltr}
+.wbar .dots u{width:13px;height:13px;border-radius:50%;background:#D5E3E3}
+.wbody{position:absolute;top:86px;left:0;right:0;bottom:0;padding:30px 32px}
+.real{position:absolute;top:86px;left:0;right:0;bottom:0;width:100%;height:calc(100% - 86px);object-fit:cover;object-position:top center;display:none}
+.win.has-real .wbody{display:none}
+.win.has-real .real{display:block}
+
+.tiles{display:grid;gap:16px}
+.tiles.c4{grid-template-columns:repeat(4,1fr)}
+.tiles.c3{grid-template-columns:repeat(3,1fr)}
+.tile{background:#fff;border:1.5px solid var(--line);border-radius:24px;padding:16px 18px 14px}
+.tile .v{font-size:46px;font-weight:900;color:var(--deep);line-height:1.15}
+.tile .l{font-size:22px;font-weight:700;color:var(--mut)}
+.tile.hl{background:var(--deep);border-color:var(--deep)}
+.tile.hl .v{color:var(--mint)} .tile.hl .l{color:rgba(232,255,254,.75)}
+
+.card{background:#fff;border:1.5px solid var(--line);border-radius:26px}
+.row{display:flex;align-items:center;gap:18px;padding:18px 20px;background:#fff;border:1.5px solid var(--line);border-radius:24px;margin-top:14px}
+.av{width:62px;height:62px;border-radius:50%;background:var(--deep);color:var(--mint);display:grid;place-items:center;font-weight:900;font-size:28px;flex-shrink:0}
+.row .nm{font-size:28px;font-weight:800;line-height:1.25}
+.row .mt{font-size:22px;color:var(--mut);font-weight:600}
+.grow{flex:1;min-width:0}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 18px 6px;border-radius:30px;font-size:22px;font-weight:800;white-space:nowrap}
+.p-amber{background:#FFF1D6;color:#A86A00}
+.p-teal{background:#DDF5F4;color:var(--teal)}
+.p-green{background:#DDF5E8;color:#17834F}
+.p-red{background:#FDE5DE;color:#C2412A}
+.p-dark{background:var(--deep);color:var(--mint)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 22px 12px;border-radius:18px;background:var(--deep);color:var(--ice);font-weight:800;font-size:23px;white-space:nowrap}
+.btn.mint{background:var(--mint);color:var(--ink)}
+.stack{position:relative;display:inline-grid}
+.stack>*{grid-area:1/1}
+
+/* floating overlay elements */
+.float{position:absolute;opacity:0}
+.bubble{background:rgba(8,58,63,.94);border:1.5px solid rgba(101,212,210,.5);color:var(--ice);border-radius:30px;padding:20px 26px;font-size:28px;font-weight:700;box-shadow:0 30px 70px rgba(0,0,0,.5);backdrop-filter:blur(8px)}
+.bubble .bt{font-size:20px;color:var(--mint);font-weight:800;margin-bottom:4px}
+.chip{display:inline-flex;align-items:center;gap:12px;border-radius:40px;padding:14px 28px 16px;font-weight:900;font-size:32px;box-shadow:0 24px 60px rgba(0,0,0,.45);white-space:nowrap}
+.chip small{font-size:22px;font-weight:700;opacity:.85}
+.chip.green{background:#1FA56C;color:#fff}
+.chip.mint{background:var(--mint);color:var(--ink)}
+.chip.dark{background:rgba(8,58,63,.95);color:var(--ice);border:1.5px solid rgba(101,212,210,.5)}
+
+/* scene pills */
+.pills{position:absolute;left:50px;right:50px;top:1372px;display:flex;flex-wrap:wrap;justify-content:center;gap:12px 12px;opacity:0}
+.pills span{padding:8px 24px 11px;border-radius:40px;font-size:30px;font-weight:800;background:rgba(232,255,254,.06);border:1.5px solid rgba(232,255,254,.18);color:rgba(232,255,254,.55);white-space:nowrap}
+
+/* transitions */
+#sweep{position:absolute;top:-400px;left:-1600px;width:900px;height:2800px;transform:rotate(14deg);background:linear-gradient(90deg,transparent,rgba(101,212,210,.0) 10%,rgba(101,212,210,.55) 50%,rgba(101,212,210,0) 90%,transparent);filter:blur(30px);opacity:0}
+#flash{position:absolute;inset:0;background:#E8FFFE;opacity:0}
+
+/* product illos */
+.illo{display:grid;place-items:center;border-radius:24px;background:linear-gradient(160deg,#E4F2F2,#CFE3E3)}
+.illo svg{width:78%;height:auto}
+.thumb{width:110px;height:110px;border-radius:22px;flex-shrink:0;overflow:hidden}
+.thumb img{width:100%;height:100%;display:block}
+
+/* toggles */
+.tg{width:76px;height:42px;border-radius:21px;background:#CBDADA;position:relative;flex-shrink:0}
+.tg .k{position:absolute;top:5px;right:5px;width:32px;height:32px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.tg .on{position:absolute;inset:0;border-radius:21px;background:var(--green);opacity:0}
+
+/* ---------- S1 ---------- */
+#s1{position:absolute;inset:0}
+.hook{position:absolute;top:250px;left:30px;right:30px;text-align:center;font-size:86px;font-weight:900;line-height:1.2;letter-spacing:-1px}
+.hook span{display:inline-block;opacity:1}
+.hook .hl{color:var(--mint)}
+#shop{position:absolute;left:250px;top:520px;width:580px;height:900px;border-radius:56px;background:#0B1F22;padding:16px;box-shadow:0 50px 120px rgba(0,0,0,.6),0 0 0 2px rgba(101,212,210,.25);opacity:0}
+#shop .scr{position:relative;width:100%;height:100%;border-radius:42px;overflow:hidden;background:var(--paper);color:var(--text)}
+.sf-top{height:96px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:#fff;border-bottom:1.5px solid var(--line)}
+.sf-top b{font-size:30px;font-weight:900;letter-spacing:1px}
+.sf-hero{margin:22px;height:330px;border-radius:30px;background:linear-gradient(150deg,#0F6F7A,#083A3F);color:var(--ice);position:relative;overflow:hidden;padding:26px 28px}
+.sf-hero h4{font-size:34px;font-weight:900;line-height:1.2}
+.sf-hero .pr{font-size:28px;font-weight:800;color:var(--mint);margin-top:6px}
+.sf-hero .btn{position:absolute;bottom:24px;right:28px;background:var(--mint);color:var(--ink)}
+.sf-hero svg{position:absolute;left:10px;bottom:14px;width:300px}
+.sf-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;padding:0 22px}
+.sf-grid .it{background:#fff;border:1.5px solid var(--line);border-radius:22px;padding:10px}
+.sf-grid .it img{width:100%;border-radius:14px;display:block}
+.sf-grid .it div{font-size:20px;font-weight:800;margin-top:6px}
+.sf-grid .it small{font-size:19px;color:var(--teal);font-weight:800}
+.notif{position:absolute;left:110px;width:860px;display:flex;align-items:center;gap:20px;padding:22px 26px;border-radius:30px;background:rgba(10,40,44,.94);border:1.5px solid rgba(101,212,210,.45);box-shadow:0 30px 70px rgba(0,0,0,.55);opacity:0}
+.notif .ic{width:70px;height:70px;border-radius:20px;background:var(--mint);color:var(--ink);display:grid;place-items:center;font-size:38px;flex-shrink:0}
+.notif .tx{flex:1}
+.notif .tx b{display:block;font-size:31px;font-weight:900}
+.notif .tx span{font-size:24px;color:rgba(232,255,254,.7);font-weight:600}
+.notif time{font-size:22px;color:var(--mint);font-weight:700}
+#withv{position:absolute;top:1380px;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:18px;font-size:44px;font-weight:800;opacity:0}
+#withv img{height:44px}
+#withv .wm{direction:ltr;font-weight:900;letter-spacing:-.5px}
+.bars{display:flex;align-items:flex-end;gap:18px;height:210px;padding:0 10px}
+.bars u{flex:1;border-radius:12px 12px 4px 4px;background:linear-gradient(180deg,var(--mint),var(--teal));transform-origin:bottom;transform:scaleY(0)}
+
+/* ---------- S5 ---------- */
+#s5{position:absolute;inset:0;visibility:hidden}
+#grid13{position:absolute;left:110px;top:430px;width:860px;padding:44px 40px 40px;border-radius:48px;background:rgba(8,58,63,.55);border:1.5px solid rgba(101,212,210,.4);box-shadow:0 50px 120px rgba(0,0,0,.5);backdrop-filter:blur(10px);opacity:0}
+#grid13 .gbar{display:flex;align-items:center;justify-content:center;gap:12px;margin:-14px 0 18px;font-size:22px;font-weight:700;color:rgba(232,255,254,.6);direction:ltr}
+#grid13 .gbar img{height:24px}
+#grid13 h3{text-align:center;font-size:54px;font-weight:900;margin-bottom:30px}
+#grid13 h3 em{font-style:normal;color:var(--mint)}
+#grid13 .g{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+#grid13 .g div{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 6px 14px;border-radius:26px;background:rgba(4,19,22,.6);border:1.5px solid rgba(101,212,210,.25);font-size:21px;font-weight:800;text-align:center;line-height:1.25;opacity:0}
+#grid13 .g div svg{font-size:46px;color:var(--mint)}
+#end{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:170px}
+#end .mark{width:330px;opacity:0;filter:drop-shadow(0 0 60px rgba(101,212,210,.55))}
+#end .wm{font-size:168px;font-weight:900;letter-spacing:-5px;direction:ltr;line-height:1;margin-top:40px;opacity:0;background:linear-gradient(180deg,#FFFFFF,#BDF3F1);-webkit-background-clip:text;background-clip:text;color:transparent}
+#end .tag{font-size:52px;font-weight:800;margin-top:36px;opacity:0}
+#end .cta{margin-top:56px;padding:22px 58px 28px;border-radius:60px;background:var(--mint);color:var(--ink);font-size:46px;font-weight:900;box-shadow:0 0 0 0 rgba(101,212,210,.6),0 30px 80px rgba(101,212,210,.35);opacity:0}
+#end .url{margin-top:34px;font-size:40px;font-weight:800;color:var(--mint);direction:ltr;letter-spacing:1px;opacity:0}
+#ring{position:absolute;left:540px;top:620px;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;border:6px solid var(--mint);opacity:0}
+
+/* ---------- per feature bits ---------- */
+/* f2 gift */
+.gform .fld{display:flex;gap:14px;align-items:center;background:var(--paper);border:1.5px solid var(--line);border-radius:18px;padding:12px 18px;margin-top:12px;font-size:25px}
+.gform .fld label{font-weight:800;color:var(--mut);width:94px;flex-shrink:0}
+.gform .fld span{font-weight:800;color:var(--text);min-height:36px}
+.giftcard{width:430px;padding:30px 34px;border-radius:26px;background:#FFFDF7;color:#2B2B2B;border:2px solid #E9E2CF;box-shadow:0 40px 90px rgba(0,0,0,.55);text-align:center}
+.giftcard img{height:46px}
+.giftcard .to,.giftcard .fr{font-size:24px;font-weight:700;color:#8A7F66}
+.giftcard .gmsg{font-size:34px;font-weight:900;margin:12px 0;line-height:1.35}
+.giftcard hr{border:0;border-top:2px dashed #E3DBC6;margin:12px 0}
+/* f4 bundle */
+.btile{position:absolute;width:200px;padding:12px;border-radius:26px;background:#fff;border:1.5px solid var(--line);text-align:center;box-shadow:0 14px 30px rgba(8,58,63,.12)}
+.btile img{width:100%;border-radius:18px;display:block}
+.btile div{font-size:21px;font-weight:800;margin-top:6px}
+.btile small{font-size:20px;color:var(--mut);font-weight:700}
+.plus{position:absolute;width:56px;height:56px;border-radius:50%;background:var(--mint);color:var(--ink);font-size:40px;font-weight:900;display:grid;place-items:center;opacity:0}
+.tabs{display:flex;gap:10px}
+.tabs span{padding:8px 26px 11px;border-radius:16px;font-size:24px;font-weight:800;background:#fff;border:1.5px solid var(--line);color:var(--mut)}
+.tabs span.on{background:var(--deep);color:var(--mint);border-color:var(--deep)}
+/* f5 seo */
+.serp{width:860px;padding:26px 30px;border-radius:30px;background:#fff;color:#1f1f1f;box-shadow:0 40px 90px rgba(0,0,0,.55);font-family:"Cairo",Arial,sans-serif}
+.serp .q{display:flex;align-items:center;gap:14px;border:1.5px solid #DADCE0;border-radius:40px;padding:10px 24px;font-size:27px;font-weight:700;color:#202124}
+.serp .q svg{font-size:30px;color:#5f6368}
+.serp .res{margin-top:22px;display:flex;gap:16px}
+.serp .fav{width:52px;height:52px;border-radius:50%;background:var(--deep);display:grid;place-items:center;flex-shrink:0}
+.serp .fav img{width:32px}
+.serp .site{font-size:22px;color:#202124;font-weight:700;direction:ltr;text-align:right}
+.serp .site small{display:block;color:#4d5156;font-weight:600}
+.serp .tt{font-size:32px;color:#1a0dab;font-weight:800;margin-top:6px;line-height:1.3}
+.serp .ds{font-size:23px;color:#4d5156;font-weight:600;line-height:1.5}
+/* f6 store design */
+#sfd{--acc:#0F6F7A;--acc2:#65D4D2;--bgc:#F3F9F9;background:var(--bgc);border-radius:26px;border:1.5px solid var(--line);overflow:hidden;height:500px}
+#sfd .h{height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:var(--acc);color:#fff;font-weight:900;font-size:26px}
+#sfd .hero{margin:18px;height:190px;border-radius:22px;background:linear-gradient(140deg,var(--acc),var(--acc2));color:#fff;padding:22px 26px;position:relative;overflow:hidden}
+#sfd .hero b{font-size:36px;font-weight:900;display:block}
+#sfd .hero span{font-size:23px;font-weight:700;opacity:.9}
+#sfd .hero svg{position:absolute;left:14px;bottom:4px;width:250px}
+#sfd .g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:0 18px}
+#sfd .g div{background:#fff;border-radius:18px;padding:8px;border:1.5px solid var(--line)}
+#sfd .g img{width:100%;border-radius:12px;display:block}
+#sfd .g i{display:block;height:12px;border-radius:6px;background:var(--acc);opacity:.85;margin-top:8px;width:70%}
+.sw{display:flex;gap:18px;align-items:center;margin-top:22px}
+.sw u{width:64px;height:64px;border-radius:50%;border:4px solid #fff;box-shadow:0 0 0 2px var(--line)}
+.sw .lbl{font-size:24px;font-weight:800;color:var(--mut);margin-left:8px}
+.cursor{position:absolute;left:0;top:0;width:56px;height:56px;opacity:0;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+/* f7 ai chat */
+.msg{max-width:660px;padding:18px 26px 22px;border-radius:28px;font-size:29px;font-weight:700;line-height:1.45;margin-top:18px;opacity:0}
+.msg.me{background:var(--deep);color:var(--ice);margin-right:auto;border-bottom-left-radius:8px}
+.msg.ai{background:#fff;border:1.5px solid var(--line);color:var(--text);margin-left:auto;border-bottom-right-radius:8px}
+.typing{display:inline-flex;gap:8px}
+.typing u{width:13px;height:13px;border-radius:50%;background:var(--slate)}
+.mini{width:340px;border-radius:40px;background:#0B1F22;padding:12px;box-shadow:0 40px 90px rgba(0,0,0,.6),0 0 0 2px rgba(101,212,210,.3)}
+.mini .scr{border-radius:30px;overflow:hidden;background:var(--paper);color:var(--text);height:430px;position:relative}
+.mini .bn{position:absolute;left:14px;right:14px;top:84px;height:190px;border-radius:22px;background:linear-gradient(135deg,#C2532E,#F5A623);color:#fff;padding:20px 22px;overflow:hidden}
+.mini .bn b{font-size:34px;font-weight:900;display:block;line-height:1.2}
+.mini .bn span{font-size:24px;font-weight:800;direction:ltr;display:block;text-align:right;opacity:.95}
+.mini .bn .off{position:absolute;left:18px;bottom:16px;background:#fff;color:#C2532E;font-weight:900;font-size:30px;padding:4px 18px 8px;border-radius:16px}
+/* f8 reviews */
+.stars{display:flex;gap:10px;justify-content:center;font-size:84px;color:#F5B301}
+.stars svg{fill:#F5B301;stroke:#F5B301;transform:scale(0)}
+.rv{display:flex;gap:16px;align-items:flex-start}
+.rv .s{color:#F5B301;font-size:24px;letter-spacing:2px}
+/* f9 loyalty */
+.lcard{position:relative;height:262px;border-radius:32px;background:linear-gradient(135deg,#0F6F7A 0%,#083A3F 60%,#041316 100%);color:var(--ice);padding:28px 34px;overflow:hidden}
+.lcard .pts{font-size:96px;font-weight:900;line-height:1;margin-top:10px;color:#fff}
+.lcard .bar{height:18px;border-radius:9px;background:rgba(232,255,254,.18);margin-top:22px;overflow:hidden}
+.lcard .bar u{display:block;height:100%;width:100%;border-radius:9px;background:linear-gradient(90deg,var(--mint),#BDF3F1);transform-origin:right;transform:scaleX(0)}
+.lcard img{position:absolute;left:30px;top:30px;height:48px;opacity:.9}
+/* f10 retarget */
+.px{display:flex;align-items:center;gap:16px;padding:16px 20px;margin-top:12px;background:#fff;border:1.5px solid var(--line);border-radius:22px}
+.px .lg{position:relative;width:56px;height:56px;border-radius:16px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:19px;flex-shrink:0;direction:ltr}
+.px .lg b{position:absolute;right:-9px;top:-9px;width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;font-size:17px;display:grid;place-items:center;border:3px solid #fff;transform:scale(0)}
+.px .st{font-size:21px;font-weight:800;color:var(--mut)}
+.px .nm{font-size:25px;font-weight:800}
+.px .id{font-size:20px;color:var(--mut);direction:ltr;text-align:right;font-weight:700}
+.adcard{width:440px;border-radius:30px;background:#fff;color:var(--text);overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.6)}
+.adcard .ah{display:flex;align-items:center;gap:12px;padding:14px 18px;font-size:22px;font-weight:800}
+.adcard .ah .av{width:46px;height:46px;font-size:20px}
+.adcard .ah small{display:block;color:var(--mut);font-size:18px}
+.adcard .ai{height:250px;background:linear-gradient(150deg,#0F6F7A,#083A3F);display:grid;place-items:center}
+.adcard .ai svg{width:300px}
+.adcard .af{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;font-size:25px;font-weight:900}
+/* f11 payments */
+.pg{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
+.pm{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:22px;background:#fff;border:2px solid var(--line);position:relative}
+.pm .lg{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;font-weight:900;font-size:19px;color:#fff;flex-shrink:0;direction:ltr;line-height:1}
+.pm .nm{font-size:24px;font-weight:800;line-height:1.2}
+.pm .nm small{display:block;font-size:18px;color:var(--mut);font-weight:700}
+.pm .ck{position:absolute;left:14px;top:50%;margin-top:-17px;width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-size:22px;transform:scale(0)}
+/* f12 currency */
+.cur{display:flex;align-items:center;gap:12px;padding:10px 22px;border-radius:30px;background:#fff;border:2px solid var(--line);font-size:28px;font-weight:900;direction:ltr}
+.price{position:relative;height:120px;overflow:hidden}
+.price div{position:absolute;inset:0;display:flex;align-items:center;gap:14px;font-size:84px;font-weight:900;color:var(--deep);opacity:0;white-space:nowrap}
+.price div small{font-size:44px;color:var(--teal)}
+/* f13 hub */
+.hub{position:absolute;left:0;right:0;top:520px;height:820px}
+.hub svg.lines{position:absolute;inset:0;width:1080px;height:820px}
+.hub svg.lines path{stroke:var(--mint);stroke-width:3;fill:none;opacity:.6;stroke-dasharray:600;stroke-dashoffset:600}
+.hub .core{position:absolute;left:390px;top:260px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,#0F6F7A,#083A3F 70%);border:3px solid var(--mint);display:grid;place-items:center;box-shadow:0 0 90px rgba(101,212,210,.45)}
+.hub .core img{width:170px}
+.hub .nd{position:absolute;transform:translate(-50%,-50%) scale(0);display:flex;align-items:center;gap:10px;padding:12px 22px 14px;border-radius:30px;background:rgba(8,58,63,.95);border:2px solid rgba(101,212,210,.55);font-size:27px;font-weight:800;white-space:nowrap;box-shadow:0 18px 40px rgba(0,0,0,.4);direction:ltr}
+.hub .nd i{font-style:normal;width:30px;height:30px;border-radius:50%;background:var(--green);display:grid;place-items:center;font-size:18px;color:#fff}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="i-cart" viewBox="0 0 24 24"><path d="M5 6h16l-1.7 8.6a2 2 0 0 1-2 1.6H9a2 2 0 0 1-2-1.6L4.6 4H2M9 20.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM17 20.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8.5a6 6 0 1 0-12 0c0 6-2.5 7.5-2.5 7.5h17S18 14.5 18 8.5zM13.7 19.5a2 2 0 0 1-3.4 0"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20.5 20.5L16 16"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.8 6.3.7-4.7 4.3 1.3 6.2-5.5-3.2-5.5 3.2 1.3-6.2L3.1 10l6.3-.7z"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><path d="M3 11.5h18V19a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zM2.2 7.6h19.6v3.9H2.2zM12 7.6V20M12 7.6S10.6 3.6 8.1 3.6a2 2 0 1 0 0 4zM12 7.6s1.4-4 3.9-4a2 2 0 1 1 0 4z"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18c1 0 1.7-.8 1.7-1.7 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.1 0-1 .8-1.7 1.7-1.7H16a5 5 0 0 0 5-5c0-4-4-7.3-9-7.3zM7.5 12.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4zM11 8.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4zM15.5 9.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4z"/></symbol>
+    <symbol id="i-ai" viewBox="0 0 24 24"><path d="M12 3l1.9 4.9 4.9 1.9-4.9 1.9L12 16.6l-1.9-4.9L5.2 9.8l4.9-1.9zM18.6 15.4l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M12 2.8l8.4 4.5v9.4L12 21.2l-8.4-4.5V7.3zM3.6 7.3L12 11.8l8.4-4.5M12 11.8v9.4"/></symbol>
+    <symbol id="i-award" viewBox="0 0 24 24"><path d="M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12zM8.2 13.9L7 22l5-3 5 3-1.2-8.1"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zM12 12.8a.8.8 0 1 0 0-1.6.8.8 0 0 0 0 1.6z"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><path d="M3 6h18a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zM2 10h20M6 15h4"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><path d="M18 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM18 22a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></symbol>
+    <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 8h16M5 8l1-4h12l1 4M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8M9.5 20v-6h5v6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <!-- product illustrations from the velorci site (viewBox 0 0 120 100) -->
+    <symbol id="p-lounge" viewBox="0 0 120 100"><path fill="currentColor" d="M20 84c-7 0-12-5.5-10.6-12.6C12.6 55 20 42.5 32 35.5c17-10 39-10 56 0 12 7 19.4 19.5 22.6 35.9C112 78.5 107 84 100 84z"/></symbol>
+    <symbol id="p-chair" viewBox="0 0 120 100"><path fill="currentColor" d="M41 16h38a7 7 0 0 1 7 7v24H34V23a7 7 0 0 1 7-7zM28 51h64a5.5 5.5 0 0 1 0 11H28a5.5 5.5 0 0 1 0-11zM56.5 62h7v14h-7zM40 80h40l-3.5 5h-33z"/></symbol>
+    <symbol id="p-table" viewBox="0 0 120 100"><path fill="currentColor" d="M14 38h92v8.5H14zM26 46.5h7.5v38H26zM86.5 46.5H94v38h-7.5zM33.5 58h53v5.5h-53z"/></symbol>
+  </defs>
+</svg>
+
+<div id="stage">
+  <div id="bg"></div>
+  <div id="pattern"></div>
+  <div class="glow" id="g1"></div>
+  <div class="glow" id="g2"></div>
+
+  <!-- persistent top bar (scenes 2–4) -->
+  <div id="top">
+    <div class="brand"><img src="../assets/logo-turq.png" alt=""><span>velorci</span></div>
+    <div id="dots"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div>
+  </div>
+
+  <!-- ================= SCENE 1 — hook (0–4s) ================= -->
+  <section id="s1">
+    <h1 class="hook"><span>تجارتك</span> <span>تستحق</span> <span class="hl">أكثر</span> <span>🚀</span></h1>
+
+    <div id="shop"><div class="scr">
+      <div class="sf-top"><svg class="i" style="font-size:34px"><use href="#i-cart"/></svg><b>YOUR BRAND</b><svg class="i" style="font-size:34px"><use href="#i-search"/></svg></div>
+      <div class="sf-hero"><h4>كرسي مكتب مريح</h4><div class="pr">56.500 د.ك</div><svg style="color:#65D4D2;opacity:.9"><use href="#p-chair"/></svg><span class="btn">اشترِ الآن</span></div>
+      <div class="sf-grid">
+        <div class="it"><img src="../assets/prod-2.png" alt=""><div>كرسي مكتب</div><small>56.500 د.ك</small></div>
+        <div class="it"><img src="../assets/prod-3.png" alt=""><div>أريكة جلدية</div><small>120.000 د.ك</small></div>
+      </div>
+    </div></div>
+
+    <div class="notif" id="n1" style="top:560px"><div class="ic">🛒</div><div class="tx"><b>طلب جديد · 49.300 د.ك</b><span>الظهر · INV-26-4393</span></div><time>الآن</time></div>
+    <div class="notif" id="n2" style="top:720px"><div class="ic">💳</div><div class="tx"><b>تم الدفع عبر KNET</b><span>98.600 د.ك · INV-26-4392</span></div><time>الآن</time></div>
+    <div class="notif" id="n3" style="top:880px"><div class="ic">🛍️</div><div class="tx"><b>طلب جديد · 120.000 د.ك</b><span>أريكة جلدية فاخرة - أسود</span></div><time>الآن</time></div>
+    <div class="notif" id="n4" style="top:1040px"><div class="ic">📈</div><div class="tx"><b>+18% مبيعات هذا الشهر</b><span>تقرير المبيعات اللحظي</span></div><time>الآن</time></div>
+
+    <div class="win" id="s1dash" style="opacity:0">
+      <div class="wbar"><span class="wic"><img src="../assets/logo-turq.png" style="width:34px" alt=""></span><b>الرئيسية</b><span class="sp"></span><i>my.velorci.com</i><span class="dots"><u></u><u></u><u></u></span></div>
+      <div class="wbody">
+        <div class="tiles c3">
+          <div class="tile"><div class="v" id="d1">0</div><div class="l">طلبات اليوم</div></div>
+          <div class="tile hl"><div class="v"><span id="d2">0</span> <small style="font-size:26px">د.ك</small></div><div class="l">إيرادات الشهر</div></div>
+          <div class="tile"><div class="v" id="d3">0</div><div class="l">قيد التوصيل</div></div>
+        </div>
+        <div class="card" style="margin-top:18px;padding:20px 22px">
+          <div style="font-size:25px;font-weight:800;margin-bottom:12px">الطلبات آخر 7 أيام</div>
+          <div class="bars" id="bars"><u style="height:45%"></u><u style="height:70%"></u><u style="height:55%"></u><u style="height:90%"></u><u style="height:65%"></u><u style="height:100%"></u><u style="height:80%"></u></div>
+        </div>
+        <div class="row"><div class="av">أ</div><div class="grow"><div class="nm">أم محمد</div><div class="mt">49.300 د.ك · INV-26-4393</div></div><span class="pill p-dark">تجهيز</span></div>
+        <div class="row" style="margin-top:10px"><div class="av">س</div><div class="grow"><div class="nm">سالم</div><div class="mt">98.600 د.ك · INV-26-4392</div></div><span class="pill p-teal">توصيل</span></div>
+      </div>
+    </div>
+    <div id="withv"><span>كل هذا مع</span><img src="../assets/logo-turq.png" alt=""><span class="wm">velorci</span></div>
+  </section>
+
+  <!-- ================= SCENE 2 — sales (4.0–10.4s) ================= -->
+
+  <!-- F1 abandoned carts -->
+  <section class="feat" id="f1">
+    <div class="fhead"><div class="num"><b>01</b>/ 13</div><h2>السلات المتروكة</h2><p>ذكّر عميلك… واسترجع البيعة</p></div>
+    <div class="win" data-real="f1">
+      <div class="wbar"><span class="wic"><svg class="i"><use href="#i-cart"/></svg></span><b>السلات المتروكة</b><span class="sp"></span><i>my.velorci.com</i><span class="dots"><u></u><u></u><u></u></span></div>
+      <div class="wbody">
+        <div class="tiles c4">
+          <div class="tile"><div class="v" data-count="46">0</div><div class="l">الإجمالي</div></div>
+          <div class="tile"><div class="v" data-count="31">0</div><div class="l">ذُكّرت</div></div>
+          <div class="tile"><div class="v" data-count="12">0</div><div class="l">تحوّلت</div></div>
+          <div class="tile hl"><div class="v"><span data-count="26">0</span>%</div><div class="l">نسبة الاسترجاع</div></div>
+        </div>
+        <div class="row" id="f1r1"><div class="av">ن</div><div class="grow"><div class="nm">نورة م.</div><div class="mt">3 منتج · 84.500 د.ك</div></div>
+          <span class="stack"><span class="pill p-amber" id="f1p1">معلّقة</span><span class="pill p-teal" id="f1p2" style="opacity:0">ذُكّرت</span><span class="pill p-green" id="f1p3" style="opacity:0">تحوّلت ✓</span></span>
+          <span class="btn" id="f1btn">📩 أرسل الأولى</span></div>
+        <div class="row"><div class="av">س</div><div class="grow"><div class="nm">سالم أ.</div><div class="mt">2 منتج · 41.000 د.ك</div></div><span class="pill p-teal">ذُكّرت</span><span class="btn">🎁 أرسل الخصم</span></div>
+        <div class="row"><div class="av">ف</div><div class="grow"><div class="nm">فاطمة ع.</div><div class="mt">1 منتج · 19.900 د.ك</div></div><span class="pill p-amber">معلّقة</span><span class="btn">📩 أرسل الأولى</span></div>
+        <div class="row"><div class="av">خ</div><div class="grow"><div class="nm">خالد ر.</div><div class="mt">4 منتج · 132.750 د.ك</div></div><span class="pill p-green">تحوّلت ✓</span><span class="btn" style="opacity:.45">طلب</span></div>
+      </div>
+      <img class="real" alt="">
+    </div>
+    <div class="float bubble" id="f1b" style="left:40px;top:1150px;width:560px"><div class="bt">📩 رسالة تذكير</div>نسيت شي في سلتك! 🛒 كمّل طلبك الحين</div>
+    <div class="float chip green" id="f1c" style="left:470px;top:470px">+84.500 د.ك <small>إيراد مسترجَع</small></div>
+  </section>
+
+  <!-- F2 gift cards -->
+  <section class="feat" id="f2">
+    <div class="fhead"><div class="num"><b>02</b>/ 13</div><h2>بطاقات إهداء</h2><p>رسالة إهداء باسم متجرك مع كل هدية</p></div>
+    <div class="win" data-real="f2">
+      <div class="wbar"><span class="wic"><svg class="i"><use href="#i-gift"/></svg></span><b>صفحة المنتج</b><span class="sp"></span><i>yourstore.com</i><span class="dots"><u></u><u></u><u></u></span></div>
+      <div class="wbody" style="display:flex;gap:26px">
+        <div class="illo" style="width:330px;height:330px;flex-shrink:0;overflow:hidden"><img src="../assets/prod-5.png" style="width:100%;height:100%;display:block" alt=""></div>
+        <div class="grow">
+          <div style="font-size:36px;font-weight:900;line-height:1.25">وسادة ديكور مزخرفة</div>
+          <div style="font-size:34px;font-weight:900;color:var(--teal);margin-top:4px">12.500 د.ك</div>
+          <div class="row" style="margin-top:20px;padding:14px 18px"><svg class="i" style="font-size:36px;color:var(--teal)"><use href="#i-gift"/></svg><div class="grow nm" style="font-size:26px">أضف بطاقة إهداء</div><span class="tg" id="f2tg"><span class="on"></span><span class="k"></span></span></div>
+          <div class="gform" id="f2form" style="opacity:0">
+            <div class="fld"><label>إلى</label><span data-type="نورة" data-at=".55" data-dur=".2"></span></div>
+            <div class="fld"><label>الرسالة</label><span data-type="كل عام وأنتِ بخير 🤍" data-at=".7" data-dur=".45"></span></div>
+            <div class="fld"><label>من</label><span data-type="سارة" data-at="1.12" data-dur=".18"></span></div>
+          </div>
+        </div>
+        <div style="position:absolute;left:32px;right:32px;bottom:30px;display:flex;gap:16px"><span class="btn mint" style="flex:1;font-size:28px;padding:18px">أضف للسلة</span></div>
+      </div>
+      <img class="real" alt="">
+    </div>
+    <div class="float" id="f2card" style="left:625px;top:650px"><div class="giftcard"><img src="../assets/logo-mono-dark.png" alt=""><div class="to">إلى: نورة</div><div class="gmsg">كل عام وأنتِ بخير 🤍</div><hr><div class="fr">من: سارة</div></div></div>
+    <div class="float chip dark" id="f2tag" style="left:640px;top:1020px">🖨️ تُطبع مع الطلب</div>
+  </section>
+
+  <!-- F3 back in stock -->
+  <section class="feat" id="f3">
+    <div class="fhead"><div class="num"><b>03</b>/ 13</div><h2>تنبيهات رجوع المخزون</h2><p>عميلك يعرف أول ما يتوفّر المنتج</p></div>
+    <div class="win" data-real="f3">
+      <div class="wbar"><span class="wic"><svg class="i" id="f3bell"><use href="#i-bell"/></svg></span><b>إشعارات توفر المنتج</b><span class="sp"></span><i>my.velorci.com</i><span class="dots"><u></u><u></u><u></u></span></div>
+      <div class="wbody">
+        <div class="tiles c3">
+          <div class="tile"><div class="v">18</div><div class="l">بانتظار</div></div>
+          <div class="tile hl"><div class="v" id="f3n">0</div><div class="l">تم الإشعار</div></div>
+          <div class="tile"><div class="v" id="f3c">0</div><div class="l">تحوّلت</div></div>
+        </div>
+        <div class="row" style="margin-top:22px;padding:22px"><div class="thumb"><img src="../assets/prod-2.png" alt=""></div>
+          <div class="grow"><div class="nm">كرسي مكتب قابل للتعديل - كحلي</div><div class="mt">18 عميل طلبوا «أعلمني عند التوفّر»</div>
+            <div style="height:14px;border-radius:7px;background:#E3EEEE;margin-top:12px;overflow:hidden"><u id="f3bar" style="display:block;height:100%;background:var(--green);transform-origin:right;transform:scaleX(0)"></u></div></div>
+          <span class="stack"><span class="pill p-red" id="f3out">نفدت الكمية</span><span class="pill p-green" id="f3in" style="opacity:0">متوفّر ✓</span></span></div>
+        <div class="row"><div class="thumb"><img src="../assets/prod-5.png" alt=""></div><div class="grow"><div class="nm">وسادة ديكور مزخرفة - رمادي</div><div class="mt">7 عملاء بانتظار</div></div><span class="pill p-amber">بانتظار</span></div>
+      </div>
+      <img class="real" alt="">
+    </div>
+    <div class="float bubble" id="f3a" style="left:60px;top:1110px;width:600px"><div class="bt">🔔 الآن</div>المنتج اللي طلبته رجع! اطلبه قبل لا يخلص</div>
+    <div class="float bubble" id="f3b" style="left:120px;top:1000px;width:600px;opacity:0"><div class="bt">🔔 الآن</div>المنتج اللي طلبته رجع! اطلبه قبل لا يخلص</div>
+  </section>
+
+  <!-- F4 bundles -->
+  <section class="feat" id="f4">
+    <div class="fhead"><div class="num"><b>04</b>/ 13</div><h2>باقات المنتجات</h2><p>اجمع منتجاتك في عرض واحد يكبّر السلة</p></div>
+    <div class="win" data-real="f4">
+      <div class="wbar"><span class="wic"><svg class="i"><use href="#i-box"/></svg></span><b>الباقات وخصومات الكمية</b><span class="sp"></span><i>my.velorci.com</i><span class="dots"><u></u><u></u><u></u></span></div>
+      <div class="wbody">
+        <div class="tabs"><span>كمية</span><span class="on">مجموعة</span><span>مرافق</span></div>
+        <div style="position:relative;height:330px;margin-top:20px">
+          <div class="btile" id="b1" style="right:20px;top:20px"><img src="../assets/prod-3.png" alt=""><div>أريكة جلدية</div><small>120.000</small></div>
+          <div class="btile" id="b2" style="right:308px;top:20px"><img src="../assets/prod-4.png" alt=""><div>طاولة طعام</div><small>141.000</small></div>
+          <div class="btile" id="b3" style="right:596px;top:20px"><img src="../assets/prod-6.png" alt=""><div>سجادة صوف</div><small>34.000</small></div>
+          <div class="plus" id="pl1" style="right:250px;top:120px">+</div>
+          <div class="plus" id="pl2" style="right:538px;top:120px">+</div>
+        </div>
+        <div class="card" id="bres" style="padding:22px 26px;display:flex;align-items:center;gap:20px;opacity:0;border:2px solid var(--mint);background:#F0FBFB">
+          <div class="wic" style="width:76px;height:76px;border-radius:22px;background:var(--deep);color:var(--mint);display:grid;place-items:center;font-size:44px"><svg class="i"><use href="#i-box"/></svg></div>
+          <div class="grow"><div style="font-size:32px;font-weight:900">باقة الصالة الكاملة</div><div style="font-size:24px;color:var(--mut);font-weight:700">3 منتجات تنشرى مع بعض</div></div>
+          <div style="text-align:left"><div style="font-size:24px;color:var(--mut);text-decoration:line-through;font-weight:700">295.000 د.ك</div><div style="font-size:40px;font-weight:900;color:var(--teal)">250.750 د.ك</div></div>
+        </div>
+      </div>
+      <img class="real" alt="">
+    </div>
+    <div class="float chip mint" id="f4c" style="left:70px;top:1220px">🔥 خصم 15% على الباقة</div>
+  </section>
+
+  <!-- ================= SCENE 3 — store & experience (10.4–16.8s) ================= -->
+
+  <!-- F5 SEO -->
+  <section class="feat" id="f5">
+    <div class="fhead"><div class="num"><b>05</b>/ 13</div><h2>ظهور أفضل في <em>Google</em></h2><p>جهّز متجرك ومنتجاتك لنتائج البحث</p></div>
+    <div class="win" data-real="f5">
+      <div class="wbar"><span class="wic"><svg class="i"><use href="#i-search"/></svg></span><b>تحسين محركات البحث (SEO)</b><span class="sp"></span><span class="dots"><u></u><u></u><u></u></span></div>
+      <div class="wbody">
+        <div style="font-size:23px;font-weight:700;color:var(--mut)">بيانات تظهر في نتائج البحث وعند مشاركة رابط المتجر</div>
+        <div class="gform">
+          <div class="fld" style="flex-direction:column;align-items:stretch;gap:2px"><label style="width:auto">العنوان</label><span data-type="متجرك | أثاث عصري بتوصيل سريع" data-at=".25" data-dur=".5"></span></div>
+          <div class="fld" style="flex-direction:column;align-items:stretch;gap:2px"><label style="width:auto">الوصف</label><span style="min-height:76px;line-height:1.5" data-type="تشكيلة أثاث فاخرة بأسعار منافسة، دفع آمن وتوصيل لكل المناطق." data-at=".55" data-dur=".55"></span></div>
+          <div class="fld"><label style="width:auto">صورة المشاركة</label><span class="pill p-green" style="margin-right:auto">✓ 1200×630</span></div>
+        </div>
+      </div>
+      <img class="real" alt="">
+    </div>
+    <div class="float" id="f5serp" style="left:110px;top:1010px"><div class="serp" style="width:860px">
+      <div class="q"><svg class="i"><use href="#i-search"/></svg>أثاث عصري الكويت</div>
+      <div class="res"><div class="fav"><img src="../assets/logo-turq.png" alt=""></div><div><div class="site">yourstore.com<small>https://yourstore.com</small></div><div class="tt">متجرك | أثاث عصري بتوصيل سريع</div><div class="ds">تشكيلة أثاث فاخرة بأسعار منافسة، دفع آمن وتوصيل لكل المناطق.</div></div></div>
+    </div></div>
+  </section>
+
+  <!-- F6 store design -->
+  <section class="feat" id="f6">
+    <div class="fhead"><div class="num"><b>06</b>/ 13</div><h2>تصميمك الخاص</h2><p>شكل متجرك على هوية علامتك</p></div>
+    <div class="win" data-real="f6">
+      <div class="wbar"><span class="wic"><svg class="i"><use href="#i-palette"/></svg></span><b>تصميم المتجر</b><span class="sp"></span><i>my.velorci.com</i><span class="dots"><u></u><u></u><u></u></span></div>
+      <div class="wbody">
+        <div id="sfd">
+          <div class="h"><span id="sfdBrand">YOUR BRAND</span><svg class="i"><use href="#i-cart"/></svg></div>
+          <div class="hero"><b id="sfdT1">مجموعة الخريف</b><span>تسوّق الجديد الآن</span><svg style="color:rgba(255,255,255,.85)"><use href="#p-table"/></svg></div>
+          <div class="g"><div><img src="../assets/prod-1.png" alt=""><i></i></div><div><img src="../assets/prod-2.png" alt=""><i></i></div><div><img src="../assets/prod-4.png" alt=""><i></i></div></div>
+        </div>
+        <div class="sw"><span class="lbl">الألوان</span><u style="background:#0F6F7A"></u><u id="sw2" style="background:#C2532E"></u><u id="sw3" style="background:#1E1E1E"></u><u style="background:#6D4AFF"></u></div>
+      </div>
+      <img class="real" alt="">
+    </div>
+    <svg class="cursor" id="f6cur" viewBox="0 0 24 24"><path d="M4 2l16 9-7 2-3 7z" fill="#fff" stroke="#041316" stroke-width="1.5" stroke-linejoin="round"/></svg>
+  </section>
+
+  <!-- F7 AI -->
+  <section class="feat" id="f7">
+    <div class="fhead"><div class="num"><b>07</b>/ 13</div><h2>بالذكاء <em>الاصطناعي</em></h2><p>اربط ChatGPT وصمّم متجرك بمحادثة</p></div>
+    <div class="win" data-real="f7">
+      <div class="wbar"><span class="wic"><svg class="i"><use href="#i-ai"/></svg></span><b>ربط ChatGPT</b><span class="sp"></span><span class="pill p-green">🎨 السماح بتصميم المتجر ✓</span></div>
+      <div class="wbody" style="background:#EEF6F6">
+        <div class="msg me" id="f7m1"><span data-type="اعمل بنر لعرض جديد بالعربي والإنجليزي" data-at=".15" data-dur=".5"></span></div>
+        <div class="msg ai" id="f7m2"><span class="typing" id="f7typ"><u></u><u></u><u></u></span></div>
+        <div class="msg ai" id="f7m3">تم ✓ أضفت البنر لمتجرك بالعربي والإنجليزي، وخلّيته أول قسم بالصفحة.</div>
+      </div>
+      <img class="real" alt="">
+    </div>
+    <div class="float" id="f7mini" style="left:36px;top:850px"><div class="mini"><div class="scr">
+      <div class="sf-top" style="height:70px"><b style="font-size:22px">YOUR BRAND</b><svg class="i" style="font-size:26px"><use href="#i-cart"/></svg></div>
+      <div class="bn" id="f7bn"><b>عرض الأسبوع</b><span>Weekly Offer</span><div class="off">-20%</div></div>
+      <div class="sf-grid" style="position:absolute;top:288px;left:0;right:0;padding:0 14px;gap:12px"><div class="it"><img src="../assets/prod-1.png" alt=""></div><div class="it"><img src="../assets/prod-3.png" alt=""></div></div>
+    </div></div></div>
+  </section>
+
+  <!-- F8 reviews -->
+  <section class="feat" id="f8">
+    <div class="fhead"><div class="num"><b>08</b>/ 13</div><h2>تقييمات العملاء</h2><p>آراء حقيقية تبني الثقة وتقنع بالشراء</p></div>
+    <div class="win" data-real="f8">
+      <div class="wbar"><span class="wic"><svg class="i"><use href="#i-star"/></svg></span><b>التقييمات</b><span class="sp"></span><i>my.velorci.com</i><span class="dots"><u></u><u></u><u></u></span></div>
+      <div class="wbody">
+        <div class="stars" id="f8stars"><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg></div>
+        <div class="tiles c3" style="margin-top:14px">
+          <div class="tile hl"><div class="v"><span id="f8avg">0.0</span></div><div class="l">متوسط التقييم</div></div>
+          <div class="tile"><div class="v" data-count="126">0</div><div class="l">تقييمات منشورة</div></div>
+          <div class="tile"><div class="v">3</div><div class="l">بانتظار المراجعة</div></div>
+        </div>
+        <div class="row rv" id="f8r1" style="opacity:0"><div class="av">ن</div><div class="grow"><div class="s">★★★★★</div><div class="nm" style="font-size:26px">جودة ممتازة والتوصيل كان سريع</div></div><span class="pill p-green">منشور</span></div>
+        <div class="row rv" id="f8r2" style="opacity:0"><div class="av">ع</div><div class="grow"><div class="s">★★★★★</div><div class="nm" style="font-size:26px">الكرسي مريح جداً، أنصح فيه</div></div><span class="pill p-green">منشور</span></div>
+      </div>
+      <img class="real" alt="">
+    </div>
+  </section>
+
+  <!-- ================= SCENE 4 — loyalty, marketing, integrations (16.8–24.8s) ================= -->
+
+  <!-- F9 loyalty -->
+  <section class="feat" id="f9">
+    <div class="fhead"><div class="num"><b>09</b>/ 13</div><h2>نظام ولاء ذكي</h2><p>نقاط ومكافآت ترجّع عميلك يشتري منك</p></div>
+    <div class="win" data-real="f9">
+      <div class="wbar"><span class="wic"><svg class="i"><use href="#i-award"/></svg></span><b>نظام الولاء</b><span class="sp"></span><i>my.velorci.com</i><span class="dots"><u></u><u></u><u></u></span></div>
+      <div class="wbody">
+        <div class="lcard"><img src="../assets/logo-turq.png" alt="">
+          <div style="font-size:24px;font-weight:700;opacity:.8">رصيد نقاط العميل</div>
+          <div class="pts"><span id="f9pts">0</span> <small style="font-size:36px;color:var(--mint)">نقطة</small></div>
+          <div class="bar"><u id="f9bar"></u></div>
+          <div style="font-size:22px;font-weight:700;margin-top:10px;opacity:.85">باقي 260 نقطة للمكافأة التالية</div>
+        </div>
+        <div class="row" id="f9r1"><div class="av" style="background:#DDF5E8;color:#17834F">✓</div><div class="grow"><div class="nm">خصم 5 د.ك</div><div class="mt">500 نقطة</div></div><span class="pill p-green">متاحة</span></div>
+        <div class="row" id="f9r2"><div class="av" style="background:#DDF5E8;color:#17834F">✓</div><div class="grow"><div class="nm">توصيل مجاني</div><div class="mt">1,000 نقطة</div></div><span class="pill p-green">متاحة</span></div>
+        <div class="row" id="f9r3"><div class="av" style="background:#EEF3F3;color:var(--mut)">🎁</div><div class="grow"><div class="nm">هدية مجانية</div><div class="mt">1,500 نقطة</div></div><span class="pill p-amber">قريباً</span></div>
+      </div>
+      <img class="real" alt="">
+    </div>
+    <div class="float chip mint" id="f9c" style="left:120px;top:470px">🛍️ طلب جديد · +50 نقطة</div>
+  </section>
+
+  <!-- F10 retargeting -->
+  <section class="feat" id="f10">
+    <div class="fhead"><div class="num"><b>10</b>/ 13</div><h2>إعادة الاستهداف</h2><p>إعلانك يلحق اللي زار متجرك وما اشترى</p></div>
+    <div class="win" data-real="f10">
+      <div class="wbar"><span class="wic"><svg class="i"><use href="#i-target"/></svg></span><b>📈 التسويق</b><span class="sp"></span><i>my.velorci.com</i><span class="dots"><u></u><u></u><u></u></span></div>
+      <div class="wbody">
+        <div style="font-size:23px;font-weight:700;color:var(--mut);line-height:1.5">اربط أدوات التتبّع والإعلانات بمتجرك. حط الـ ID لكل أداة وبيشتغل تلقائياً على المتجر العام.</div>
+        <div class="px"><span class="lg" style="background:#1877F2">Meta<b>✓</b></span><div class="grow"><div class="nm">فيسبوك بكسل + Conversion API</div><div class="id">Pixel ID · 4829•••••</div></div><span class="st"><span class="f10off">غير مربوط</span></span></div>
+        <div class="px"><span class="lg" style="background:#111">TikTok<b>✓</b></span><div class="grow"><div class="nm">تيكتوك بكسل + Events API</div><div class="id">Pixel ID · C9K2•••••</div></div><span class="st"><span class="f10off">غير مربوط</span></span></div>
+        <div class="px"><span class="lg" style="background:#F7D400;color:#111">Snap<b>✓</b></span><div class="grow"><div class="nm">سناب شات بكسل</div><div class="id">Snap Pixel ID · 7f1e•••••</div></div><span class="st"><span class="f10off">غير مربوط</span></span></div>
+        <div class="px"><span class="lg" style="background:#34A853">Ads<b>✓</b></span><div class="grow"><div class="nm">جوجل أدز (Conversion ID)</div><div class="id">AW-1093•••••</div></div><span class="st"><span class="f10off">غير مربوط</span></span></div>
+      </div>
+      <img class="real" alt="">
+    </div>
+    <div class="float" id="f10ad" style="left:40px;top:860px"><div class="adcard">
+      <div class="ah"><div class="av">Y</div><div>YOUR BRAND<small>مُموَّل</small></div></div>
+      <div class="ai"><svg style="color:#65D4D2"><use href="#p-chair"/></svg></div>
+      <div class="af"><span>لسا تفكر فيه؟ 🪑</span><span class="btn mint" style="font-size:22px">تسوّق الآن</span></div>
+    </div></div>
+    <div class="float chip green" id="f10c" style="left:520px;top:1240px">↩︎ رجع وكمّل الطلب ✓</div>
+  </section>
+
+  <!-- F11 payment gateways -->
+  <section class="feat" id="f11">
+    <div class="fhead"><div class="num"><b>11</b>/ 13</div><h2>بوابات الدفع</h2><p>عميلك يدفع بالطريقة اللي تناسبه</p></div>
+    <div class="win" data-real="f11">
+      <div class="wbar"><span class="wic"><svg class="i"><use href="#i-card"/></svg></span><b>الدفع</b><span class="sp"></span><i>my.velorci.com</i><span class="dots"><u></u><u></u><u></u></span></div>
+      <div class="wbody">
+        <div style="font-size:26px;font-weight:800">اختر طرق الدفع المتاحة للعملاء</div>
+        <div class="pg">
+          <div class="pm"><span class="lg" style="background:#0A4DA2">KNET</span><div class="nm">كي نت<small>بطاقات الكويت المحلية</small></div><span class="ck">✓</span></div>
+          <div class="pm"><span class="lg" style="background:#1A1F71;font-size:16px">VISA<br>MC</span><div class="nm">بطاقة ائتمان<small>Visa / Mastercard</small></div><span class="ck">✓</span></div>
+          <div class="pm"><span class="lg" style="background:#000;font-size:20px">Pay</span><div class="nm">Apple Pay<small>عبر UPayments</small></div><span class="ck">✓</span></div>
+          <div class="pm"><span class="lg" style="background:#fff;color:#3C4043;border:2px solid #DADCE0;font-size:28px">G</span><div class="nm">Google Pay<small>عبر UPayments</small></div><span class="ck">✓</span></div>
+          <div class="pm"><span class="lg" style="background:#0E9F8E;font-size:15px">My<br>Fatoorah</span><div class="nm">ماي فاتورة<small>MyFatoorah</small></div><span class="ck">✓</span></div>
+          <div class="pm"><span class="lg" style="background:#5B2BE0;font-size:16px">deema</span><div class="nm">ديمه<small>ادفع لاحقاً</small></div><span class="ck">✓</span></div>
+          <div class="pm"><span class="lg" style="background:#00B39B;font-size:18px">taly</span><div class="nm">تالي<small>قسّمها بدون فوائد</small></div><span class="ck">✓</span></div>
+          <div class="pm"><span class="lg" style="background:var(--deep);color:var(--mint);font-size:30px">💵</span><div class="nm">الدفع عند الاستلام<small>نقداً</small></div><span class="ck">✓</span></div>
+        </div>
+      </div>
+      <img class="real" alt="">
+    </div>
+    <div class="float chip green" id="f11c" style="left:90px;top:470px">✓ تم الدفع · 59.000 د.ك</div>
+  </section>
+
+  <!-- F12 multi currency -->
+  <section class="feat" id="f12">
+    <div class="fhead"><div class="num"><b>12</b>/ 13</div><h2>تعدد العملات</h2><p>زائرك يشوف الأسعار بعملة بلده</p></div>
+    <div class="win" data-real="f12">
+      <div class="wbar"><span class="wic"><svg class="i"><use href="#i-globe"/></svg></span><b>💱 العملات</b><span class="sp"></span><i>my.velorci.com</i><span class="dots"><u></u><u></u><u></u></span></div>
+      <div class="wbody">
+        <div class="card" style="padding:24px;display:flex;gap:24px;align-items:center">
+          <div class="illo" style="width:220px;height:220px;flex-shrink:0;color:#6E8F92"><svg><use href="#p-chair"/></svg></div>
+          <div class="grow">
+            <div style="font-size:30px;font-weight:900">كرسي مكتب قابل للتعديل</div>
+            <div class="price" id="f12price">
+              <div style="opacity:1">59.000 <small>د.ك</small></div>
+              <div>720 <small>ر.س</small></div>
+              <div>706 <small>د.إ</small></div>
+              <div>700 <small>ر.ق</small></div>
+            </div>
+            <div class="stack"><span class="cur f12cur" style="opacity:1">🇰🇼 KWD ▾</span><span class="cur f12cur" style="opacity:0">🇸🇦 SAR ▾</span><span class="cur f12cur" style="opacity:0">🇦🇪 AED ▾</span><span class="cur f12cur" style="opacity:0">🇶🇦 QAR ▾</span></div>
+          </div>
+        </div>
+        <div class="row" style="margin-top:18px"><div class="grow"><div class="nm" style="font-size:26px">تفعيل تعدّد العملات في المتجر</div><div class="mt">يظهر للزائر زر لاختيار العملة، وتُعرض الأسعار محوّلة.</div></div><span class="tg" id="f12tg"><span class="on"></span><span class="k"></span></span></div>
+        <div class="row" style="margin-top:12px"><div class="grow"><div class="nm" style="font-size:26px">كيف تُختار عملة الزائر؟</div></div><span class="pill p-dark">تلقائي حسب الدولة</span></div>
+      </div>
+      <img class="real" alt="">
+    </div>
+  </section>
+
+  <!-- F13 marketing & social integrations -->
+  <section class="feat" id="f13">
+    <div class="fhead"><div class="num"><b>13</b>/ 13</div><h2>تكاملات تسويقية</h2><p>متجرك مربوط بأدوات التسويق والتواصل</p></div>
+    <div class="hub" data-real="f13">
+      <svg class="lines" viewBox="0 0 1080 820">
+        <path d="M540 410 L190 120"/><path d="M540 410 L540 70"/><path d="M540 410 L890 120"/>
+        <path d="M540 410 L150 330"/><path d="M540 410 L930 330"/>
+        <path d="M540 410 L150 520"/><path d="M540 410 L930 520"/>
+        <path d="M540 410 L210 720"/><path d="M540 410 L540 760"/><path d="M540 410 L870 720"/>
+      </svg>
+      <div class="core"><img src="../assets/logo-turq.png" alt=""></div>
+      <div class="nd" style="left:190px;top:120px"><i>✓</i>Meta Ads</div>
+      <div class="nd" style="left:540px;top:70px"><i>✓</i>WhatsApp Business</div>
+      <div class="nd" style="left:890px;top:120px"><i>✓</i>Instagram</div>
+      <div class="nd" style="left:150px;top:330px"><i>✓</i>TikTok</div>
+      <div class="nd" style="left:930px;top:330px"><i>✓</i>Snapchat</div>
+      <div class="nd" style="left:150px;top:520px"><i>✓</i>Google Ads</div>
+      <div class="nd" style="left:930px;top:520px"><i>✓</i>Google Analytics</div>
+      <div class="nd" style="left:210px;top:720px"><i>✓</i>Tag Manager</div>
+      <div class="nd" style="left:540px;top:760px"><i>✓</i>Product Feed</div>
+      <div class="nd" style="left:870px;top:720px"><i>✓</i>X</div>
+    </div>
+  </section>
+
+  <!-- scene on-screen text (pills) -->
+  <div class="pills" id="pills2"><span>استرجع المبيعات</span><span>بطاقات إهداء</span><span>تنبيهات المخزون</span><span>باقات المنتجات</span></div>
+  <div class="pills" id="pills3"><span>ظهور أفضل في Google</span><span>تصميمك الخاص</span><span>ذكاء اصطناعي</span><span>تقييمات العملاء</span></div>
+  <div class="pills" id="pills4"><span>ولاء ذكي</span><span>إعادة استهداف</span><span>بوابات دفع</span><span>تعدد العملات</span><span>تكاملات تسويقية</span></div>
+
+  <!-- ================= SCENE 5 — end card (24.8–30s) ================= -->
+  <section id="s5">
+    <div id="grid13">
+      <div class="gbar"><img src="../assets/logo-turq.png" alt=""><span>my.velorci.com</span></div>
+      <h3><em>13</em> أداة · منصة واحدة</h3>
+      <div class="g">
+        <div><svg class="i"><use href="#i-cart"/></svg>السلات المتروكة</div>
+        <div><svg class="i"><use href="#i-gift"/></svg>بطاقات إهداء</div>
+        <div><svg class="i"><use href="#i-bell"/></svg>توفّر المخزون</div>
+        <div><svg class="i"><use href="#i-box"/></svg>الباقات</div>
+        <div><svg class="i"><use href="#i-search"/></svg>SEO</div>
+        <div><svg class="i"><use href="#i-palette"/></svg>تصميم المتجر</div>
+        <div><svg class="i"><use href="#i-ai"/></svg>ذكاء اصطناعي</div>
+        <div><svg class="i"><use href="#i-star"/></svg>التقييمات</div>
+        <div><svg class="i"><use href="#i-award"/></svg>الولاء</div>
+        <div><svg class="i"><use href="#i-target"/></svg>إعادة الاستهداف</div>
+        <div><svg class="i"><use href="#i-card"/></svg>بوابات الدفع</div>
+        <div><svg class="i"><use href="#i-globe"/></svg>تعدد العملات</div>
+      </div>
+      <div class="g" style="grid-template-columns:1fr;margin-top:18px"><div style="flex-direction:row;justify-content:center;gap:14px;font-size:24px"><svg class="i" style="font-size:40px"><use href="#i-share"/></svg>تكاملات التسويق والتواصل الاجتماعي</div></div>
+    </div>
+    <div id="ring"></div>
+    <div id="end">
+      <img class="mark" src="../assets/logo-turq.png" alt="velorci">
+      <div class="wm">velorci</div>
+      <div class="tag">كل أدوات تجارتك في مكان واحد.</div>
+      <div class="cta">اكتشف المنصة الآن</div>
+      <div class="url">www.velorci.com</div>
+    </div>
+  </section>
+
+  <div id="sweep"></div>
+  <div id="flash"></div>
+  <div id="vignette"></div>
+</div>
+
+<script src="vendor/gsap.min.js"></script>
+<script>
+const $ = s => document.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+/* ---------------- timing (seconds) — music runs at 150 BPM, 1 bar = 1.6s ---------------- */
+const TOTAL = 30;
+const SLOT = 1.6;
+const F = {   // feature start times
+  f1: 4.0,  f2: 5.6,  f3: 7.2,  f4: 8.8,
+  f5: 10.4, f6: 12.0, f7: 13.6, f8: 15.2,
+  f9: 16.8, f10: 18.4, f11: 20.0, f12: 21.6, f13: 23.2,
+};
+const SCENES = { s2: 4.0, s3: 10.4, s4: 16.8, s5: 24.8, logo: 26.4 };
+
+/* ---------------- optional real screenshots (injected by render.mjs or set by hand) ---------------- */
+const REAL = window.REAL_SCREENS || {};
+$$('[data-real]').forEach(w => {
+  const src = REAL[w.dataset.real];
+  if (src && w.classList.contains('win')) { w.querySelector('.real').src = src; w.classList.add('has-real'); }
+});
+
+/* ---------------- timeline + text proxies ---------------- */
+const tl = gsap.timeline({ paused: true });
+const proxies = [];
+const money = v => v.toLocaleString('en', { minimumFractionDigits: 3, maximumFractionDigits: 3 });
+function counter(el, to, at, dur = 0.8, fmt = v => Math.round(v).toLocaleString('en')) {
+  const o = { v: 0 };
+  proxies.push(() => { el.textContent = fmt(o.v); });
+  tl.to(o, { v: to, duration: dur, ease: 'power2.out' }, at);
+}
+function typer(el, text, at, dur) {
+  const chars = Array.from(text), o = { n: 0 };
+  proxies.push(() => { el.textContent = chars.slice(0, Math.round(o.n)).join(''); });
+  tl.to(o, { n: chars.length, duration: dur, ease: 'none' }, at);
+}
+function apply() { proxies.forEach(f => f()); }
+
+/* ---------------- global layers ---------------- */
+tl.to('#pattern', { x: -180, y: -260, duration: TOTAL, ease: 'none' }, 0);
+tl.to('#g1', { x: 260, y: 520, duration: TOTAL, ease: 'sine.inOut' }, 0);
+tl.to('#g2', { x: -300, y: -640, duration: TOTAL, ease: 'sine.inOut' }, 0);
+
+function transition(at) {           // light sweep + soft flash on a scene cut
+  tl.fromTo('#sweep', { x: 0, opacity: 1 }, { x: 3200, duration: 0.55, ease: 'power2.inOut', immediateRender: false }, at - 0.3);
+  tl.fromTo('#flash', { opacity: 0 }, { opacity: 0.22, duration: 0.08, ease: 'none', immediateRender: false }, at - 0.04);
+  tl.to('#flash', { opacity: 0, duration: 0.3, ease: 'power2.out' }, at + 0.04);
+}
+
+/* ================= SCENE 1 ================= */
+(function () {
+  const words = $$('.hook span');
+  tl.set(words, { opacity: 1 }, 0);
+  tl.fromTo('.hook', { scale: 1.1 }, { scale: 1, duration: .5, ease: 'power3.out' }, 0);
+  tl.fromTo(words[2], { color: '#E8FFFE' }, { color: '#65D4D2', duration: .25 }, .25);
+  tl.fromTo('#shop', { opacity: 1, y: 60, scale: .96 }, { opacity: 1, y: 0, scale: 1, duration: .6, ease: 'power3.out' }, 0);
+  ['#n1', '#n2', '#n3', '#n4'].forEach((n, i) => {
+    tl.fromTo(n, { opacity: 0, y: -60, scale: .85 }, { opacity: 1, y: 0, scale: 1, duration: .28, ease: 'back.out(2.2)' }, 0.4 + i * 0.4);
+  });
+  // zoom-through into the velorci dashboard (lands on the 2.4s downbeat)
+  tl.to('#shop', { scale: 1.6, opacity: 0, filter: 'blur(14px)', duration: .45, ease: 'power3.in' }, 2.0);
+  tl.to(['#n1', '#n2', '#n3', '#n4'], { opacity: 0, y: -40, scale: 1.08, filter: 'blur(10px)', duration: .35, stagger: .03, ease: 'power2.in' }, 2.0);
+  tl.fromTo('#s1dash', { opacity: 0, scale: .82, y: 80, filter: 'blur(14px)' }, { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)', duration: .5, ease: 'power3.out' }, 2.3);
+  counter($('#d1'), 32, 2.5, .9);
+  counter($('#d2'), 4280, 2.5, .9);
+  counter($('#d3'), 12, 2.5, .9);
+  tl.to('#bars u', { scaleY: 1, duration: .45, stagger: .06, ease: 'back.out(1.6)' }, 2.55);
+  tl.fromTo('#withv', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .35, ease: 'power3.out' }, 2.8);
+  tl.to('#s1', { opacity: 0, y: -60, filter: 'blur(10px)', duration: .3, ease: 'power2.in' }, 3.72);
+  tl.set('#s1', { display: 'none' }, 4.02);
+})();
+transition(4.0);
+
+/* top bar for the feature scenes */
+tl.fromTo('#top', { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: .4, ease: 'power2.out' }, 4.0);
+tl.to('#top', { opacity: 0, duration: .3 }, 24.6);
+
+/* ================= feature frames ================= */
+const order = Object.keys(F);
+function frame(id, idx) {
+  const T = F[id], f = $('#' + id), head = f.querySelector('.fhead'), body = f.querySelector('.win, .hub');
+  const isSceneEnd = ['f4', 'f8', 'f13'].includes(id);
+  tl.set(f, { visibility: 'visible' }, T);
+  tl.fromTo(head, { opacity: 0, x: -80 }, { opacity: 1, x: 0, duration: .32, ease: 'power3.out' }, T);
+  tl.fromTo(body, { opacity: 0, y: 70, scale: .93, filter: 'blur(12px)' }, { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: .42, ease: 'power3.out' }, T + .03);
+  tl.to(body, { scale: 1.025, duration: SLOT - .6, ease: 'none' }, T + .45);
+  // progress dot
+  tl.to($$('#dots u')[idx], { backgroundColor: '#65D4D2', duration: .2 }, T);
+  // auto counters / typers inside the frame
+  $$('[data-count]', f).forEach(el => counter(el, +el.dataset.count, T + .2, .8));
+  $$('[data-type]', f).forEach(el => typer(el, el.dataset.type, T + +el.dataset.at, +el.dataset.dur));
+  // exit (scene ends use a slightly longer, blurrier exit under the sweep)
+  const outAt = T + SLOT - (isSceneEnd ? .32 : .26);
+  tl.to(f, { opacity: 0, x: 100, filter: 'blur(10px)', duration: isSceneEnd ? .32 : .26, ease: 'power2.in' }, outAt);
+  tl.set(f, { visibility: 'hidden' }, T + SLOT + .01);
+}
+order.forEach(frame);
+
+function posOf(el) {            // position relative to #stage, ignoring transforms
+  let x = 0, y = 0;
+  for (let e = el; e && e.id !== 'stage'; e = e.offsetParent) { x += e.offsetLeft; y += e.offsetTop; }
+  return { x, y };
+}
+function popIn(sel, at, from = { y: 40, scale: .85 }) {
+  tl.fromTo(sel, { opacity: 0, x: 0, y: 0, ...from }, { opacity: 1, x: 0, y: 0, scale: 1, duration: .3, ease: 'back.out(2)' }, at);
+}
+
+/* ---------- F1 abandoned carts ---------- */
+(function (T) {
+  tl.to('#f1btn', { scale: .9, backgroundColor: '#65D4D2', color: '#041316', duration: .08, yoyo: true, repeat: 1 }, T + .55);
+  tl.to('#f1p1', { opacity: 0, duration: .1 }, T + .7);
+  tl.fromTo('#f1p2', { opacity: 0, scale: .6 }, { opacity: 1, scale: 1, duration: .2, ease: 'back.out(3)' }, T + .7);
+  popIn('#f1b', T + .72, { x: -60, scale: .9 });
+  tl.to('#f1p2', { opacity: 0, duration: .1 }, T + 1.08);
+  tl.fromTo('#f1p3', { opacity: 0, scale: .6 }, { opacity: 1, scale: 1, duration: .22, ease: 'back.out(3)' }, T + 1.08);
+  tl.to('#f1r1', { boxShadow: '0 0 0 3px #2FB37A, 0 12px 30px rgba(47,179,122,.25)', duration: .2 }, T + 1.08);
+  popIn('#f1c', T + 1.12, { y: 40, scale: .7 });
+})(F.f1);
+
+/* ---------- F2 gift cards ---------- */
+(function (T) {
+  tl.to('#f2tg .on', { opacity: 1, duration: .15 }, T + .35);
+  tl.to('#f2tg .k', { x: -34, duration: .15, ease: 'power2.out' }, T + .35);
+  tl.fromTo('#f2form', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .2 }, T + .45);
+  tl.fromTo('#f2card', { opacity: 0, y: 80, rotation: 6, scale: .8 }, { opacity: 1, y: 0, rotation: -5, scale: 1, duration: .38, ease: 'back.out(1.8)' }, T + 1.0);
+  popIn('#f2tag', T + 1.18, { y: 30, scale: .8 });
+})(F.f2);
+
+/* ---------- F3 back in stock ---------- */
+(function (T) {
+  tl.to('#f3bar', { scaleX: 1, duration: .35, ease: 'power2.out' }, T + .3);
+  tl.to('#f3out', { opacity: 0, duration: .1 }, T + .55);
+  tl.fromTo('#f3in', { opacity: 0, scale: .6 }, { opacity: 1, scale: 1, duration: .22, ease: 'back.out(3)' }, T + .55);
+  tl.to('#f3bell', { rotation: 18, duration: .06, yoyo: true, repeat: 5, transformOrigin: '50% 10%', ease: 'sine.inOut' }, T + .6);
+  counter($('#f3n'), 18, T + .62, .5);
+  counter($('#f3c'), 7, T + .9, .45);
+  popIn('#f3a', T + .7, { x: -60, scale: .9 });
+  tl.fromTo('#f3b', { opacity: 0, y: 30, scale: .9 }, { opacity: 1, y: 0, scale: 1, duration: .28, ease: 'back.out(2)' }, T + .95);
+})(F.f3);
+
+/* ---------- F4 bundles ---------- */
+(function (T) {
+  ['#b1', '#b2', '#b3'].forEach((b, i) => tl.fromTo(b, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: .25, ease: 'back.out(2)' }, T + .12 + i * .08));
+  tl.fromTo(['#pl1', '#pl2'], { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: .2, stagger: .06, ease: 'back.out(3)' }, T + .4);
+  tl.to('#b1', { x: -60, scale: .92, duration: .3, ease: 'power3.inOut' }, T + .62);
+  tl.to('#b3', { x: 60, scale: .92, duration: .3, ease: 'power3.inOut' }, T + .62);
+  tl.to('#b2', { scale: .96, duration: .3, ease: 'power3.inOut' }, T + .62);
+  tl.to(['#pl1'], { x: -30, duration: .3, ease: 'power3.inOut' }, T + .62);
+  tl.to(['#pl2'], { x: 30, duration: .3, ease: 'power3.inOut' }, T + .62);
+  tl.fromTo('#bres', { opacity: 0, y: 30, scale: .95 }, { opacity: 1, y: 0, scale: 1, duration: .3, ease: 'back.out(1.8)' }, T + .85);
+  popIn('#f4c', T + 1.05, { y: 30, scale: .7 });
+})(F.f4);
+
+/* ---------- F5 SEO ---------- */
+(function (T) {
+  tl.fromTo('#f5serp', { opacity: 0, y: 90, scale: .92 }, { opacity: 1, y: 0, scale: 1, duration: .38, ease: 'back.out(1.6)' }, T + .95);
+  tl.fromTo('#f5serp .tt', { backgroundColor: 'rgba(101,212,210,0)' }, { backgroundColor: 'rgba(101,212,210,.28)', duration: .2, yoyo: true, repeat: 1 }, T + 1.2);
+})(F.f5);
+
+/* ---------- F6 store design ---------- */
+(function (T) {
+  const cur = '#f6cur', p2 = posOf($('#sw2')), p3 = posOf($('#sw3'));
+  tl.fromTo(cur, { opacity: 0, x: p2.x + 160, y: p2.y + 90 }, { opacity: 1, x: p2.x + 90, y: p2.y + 60, duration: .25, ease: 'power2.out' }, T + .25);
+  tl.to(cur, { x: p2.x + 22, y: p2.y + 26, duration: .2, ease: 'power2.inOut' }, T + .45);
+  tl.to(cur, { scale: .8, duration: .06, yoyo: true, repeat: 1 }, T + .65);
+  tl.to('#sw2', { boxShadow: '0 0 0 5px #0B2A2E', duration: .1 }, T + .66);
+  tl.to('#sfd', { '--acc': '#C2532E', '--acc2': '#F5A623', '--bgc': '#FFF7F0', duration: .25 }, T + .68);
+  tl.to(cur, { x: p3.x + 22, y: p3.y + 26, duration: .2, ease: 'power2.inOut' }, T + .95);
+  tl.to(cur, { scale: .8, duration: .06, yoyo: true, repeat: 1 }, T + 1.15);
+  tl.to('#sw2', { boxShadow: '0 0 0 2px #DCE9E9', duration: .1 }, T + 1.16);
+  tl.to('#sw3', { boxShadow: '0 0 0 5px #0B2A2E', duration: .1 }, T + 1.16);
+  tl.to('#sfd', { '--acc': '#1E1E1E', '--acc2': '#C9A24A', '--bgc': '#F7F5EF', duration: .25 }, T + 1.18);
+  typer($('#sfdT1'), 'تخفيضات الصيف', T + 1.2, .01);
+})(F.f6);
+
+/* ---------- F7 AI ---------- */
+(function (T) {
+  tl.fromTo('#f7m1', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .15 }, T + .1);
+  tl.fromTo('#f7m2', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .15 }, T + .68);
+  tl.to('#f7typ u', { y: -8, duration: .12, stagger: .06, yoyo: true, repeat: 3, ease: 'sine.inOut' }, T + .7);
+  tl.to('#f7m2', { opacity: 0, height: 0, marginTop: 0, padding: 0, duration: .1 }, T + .95);
+  tl.fromTo('#f7m3', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .2 }, T + .97);
+  tl.fromTo('#f7mini', { opacity: 0, x: -120, rotation: -4 }, { opacity: 1, x: 0, rotation: -3, duration: .35, ease: 'back.out(1.6)' }, T + 1.0);
+  tl.fromTo('#f7bn', { scale: .4, opacity: 0 }, { scale: 1, opacity: 1, duration: .3, ease: 'back.out(2)' }, T + 1.12);
+})(F.f7);
+
+/* ---------- F8 reviews ---------- */
+(function (T) {
+  $$('#f8stars svg').forEach((s, i) => tl.to(s, { scale: 1, duration: .2, ease: 'back.out(3)' }, T + .2 + i * .08));
+  counter($('#f8avg'), 4.8, T + .25, .7, v => v.toFixed(1));
+  tl.fromTo('#f8r1', { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: .25, ease: 'power3.out' }, T + .7);
+  tl.fromTo('#f8r2', { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: .25, ease: 'power3.out' }, T + .88);
+})(F.f8);
+
+/* ---------- F9 loyalty ---------- */
+(function (T) {
+  counter($('#f9pts'), 1240, T + .2, .8);
+  tl.to('#f9bar', { scaleX: 0.83, duration: .8, ease: 'power2.out' }, T + .2);
+  popIn('#f9c', T + .95, { y: 40, scale: .7 });
+  tl.to('#f9pts', { color: '#65D4D2', duration: .1, yoyo: true, repeat: 1 }, T + 1.05);
+})(F.f9);
+
+/* ---------- F10 retargeting ---------- */
+(function (T) {
+  $$('#f10 .px').forEach((row, i) => {
+    const at = T + .25 + i * .12;
+    tl.to(row.querySelector('.lg b'), { scale: 1, duration: .18, ease: 'back.out(3)' }, at);
+    tl.to(row, { borderColor: '#2FB37A', backgroundColor: '#F2FBF7', duration: .12 }, at);
+    tl.to(row.querySelector('.f10off'), { opacity: 0, duration: .06 }, at);
+    typer(row.querySelector('.f10off'), 'متصل ✓', at + .06, .01);
+    tl.to(row.querySelector('.st'), { color: '#17834F', duration: .06 }, at);
+    tl.to(row.querySelector('.f10off'), { opacity: 1, duration: .08 }, at + .07);
+  });
+  tl.fromTo('#f10ad', { opacity: 0, x: -120, rotation: -6 }, { opacity: 1, x: 0, rotation: -3, duration: .35, ease: 'back.out(1.6)' }, T + .78);
+  popIn('#f10c', T + 1.12, { y: 30, scale: .7 });
+})(F.f10);
+
+/* ---------- F11 payments ---------- */
+(function (T) {
+  const pms = $$('#f11 .pm');
+  pms.forEach((p, i) => {
+    tl.to(p, { borderColor: '#2FB37A', backgroundColor: '#F2FBF7', duration: .1 }, T + .2 + i * .085);
+    tl.to(p.querySelector('.ck'), { scale: 1, duration: .16, ease: 'back.out(3)' }, T + .2 + i * .085);
+  });
+  popIn('#f11c', T + 1.0, { y: 40, scale: .7 });
+})(F.f11);
+
+/* ---------- F12 multi currency ---------- */
+(function (T) {
+  tl.to('#f12tg .on', { opacity: 1, duration: .12 }, T + .2);
+  tl.to('#f12tg .k', { x: -34, duration: .12 }, T + .2);
+  const prices = $$('#f12price div'), curs = $$('#f12 .f12cur');
+  [.42, .74, 1.06].forEach((dt, i) => {
+    tl.to(prices[i], { opacity: 0, y: -60, duration: .14, ease: 'power2.in' }, T + dt);
+    tl.fromTo(prices[i + 1], { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: .16, ease: 'power2.out' }, T + dt + .08);
+    tl.to(curs[i], { opacity: 0, duration: .08 }, T + dt);
+    tl.to(curs[i + 1], { opacity: 1, duration: .1 }, T + dt + .06);
+  });
+})(F.f12);
+
+/* ---------- F13 integrations hub ---------- */
+(function (T) {
+  tl.fromTo('#f13 .core', { scale: .4, opacity: 0 }, { scale: 1, opacity: 1, duration: .35, ease: 'back.out(2)' }, T + .05);
+  $$('#f13 .lines path').forEach((p, i) => tl.to(p, { strokeDashoffset: 0, duration: .3, ease: 'power2.out' }, T + .2 + i * .07));
+  $$('#f13 .nd').forEach((n, i) => tl.to(n, { scale: 1, duration: .22, ease: 'back.out(2.5)' }, T + .3 + i * .07));
+  tl.to('#f13 .core', { boxShadow: '0 0 140px rgba(101,212,210,.8)', duration: .25, yoyo: true, repeat: 1 }, T + 1.0);
+})(F.f13);
+
+/* ---------- scene pills ---------- */
+function pills(id, start, end, feats) {
+  const box = $(id), items = $$('span', box);
+  tl.fromTo(box, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .3, ease: 'power2.out' }, start + .05);
+  feats.forEach((f, i) => {
+    tl.to(items[i], { backgroundColor: '#65D4D2', borderColor: '#65D4D2', color: '#041316', scale: 1.06, duration: .18 }, F[f]);
+    if (i > 0) tl.to(items[i - 1], { backgroundColor: 'rgba(101,212,210,.16)', borderColor: 'rgba(101,212,210,.5)', color: '#E8FFFE', scale: 1, duration: .18 }, F[f]);
+  });
+  tl.to(items[items.length - 1], { backgroundColor: 'rgba(101,212,210,.16)', borderColor: 'rgba(101,212,210,.5)', color: '#E8FFFE', scale: 1, duration: .15 }, end - .45);
+  tl.to(box, { opacity: 0, y: 20, duration: .25, ease: 'power2.in' }, end - .28);
+}
+pills('#pills2', SCENES.s2, SCENES.s3, ['f1', 'f2', 'f3', 'f4']);
+pills('#pills3', SCENES.s3, SCENES.s4, ['f5', 'f6', 'f7', 'f8']);
+pills('#pills4', SCENES.s4, SCENES.s5, ['f9', 'f10', 'f11', 'f12', 'f13']);
+transition(SCENES.s3);
+transition(SCENES.s4);
+transition(SCENES.s5);
+
+/* ================= SCENE 5 ================= */
+(function (S, L) {
+  tl.set('#s5', { visibility: 'visible' }, S);
+  tl.fromTo('#grid13', { opacity: 0, y: 80, scale: .9 }, { opacity: 1, y: 0, scale: 1, duration: .4, ease: 'power3.out' }, S);
+  $$('#grid13 .g div').forEach((d, i) => tl.fromTo(d, { opacity: 0, scale: .5, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: .22, ease: 'back.out(2.5)' }, S + .15 + i * .05));
+  // collapse into the logo on the 26.4s downbeat
+  tl.to('#grid13', { scale: .15, opacity: 0, y: -120, filter: 'blur(8px)', duration: .35, ease: 'power3.in' }, L - .32);
+  tl.fromTo('#flash', { opacity: 0 }, { opacity: .35, duration: .06, immediateRender: false }, L - .03);
+  tl.to('#flash', { opacity: 0, duration: .5, ease: 'power2.out' }, L + .03);
+  tl.fromTo('#ring', { opacity: .9, scale: 1 }, { opacity: 0, scale: 90, duration: .9, ease: 'power2.out' }, L);
+  tl.fromTo('#end .mark', { opacity: 0, scale: .3, rotation: -12 }, { opacity: 1, scale: 1, rotation: 0, duration: .6, ease: 'back.out(1.8)' }, L);
+  tl.fromTo('#end .wm', { opacity: 0, y: 40, letterSpacing: '20px' }, { opacity: 1, y: 0, letterSpacing: '-5px', duration: .6, ease: 'power3.out' }, L + .2);
+  tl.fromTo('#end .tag', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .45, ease: 'power3.out' }, L + .9);
+  tl.fromTo('#end .cta', { opacity: 0, y: 30, scale: .9 }, { opacity: 1, y: 0, scale: 1, duration: .45, ease: 'back.out(2)' }, L + 2.45);
+  tl.fromTo('#end .url', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .4, ease: 'power3.out' }, L + 2.65);
+  tl.to('#end .cta', { boxShadow: '0 0 0 26px rgba(101,212,210,0), 0 30px 80px rgba(101,212,210,.35)', duration: .8, ease: 'power2.out' }, L + 2.9);
+  tl.to('#end .mark', { scale: 1.04, duration: 3.6, ease: 'sine.inOut' }, L + .6);
+})(SCENES.s5, SCENES.logo);
+
+/* end marker so the timeline is exactly TOTAL seconds */
+tl.set({}, {}, TOTAL);
+
+/* ---------------- control API (used by render.mjs) ---------------- */
+window.TOTAL = TOTAL;
+window.seek = t => { tl.time(Math.min(t, TOTAL), false); apply(); };
+window.ready = document.fonts.ready.then(() => Promise.all(Array.from(document.images).map(im => im.complete ? 1 : new Promise(r => { im.onload = im.onerror = r; }))));
+seek(0);
+
+/* live preview controls */
+if (!window.RENDER_MODE) {
+  gsap.ticker.add(apply);
+  document.addEventListener('keydown', e => {
+    if (e.code === 'Space') { tl.paused() ? tl.play() : tl.pause(); }
+    if (e.code === 'ArrowRight') { tl.pause(); seek(tl.time() + 1 / 30); }
+    if (e.code === 'ArrowLeft') { tl.pause(); seek(Math.max(0, tl.time() - 1 / 30)); }
+    if (e.code === 'KeyR') { seek(0); tl.play(); }
+  });
+  const fit = () => { const s = Math.min(innerWidth / 1080, innerHeight / 1920); const st = $('#stage'); st.style.transformOrigin = '0 0'; st.style.transform = `scale(${s})`; document.body.style.overflow = 'hidden'; };
+  if (innerWidth < 1080 || innerHeight < 1920) { document.documentElement.style.width = document.body.style.width = '100vw'; document.documentElement.style.height = document.body.style.height = '100vh'; fit(); addEventListener('resize', fit); }
+}
+</script>
+</body>
+</html>
