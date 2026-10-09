@@ -4,6 +4,8 @@
     python build_audio.py --edge-vo               -> also synthesises the Gulf voice-over (Microsoft neural TTS)
                                                      and writes out/<name>.vo.wav and .mix_vo.wav
     python build_audio.py --vo voice.wav          -> mixes a recorded voice-over instead (aligned to 0 s)
+    python build_audio.py --vo-lines vo/          -> one wav per phrase (intro.wav, f1.wav … logo.wav), each placed
+                                                     on its cue and sped up if it overruns its slot
     python build_audio.py --timing timing-30s.json  the fast 30 s cut
 
 The music is synthesised here (no samples, no licences), A minor, at the timing file's BPM. Bars start at
@@ -396,23 +398,23 @@ def build_sfx():
 
 
 # ---------------------------------------------------------------- voice-over
-# The script, one phrase per beat of the picture. 'at' is the feature/scene the phrase starts with.
+# The script (Kuwaiti/Gulf wording), one phrase per beat of the picture. 'at' is the feature/scene the phrase starts with.
 VO_SCRIPT = [
-    ('intro', 'تبي تكبّر تجارتك؟ مع فيلورسي، عندك الأدوات اللي تحتاجها بمكان واحد!'),
-    ('f1', 'استرجع السلات المتروكة،'),
-    ('f2', 'قدّم بطاقات إهداء،'),
-    ('f3', 'نبّه عملاءك عند رجوع المنتجات،'),
-    ('f4', 'وأنشئ باقات وعروض مميزة!'),
-    ('f5', 'حسّن ظهور متجرك في جوجل،'),
-    ('f6', 'صمّمه على ذوقك،'),
-    ('f7', 'طوّره بالذكاء الاصطناعي،'),
-    ('f8', 'وابنِ ثقة عملائك بالتقييمات!'),
-    ('f9', 'كافئ عملاءك،'),
-    ('f10', 'أعد استهداف المهتمين،'),
+    ('intro', 'تبي تكبّر تجارتك؟ ويّا فيلورسي، كل الأدوات اللي تحتاجها صارت بمكان واحد!'),
+    ('f1', 'رجّع اللي تركوا سلّتهم،'),
+    ('f2', 'ضيف بطاقة إهداء ويّا الطلب،'),
+    ('f3', 'بلّغ زباينك أول ما يتوفّر المنتج،'),
+    ('f4', 'وسوّي باقات وخصومات على الكمية!'),
+    ('f5', 'ضبّط ظهور متجرك في قوقل،'),
+    ('f6', 'صمّمه على كيفك،'),
+    ('f7', 'وطوّره بالذكاء الاصطناعي،'),
+    ('f8', 'وخلّ التقييمات تكسب لك الثقة!'),
+    ('f9', 'دلّع زباينك بنقاط الولاء،'),
+    ('f10', 'وصّل إعلانك للي زاروك،'),
     ('f11', 'واربط متجرك ببوابات الدفع،'),
-    ('f12', 'والعملات،'),
-    ('f13', 'وأدوات التسويق والتواصل الاجتماعي!'),
-    ('logo', 'فيلورسي... كل أدوات تجارتك، بمنصة واحدة. اكتشفها اليوم!'),
+    ('f12', 'واعرض أسعارك بعملات وايد،'),
+    ('f13', 'وأدوات التسويق والسوشال ميديا بعد!'),
+    ('logo', 'فيلورسي… كل أدوات تجارتك بمنصّة وحدة. اكتشفها الحين!'),
 ]
 
 
@@ -450,22 +452,35 @@ def rate_up(rate, factor):
     return f'{int(rate.strip("%+")) + int(np.ceil((factor - 1) * 100)) + 2:+d}%'
 
 
-def edge_vo():
-    voice = T.get('vo', {}).get('voice', 'ar-KW-FahedNeural')
+def place_lines(say):
+    """Lays every phrase on the timeline at its slot; say(at, text, rate, maxd) -> mono array at SR."""
     vo = np.zeros(N)
-    for t0, maxd, text, rate in vo_slots():
-        x = edge_say(text, voice, rate)
-        if len(x) / SR > maxd:                               # too long for its slot: re-read a little faster
-            rate = rate_up(rate, len(x) / SR / maxd)
-            x = edge_say(text, voice, rate)
-        if len(x) / SR > maxd:
+    for (t0, maxd, text, rate), (at, _) in zip(vo_slots(), VO_SCRIPT):
+        x = say(at, text, rate, maxd)
+        if len(x) / SR > maxd:                               # too long for its slot: speed it up to fit
             x = atempo(x, len(x) / SR / maxd)
         i = int(t0 * SR)
         j = min(N, i + len(x))
         vo[i:j] += x[: j - i]
-        print(f'  vo @ {t0:6.2f}s  {len(x) / SR:4.2f}s / {maxd:4.2f}s  rate {rate}  {text}')
+        print(f'  vo @ {t0:6.2f}s  {len(x) / SR:4.2f}s / {maxd:4.2f}s  {text}')
     vo = hp(vo, 80)
     return vo / (np.abs(vo).max() + 1e-9) * 0.9
+
+
+def edge_vo():
+    voice = T.get('vo', {}).get('voice', 'ar-KW-FahedNeural')
+
+    def say(at, text, rate, maxd):
+        x = edge_say(text, voice, rate)
+        if len(x) / SR > maxd:                               # re-read a little faster before stretching
+            x = edge_say(text, voice, rate_up(rate, len(x) / SR / maxd))
+        return x
+    return place_lines(say)
+
+
+def lines_vo(d):
+    """One recorded or synthesised file per phrase: <dir>/<intro|f1..f13|logo>.wav (any rate, mono or stereo)."""
+    return place_lines(lambda at, text, rate, maxd: trim(read_wav(os.path.join(d, f'{at}.wav'))))
 
 
 def read_wav(path):
@@ -524,7 +539,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--timing', default=os.path.join(HERE, '..', 'timing.json'))
     ap.add_argument('--vo', help='recorded VO wav, already aligned to the picture (starts at 0 s)')
-    ap.add_argument('--edge-vo', action='store_true', help='synthesise the Gulf VO with Microsoft neural TTS')
+    ap.add_argument('--edge-vo', action='store_true', help='synthesise the VO with Microsoft neural TTS')
+    ap.add_argument('--vo-lines', help='folder with one wav per phrase (intro.wav, f1.wav … f13.wav, logo.wav)')
     a = ap.parse_args()
     with open(a.timing, encoding='utf-8') as f:
         configure(json.load(f))
@@ -543,8 +559,8 @@ def main():
     if a.vo:
         vo = read_wav(a.vo)[:N]
         vo = np.pad(vo, (0, N - len(vo)))
-    elif a.edge_vo:
-        vo = edge_vo()
+    elif a.edge_vo or a.vo_lines:
+        vo = lines_vo(a.vo_lines) if a.vo_lines else edge_vo()
         write(o('vo'), np.vstack([vo, vo]))
     if vo is not None:
         bed = (music + sfx * 0.9) * duck_curve(vo)
