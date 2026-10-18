@@ -1260,7 +1260,7 @@
           </div>
           <a href="{{ t.packages.trialHref }}" style="padding:13px 26px; border-radius:6px; background:#023A3F; color:#FFFFFF; font-weight:600; font-size:15px; text-decoration:none; white-space:nowrap; font-family:{{ t.headingFont }}; box-shadow:0 1px 2px rgba(14,23,25,.05);">{{ t.packages.trialCta }}</a>
         </div>
-        <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:14px; align-items:stretch;" class="r-grid5">
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:14px; align-items:stretch;" class="r-grid4">
           <sc-for list="{{ t.packages.items }}" as="pk" hint-placeholder-count="4">
             <div style="position:relative; padding:28px 22px; background:{{ pk.bg }}; border-radius:8px; border:{{ pk.border }}; display:flex; flex-direction:column; gap:16px; transition:all .3s;" style-hover="transform:translateY(-6px);">
               <sc-if value="{{ pk.highlight }}" hint-placeholder-val="{{ false }}">
@@ -1364,7 +1364,7 @@
           </div>
           <a href="{{ t.packages.trialHref }}" style="padding:13px 26px; border-radius:6px; background:#023A3F; color:#FFFFFF; font-weight:600; font-size:15px; text-decoration:none; white-space:nowrap; font-family:{{ t.headingFont }}; box-shadow:0 1px 2px rgba(14,23,25,.05);">{{ t.packages.trialCta }}</a>
         </div>
-        <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:14px; align-items:stretch;" class="r-grid5">
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:14px; align-items:stretch;" class="r-grid4">
           <sc-for list="{{ t.packages.items }}" as="pk" hint-placeholder-count="4">
             <div style="position:relative; padding:28px 22px; background:{{ pk.bg }}; border-radius:8px; border:{{ pk.border }}; display:flex; flex-direction:column; gap:16px; transition:all .3s;" style-hover="transform:translateY(-6px);">
               <sc-if value="{{ pk.highlight }}" hint-placeholder-val="{{ false }}">
@@ -1491,7 +1491,7 @@
       </section>
       <section style="background:#F5FAFA; padding:28px 40px 20px; max-width:1100px; margin:0 auto; animation:fadeUp .6s .1s ease both;">
         <div style="font-family:{{ t.headingFont }}; font-weight:600; font-size:17px; color:#0E1719; margin-bottom:18px;">{{ t.subscribe.planLabel }}</div>
-        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:14px;" class="r-grid4">
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px;" class="r-grid3">
           <sc-for list="{{ t.subscribe.plans }}" as="sp" hint-placeholder-count="4">
             <div onClick="{{ sp.pick }}" style="padding:22px 18px; border-radius:8px; background:{{ sp.bg }}; border:{{ sp.border }}; cursor:pointer; display:flex; flex-direction:column; gap:7px; transition:all .25s;" style-hover="border-color:#1C5F64;">
               <div style="font-family:{{ t.headingFont }}; font-weight:600; font-size:16.5px; color:#0E1719;">{{ sp.name }}</div>
@@ -1685,7 +1685,7 @@ function requestedPlan() {
 // there is no automatic conversion for a customer to dispute later.
 const TRIAL_DAYS = 14;
 
-const PRICES_KWD = { starter:200, growth:300, pro:550, ent:700 };
+const PRICES_KWD = { starter:500, pro:750, ent:1000 };
 const USD_PER_KWD = 3.26;
 
 // Bidi-safe variants of the Latin fields, for use inside prose and bindings.
@@ -2051,10 +2051,9 @@ const DATA = {
     { badge:"RP", title:{ar:"التقارير والفواتير",en:"Reports & Invoices"}, desc:{ar:"لوحة إحصائيات، تقارير مجدولة، وفواتير جاهزة للطباعة.",en:"Dashboards, scheduled reports, and print-ready invoices."} },
   ],
   packages: [
-    { key:"starter", name:{ar:"أساسية",en:"Starter"}, bullets:{ar:["إدارة الطلبات والمراحل","تطبيق سائق","فواتير","إشعارات واتساب أساسية"],en:["Order management & stages","Driver app","Invoices","Basic WhatsApp notifications"]} },
-    { key:"growth", name:{ar:"نمو",en:"Growth"}, bullets:{ar:["كل ما في الأساسية","متجر إلكتروني بدومين خاص","CRM وكوبونات وتقييمات","نقطة بيع POS"],en:["Everything in Starter","Online store with custom domain","CRM, coupons & reviews","Point of Sale"]} },
-    { key:"pro", highlight:true, name:{ar:"احترافية",en:"Pro"}, bullets:{ar:["كل ما في النمو","محاسبة كاملة","مشتريات وتكاليف","واتساب أعمال وبريد وتقارير مجدولة"],en:["Everything in Growth","Full accounting","Purchasing & costing","WhatsApp business, email & scheduled reports"]} },
-    { key:"ent", name:{ar:"متقدمة",en:"Enterprise"}, bullets:{ar:["كل ما في الاحترافية","وكيل ذكاء اصطناعي على واتساب","إعلانات ميتا وكتالوج منتجات","مدفوعات وأدوار فريق كاملة"],en:["Everything in Pro","AI agent on WhatsApp","Meta ads & product catalog","Payments & full team roles"]} },
+    { key:"starter", name:{ar:"أساسية",en:"Starter"}, bullets:{ar:["إدارة الطلبات والمراحل وتطبيق السائق","متجر إلكتروني بدومين خاص","نقطة بيع POS ومخزون موحّد","CRM وكوبونات وتقييمات","فواتير وإشعارات واتساب تلقائية"],en:["Order management, stages & driver app","Online store with custom domain","Point of Sale with shared stock","CRM, coupons & reviews","Invoices & automated WhatsApp notifications"]} },
+    { key:"pro", highlight:true, name:{ar:"احترافية",en:"Pro"}, bullets:{ar:["كل ما في الأساسية","محاسبة كاملة","مشتريات وتكاليف","واتساب أعمال وبث جماعي","برنامج ولاء ونقاط","بريد إلكتروني وتقارير مجدولة"],en:["Everything in Starter","Full accounting","Purchasing & costing","WhatsApp Business & broadcasts","Loyalty points program","Email & scheduled reports"]} },
+    { key:"ent", name:{ar:"متقدمة",en:"Enterprise"}, bullets:{ar:["كل ما في الاحترافية","وكيل ذكاء اصطناعي على واتساب","إعلانات ميتا وكتالوج منتجات","مدفوعات إلكترونية","أدوار وصلاحيات فريق كاملة","دعم فني بأولوية"],en:["Everything in Pro","AI agent on WhatsApp","Meta ads & product catalog","Online payments","Full team roles & permissions","Priority support"]} },
     { key:"custom", custom:true, name:{ar:"مخصّصة",en:"Custom"}, bullets:{ar:["موديولات مختارة حسب احتياجك","تكاملات مع أنظمتك الحالية","ترحيل بياناتك من نظامك القديم","مدير حساب ودعم بأولوية","اتفاقية مستوى خدمة (SLA)","تدريب فريقك على المنصة"],en:["Modules picked for your needs","Integrations with your systems","Migration from your current system","Account manager & priority support","Service level agreement (SLA)","Training for your team"]} },
   ],
   roles: [
@@ -2772,7 +2771,7 @@ class Component extends DCLogic {
         namePlaceholder: L==="ar" ? "اسم مسؤول التواصل" : "Contact person",
         emailPlaceholder: L==="ar" ? "البريد الإلكتروني" : "Email address",
         phonePlaceholder: L==="ar" ? "الهاتف / واتساب" : "Phone / WhatsApp",
-        plans: DATA.packages.map(p => {
+        plans: DATA.packages.filter(p => !p.custom).map(p => {
           const on = this.state.form.plan === p.key;
           return {
             name: this.pick(p.name),
