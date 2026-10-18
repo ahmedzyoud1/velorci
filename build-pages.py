@@ -220,9 +220,9 @@ def jsonld(key: str, url: str, lang: str, title: str, desc: str) -> str:
             "offers": {
                 "@type": "AggregateOffer",
                 "priceCurrency": "KWD",
-                "lowPrice": "200",
-                "highPrice": "700",
-                "offerCount": "4",
+                "lowPrice": "500",
+                "highPrice": "1000",
+                "offerCount": "3",
             },
         })
     body = json.dumps({"@context": "https://schema.org", "@graph": graph},
