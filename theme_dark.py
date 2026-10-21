@@ -186,9 +186,10 @@ def darken(s: str) -> str:
 
     out = re.sub(r"#[0-9a-fA-F]{6}\b|rgba?\((\d+,\d+,\d+),\s*([0-9.]+)\)", swap, s)
 
-    # the page itself, and the two assets that come in a dark cut
+    # the page itself, and the assets that come in a dark cut
     out = out.replace("body{margin:0;background:" + CARD, "body{margin:0;background:" + PAGE)
     out = out.replace("assets/logo-ink.png", "assets/logo-turq.png")
     out = out.replace("assets/pattern-light.png", "assets/pattern-dark.png")
     out = re.sub(r"assets/prod-(\d)\.png", r"assets/prod-\1-dark.png", out)
+    out = re.sub(r"assets/pay-([a-z]+)\.(svg|png)", r"assets/pay-\1-dark.\2", out)
     return out
