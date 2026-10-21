@@ -15,12 +15,6 @@
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta name="ext-resource-dependency" content="../assets/prod-1-dark.svg">
-<meta name="ext-resource-dependency" content="../assets/prod-2-dark.svg">
-<meta name="ext-resource-dependency" content="../assets/prod-3-dark.svg">
-<meta name="ext-resource-dependency" content="../assets/prod-4-dark.svg">
-<meta name="ext-resource-dependency" content="../assets/prod-5-dark.svg">
-<meta name="ext-resource-dependency" content="../assets/prod-6-dark.svg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="velorci — business operating platform">
 <meta name="twitter:image" content="https://www.velorci.com/assets/og.jpg">
@@ -169,10 +163,6 @@
     .r-hchip1, .r-hchip3{inset-inline-start:6px !important;}
     .r-hchip2{inset-inline-end:6px !important;}
     .r-grid5, .r-grid4, .r-grid3, .r-grid2{grid-template-columns:1fr !important;}
-    .r-sell{grid-template-columns:24px 40px minmax(0,1fr) auto !important; gap:10px !important; padding-left:14px !important; padding-right:14px !important;}
-    .r-sell-q{display:none !important;}
-    .r-sell-m{display:block !important;}
-    .r-sell-n{white-space:normal !important; font-size:13.5px !important; line-height:1.45 !important;}
     .r-contact{padding:64px 20px 70px !important;}
     .r-rail{display:none !important;}
     .r-step{gap:16px !important;}
@@ -1263,51 +1253,6 @@
       </div>
     </section>
 
-    <!-- TOP SELLERS -->
-    <section data-reveal="" style="background:#0E1719; padding:64px 40px 72px;">
-      <div style="max-width:1000px; margin:0 auto;">
-        <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:12px; margin-bottom:36px;">
-          <span style="font-family:{{ t.headingFont }}; font-size:13px; font-weight:700; letter-spacing:{{ t.labelLS }}; text-transform:uppercase; color:#6FD8D6;">{{ t.sellers.tag }}</span>
-          <h2 style="font-family:{{ t.headingFont }}; font-size:31px; font-weight:600; margin:0; color:#E8F4F3; line-height:1.22;">{{ t.sellers.title }}</h2>
-          <p style="font-size:16px; line-height:1.7; color:rgba(232,244,243,0.84); max-width:600px; margin:0;">{{ t.sellers.sub }}</p>
-        </div>
-        <div style="border-radius:8px; background:#111B1D; border:1px solid rgba(232,244,243,0.182); box-shadow:0 1px 2px rgba(0,0,0,0.25); overflow:hidden;">
-          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px 22px; border-bottom:1px solid rgba(232,244,243,0.13);">
-            <span style="font-family:{{ t.headingFont }}; font-size:15px; font-weight:600; color:#E8F4F3;">{{ t.sellers.cardTitle }}</span>
-            <span style="font-size:12px; font-weight:600; padding:4px 10px; border-radius:6px; color:#6FD8D6; background:rgba(28,95,100,.1);">{{ t.sellers.period }}</span>
-          </div>
-          <div class="r-sell" style="display:grid; grid-template-columns:28px 44px minmax(0,1fr) 80px 120px; align-items:center; gap:14px; padding:10px 22px; font-size:11.5px; font-weight:600; color:rgba(232,244,243,0.64); border-bottom:1px solid rgba(232,244,243,0.104);">
-            <span style="text-align:center;">#</span>
-            <span></span>
-            <span>{{ t.sellers.colProduct }}</span>
-            <span class="r-sell-q" style="text-align:{{ t.chipSide2 }};">{{ t.sellers.colQty }}</span>
-            <span style="text-align:{{ t.chipSide2 }};">{{ t.sellers.colRevenue }}</span>
-          </div>
-          <sc-for list="{{ sellers }}" as="s" hint-placeholder-count="6">
-            <div class="r-sell" style="display:grid; grid-template-columns:28px 44px minmax(0,1fr) 80px 120px; align-items:center; gap:14px; padding:14px 22px; border-bottom:1px solid rgba(232,244,243,0.078); transition:background .2s;" style-hover="background:rgba(232,244,243,0.048);">
-              <div style="width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif; font-weight:600; font-size:13px; background:{{ s.rankBg }}; color:{{ s.rankFg }}; border:{{ s.rankBorder }};">{{ s.rank }}</div>
-              <div style="width:44px; height:44px; border-radius:6px; background:rgba(28,95,100,.08); display:flex; align-items:center; justify-content:center;"><img src="{{ s.img }}" alt="" style="width:28px; height:28px; display:block;"></div>
-              <div style="min-width:0; display:flex; flex-direction:column; gap:8px;">
-                <span class="r-sell-n" style="font-size:14.5px; font-weight:600; color:#E8F4F3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ s.name }}</span>
-                <div style="height:6px; border-radius:3px; background:rgba(232,244,243,0.096); overflow:hidden;">
-                  <div style="height:100%; width:{{ s.barW }}; border-radius:3px; background:#65D4D2; transition:width .1s linear;"></div>
-                </div>
-              </div>
-              <span class="r-sell-q" style="text-align:{{ t.chipSide2 }}; font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif; font-size:15px; font-weight:600; color:#E8F4F3; font-variant-numeric:tabular-nums;">{{ s.pcs }} <span style="font-size:11px; font-weight:600; color:rgba(232,244,243,0.64);">{{ t.sellers.pcs }}</span></span>
-              <div style="text-align:{{ t.chipSide2 }}; display:flex; flex-direction:column; gap:2px;">
-                <span style="font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif; font-size:14px; font-weight:600; color:#6FD8D6; font-variant-numeric:tabular-nums; white-space:nowrap;">{{ s.amount }} <span style="font-size:11px;">{{ t.sellers.cur }}</span></span>
-                <span class="r-sell-m" style="display:none; font-size:11.5px; color:rgba(232,244,243,0.64);">{{ s.pcs }} {{ t.sellers.pcs }}</span>
-              </div>
-            </div>
-          </sc-for>
-          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; padding:14px 22px; background:rgba(232,244,243,0.048); font-size:13px; color:rgba(232,244,243,0.8);">
-            <span>{{ t.sellers.total }}</span>
-            <span style="font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif; font-weight:600; color:#E8F4F3; font-variant-numeric:tabular-nums;">{{ sellersPcs }} {{ t.sellers.pcs }} · {{ sellersRevenue }} {{ t.sellers.cur }}</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- VISITOR ANALYTICS -->
     <section data-reveal="" style="padding:64px 40px; background:#0A1214; border-top:1px solid rgba(232,244,243,0.104);">
       <div style="max-width:1100px; margin:0 auto;">
@@ -2188,14 +2133,6 @@ const DATA = {
     {ar:"وكيل ذكاء اصطناعي",en:"AI Agent"},{ar:"نقطة بيع POS",en:"POS"},{ar:"إعلانات ميتا",en:"Meta Ads"},{ar:"مدفوعات KNET",en:"KNET Payments"},
     {ar:"شريك أعمال معتمد لدى Meta",en:"Meta Business Partner"},
   ],
-  topSellers: [
-    { rank:1, name:{ar:"أريكة جلدية فاخرة - أسود",en:"Premium Leather Sofa - Black"}, pcs:31, amount:"1,742.500", pct:100, img:"../assets/prod-1-dark.svg" },
-    { rank:2, name:{ar:"كرسي مكتب قابل للتعديل - كحلي",en:"Adjustable Office Chair - Navy"}, pcs:27, amount:"1,510.200", pct:88, img:"../assets/prod-2-dark.svg" },
-    { rank:3, name:{ar:"طاولة طعام خشبية - بني",en:"Wooden Dining Table - Brown"}, pcs:24, amount:"1,388.000", pct:80, img:"../assets/prod-3-dark.svg" },
-    { rank:4, name:{ar:"مصباح أرضي معاصر - أبيض",en:"Modern Floor Lamp - White"}, pcs:18, amount:"612.300", pct:60, img:"../assets/prod-4-dark.svg" },
-    { rank:5, name:{ar:"وسادة ديكور مزخرفة - رمادي",en:"Decorative Throw Pillow - Gray"}, pcs:15, amount:"245.750", pct:48, img:"../assets/prod-5-dark.svg" },
-    { rank:6, name:{ar:"سجادة صوف طبيعي - بيج",en:"Natural Wool Rug - Beige"}, pcs:13, amount:"188.400", pct:42, img:"../assets/prod-6-dark.svg" },
-  ],
 };
 
 class Component extends DCLogic {
@@ -2615,20 +2552,6 @@ class Component extends DCLogic {
           cur: L==="ar" ? "د.ك" : "KD",
           tabs: L==="ar" ? ["الرئيسية","واتساب","","الإعلانات","التقارير"] : ["Home","WhatsApp","","Ads","Reports"],
         },
-      },
-      sellers: {
-        tag: L==="ar" ? "تقارير المنتجات" : "Product reports",
-        title: L==="ar" ? "الأكثر مبيعاً" : "Top Sellers",
-        sub: L==="ar" ? "المنصة ترتّب منتجاتك تلقائياً حسب المبيعات والإيراد — فتعرف بالضبط ما الذي يبيع." : "The platform ranks your products automatically by sales and revenue — you know exactly what sells.",
-        pcs: L==="ar" ? "قطعة" : "pcs",
-        cur: L==="ar" ? "د.ك" : "KD",
-        imgHint: L==="ar" ? "صورة المنتج" : "Product photo",
-        cardTitle: L==="ar" ? "أفضل المنتجات" : "Best-selling products",
-        period: L==="ar" ? "آخر 30 يوماً" : "Last 30 days",
-        colProduct: L==="ar" ? "المنتج" : "Product",
-        colQty: L==="ar" ? "المبيعات" : "Sold",
-        colRevenue: L==="ar" ? "الإيراد" : "Revenue",
-        total: L==="ar" ? "إجمالي أفضل ٦ منتجات" : "Top 6 products in total",
       },
       analytics: {
         tag: L==="ar" ? "تحليلات الزوار" : "Visitor analytics",
@@ -3071,21 +2994,6 @@ class Component extends DCLogic {
       netRevenue: (34892.115*revealEase).toLocaleString("en",{minimumFractionDigits:3, maximumFractionDigits:3}),
       avgOrder: (63.440*revealEase).toLocaleString("en",{minimumFractionDigits:3, maximumFractionDigits:3}),
       ordersCount: Math.round(550*revealEase).toLocaleString("en"),
-      sellersPcs: Math.round(DATA.topSellers.reduce((n,s)=>n+s.pcs,0)*revealEase),
-      sellersRevenue: (DATA.topSellers.reduce((n,s)=>n+parseFloat(s.amount.replace(/,/g,"")),0)*revealEase).toLocaleString("en",{minimumFractionDigits:3, maximumFractionDigits:3}),
-      sellers: DATA.topSellers.map(s => ({
-        rank: s.rank,
-        rankBg: s.rank===1?"#65D4D2":s.rank===2?"rgba(101,212,210,0.077)":s.rank===3?"rgba(101,212,210,0.077)":"rgba(232,244,243,0.064)",
-        rankFg: s.rank===1?"#06191B":s.rank<=3?"#8FE3E1":"rgba(232,244,243,0.8)",
-        rankBorder: s.rank<=3?"1px solid rgba(101,212,210,0.288)":"1px solid rgba(232,244,243,0.156)",
-        medal: s.rank<=3,
-        name: this.pick(s.name),
-        pcs: Math.round(s.pcs*revealEase),
-        amount: s.amount,
-        barW: (s.pct*revealEase)+"%",
-        img: s.img,
-        slotId: "seller-"+s.rank,
-      })),
       phoneBars: [40,60,45,75,55,90,50,70,45,65,80,55,40,70,50,85,45,60,75,50].map((h,i)=>({h:h+"%", delay:(0.5+i*0.04).toFixed(2)+"s"})),
       analyticsCards: t.analytics.cards.map(c => {
         const v = c.target*revealEase;
