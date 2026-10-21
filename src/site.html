@@ -625,8 +625,8 @@
                   <div style="display:flex; align-items:center; gap:18px; padding:24px; border-radius:8px; background:rgba(14,23,25,.03); border:1px solid rgba(14,23,25,.14); animation:fadeUp .6s .15s ease both;">
                     <svg viewBox="0 0 120 100" style="width:110px; height:auto; flex:none;">
                       <ellipse cx="60" cy="90" rx="34" ry="5" fill="#000" opacity=".28"></ellipse>
-                      <path d="M20 84c-7 0-12-5.5-10.6-12.6C12.6 55 20 42.5 32 35.5c17-10 39-10 56 0 12 7 19.4 19.5 22.6 35.9C112 78.5 107 84 100 84z" fill="rgba(14,23,25,.44)"></path>
-                      <path d="M20 84c-7 0-12-5.5-10.6-12.6C12.6 55 20 42.5 32 35.5c17-10 39-10 56 0 12 7 19.4 19.5 22.6 35.9C112 78.5 107 84 100 84z" fill="rgba(2,58,63,.34)" style="clip-path:inset(0 0 52% 0);"></path>
+                      <path d="M50 4h20v15H50zM55 19h10v9H55zM42 28h36a8 8 0 0 1 8 8v40a8 8 0 0 1-8 8H42a8 8 0 0 1-8-8V36a8 8 0 0 1 8-8z" fill="rgba(14,23,25,.44)"></path>
+                      <path d="M50 4h20v15H50zM55 19h10v9H55zM42 28h36a8 8 0 0 1 8 8v40a8 8 0 0 1-8 8H42a8 8 0 0 1-8-8V36a8 8 0 0 1 8-8z" fill="rgba(2,58,63,.34)" style="clip-path:inset(0 0 52% 0);"></path>
                     </svg>
                     <div style="flex:1; min-width:0;">
                       <div style="font-family:{{ t.headingFont }}; font-size:16.5px; font-weight:600; color:#0E1719; line-height:1.4;">{{ t.pillars.store.heroName }}</div>
@@ -2193,8 +2193,8 @@ class Component extends DCLogic {
 
         store: {
           brand: L==="ar" ? "متجرك" : "YOUR BRAND",
-          heroName: L==="ar" ? "كرسي استرخاء كبير" : "Large lounge chair",
-          heroPrice: L==="ar" ? "59 د.ك" : "KD 59",
+          heroName: L==="ar" ? "عطر عود ملكي 100 مل" : "Royal Oud perfume 100ml",
+          heroPrice: L==="ar" ? "24 د.ك" : "KD 24",
           buy: L==="ar" ? "اشترِ الآن" : "Buy now",
           offers: L==="ar" ? "العروض" : "Offers",
           cartLine: L==="ar" ? "سلة العميل جاهزة للدفع عبر KNET أو البطاقة" : "The cart is ready to pay by KNET or card",
@@ -2214,14 +2214,14 @@ class Component extends DCLogic {
           ],
           seeAll: L==="ar" ? "الكل ←" : "See all →",
           hero: [
-            { d:"M41 16h38a7 7 0 0 1 7 7v24H34V23a7 7 0 0 1 7-7zM28 51h64a5.5 5.5 0 0 1 0 11H28a5.5 5.5 0 0 1 0-11zM56.5 62h7v14h-7zM40 80h40l-3.5 5h-33z", fill:"#AEB9BC", w:"122px", flex:"1", op:".6" },
-            { d:"M20 84c-7 0-12-5.5-10.6-12.6C12.6 55 20 42.5 32 35.5c17-10 39-10 56 0 12 7 19.4 19.5 22.6 35.9C112 78.5 107 84 100 84z",  fill:"#8E9BA0", w:"200px", flex:"1.6", op:"1" },
-            { d:"M14 38h92v8.5H14zM26 46.5h7.5v38H26zM86.5 46.5H94v38h-7.5zM33.5 58h53v5.5h-53z", fill:"#AEB9BC", w:"122px", flex:"1", op:".6" },
+            { d:"M42 14L18 26l8 18 10-5v45h48V39l10 5 8-18-24-12c-2 7-9 11-18 11s-16-4-18-11z", fill:"#AEB9BC", w:"122px", flex:"1", op:".6" },
+            { d:"M50 4h20v15H50zM55 19h10v9H55zM42 28h36a8 8 0 0 1 8 8v40a8 8 0 0 1-8 8H42a8 8 0 0 1-8-8V36a8 8 0 0 1 8-8z",  fill:"#8E9BA0", w:"200px", flex:"1.6", op:"1" },
+            { d:"M18 50c0-20 19-32 42-32s42 12 42 32zM14 55h92a4 4 0 0 1 0 8H14a4 4 0 0 1 0-8zM18 67h84v6a11 11 0 0 1-11 11H29a11 11 0 0 1-11-11z", fill:"#AEB9BC", w:"122px", flex:"1", op:".6" },
           ],
           products: [
-            { d:"M41 16h38a7 7 0 0 1 7 7v24H34V23a7 7 0 0 1 7-7zM28 51h64a5.5 5.5 0 0 1 0 11H28a5.5 5.5 0 0 1 0-11zM56.5 62h7v14h-7zM40 80h40l-3.5 5h-33z", fill:"#97A4A8", name: L==="ar"?"كرسي مكتب قابل للتعديل":"Adjustable office chair", was:"66.500", now: L==="ar"?"56.500 د.ك":"KD 56.500", off:"15%" },
-            { d:"M14 38h92v8.5H14zM26 46.5h7.5v38H26zM86.5 46.5H94v38h-7.5zM33.5 58h53v5.5h-53z", fill:"#A9B0AC", name: L==="ar"?"طاولة طعام خشبية":"Wooden dining table", was:"141.000", now: L==="ar"?"120.000 د.ك":"KD 120.000", off:"15%" },
-            { d:"M60 44c27.6 0 47 8.4 47 17.5S87.6 79 60 79 13 70.6 13 61.5 32.4 44 60 44zm0 8c-19.8 0-34 4.6-34 9.5S40.2 71 60 71s34-4.6 34-9.5S79.8 52 60 52z",   fill:"#B4BBB7", name: L==="ar"?"سجادة صوف طبيعي":"Natural wool rug", was:"34.000", now: L==="ar"?"28.900 د.ك":"KD 28.900", off:"15%" },
+            { d:"M42 14L18 26l8 18 10-5v45h48V39l10 5 8-18-24-12c-2 7-9 11-18 11s-16-4-18-11z", fill:"#97A4A8", name: L==="ar"?"تيشيرت قطن أساسي":"Basic cotton T-shirt", was:"9.000", now: L==="ar"?"7.650 د.ك":"KD 7.650", off:"15%" },
+            { d:"M50 4h20v15H50zM55 19h10v9H55zM42 28h36a8 8 0 0 1 8 8v40a8 8 0 0 1-8 8H42a8 8 0 0 1-8-8V36a8 8 0 0 1 8-8z", fill:"#A9B0AC", name: L==="ar"?"عطر مسك أبيض 50 مل":"White musk perfume 50ml", was:"14.000", now: L==="ar"?"11.900 د.ك":"KD 11.900", off:"15%" },
+            { d:"M18 50c0-20 19-32 42-32s42 12 42 32zM14 55h92a4 4 0 0 1 0 8H14a4 4 0 0 1 0-8zM18 67h84v6a11 11 0 0 1-11 11H29a11 11 0 0 1-11-11z",   fill:"#B4BBB7", name: L==="ar"?"وجبة برجر دبل":"Double burger meal", was:"4.500", now: L==="ar"?"3.825 د.ك":"KD 3.825", off:"15%" },
           ],
         },
 
@@ -2270,18 +2270,18 @@ class Component extends DCLogic {
           ],
           cats: [
             { label: L==="ar"?"الكل":"All", active:true },
-            { label: L==="ar"?"إعادة تعبئة":"Refill", active:false },
-            { label: L==="ar"?"جلسات خارجية":"Outdoor seating", active:false },
-            { label: L==="ar"?"جلسات داخلية":"Indoor seating", active:false },
+            { label: L==="ar"?"العطور":"Perfumes", active:false },
+            { label: L==="ar"?"الملابس":"Clothing", active:false },
+            { label: L==="ar"?"الوجبات":"Meals", active:false },
             { label: L==="ar"?"منتجات موسمية":"Seasonal", active:false },
           ],
           colProduct: L==="ar" ? "المنتج" : "Product",
           colType: L==="ar" ? "النوع" : "Type",
           colPrice: L==="ar" ? "السعر" : "Price",
           rows: [
-            { d:"M20 84c-7 0-12-5.5-10.6-12.6C12.6 55 20 42.5 32 35.5c17-10 39-10 56 0 12 7 19.4 19.5 22.6 35.9C112 78.5 107 84 100 84z",  name: L==="ar"?"بين باج ضد الماء":"Waterproof bean bag", sku:"158161", type: L==="ar"?"رئيسي · 10 متغيّرات":"Parent · 10 children", price:"38.000" },
-            { d:"M41 16h38a7 7 0 0 1 7 7v24H34V23a7 7 0 0 1 7-7zM28 51h64a5.5 5.5 0 0 1 0 11H28a5.5 5.5 0 0 1 0-11zM56.5 62h7v14h-7zM40 80h40l-3.5 5h-33z", name: L==="ar"?"كرسي فردي ضد الماء":"Waterproof single chair", sku:"158274", type: L==="ar"?"رئيسي · 10 متغيّرات":"Parent · 10 children", price:"30.000" },
-            { d:"M14 38h92v8.5H14zM26 46.5h7.5v38H26zM86.5 46.5H94v38h-7.5zM33.5 58h53v5.5h-53z", name: L==="ar"?"طاولة ضد الماء":"Waterproof table", sku:"158277", type: L==="ar"?"رئيسي · 10 متغيّرات":"Parent · 10 children", price:"12.000" },
+            { d:"M50 4h20v15H50zM55 19h10v9H55zM42 28h36a8 8 0 0 1 8 8v40a8 8 0 0 1-8 8H42a8 8 0 0 1-8-8V36a8 8 0 0 1 8-8z",  name: L==="ar"?"عطر عود ملكي":"Royal Oud perfume", sku:"158161", type: L==="ar"?"رئيسي · 3 أحجام":"Parent · 3 sizes", price:"24.000" },
+            { d:"M42 14L18 26l8 18 10-5v45h48V39l10 5 8-18-24-12c-2 7-9 11-18 11s-16-4-18-11z", name: L==="ar"?"عباية كريب سوداء":"Black crepe abaya", sku:"158274", type: L==="ar"?"رئيسي · 10 متغيّرات":"Parent · 10 children", price:"32.000" },
+            { d:"M18 50c0-20 19-32 42-32s42 12 42 32zM14 55h92a4 4 0 0 1 0 8H14a4 4 0 0 1 0-8zM18 67h84v6a11 11 0 0 1-11 11H29a11 11 0 0 1-11-11z", name: L==="ar"?"وجبة برجر دبل":"Double burger meal", sku:"158277", type: L==="ar"?"رئيسي · 4 إضافات":"Parent · 4 add-ons", price:"3.750" },
           ],
         },
 
@@ -2290,12 +2290,12 @@ class Component extends DCLogic {
           title: L==="ar" ? "نقطة البيع" : "Point of sale",
           sub: L==="ar" ? "فاتورة #POS-1184" : "Receipt #POS-1184",
           lines: [
-            { name: L==="ar"?"كرسي استرخاء كبير":"Large lounge chair", price: L==="ar"?"59.000":"59.000" },
-            { name: L==="ar"?"وسادة ديكور":"Decorative cushion", price: L==="ar"?"7.500":"7.500" },
-            { name: L==="ar"?"سجادة صوف طبيعي":"Natural wool rug", price: L==="ar"?"28.900":"28.900" },
+            { name: L==="ar"?"عطر عود ملكي 100 مل":"Royal Oud perfume 100ml", price: L==="ar"?"24.000":"24.000" },
+            { name: L==="ar"?"تيشيرت قطن أساسي":"Basic cotton T-shirt", price: L==="ar"?"9.000":"9.000" },
+            { name: L==="ar"?"وجبة برجر دبل":"Double burger meal", price: L==="ar"?"3.750":"3.750" },
           ],
           totalLabel: L==="ar" ? "الإجمالي" : "Total",
-          total: L==="ar" ? "95.400 د.ك" : "KD 95.400",
+          total: L==="ar" ? "36.750 د.ك" : "KD 36.750",
           note: L==="ar" ? "الفاتورة تُطبع حرارياً للزبون، والقطع تُخصم من المخزون نفسه في اللحظة نفسها." : "The receipt prints thermally for the customer, and the items come off the same stock at that very moment.",
         },
 
