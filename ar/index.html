@@ -15,12 +15,12 @@
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta name="ext-resource-dependency" content="../assets/prod-1-dark.png">
-<meta name="ext-resource-dependency" content="../assets/prod-2-dark.png">
-<meta name="ext-resource-dependency" content="../assets/prod-3-dark.png">
-<meta name="ext-resource-dependency" content="../assets/prod-4-dark.png">
-<meta name="ext-resource-dependency" content="../assets/prod-5-dark.png">
-<meta name="ext-resource-dependency" content="../assets/prod-6-dark.png">
+<meta name="ext-resource-dependency" content="../assets/prod-1-dark.svg">
+<meta name="ext-resource-dependency" content="../assets/prod-2-dark.svg">
+<meta name="ext-resource-dependency" content="../assets/prod-3-dark.svg">
+<meta name="ext-resource-dependency" content="../assets/prod-4-dark.svg">
+<meta name="ext-resource-dependency" content="../assets/prod-5-dark.svg">
+<meta name="ext-resource-dependency" content="../assets/prod-6-dark.svg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="velorci — business operating platform">
 <meta name="twitter:image" content="https://www.velorci.com/assets/og.jpg">
@@ -149,8 +149,6 @@
   @keyframes dot{0%,60%,100%{transform:translateY(0);opacity:.35;}30%{transform:translateY(-4px);opacity:1;}}
   @keyframes livePulse{0%,100%{box-shadow:0 0 0 0 rgba(23,160,92,.55);}70%{box-shadow:0 0 0 7px rgba(23,160,92,0);}}
   @keyframes knobIn{from{transform:translateX(-19px);}to{transform:none;}}
-  .temj-on{filter:grayscale(1) brightness(0) invert(1);}
-  .temj{filter:grayscale(1) brightness(0) saturate(100%) invert(34%) sepia(42%) saturate(1046%) hue-rotate(147deg) brightness(93%) contrast(92%);}
   @media (max-width:900px){
     .r-grid5{grid-template-columns:1fr 1fr 1fr !important;}
     .r-grid4{grid-template-columns:1fr 1fr !important;}
@@ -190,6 +188,10 @@
     .r-hchip1, .r-hchip3{inset-inline-start:6px !important;}
     .r-hchip2{inset-inline-end:6px !important;}
     .r-grid5, .r-grid4, .r-grid3, .r-grid2{grid-template-columns:1fr !important;}
+    .r-sell{grid-template-columns:24px 40px minmax(0,1fr) auto !important; gap:10px !important; padding-left:14px !important; padding-right:14px !important;}
+    .r-sell-q{display:none !important;}
+    .r-sell-m{display:block !important;}
+    .r-sell-n{white-space:normal !important; font-size:13.5px !important; line-height:1.45 !important;}
     .r-contact{padding:64px 20px 70px !important;}
     .r-rail{display:none !important;}
     .r-step{gap:16px !important;}
@@ -1216,9 +1218,9 @@
                   <span style="font-family:{{ t.headingFont }}; font-size:17px; font-weight:600; color:#6FD8D6;">{{ t.showcase.phone.header }}</span>
                 </div>
                 <div style="display:flex; align-items:center; gap:12px; color:#6FD8D6; font-size:13px;">
-                  <span>⟳</span>
-                  <span style="position:relative;">◔<span style="position:absolute; top:-6px; {{ t.chipSide2 }}:-6px; background:#F5C242; color:#06191B; font-size:8px; font-weight:600; border-radius:50%; width:13px; height:13px; display:flex; align-items:center; justify-content:center;">2</span></span>
-                  <span>☀</span>
+                  <span><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></span>
+                  <span style="position:relative;"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span style="position:absolute; top:-6px; {{ t.chipSide2 }}:-6px; background:#F5C242; color:#06191B; font-size:8px; font-weight:600; border-radius:50%; width:13px; height:13px; display:flex; align-items:center; justify-content:center;">2</span></span>
+                  <span><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></span>
                 </div>
               </div>
               <div style="padding:12px 14px 16px; display:flex; flex-direction:column; gap:10px;">
@@ -1231,7 +1233,7 @@
                 <div style="padding:16px; border-radius:8px; background:rgba(232,244,243,0.048); border:1px solid rgba(232,244,243,0.182);">
                   <div style="display:flex; align-items:center; justify-content:flex-end; gap:8px; margin-bottom:6px;">
                     <span style="font-size:12px; color:rgba(232,244,243,0.8);">{{ t.showcase.phone.netLabel }}</span>
-                    <span style="width:22px;height:22px;border-radius:4px;background:rgba(232,244,243,0.048);display:flex;align-items:center;justify-content:center;font-size:11px;"><span class="temj">💰</span></span>
+                    <span style="width:22px;height:22px;border-radius:4px;background:rgba(232,244,243,0.048);display:flex;align-items:center;justify-content:center;color:#6FD8D6;"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg></span>
                   </div>
                   <div style="display:flex; align-items:baseline; justify-content:flex-end; gap:6px;">
                     <span style="font-size:13px; color:rgba(232,244,243,0.8);">{{ t.showcase.phone.cur }}</span>
@@ -1260,19 +1262,19 @@
                   </div>
                 </div>
                 <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-radius:8px; background:rgba(232,244,243,0.048); border:1px solid rgba(232,244,243,0.182);">
-                  <span style="font-size:12px; color:rgba(232,244,243,0.84);">{{ t.showcase.phone.waRead }} <span class="temj">✅</span></span>
+                  <span style="font-size:12px; color:rgba(232,244,243,0.84);">{{ t.showcase.phone.waRead }} <span style="display:inline-block; vertical-align:-2px; color:#6FD8D6;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;"><path d="M18 6 7 17l-5-5"/><path d="m22 10-7.5 7.5L13 16"/></svg></span></span>
                   <div style="display:flex; align-items:center; gap:8px;">
                     <span style="font-size:12px; color:rgba(232,244,243,0.8);">WhatsApp</span>
-                    <span style="width:22px;height:22px;border-radius:4px;background:rgba(232,244,243,0.048);display:flex;align-items:center;justify-content:center;font-size:11px;"><span class="temj">💬</span></span>
+                    <span style="width:22px;height:22px;border-radius:4px;background:rgba(232,244,243,0.048);display:flex;align-items:center;justify-content:center;color:#6FD8D6;"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span>
                   </div>
                 </div>
               </div>
               <div style="display:flex; align-items:center; justify-content:space-around; padding:10px 8px 16px; border-top:1px solid rgba(232,244,243,0.169); background:rgba(232,244,243,.05);">
-                <span style="font-size:10px; color:#6FD8D6; text-align:center;"><span class="temj">⌂</span><br>{{ t.showcase.phone.tabs.0 }}</span>
-                <span style="font-size:10px; color:rgba(232,244,243,0.7); text-align:center;"><span class="temj">💬</span><br>{{ t.showcase.phone.tabs.1 }}</span>
-                <span style="width:40px; height:40px; border-radius:50%; background:#65D4D2; display:flex; align-items:center; justify-content:center; font-size:16px; margin-top:-14px; border:3px solid #162224;"><span class="temj-on">🛍</span></span>
-                <span style="font-size:10px; color:rgba(232,244,243,0.7); text-align:center;"><span class="temj">📢</span><br>{{ t.showcase.phone.tabs.3 }}</span>
-                <span style="font-size:10px; color:rgba(232,244,243,0.7); text-align:center;"><span class="temj">📈</span><br>{{ t.showcase.phone.tabs.4 }}</span>
+                <span style="font-size:10px; color:#6FD8D6; text-align:center; display:flex; flex-direction:column; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-4v6H4a1 1 0 0 1-1-1z"/></svg>{{ t.showcase.phone.tabs.0 }}</span>
+                <span style="font-size:10px; color:rgba(232,244,243,0.7); text-align:center; display:flex; flex-direction:column; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>{{ t.showcase.phone.tabs.1 }}</span>
+                <span style="width:40px; height:40px; border-radius:50%; background:#65D4D2; display:flex; align-items:center; justify-content:center; color:#06191B; margin-top:-14px; border:3px solid #162224;"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span>
+                <span style="font-size:10px; color:rgba(232,244,243,0.7); text-align:center; display:flex; flex-direction:column; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>{{ t.showcase.phone.tabs.3 }}</span>
+                <span style="font-size:10px; color:rgba(232,244,243,0.7); text-align:center; display:flex; flex-direction:column; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;"><path d="M22 7 13.5 15.5 8.5 10.5 2 17"/><path d="M16 7h6v6"/></svg>{{ t.showcase.phone.tabs.4 }}</span>
               </div>
             </div>
           </div>
@@ -1281,37 +1283,51 @@
     </section>
 
     <!-- TOP SELLERS -->
-    
-
-    <!-- VISITOR ANALYTICS -->
-    <section data-reveal="" style="background:#0E1719; padding:20px 40px 72px;">
+    <section data-reveal="" style="background:#0E1719; padding:64px 40px 72px;">
       <div style="max-width:1000px; margin:0 auto;">
-        <div style="display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:12px;">
-          <span style="width:40px; height:40px; border-radius:6px; background:#65D4D2; display:flex; align-items:center; justify-content:center; font-size:18.5px;">🏆</span>
-          <h2 style="font-family:{{ t.headingFont }}; font-size:31px; font-weight:600; text-align:center; margin:0; color:#E8F4F3; line-height:1.22;">{{ t.sellers.title }}</h2>
+        <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:12px; margin-bottom:36px;">
+          <span style="font-family:{{ t.headingFont }}; font-size:13px; font-weight:700; letter-spacing:{{ t.labelLS }}; text-transform:uppercase; color:#6FD8D6;">{{ t.sellers.tag }}</span>
+          <h2 style="font-family:{{ t.headingFont }}; font-size:31px; font-weight:600; margin:0; color:#E8F4F3; line-height:1.22;">{{ t.sellers.title }}</h2>
+          <p style="font-size:16px; line-height:1.7; color:rgba(232,244,243,0.84); max-width:600px; margin:0;">{{ t.sellers.sub }}</p>
         </div>
-        <p style="text-align:center; color:rgba(232,244,243,0.8); font-size:16px; max-width:600px; margin:0 auto 40px;">{{ t.sellers.sub }}</p>
-        <div style="display:flex; flex-direction:column; gap:10px; padding:22px; background:rgba(232,244,243,0.048); border:1px solid rgba(232,244,243,0.182); border-radius:8px;">
+        <div style="border-radius:8px; background:#111B1D; border:1px solid rgba(232,244,243,0.182); box-shadow:0 1px 2px rgba(0,0,0,0.25); overflow:hidden;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px 22px; border-bottom:1px solid rgba(232,244,243,0.13);">
+            <span style="font-family:{{ t.headingFont }}; font-size:15px; font-weight:600; color:#E8F4F3;">{{ t.sellers.cardTitle }}</span>
+            <span style="font-size:12px; font-weight:600; padding:4px 10px; border-radius:6px; color:#6FD8D6; background:rgba(28,95,100,.1);">{{ t.sellers.period }}</span>
+          </div>
+          <div class="r-sell" style="display:grid; grid-template-columns:28px 44px minmax(0,1fr) 80px 120px; align-items:center; gap:14px; padding:10px 22px; font-size:11.5px; font-weight:600; color:rgba(232,244,243,0.64); border-bottom:1px solid rgba(232,244,243,0.104);">
+            <span style="text-align:center;">#</span>
+            <span></span>
+            <span>{{ t.sellers.colProduct }}</span>
+            <span class="r-sell-q" style="text-align:{{ t.chipSide2 }};">{{ t.sellers.colQty }}</span>
+            <span style="text-align:{{ t.chipSide2 }};">{{ t.sellers.colRevenue }}</span>
+          </div>
           <sc-for list="{{ sellers }}" as="s" hint-placeholder-count="6">
-            <div style="display:flex; align-items:center; gap:14px; padding:12px 10px; border-radius:6px; transition:background .2s;" style-hover="background:rgba(232,244,243,0.048);">
-              <div style="width:28px; height:28px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif; font-weight:600; font-size:13px; background:{{ s.rankBg }}; color:{{ s.rankFg }}; border:{{ s.rankBorder }};">{{ s.rank }}</div>
-              <div style="width:52px; height:52px; border-radius:6px; flex-shrink:0; overflow:hidden; border:1px solid rgba(101,212,210,0.2448);"><img src="{{ s.img }}" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
-              <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:7px;">
-                <span style="font-size:14.5px; font-weight:600; color:#E8F4F3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ s.name }}</span>
-                <div style="height:7px; border-radius:3px; background:rgba(232,244,243,0.064); overflow:hidden;">
+            <div class="r-sell" style="display:grid; grid-template-columns:28px 44px minmax(0,1fr) 80px 120px; align-items:center; gap:14px; padding:14px 22px; border-bottom:1px solid rgba(232,244,243,0.078); transition:background .2s;" style-hover="background:rgba(232,244,243,0.048);">
+              <div style="width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif; font-weight:600; font-size:13px; background:{{ s.rankBg }}; color:{{ s.rankFg }}; border:{{ s.rankBorder }};">{{ s.rank }}</div>
+              <div style="width:44px; height:44px; border-radius:6px; background:rgba(28,95,100,.08); display:flex; align-items:center; justify-content:center;"><img src="{{ s.img }}" alt="" style="width:28px; height:28px; display:block;"></div>
+              <div style="min-width:0; display:flex; flex-direction:column; gap:8px;">
+                <span class="r-sell-n" style="font-size:14.5px; font-weight:600; color:#E8F4F3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ s.name }}</span>
+                <div style="height:6px; border-radius:3px; background:rgba(232,244,243,0.096); overflow:hidden;">
                   <div style="height:100%; width:{{ s.barW }}; border-radius:3px; background:#65D4D2; transition:width .1s linear;"></div>
                 </div>
               </div>
-              <div style="flex-shrink:0; text-align:{{ t.chipSide2 }}; display:flex; flex-direction:column; gap:2px;">
-                <span style="font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif; font-size:15px; font-weight:600; color:#E8F4F3;">{{ s.pcs }} <span style="font-size:11px; font-weight:600; color:rgba(232,244,243,0.7);">{{ t.sellers.pcs }}</span></span>
-                <span style="font-size:12px; color:#6FD8D6;">{{ s.amount }} {{ t.sellers.cur }}</span>
+              <span class="r-sell-q" style="text-align:{{ t.chipSide2 }}; font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif; font-size:15px; font-weight:600; color:#E8F4F3; font-variant-numeric:tabular-nums;">{{ s.pcs }} <span style="font-size:11px; font-weight:600; color:rgba(232,244,243,0.64);">{{ t.sellers.pcs }}</span></span>
+              <div style="text-align:{{ t.chipSide2 }}; display:flex; flex-direction:column; gap:2px;">
+                <span style="font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif; font-size:14px; font-weight:600; color:#6FD8D6; font-variant-numeric:tabular-nums; white-space:nowrap;">{{ s.amount }} <span style="font-size:11px;">{{ t.sellers.cur }}</span></span>
+                <span class="r-sell-m" style="display:none; font-size:11.5px; color:rgba(232,244,243,0.64);">{{ s.pcs }} {{ t.sellers.pcs }}</span>
               </div>
             </div>
           </sc-for>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; padding:14px 22px; background:rgba(232,244,243,0.048); font-size:13px; color:rgba(232,244,243,0.8);">
+            <span>{{ t.sellers.total }}</span>
+            <span style="font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif; font-weight:600; color:#E8F4F3; font-variant-numeric:tabular-nums;">{{ sellersPcs }} {{ t.sellers.pcs }} · {{ sellersRevenue }} {{ t.sellers.cur }}</span>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- VISITOR ANALYTICS -->
     <section data-reveal="" style="padding:64px 40px; background:#0A1214; border-top:1px solid rgba(232,244,243,0.104);">
       <div style="max-width:1100px; margin:0 auto;">
         <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:12px; margin-bottom:36px;">
@@ -1320,7 +1336,7 @@
           <p style="font-size:16px; line-height:1.7; color:rgba(232,244,243,0.84); max-width:600px; margin:0;">{{ t.analytics.sub }}</p>
         </div>
         <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 22px; border-radius:8px; background:#65D4D2; margin-bottom:16px; box-shadow:0 1px 2px rgba(0,0,0,0.25);">
-          <span style="width:34px;height:34px;border-radius:4px;background:rgba(6,25,27,0.18);display:flex;align-items:center;justify-content:center;font-size:16px;">📸</span>
+          <span style="width:34px;height:34px;border-radius:4px;background:rgba(6,25,27,0.18);display:flex;align-items:center;justify-content:center;color:#06191B;"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></span>
           <div style="text-align:{{ t.chipSide2 }};">
             <div style="font-size:12px; color:rgba(6,25,27,0.88);">{{ t.analytics.topSource }}</div>
             <div style="font-family:{{ t.headingFont }}; font-size:17.5px; font-weight:600; color:#06191B;">{{ t.analytics.topSourceVal }}</div>
@@ -2192,12 +2208,12 @@ const DATA = {
     {ar:"شريك أعمال معتمد لدى Meta",en:"Meta Business Partner"},
   ],
   topSellers: [
-    { rank:1, name:{ar:"أريكة جلدية فاخرة - أسود",en:"Premium Leather Sofa - Black"}, pcs:31, amount:"1,742.500", pct:100, img:"../assets/prod-1-dark.png" },
-    { rank:2, name:{ar:"كرسي مكتب قابل للتعديل - كحلي",en:"Adjustable Office Chair - Navy"}, pcs:27, amount:"1,510.200", pct:88, img:"../assets/prod-2-dark.png" },
-    { rank:3, name:{ar:"طاولة طعام خشبية - بني",en:"Wooden Dining Table - Brown"}, pcs:24, amount:"1,388.000", pct:80, img:"../assets/prod-3-dark.png" },
-    { rank:4, name:{ar:"مصباح أرضي معاصر - أبيض",en:"Modern Floor Lamp - White"}, pcs:18, amount:"612.300", pct:60, img:"../assets/prod-4-dark.png" },
-    { rank:5, name:{ar:"وسادة ديكور مزخرفة - رمادي",en:"Decorative Throw Pillow - Gray"}, pcs:15, amount:"245.750", pct:48, img:"../assets/prod-5-dark.png" },
-    { rank:6, name:{ar:"سجادة صوف طبيعي - بيج",en:"Natural Wool Rug - Beige"}, pcs:13, amount:"188.400", pct:42, img:"../assets/prod-6-dark.png" },
+    { rank:1, name:{ar:"أريكة جلدية فاخرة - أسود",en:"Premium Leather Sofa - Black"}, pcs:31, amount:"1,742.500", pct:100, img:"../assets/prod-1-dark.svg" },
+    { rank:2, name:{ar:"كرسي مكتب قابل للتعديل - كحلي",en:"Adjustable Office Chair - Navy"}, pcs:27, amount:"1,510.200", pct:88, img:"../assets/prod-2-dark.svg" },
+    { rank:3, name:{ar:"طاولة طعام خشبية - بني",en:"Wooden Dining Table - Brown"}, pcs:24, amount:"1,388.000", pct:80, img:"../assets/prod-3-dark.svg" },
+    { rank:4, name:{ar:"مصباح أرضي معاصر - أبيض",en:"Modern Floor Lamp - White"}, pcs:18, amount:"612.300", pct:60, img:"../assets/prod-4-dark.svg" },
+    { rank:5, name:{ar:"وسادة ديكور مزخرفة - رمادي",en:"Decorative Throw Pillow - Gray"}, pcs:15, amount:"245.750", pct:48, img:"../assets/prod-5-dark.svg" },
+    { rank:6, name:{ar:"سجادة صوف طبيعي - بيج",en:"Natural Wool Rug - Beige"}, pcs:13, amount:"188.400", pct:42, img:"../assets/prod-6-dark.svg" },
   ],
 };
 
@@ -2620,11 +2636,18 @@ class Component extends DCLogic {
         },
       },
       sellers: {
+        tag: L==="ar" ? "تقارير المنتجات" : "Product reports",
         title: L==="ar" ? "الأكثر مبيعاً" : "Top Sellers",
         sub: L==="ar" ? "المنصة ترتّب منتجاتك تلقائياً حسب المبيعات والإيراد — فتعرف بالضبط ما الذي يبيع." : "The platform ranks your products automatically by sales and revenue — you know exactly what sells.",
         pcs: L==="ar" ? "قطعة" : "pcs",
         cur: L==="ar" ? "د.ك" : "KD",
         imgHint: L==="ar" ? "صورة المنتج" : "Product photo",
+        cardTitle: L==="ar" ? "أفضل المنتجات" : "Best-selling products",
+        period: L==="ar" ? "آخر 30 يوماً" : "Last 30 days",
+        colProduct: L==="ar" ? "المنتج" : "Product",
+        colQty: L==="ar" ? "المبيعات" : "Sold",
+        colRevenue: L==="ar" ? "الإيراد" : "Revenue",
+        total: L==="ar" ? "إجمالي أفضل ٦ منتجات" : "Top 6 products in total",
       },
       analytics: {
         tag: L==="ar" ? "تحليلات الزوار" : "Visitor analytics",
@@ -3067,6 +3090,8 @@ class Component extends DCLogic {
       netRevenue: (34892.115*revealEase).toLocaleString("en",{minimumFractionDigits:3, maximumFractionDigits:3}),
       avgOrder: (63.440*revealEase).toLocaleString("en",{minimumFractionDigits:3, maximumFractionDigits:3}),
       ordersCount: Math.round(550*revealEase).toLocaleString("en"),
+      sellersPcs: Math.round(DATA.topSellers.reduce((n,s)=>n+s.pcs,0)*revealEase),
+      sellersRevenue: (DATA.topSellers.reduce((n,s)=>n+parseFloat(s.amount.replace(/,/g,"")),0)*revealEase).toLocaleString("en",{minimumFractionDigits:3, maximumFractionDigits:3}),
       sellers: DATA.topSellers.map(s => ({
         rank: s.rank,
         rankBg: s.rank===1?"#65D4D2":s.rank===2?"rgba(101,212,210,0.077)":s.rank===3?"rgba(101,212,210,0.077)":"rgba(232,244,243,0.064)",
