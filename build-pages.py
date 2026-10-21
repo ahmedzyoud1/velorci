@@ -63,12 +63,6 @@ PAGES = [
         "en": ("Services & plans — velorci",
                "Platform modules and annual subscription plans: orders, online store, accounting, POS, WhatsApp Business and ads."),
     }),
-    ("team", "team.html", {
-        "ar": ("فريق العمل على المنصة — velorci",
-               "تطبيق مستقل بصلاحيات محددة لكل دور في عملك — من مدير الشركة حتى الكاشير والسائق."),
-        "en": ("Your team on the platform — velorci",
-               "A dedicated app with clear permissions for every role in your business — from the manager to the cashier and driver."),
-    }),
     ("subscribe", "subscribe.html", {
         "ar": ("إتمام الاشتراك — velorci",
                "اختر باقتك السنوية وأرسل طلب الاشتراك، ونرسل لك فاتورة رسمية ورابط دفع آمن لإتمام العملية."),

@@ -3307,25 +3307,6 @@
     </section>
   </sc-if>
 
-  <!-- TEAM -->
-  <sc-if value="{{ isTeam }}" hint-placeholder-val="{{ false }}">
-    <section style="padding:72px 40px 20px; max-width:900px; margin:0 auto; text-align:center; display:flex; flex-direction:column; gap:16px; animation:fadeUp .6s ease both;">
-      <h1 style="font-family:{{ t.headingFont }}; font-size:40px; font-weight:600; margin:0; color:#E8F4F3; line-height:1.22;">{{ t.team.title }}</h1>
-      <p style="font-size:16.5px; line-height:1.8; color:rgba(232,244,243,0.84); margin:0;">{{ t.team.sub }}</p>
-    </section>
-    <section style="background:#0E1719; padding:40px 40px 72px; max-width:1100px; margin:0 auto; animation:fadeUp .6s .15s ease both;">
-      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px;" class="r-grid3">
-        <sc-for list="{{ t.team.roles }}" as="r" hint-placeholder-count="6">
-          <div style="padding:30px 24px; background:rgba(232,244,243,0.048); border:1px solid rgba(232,244,243,0.182); border-radius:8px; display:flex; flex-direction:column; gap:12px; text-align:center; align-items:center; transition:all .3s;" style-hover="transform:translateY(-6px); border-color:rgba(101,212,210,.3); background:rgba(232,244,243,0.048);">
-            <div style="width:56px; height:56px; border-radius:50%; background:#65D4D2; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif; font-weight:600; font-size:17.5px; color:#06191B;">{{ r.initial }}</div>
-            <div style="font-family:{{ t.headingFont }}; font-weight:700; font-size:16.5px; color:#E8F4F3;">{{ r.name }}</div>
-            <div style="font-size:14px; line-height:1.7; color:rgba(232,244,243,0.8);">{{ r.desc }}</div>
-          </div>
-        </sc-for>
-      </div>
-    </section>
-  </sc-if>
-
   <!-- CONTACT -->
   <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
     <section style="padding:72px 40px 72px; max-width:1000px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:48px; animation:fadeUp .6s ease both;" class="r-contact r-grid2">
@@ -3554,7 +3535,6 @@ const PAGES = [
   { key:"home",      file:"index.html",     nav:true,  ar:"الرئيسية",   en:"Home" },
   { key:"about",     file:"about.html",     nav:true,  ar:"من نحن",     en:"About" },
   { key:"services",  file:"services.html",  nav:true,  ar:"الخدمات",    en:"Services" },
-  { key:"team",      file:"team.html",      nav:true,  ar:"أدوار الفريق", en:"Team roles" },
   { key:"subscribe", file:"subscribe.html", nav:true,  ar:"الاشتراك",   en:"Subscribe" },
   { key:"contact",   file:"contact.html",   nav:true,  ar:"تواصل معنا", en:"Contact" },
   { key:"terms",     file:"terms.html",     nav:false, ar:"شروط الاستخدام",       en:"Terms of Service" },
@@ -3971,14 +3951,6 @@ const DATA = {
     { key:"pro", highlight:true, name:{ar:"احترافية",en:"Pro"}, bullets:{ar:["كل ما في الأساسية","محاسبة كاملة","مشتريات وتكاليف","واتساب أعمال وبث جماعي","برنامج ولاء ونقاط","بريد إلكتروني وتقارير مجدولة"],en:["Everything in Starter","Full accounting","Purchasing & costing","WhatsApp Business & broadcasts","Loyalty points program","Email & scheduled reports"]} },
     { key:"ent", name:{ar:"متقدمة",en:"Enterprise"}, bullets:{ar:["كل ما في الاحترافية","وكيل ذكاء اصطناعي على واتساب","إعلانات ميتا وكتالوج منتجات","مدفوعات إلكترونية","أدوار وصلاحيات فريق كاملة","دعم فني بأولوية"],en:["Everything in Pro","AI agent on WhatsApp","Meta ads & product catalog","Online payments","Full team roles & permissions","Priority support"]} },
     { key:"custom", custom:true, name:{ar:"مخصّصة",en:"Custom"}, bullets:{ar:["موديولات مختارة حسب احتياجك","تكاملات مع أنظمتك الحالية","ترحيل بياناتك من نظامك القديم","مدير حساب ودعم بأولوية","اتفاقية مستوى خدمة (SLA)","تدريب فريقك على المنصة"],en:["Modules picked for your needs","Integrations with your systems","Migration from your current system","Account manager & priority support","Service level agreement (SLA)","Training for your team"]} },
-  ],
-  roles: [
-    { initial:"M", name:{ar:"مدير الشركة",en:"Company Manager"}, desc:{ar:"لوحة كاملة، إعدادات، محاسبة وإحصائيات.",en:"Full dashboard, settings, accounting and analytics."} },
-    { initial:"E", name:{ar:"موظف",en:"Employee"}, desc:{ar:"الطلبات المُسندة وتحصيل الكاش وإرسال الفواتير.",en:"Assigned orders, cash collection and sending invoices."} },
-    { initial:"D", name:{ar:"سائق",en:"Driver"}, desc:{ar:"طلباته، العنوان، والتواصل مع العميل للتسليم.",en:"His orders, addresses and customer contact for delivery."} },
-    { initial:"T", name:{ar:"خياط",en:"Tailor"}, desc:{ar:"الطلبات قيد الخياطة والقياسات وتوفّر الخام.",en:"Orders in progress, measurements and material availability."} },
-    { initial:"P", name:{ar:"معبّئ",en:"Packer"}, desc:{ar:"الطلبات الجاهزة للتعبئة وتنبيه السائق.",en:"Orders ready for packing and alerting the driver."} },
-    { initial:"C", name:{ar:"كاشير",en:"Cashier"}, desc:{ar:"نقطة بيع كاملة لمبيعات المحل.",en:"A full point-of-sale for in-store sales."} },
   ],
   whyItems: [
     {ar:"الكل في واحد: طلبات، متجر، محاسبة، واتساب، إعلانات وPOS في اشتراك واحد.",en:"All-in-one: orders, store, accounting, WhatsApp, ads and POS in one subscription."},
@@ -4518,11 +4490,6 @@ class Component extends DCLogic {
         sub: L==="ar" ? "كل موديول تحتاجه لإدارة عملك، مبني في منصة واحدة." : "Every module your business needs, built into one platform.",
         modules: DATA.modules.map(m => ({badge:m.badge, title:this.pick(m.title), desc:this.pick(m.desc)})),
       },
-      team: {
-        title: L==="ar" ? "فريق عملك على المنصة" : "Your team on the platform",
-        sub: L==="ar" ? "تطبيق مستقل بصلاحيات محددة لكل دور في عملك — من المدير حتى الكاشير." : "A dedicated app with clear permissions for every role — from the manager to the cashier.",
-        roles: DATA.roles.map(r => ({initial:r.initial, name:this.pick(r.name), desc:this.pick(r.desc)})),
-      },
       contact: {
         title: L==="ar" ? "تواصل معنا" : "Get in touch",
         body: L==="ar" ? "راسلنا لحجز عرض تجريبي أو لأي استفسار عن المنصة، ونتواصل معك قريباً." : "Reach out to book a demo or ask anything about the platform — we'll get back to you soon.",
@@ -4849,7 +4816,6 @@ class Component extends DCLogic {
       isHome: this.state.page==="home",
       isAbout: this.state.page==="about",
       isServices: this.state.page==="services",
-      isTeam: this.state.page==="team",
       isContact: this.state.page==="contact",
       isLegal: !!legalKey,
       isSubscribe: this.state.page==="subscribe",

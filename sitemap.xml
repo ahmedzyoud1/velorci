@@ -23,13 +23,6 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://www.velorci.com/ar/team.html</loc>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.velorci.com/ar/team.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.velorci.com/en/team.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.velorci.com/ar/team.html"/>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
     <loc>https://www.velorci.com/ar/subscribe.html</loc>
     <xhtml:link rel="alternate" hreflang="ar" href="https://www.velorci.com/ar/subscribe.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.velorci.com/en/subscribe.html"/>
@@ -83,13 +76,6 @@
     <xhtml:link rel="alternate" hreflang="ar" href="https://www.velorci.com/ar/services.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.velorci.com/en/services.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.velorci.com/ar/services.html"/>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://www.velorci.com/en/team.html</loc>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.velorci.com/ar/team.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.velorci.com/en/team.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.velorci.com/ar/team.html"/>
     <changefreq>monthly</changefreq>
   </url>
   <url>
